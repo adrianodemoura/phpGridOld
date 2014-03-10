@@ -198,6 +198,7 @@ class Controller {
 	public function lista()
 	{
 		$modelClass 		= $this->modelClass;
+
 		$params 			= array();
 		$params['pag'] 		= isset($this->params['pag']) ? $this->params['pag'] : 1;
 		$params['pag']		= empty($params['pag']) ? 1 : $params['pag'];
@@ -221,6 +222,22 @@ class Controller {
 			$this->viewVars['fields'] = $fields;
 		}
 		$this->viewVars['urlRetorno'] = isset($this->viewVars['urlRetorno']) ? $this->viewVars['urlRetorno'] : $this->viewVars['aqui'];
+
+		// ferramentas da lista
+		$f = isset($this->viewVars['ferramentas']) ? $this->viewVars['ferramentas'] : array();
+		if (!isset($f['editar']))
+		{
+			/*$f['editar']['tit'] 	= 'Editar';
+			$f['editar']['link'] 	= $this->viewVars['base'].strtolower($this->module).'/'.strtolower($this->controller).'/editar/*id*';*/
+		}
+		if (!isset($f['excluir']))
+		{
+			$f['excluir']['tit'] 	= 'Excluir';
+			$f['excluir']['link'] 	= $this->viewVars['base'].strtolower($this->module).'/'.strtolower($this->controller).'/excluir/*id*';
+			$f['excluir']['title'] 	= 'Clique aqui para excluir este registro';
+		}
+		$this->viewVars['ferramentas'] = $f;
+
 	}
 
 	/**

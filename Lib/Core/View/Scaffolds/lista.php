@@ -87,6 +87,10 @@
 
 		<?php if (!$_l) : ?>
 		<tr><!-- cabeçalho -->
+			<th colspan='<?= count($ferramentas); ?>'>
+			#
+			</th>
+
 			<?php foreach($this->viewVars['fields'] as $_l2 => $_cmp) : $a = explode('.',$_cmp); ?>
 			<th>
 				<?= $this->viewVars['esquema'][$a['0']][$a['1']]['tit'] ?>
@@ -95,7 +99,27 @@
 		</tr>
 		<?php endif ?>
 
-		<tr>
+		<tr><!-- ferramentas -->
+			<?php
+			foreach($ferramentas as $_fer => $_prop) : 
+			$_prop['title'] = isset($_prop['title']) ? $_prop['title'] : $_fer;
+			$arqBt 			= 'bt_'.$_fer.'.png';
+			if (strpos($_prop['link'], '*'))
+			{
+				foreach($primaryKey as $_l2 => $_cmp)
+				{ 
+					$v = $_arrMods[$modelClass][$_cmp];
+					$_prop['link'] = str_replace('*'.$_cmp.'*', $v, $_prop['link']);
+				}
+			}
+			?>
+			<td>
+				<a href='<?= $_prop['link'] ?>'>
+					<img src='<?= $base ?>img/<?= $arqBt ?>' title='<?= $_prop['title'] ?>' /> 
+				</a>
+			</td>
+			<?php endforeach ?>
+
 			<?php 
 				foreach($this->viewVars['fields'] as $_l2 => $_cmp) : 
 				$a = explode('.',$_cmp);
@@ -122,3 +146,4 @@
 	</div>
 </div>
 </div>
+<br /><br /><br /><br />
