@@ -1,11 +1,11 @@
 Angú
 ==========
 
-Php com OO, MVC, Auxiliares, jQuery, Bootstrap e polenta.
+Php com OO, MVC, Auxiliares, jQuery, Bootstrap e listas.
 
 1 - Considerações
 
-o Angu tem a estrutura e fluxo de requisições do cakePHP, mas a camada de visão foi implementada com o BootStrap e jQuery.
+o phpGrid tem a estrutura e fluxo de requisições do cakePHP, mas a camada de visão foi implementada com o BootStrap e jQuery.
 Se quiser criar um arquivo JS ou CSS para sua action, crie os arquivos dentro do diretório webroot, como no exemplo abaixo:
 
 APP/webroot/js/module_controller_action.js
@@ -29,7 +29,7 @@ Bootstrap e jQjuery já inclusos no CORE.
 2 - Instalação:
 
 Copia o código para o diretório do seu servidor apache
-.
+
 email: admin@admin.com.br <br />
 senha: admin
 
