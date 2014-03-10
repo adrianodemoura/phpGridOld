@@ -55,4 +55,17 @@ class Cidade extends SistemaAppModel {
 			'tit'	=> 'Uf',
 		)
 	);
+
+	/**
+	 * Executa código antes da de excluir uma cidade no banco
+	 * - Nenhuma cidade pode ser excluída
+	 * 
+	 * @return boolean
+	 */
+	public function beforeExclude()
+	{
+		$this->erro = 'Nenhuma Cidade pode ser excluída !!!';
+		return false;
+		//return parent::beforeExclude();
+	}
 }

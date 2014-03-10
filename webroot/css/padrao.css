@@ -183,12 +183,11 @@ body
 {
 	background-color: #fdffaf;
 }
-#lista #btFecNo,
-#lista #btSalvarN
+#tabLista th a
 {
-	display: none;
+	color: #fff;
+	display: block;
 }
-
 pre
 {
 	font-size: 10px;

@@ -128,8 +128,9 @@ class Usuario extends SistemaAppModel {
 	}
 
 	/**
-	 * Executa código antes da de excluir um usuário no banco
-	 * Usuário administrador não pode ser excluído
+	 * Executa código antes de excluir um usuário no banco
+	 *
+	 * - Usuário administrador não pode ser excluído
 	 * 
 	 * @return boolean
 	 */

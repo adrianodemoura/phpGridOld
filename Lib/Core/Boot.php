@@ -253,9 +253,11 @@ class Boot {
 		$module		= $this->viewVars['module'];
 		$controller = $this->viewVars['controller'];
 		$action		= $this->viewVars['action'];
+
 		// atualizando as variáveis locais
 		foreach($vars as $_var => $_vlr) ${$_var} = $_vlr;
 		$arq = 'View/Elements/'.$e.'.php';
+
 		require_once($arq);
 	}
 }

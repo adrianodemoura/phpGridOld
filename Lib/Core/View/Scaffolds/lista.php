@@ -1,35 +1,9 @@
 <?php
 	$this->Html->setHead('js','jquery.maskedinput.min');
 ?>
-<div id='lista'>
+<div id='lista' style='min-height: 470px;'>
 
-<div class='row-fluid' style='margin: 0px 0px 0px 131px; padding: 0px 0px 10px 0px;'>
-	<input type='button' class='btn btn-primary' name='ExibirNovo' 
-		id='btNovo' value='Novo' onclick='$("#btNovo").fadeOut(); 
-			$("#btFecNo").fadeIn(); 
-			$("#btSalvarN").fadeIn(); 
-			$("#tabNovo").fadeIn(); 
-			$("#btSalvarT").fadeOut(); 
-			$("#tabLista").fadeOut(); ' />
-	
-	<input type='button' class='btn' name='CancerNovo' 
-		id='btFecNo' value='Cancelar' onclick='$("#btFecNo").fadeOut(); 
-			$("#btSalvarN").fadeOut(); 
-			$("#tabNovo").fadeOut(); 
-			$("#btNovo").fadeIn(); 
-			$("#btSalvarT").fadeIn(); 
-			$("#tabLista").fadeIn(); ' />
-
-	<input type='button' class='btn btn-success' name='SalvarNovo' 
-		id='btSalvarN' value='Salvar Novo' onclick='$("#formLiNo").submit();' />
-
-	<input type='button' class='btn btn-success' name='SalvarTodos' 
-		id='btSalvarT' value='Salvar Todos' onclick='$("#formLista").submit();' />
-
-</div>
-
-<div class='row-fluid'>
-
+	<div style='position: absolute; width: 130px; min-height: 200px;'><!-- menu -->
 	<?php if (isset($linksMenu)) : ?>
 		<div style='position: absolute; width: 130px;'>
 		<?php foreach($linksMenu as $_con => $_arrOpcs) : ?>
@@ -37,49 +11,73 @@
 		<?php endforeach; ?>
 		</div>
 	<?php endif; ?>
+	</div><!-- fim menu -->
 
-	<div style='margin-left: 131px;'>
+	<div style='position: absolute; width: auto; min-width: 500px; min-height: 200px; display: table; margin-left: 135px;'><!-- esquerda -->
 
-	<div><!-- filtros -->
-	</div>
+		<div>
+			<div id='novo' style='position: absolute;  min-height: 30px; display: none;'><!-- novo -->
+			<div style='margin: 0px 0px 5px 0px;'>
+				<input type='button' class='btn' name='CancerNovo' id='btFecNo' value='Cancelar' onclick='$("#novo").fadeOut(); $("#ferramentas").fadeIn(); $("#tabela").fadeIn();' />
+				<input type='button' class='btn btn-success' name='SalvarNovo' id='btSalvarN' value='Salvar Novo' onclick='$("#formLiNo").submit();' />
+			</div>
 
-	<div>
-		<table id='tabNovo' style='display: none;'><!-- novo -->
-		<form name='formLiNo' id='formLiNo' method='post' action='<?= $base.strtolower($module).'/'.strtolower($controller).'/salvar' ?>' >
-		<input type='hidden' name='urlRetorno' value='<?= $urlRetorno ?>' style='width: 300px;' />
+			<table id='tabNovo'>
+			<form name='formLiNo' id='formLiNo' method='post' action='<?= $base.strtolower($module).'/'.strtolower($controller).'/salvar' ?>' >
+			<input type='hidden' name='urlRetorno' value='<?= $urlRetorno ?>' style='width: 300px;' />
 
-		<tr><!-- cabeçalho novo -->
-			<?php
-				foreach($this->viewVars['fields'] as $_l2 => $_cmp) : 
-				$a = explode('.',$_cmp);
-				$p = $this->viewVars['esquema'][$a['0']][$a['1']];
-				if (!isset($p['edicaoOff'])) :
-			?>
-			<th>
-				<?= $this->viewVars['esquema'][$a['0']][$a['1']]['tit'] ?>
-			</th>
-			<?php endif; endforeach ?>
-		</tr>
-		<tr><!-- input novo -->
-			<?php
-				foreach($this->viewVars['fields'] as $_l2 => $_cmp) : 
-				$a = explode('.',$_cmp);
-				$p = $this->viewVars['esquema'][$a['0']][$a['1']];
-				if (!isset($p['edicaoOff'])) :
-			?>
-			<td align='center'>
-			<?php
-				$cmp = $_l.'.'.$a['0'].'.'.$a['1'];
-				$vlr = isset($p['default']) ? $p['default'] : '';
-				echo $this->Html->getInput($cmp,array('value'=>$vlr),$p);
-				if (isset($p['mascara'])) array_push($this->viewVars['onRead'],'$("#'.$this->Html->domId($cmp).'").mask("'.str_replace('#','9',$p['mascara']).'")');
-			?>
-			</td>
-			<?php endif; endforeach ?>
-		</tr>
-		</form>
-		</table><!-- fim novo -->
+			<tr><!-- cabeçalho novo -->
+				<?php
+					foreach($this->viewVars['fields'] as $_l2 => $_cmp) : 
+					$a = explode('.',$_cmp);
+					$p = $this->viewVars['esquema'][$a['0']][$a['1']];
+					if (!isset($p['edicaoOff'])) :
+				?>
+				<th>
+					<?= $this->viewVars['esquema'][$a['0']][$a['1']]['tit'] ?>
+				</th>
+				<?php endif; endforeach ?>
+			</tr>
+			<tr><!-- input novo -->
+				<?php
+					foreach($this->viewVars['fields'] as $_l2 => $_cmp) : 
+					$a = explode('.',$_cmp);
+					$p = $this->viewVars['esquema'][$a['0']][$a['1']];
+					if (!isset($p['edicaoOff'])) :
+				?>
+				<td align='center'>
+				<?php
+					$cmp = $_l.'.'.$a['0'].'.'.$a['1'];
+					$vlr = isset($p['default']) ? $p['default'] : '';
+					echo $this->Html->getInput($cmp,array('value'=>$vlr),$p);
+					if (isset($p['mascara'])) array_push($this->viewVars['onRead'],'$("#'.$this->Html->domId($cmp).'").mask("'.str_replace('#','9',$p['mascara']).'")');
+				?>
+				</td>
+				<?php endif; endforeach ?>
+			</tr>
+			</form>
+			</table>
+			</div><!-- fim novo -->
 
+			<div id='ferramentas' style='width: 100%; min-height: 35px; margin: 0px 0px 5px 0px;'><!-- ferramentas -->
+				
+			<div style='float: left; margin: 0px 10px 0px 0px;'><!-- paginação -->
+			<?= $this->element('paginacao') ?>
+			</div><!-- fim paginação -->
+				
+			<div style='float: left; margin: 0px 10px 0px 0px;'><!-- botoes -->
+			<input type='button' class='btn btn-primary' name='ExibirNovo' id='btNovo' value='Novo' onclick='$("#novo").fadeIn(); $("#ferramentas").fadeOut(); $("#tabela").fadeOut();' />
+			<input type='button' class='btn btn-success' name='SalvarTodos' id='btSalvarT' value='Salvar Todos' onclick='$("#formLista").submit();' />
+			</div><!-- fim botoes -->
+
+			<div style='line-height: 30px;'><!-- filtros -->
+				aqui vai os filtros
+			</div><!-- fim filtros -->
+
+			</div><!-- fim ferrametnas -->
+		</div>
+
+		<div id='tabela' style='min-height: 200px; min-width: 500px;'><!-- tabela -->
 		<table id='tabLista'><!-- linhas -->
 		<form name='formLista' id='formLista' method='post' action='<?= $base.strtolower($module).'/'.strtolower($controller).'/salvar' ?>' >
 		<input type='hidden' name='urlRetorno' value='<?= $urlRetorno ?>' style='width: 300px;' />
@@ -91,9 +89,16 @@
 			#
 			</th>
 
-			<?php foreach($this->viewVars['fields'] as $_l2 => $_cmp) : $a = explode('.',$_cmp); ?>
+			<?php
+			foreach($this->viewVars['fields'] as $_l2 => $_cmp) : 
+			$a = explode('.',$_cmp); 
+			$d = ($params['dir']=='asc') ? 'desc' : 'asc';
+			$l = $base.strtolower($module.'/'.$controller.'/lista/pag:'.$params['pag'].'/ord:'.str_replace('.', '_', $_cmp).'/dir:'.$d);
+			?>
 			<th>
-				<?= $this->viewVars['esquema'][$a['0']][$a['1']]['tit'] ?>
+				<a href='<?= $l ?>'>
+					<?= $this->viewVars['esquema'][$a['0']][$a['1']]['tit'] ?>
+				</a>
 			</th>
 			<?php endforeach ?>
 		</tr>
@@ -142,8 +147,8 @@
 		<?php endforeach ?>
 		</form>
 		</table><!-- fim linhas -->
-		</div>
-	</div>
-</div>
-</div>
-<br /><br /><br /><br />
+		</div><!-- fim tabela -->
+
+	</div><!-- fim esquerda -->
+
+</div><!-- fim lista -->

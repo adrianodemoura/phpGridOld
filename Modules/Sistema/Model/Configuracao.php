@@ -81,4 +81,21 @@ class Configuracao extends SistemaAppModel {
 			'options'	=> array('1'=>'Sim','0'=>'Não')
 		)
 	);
+
+	/**
+	 * Executa código antes de excluir a configuração no banco 
+	 *
+	 * - A configuração não pode ser excluída só alterada
+	 * 
+	 * @return boolean
+	 */
+	public function beforeExclude()
+	{
+		if (isset($this->data['id']) && $this->data['id']==1)
+		{
+			$this->erro = 'A Configuração não pode ser excluída !!!';
+			return false;
+		}
+		return parent::beforeExclude();
+	}
 }

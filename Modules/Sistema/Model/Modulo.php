@@ -76,4 +76,21 @@ class Modulo extends SistemaAppModel {
 		}
 		return parent::beforeSave();
 	}
+
+	/**
+	 * Executa código antes de excluir um módulo no banco
+	 *
+	 * - Módulo SISTEMA não pode ser excluído
+	 * 
+	 * @return boolean
+	 */
+	public function beforeExclude()
+	{
+		if (isset($this->data['id']) && $this->data['id']==1)
+		{
+			$this->erro = 'O Módulo SISTEMA não pode ser excluído !!!';
+			return false;
+		}
+		return parent::beforeExclude();
+	}
 }

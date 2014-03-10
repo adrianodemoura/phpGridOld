@@ -53,8 +53,9 @@ class Perfil extends SistemaAppModel {
 	);
 
 	/**
-	 * Executa código antes da de excluir um perfil no banco
-	 * Perfil administrador não pode ser excluído
+	 * Executa código antes de excluir um perfil no banco
+	 *
+	 * - Perfil ADMINISTRADOR não pode ser excluído
 	 * 
 	 * @return boolean
 	 */
@@ -62,7 +63,7 @@ class Perfil extends SistemaAppModel {
 	{
 		if (isset($this->data['id']) && $this->data['id']==1)
 		{
-			$this->erro = 'O Perfil Administrador não pode ser excluído !!!';
+			$this->erro = 'O Perfil ADMINISTRADOR não pode ser excluído !!!';
 			return false;
 		}
 		return parent::beforeExclude();

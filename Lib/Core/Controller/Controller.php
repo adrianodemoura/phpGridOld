@@ -169,6 +169,7 @@ class Controller {
 	/**
 	 * Redirecion o fluxo da request
 	 * 
+	 * @param 	string 	$mod 	Módulo
 	 * @param	string	$con	Controller
 	 * @param	string	$act	Action
 	 * @param	string	$plug	Plugin
@@ -191,6 +192,8 @@ class Controller {
 
 	/**
 	 * Exibe a tela de listagem do cadastro corrente
+	 * 
+	 * - Os parâmetros pag (página), ord (ordem), dir(direção) são OBRIGATÓRIOS, caso contrário o sistema vai criá-los automaticamente.
 	 *
 	 * @param 	array 	
 	 * @return 	void
@@ -198,6 +201,18 @@ class Controller {
 	public function lista()
 	{
 		$modelClass 		= $this->modelClass;
+
+		// se não tem parâmetros, cria-os-os ...
+		if (	!isset($this->params['pag'])
+			||	!isset($this->params['ord'])
+			||  !isset($this->params['dir'])
+			)
+		{
+			$params['pag'] = 1;
+			$params['ord'] = $this->$modelClass->getDisplayField();
+			$params['dir'] = 'asc';
+			$this->redirect(strtolower($this->module),strtolower($this->controller),'lista',$params);
+		}
 
 		$params 			= array();
 		$params['pag'] 		= isset($this->params['pag']) ? $this->params['pag'] : 1;
