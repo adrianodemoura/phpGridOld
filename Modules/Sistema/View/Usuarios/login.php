@@ -6,7 +6,7 @@
 	<br />
 	<center>
 	<!-- <img src='<?= $base ?>img/angu.png' width='130px' /> -->
-	<h1><?= SISTEMA ?></h1>
+	<h1><?= SISTEMA ?> - <span style='color: red;'>beta</span></h1>
 	</center>
 	<br />
 </div>

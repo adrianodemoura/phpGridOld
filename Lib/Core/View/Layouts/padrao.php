@@ -67,9 +67,8 @@ $('#contador').chrony({
 	<div id="cabecalho" class="row">
 	<div id='cab1' class='container-fluid'>
 		<div style='float: left;'>
-			<a href='<?= $base ?>'><?= SISTEMA ?></a>
+			<a href='<?= $base ?>'><?= SISTEMA ?></a> - <span style='color: red;'>beta</span>
 		</div>
-		
 		<div style='float: right;'>
 			<span style='float: left; margin-right: 5px'>sua sessão expira em</span>
 			<span id="contador"></span>
