@@ -1,0 +1,23 @@
+<div id='registro' class="container">
+<?php 
+	foreach($this->data['0'] as $_model => $_arrCmps) : 
+	foreach($_arrCmps as $_cmp => $_vlr) : 
+	$tit = isset($esquema[$_model][$_cmp]['tit']) ? $esquema[$_model][$_cmp]['tit'] : $_cmp;
+?>
+
+	<div>
+
+		<?php 
+			if (!in_array($_cmp,array('id','cidade_id'))) : 
+			$props = isset($esquema[$_model][$_cmp]) ? $esquema[$_model][$_cmp] : array(); 
+		?>
+
+		<label><?= $tit ?></label><?= $se ?>
+		<span><?= $this->Html->getMascara($_vlr,$props); ?></span>
+
+		<?php endif ?>
+
+	</div>
+
+<?php endforeach; endforeach; ?>
+</div>

@@ -1,0 +1,195 @@
+body
+{
+	 background-image: url("../img/bg4.png");
+}
+
+#cabecalho
+{
+	 background-image: url("../img/bg2.png");
+	 color: #fff;
+	 margin-bottom: 5px;
+}
+#cabecalho #cab1
+{
+	height: 40px;
+	line-height: 40px;
+	border-bottom: 2px solid #aaa;
+}
+#cabecalho a
+{
+	color: #fff;
+	letter-spacing: 2px;
+}
+#cabecalho #cab2
+{
+	background-color: #535759;
+	height: 30px;
+	line-height: 30px;
+	font-size: 11px;
+	letter-spacing: 2px;
+}
+#conteudo
+{
+	/*background-color: #fff;*/
+	display: table;
+	min-height: 300px;
+}
+.msgFlashErro
+{
+	color: #fff;
+	background-color: red;
+	text-align: center;
+	font-weight: bold;
+	position: fixed;
+	width: 100%;
+	line-height: 40px;
+	z-index: 1001;
+}
+.msgFlashOk
+{
+	color: #fff;
+	background-color: green;
+	text-align: center;
+	font-weight: bold;
+	position: fixed;
+	width: 100%;
+	line-height: 40px;
+	z-index: 1001;
+}
+
+#sql_dump
+{
+	clear: both;
+	margin: 10px 0px;
+}
+#sql_dump table th
+{
+	text-align: center;
+	background-color: #eee;
+}
+
+#sql_dump table td
+{
+	padding: 3px;
+	background-color: #fff;
+	font-size: 10px;
+}
+
+#registro
+{
+	border: 1px solid #000;
+	padding: 15px 0px 15px 0px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	background-color: #fff;
+}
+#registro label
+{
+	display: block;
+	float: left;
+	text-align: right;
+	margin: 0px 5px 0px 0px;
+	min-width: 120px;
+}
+#lista table
+{
+	background-color: #fff;
+	border-left: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	font-size: 13px;
+}
+
+#lista table tr th,
+#lista table tr td
+{
+	padding: 0px;
+	border-right: 1px solid #ccc;
+	border-top: 1px solid #ccc;
+}
+#lista table tr th
+{
+	text-align: center;
+	background-color: #428BCA;
+	color: #fff;
+}
+#lista table tr td
+{
+	padding: 0px 2px 0px 3px;
+}
+#lista table tr td input
+{
+	border: 0px solid #ccc;
+	padding: 0px 5px 0px 5px;
+}
+
+#lista select
+{
+	border: 0px;
+	background-color: #fff;
+}
+
+#lista .in_nome
+{
+	width: 250px;
+}
+#lista .in_email
+{
+	width: 200px;
+}
+#lista .in_acessos
+{
+	width: 50px;
+	text-align: center;
+}
+#lista .in_celular
+{
+	width: 100px;
+	text-align: center;
+}
+#lista .in_uf
+{
+	width: 30px;
+	text-align: center;
+}
+#lista .in_ultimo_ip,
+#lista .in_senha
+{
+	width: 80px;
+	text-align: center;
+}
+
+#lista .in_cep
+{
+	text-align: center;
+	width: 90px;
+}
+#lista .in_tel1,
+#lista .in_tel2,
+#lista .in_tel3
+{
+	text-align: center;
+	width: 110px;
+}
+
+#lista .in_criado,
+#lista .in_modificado
+{
+	width: 130px;
+	text-align: center;
+}
+#tabLista input:focus,
+#tabNovo input:focus
+{
+	background-color: #fdffaf;
+}
+#lista #btFecNo,
+#lista #btSalvarN
+{
+	display: none;
+}
+
+pre
+{
+	font-size: 10px;
+}

@@ -1,0 +1,39 @@
+body
+{
+	background-image: url("../img/bg.png");
+}
+#cabecalho
+{
+	/*background-image: url("../img/bg3.png");*/
+	background-color: #ddd;
+	line-height: 30px;
+	border-bottom: 2px solid #bbb;
+}
+#cabecalho a
+{
+	color: #aaa;
+	letter-spacing: 2px;
+}
+
+.msgFlashErro
+{
+	color: #fff;
+	background-color: red;
+	text-align: center;
+	font-weight: bold;
+	position: fixed;
+	width: 100%;
+	line-height: 30px;
+	z-index: 1001;
+}
+.msgFlashOk
+{
+	color: #fff;
+	background-color: green;
+	text-align: center;
+	font-weight: bold;
+	position: fixed;
+	width: 100%;
+	line-height: 30px;
+	z-index: 1001;
+}

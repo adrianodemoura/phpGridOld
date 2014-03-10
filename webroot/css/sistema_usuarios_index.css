@@ -1,0 +1,27 @@
+#login
+{
+	background-color: #fff;
+	width: 324px; 
+	margin: 10px auto;
+	padding: 10px 10px 0px 10px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+}
+
+#login #BtEnviar
+{
+	width: 80px;
+}
+
+#login div
+{
+	margin: 10px;
+}
+
+#login #BtEnviar
+{
+	float: left;
+	margin: 0px 10px 0px 0px;
+}
