@@ -233,7 +233,8 @@ class Controller {
 		if (!isset($f['excluir']))
 		{
 			$f['excluir']['tit'] 	= 'Excluir';
-			$f['excluir']['link'] 	= $this->viewVars['base'].strtolower($this->module).'/'.strtolower($this->controller).'/excluir/*id*';
+			$f['excluir']['link'] 	= $this->viewVars['base'].strtolower($this->module).'/'.
+				strtolower($this->controller).'/excluir/id:*id*';
 			$f['excluir']['title'] 	= 'Clique aqui para excluir este registro';
 		}
 		$this->viewVars['ferramentas'] = $f;
@@ -265,6 +266,26 @@ class Controller {
 			$this->setMsgFlash($msg,'msgFlashOk');
 			header('Location: '.$this->viewVars['urlRetorno']);
 			die();
+		}
+	}
+
+	/**
+	 * Exibe a tela de exclusão de um registro
+	 *
+	 * @return void
+	 */
+	public function excluir()
+	{
+		$modelClass = $this->modelClass;
+		if ($this->$modelClass->exclude($this->params))
+		{
+			$this->setMsgFlash('O Registro foi excluído com sucesso ...','msgFlashOk');
+			$this->redirect(strtolower($this->module),strtolower($this->controller),'lista');
+		} else
+		{
+			$msg = !empty($this->$modelClass->erro) ? $this->$modelClass->erro : 'Erro ao tentar excluir registro !!!';
+			$this->setMsgFlash($msg,'msgFlashErro');
+			$this->redirect(strtolower($this->module),strtolower($this->controller),'lista');
 		}
 	}
 }

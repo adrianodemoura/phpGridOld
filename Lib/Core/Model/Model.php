@@ -333,6 +333,38 @@ class Model {
 	}
 
 	/**
+	 * Exclui um registro no banco de dados
+	 *
+	 * @params array 	$params Parâmetros da exclusão, params['tabela'], params['where']
+	 */
+	public function exclude($data=array())
+	{
+		$this->data = $data;
+
+		if (!$this->beforeExclude()) return false;
+
+		$where = '';
+		// dando um loop na data pra criar cada sql
+		foreach($data as $_cmp => $_vlr)
+		{
+			if (!empty($where)) $where .= ' AND ';
+			if (is_numeric($_vlr))
+			{
+				$where .= "$_cmp=$_vlr";
+			} else
+			{
+				$where .= "$_cmp='$_vlr'";
+			}
+		}
+		if (empty($where)) die(debug('Impossível excluir registro sem um filtro !!!'));
+		$sql = 'DELETE FROM '.$this->tabela.' WHERE '.$where;
+		$this->query($sql);
+		$erro = $this->db->errorInfo();
+		if (!empty($erro['1'])) die(debug($erro));
+		return true;
+	}
+
+	/**
 	 * Retorno o campo principal do model, o segundo campo do esquema é considerado como tal campo.
 	 *
 	 * @return 	string 	$field Nome do campo
@@ -585,6 +617,17 @@ class Model {
 				}
 				break;
 		}
+	}
+
+	/**
+	 * Executa código antes da exclusão de um registro no banco de dados
+	 * 
+	 * @param	array	$data	Atributo do Model contendo os valores do model, seguindo o modelo data[campo][valor]
+	 * @return	boolean	Verdadeiro se o método salvar deve continuar
+	 */
+	public function beforeExclude()
+	{
+		return true;
 	}
 
 	/**

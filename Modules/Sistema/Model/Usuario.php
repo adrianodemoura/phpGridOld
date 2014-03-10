@@ -128,6 +128,22 @@ class Usuario extends SistemaAppModel {
 	}
 
 	/**
+	 * Executa código antes da de excluir um usuário no banco
+	 * Usuário administrador não pode ser excluído
+	 * 
+	 * @return boolean
+	 */
+	public function beforeExclude()
+	{
+		if (isset($this->data['id']) && $this->data['id']==1)
+		{
+			$this->erro = 'O Usuário Administrador não pode ser excluído !!!';
+			return false;
+		}
+		return parent::beforeExclude();
+	}
+
+	/**
 	 * Executa código antes da de salvar no banco
 	 * Caso a senha seja passada, a mesma será encriptada
 	 * 

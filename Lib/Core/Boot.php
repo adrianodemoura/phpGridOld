@@ -79,8 +79,11 @@ class Boot {
 			{
 				if ($_l>=3)
 				{
-					$arrTag = explode(':',$_tag);
-					$params[$arrTag['0']] = $arrTag['1'];
+					if (strpos($_tag,':'))
+					{
+						$arrTag = explode(':',$_tag);
+						$params[$arrTag['0']] = $arrTag['1'];
+					} else $params[$_tag] = $_tag;
 				}
 			}
 		} 
