@@ -3,20 +3,16 @@ phpGrid
 
 Php com OO, MVC, Auxiliares, jQuery, Bootstrap e listas.
 
-1 - Requerimentos:
+<b>1 - Requerimentos:</b>
 
-Servidor Web Apache versão 2 ou superior, com módulo rewrite habilitado.
+Servidor Web Apache versão 2 ou superior, com módulo rewrite habilitado.<br />
+Php versão 5 ou superior, Bootstrap e jQjuery já inclusos no CORE.
 
-Php versão 5 ou superior
-
-Bootstrap e jQjuery já inclusos no CORE.
-
-2 - Instalação:
+<b>2 - Instalação:</b>
 
 Copie o código para o diretório do seu servidor Apache.
 
-Corrija o seguintes arquivos:
-
+Corrija o seguintes arquivos:<br />
 * <b>Config/database_default.php</b> PARA <b>Config/database.php</b><br />
 Abra o arquivo e altere o seu banco de dados, caso tenha dificuldades, peça ajuda ao Administrador do Banco de Dados.
 
@@ -30,7 +26,7 @@ email: admin@admin.com.br <br />
 senha: admin
 
 
-3 - Considerações
+<b>3 - Considerações</b>
 
 o phpGrid tem a estrutura e fluxo de requisições do cakePHP, mas a camada de visão foi implementada com o BootStrap e jQuery.
 Se quiser criar um arquivo JS ou CSS para sua action, crie os arquivos dentro do diretório webroot, como no exemplo abaixo:
