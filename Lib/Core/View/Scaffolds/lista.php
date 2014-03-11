@@ -1,7 +1,7 @@
 <?php
 	$this->Html->setHead('js','jquery.maskedinput.min');
 ?>
-<div id='lista' style='min-height: 470px;'>
+<div id='lista' style='display: table; clear: both;'>
 
 	<div style='position: absolute; width: 130px; min-height: 200px;'><!-- menu -->
 	<?php if (isset($linksMenu)) : ?>
@@ -70,7 +70,7 @@
 			<input type='button' class='btn btn-success' name='SalvarTodos' id='btSalvarT' value='Salvar Todos' onclick='$("#formLista").submit();' />
 			</div><!-- fim botoes -->
 
-			<div style='line-height: 30px;'><!-- filtros -->
+			<div style='line-height: 30px; display: table;'><!-- filtros -->
 				aqui vai os filtros
 			</div><!-- fim filtros -->
 

@@ -92,6 +92,10 @@ body
 	margin: 0px 5px 0px 0px;
 	min-width: 120px;
 }
+#lista
+{
+	min-height: 490px;
+}
 #lista table
 {
 	background-color: #fff;
@@ -178,6 +182,10 @@ body
 {
 	width: 130px;
 	text-align: center;
+}
+#tabLista
+{
+	clear: both;
 }
 #tabLista input:focus,
 #tabNovo input:focus
