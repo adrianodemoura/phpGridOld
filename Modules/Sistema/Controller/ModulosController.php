@@ -16,4 +16,16 @@ class ModulosController extends SistemaAppController {
 	 * @var		array
 	 */
 	public $Model = array('Modulo');
+
+	/**
+	 * Configurando a página
+	 *
+	 * @return void
+	 */
+	public function beforeIndex()
+	{
+		$this->viewVars['tituloPagina'] 	= 'Módulos do Sistema '.SISTEMA;
+		$this->viewVars['tituloController'] = 'Módulos';
+		parent::beforeIndex();
+	}
 }
