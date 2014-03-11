@@ -129,7 +129,8 @@ body
 	background-color: #fff;
 }
 
-#lista .in_nome
+#lista .in_nome,
+#lista .in_empresa
 {
 	width: 250px;
 }

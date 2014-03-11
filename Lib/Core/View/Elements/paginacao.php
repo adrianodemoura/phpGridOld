@@ -14,12 +14,12 @@
 ?>
 <ul class="pagination" style='margin: 0px; padding: 0px;'>
   <li><a href="<?= $link1 ?>">&laquo;</a></li>
-  <li><a href="<?= $linkA ?>"> <  </a></li>
+  <li><a href="<?= $linkA ?>">&lsaquo;</a></li>
 
   <div style='float: left; line-height: 26px; margin: 2px 2px 0px 2px; '>
   <input type='text' disabled='disabled' value='<?= $this->viewVars['paginacao']['pag'] ?>' style='border: 1px solid #ccc; width: 40px; text-align: center;' />
   </div>
 
-  <li><a href="<?= $linkP ?>"> > </a></li>
+  <li><a href="<?= $linkP ?>">&rsaquo;</a></li>
   <li><a href="<?= $linkU ?>">&raquo;</a></li>
 </ul>

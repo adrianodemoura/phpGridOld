@@ -62,10 +62,10 @@ class Cidade extends SistemaAppModel {
 	 * 
 	 * @return boolean
 	 */
-	public function beforeExclude()
+	/*public function beforeExclude()
 	{
 		$this->erro = 'Nenhuma Cidade pode ser excluída !!!';
 		return false;
 		//return parent::beforeExclude();
-	}
+	}*/
 }

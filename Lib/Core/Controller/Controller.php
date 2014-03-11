@@ -200,7 +200,17 @@ class Controller {
 	 */
 	public function lista()
 	{
-		$modelClass 		= $this->modelClass;
+		$modelClass = $this->modelClass;
+
+		// verificando a sessão de paginação, se for de outro módulo.controller, zera ela.
+		if (isset($_SESSION['Pagi']))
+		{
+			if (!isset($_SESSION['Pagi'][$this->module][$this->controller]))
+			{
+				unset($_SESSION['Pagi']);
+			}
+		}
+		
 
 		// se não tem parâmetros, cria-os-os ...
 		if (	!isset($this->params['pag'])
@@ -208,11 +218,14 @@ class Controller {
 			||  !isset($this->params['dir'])
 			)
 		{
-			$params['pag'] = 1;
+			$params['pag'] = isset($_SESSION['Pagi'][$this->module][$this->controller]['pag']) ? $_SESSION['Pagi'][$this->module][$this->controller]['pag'] : 1;
 			$params['ord'] = $this->$modelClass->getDisplayField();
 			$params['dir'] = 'asc';
 			$this->redirect(strtolower($this->module),strtolower($this->controller),'lista',$params);
 		}
+
+		// salvando na sessão
+		$_SESSION['Pagi'][$this->module][$this->controller]['pag'] = $this->params['pag'];
 
 		$params 			= array();
 		$params['pag'] 		= isset($this->params['pag']) ? $this->params['pag'] : 1;
