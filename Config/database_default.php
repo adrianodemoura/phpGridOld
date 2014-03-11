@@ -71,7 +71,7 @@ class Database_Config {
 		$this->default = $this->$banco;
 
 		// obriga todos os models a usar database produção
-		if (DESENVOLVIMENTO=='PRODUÇÃO')
+		if (AMBIENTE=='PRODUÇÃO')
 		{
 			$this->default = $this->producao;
 		}
