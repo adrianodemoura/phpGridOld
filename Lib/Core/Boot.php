@@ -51,6 +51,22 @@ class Boot {
 	 */
 	public function render()
 	{
+		header('Content-Type: text/html; charset=utf-8');
+
+		// fuso-horário
+		date_default_timezone_set('America/Sao_Paulo');
+
+		// exibindo todos os erros
+		error_reporting(E_ALL);
+		ini_set('display_errors', 1);
+
+		// incluindo bootstrap
+		require_once(APP.'Config/bootstrap.php');
+
+		// sessão
+		session_name(SESSAO); 
+		session_start();
+
 		// configurando, módulo, controler, action e parâmetros
 		$_url 	= explode('/',$_SERVER['REQUEST_URI']);
 		$url 	= array();

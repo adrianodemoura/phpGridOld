@@ -6,7 +6,10 @@
 	<br />
 	<center>
 	<!-- <img src='<?= $base ?>img/angu.png' width='130px' /> -->
-	<h1><?= SISTEMA ?> - <span style='color: red;'>beta</span></h1>
+	<h1>
+		<?= SISTEMA ?>
+		<?php if (AMBIENTE!='PRODUÇÃO') : ?> (<span style='color: red; font-size: 18px;'><?= AMBIENTE ?></span>)<?php endif ?>
+	</h1>
 	</center>
 	<br />
 </div>

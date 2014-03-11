@@ -67,7 +67,8 @@ $('#contador').chrony({
 	<div id="cabecalho" class="row">
 	<div id='cab1' class='container-fluid'>
 		<div style='float: left;'>
-			<a href='<?= $base ?>'><?= SISTEMA ?></a> - <span style='color: red;'>beta</span>
+			<a href='<?= $base ?>'><?= SISTEMA ?></a>
+			<?php if (AMBIENTE!='PRODUÇÃO') : ?><span style='color: red; font-size: 20px; letter-spacing: 2px;'>(<?= AMBIENTE ?>)</span><?php endif ?>
 		</div>
 		<div style='float: right;'>
 			<span style='float: left; margin-right: 5px'>sua sessão expira em</span>
