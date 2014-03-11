@@ -20,6 +20,18 @@ class ConfiguracoesController extends SistemaAppController {
 	public $Model = array('Configuracao');
 
 	/**
+	 * Configurando a página
+	 *
+	 * @return void
+	 */
+	public function beforeIndex()
+	{
+		$this->viewVars['tituloPagina'] 	= 'Configurações do Sistema '.SISTEMA;
+		$this->viewVars['tituloController'] = 'Configurações';
+		parent::beforeIndex();
+	}
+
+	/**
 	 * Salva o registro de configração no banco de dados
 	 * 
 	 * - Altera o valor da sessão sql_dump
