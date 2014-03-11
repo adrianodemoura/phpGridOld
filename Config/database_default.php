@@ -48,7 +48,7 @@ class Database_Config {
 	 * @var		array
 	 * @access	public
 	 */
-	public $test = array
+	public $producao = array
 	(
 		'driver'	=> 'mysql',
 		'persistent'=> false,
