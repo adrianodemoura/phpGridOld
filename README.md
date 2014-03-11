@@ -3,21 +3,6 @@ phpGrid
 
 Php com OO, MVC, Auxiliares, jQuery, Bootstrap e listas.
 
-1 - Considerações
-
-o phpGrid tem a estrutura e fluxo de requisições do cakePHP, mas a camada de visão foi implementada com o BootStrap e jQuery.
-Se quiser criar um arquivo JS ou CSS para sua action, crie os arquivos dentro do diretório webroot, como no exemplo abaixo:
-
-APP/webroot/js/module_controller_action.js
-
-APP/webroot/css/module_controller_action.css
-
-dentro da view execute:
-
-<?php $this->head('css','action'); ?>
-
-* troque module pelo nome do módulo, controller pelo nome do controller e action pelo nome da action.
-
 1 - Requerimentos:
 
 Servidor Web Apache versão 2 ou superior, com módulo rewrite habilitado.
@@ -44,3 +29,20 @@ Abra o arquivo e configura as opções do ambiente, caso tenha dificuldades, pe�
 email: admin@admin.com.br <br />
 senha: admin
 
+
+3 - Considerações
+
+o phpGrid tem a estrutura e fluxo de requisições do cakePHP, mas a camada de visão foi implementada com o BootStrap e jQuery.
+Se quiser criar um arquivo JS ou CSS para sua action, crie os arquivos dentro do diretório webroot, como no exemplo abaixo:
+
+APP/webroot/js/module_controller_action.js
+
+APP/webroot/css/module_controller_action.css
+
+dentro da view execute:
+
+<?php $this->head('css','action'); ?>
+
+* troque module pelo nome do módulo, controller pelo nome do controller e action pelo nome da action.
+
+Se tem alguma outra dificuldade LEIA O CÓDIGO, se titver alguma dificuldade me contacte pelo e-mail adrianodemoura@gmail.com
