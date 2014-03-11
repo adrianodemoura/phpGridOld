@@ -24,7 +24,7 @@ email: admin@admin.com.br <br />
 senha: admin
 
 
-<b>3 - Considerações</b><br />
+<b>3 - Considerações:</b><br />
 O phpGrid tem a estrutura e fluxo de requisições do cakePHP, mas a camada de visão foi implementada com o <b>BootStrap</b> e <b>jQuery</b>.
 Se quiser criar um arquivo JS ou CSS para sua action, crie os arquivos dentro do diretório webroot, como no exemplo abaixo:
 
