@@ -201,6 +201,7 @@ class Controller {
 	public function lista()
 	{
 		$modelClass = $this->modelClass;
+		$params 	= array();
 
 		// verificando a sessão de paginação, se for de outro módulo.controller, zera ela.
 		if (isset($_SESSION['Pagi']))
@@ -226,11 +227,22 @@ class Controller {
 		// salvando na sessão
 		$_SESSION['Pagi'][$this->module][$this->controller]['pag'] = $this->params['pag'];
 
-		$params 			= array();
+		// configurando os parâmetros pela sessão
+		if (isset($_SESSION['Filtros'][$this->module][$this->controller]))
+		{
+			foreach($_SESSION['Filtros'][$this->module][$this->controller] as $_cmp => $_vlr)
+			{
+				if (!empty($_vlr)) $params['where'][$_cmp] = $_vlr;
+			}
+		}
+
+		// recuperando os parâmetros da GET
 		$params['pag'] 		= isset($this->params['pag']) ? $this->params['pag'] : 1;
 		$params['pag']		= empty($params['pag']) ? 1 : $params['pag'];
 		$params['order'] 	= isset($this->params['ord']) ? $this->params['ord'] : array();
 		$params['direc'] 	= isset($this->params['dir']) ? $this->params['dir'] : 'ASC';
+
+		// recuperando o data
 		$this->data 		= $this->$modelClass->find('all',$params);
 		if (!isset($this->viewVars['fields']))
 		{
@@ -315,4 +327,20 @@ class Controller {
 			$this->redirect(strtolower($this->module),strtolower($this->controller),'lista');
 		}
 	}
+
+	/**
+	 * Exibe a tela de exclusão de um registro
+	 *
+	 * @return void
+	 */
+	public function set_filtro()
+	{
+		if (isset($_POST['filtro']))
+		{
+			$_SESSION['Filtros'][$this->module][$this->controller] = $_POST['filtro'];
+			unset($_SESSION['Pagi']);
+		}
+		$this->redirect(strtolower($this->module.'/'.$this->controller.'/lista'));
+	}
+
 }

@@ -16,4 +16,20 @@ class CidadesController extends SistemaAppController {
 	 * @var		array
 	 */
 	public $Model = array('Cidade');
+
+	/**
+	 * Exibe a lista de cidades
+	 *
+	 * @return void
+	 */
+	public function lista()
+	{
+		$est = array();
+		$res = $this->Cidade->query('SELECT DISTINCT uf FROM cidades ORDER BY uf');
+		foreach ($res as $_l => $_a)  $est[$_a['uf']] = $_a['uf'];
+		$filtros['uf']['empty'] 	= '-- Todos Estados --';
+		$filtros['uf']['options'] 	= $est;
+		$this->viewVars['filtros'] 	= $filtros;
+		parent::lista();
+	}
 }

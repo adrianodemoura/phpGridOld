@@ -68,4 +68,16 @@ class Cidade extends SistemaAppModel {
 		return false;
 		//return parent::beforeExclude();
 	}*/
+
+	/**
+	 * Retorna uma lista, não duplicada, de estados
+	 * 
+	 * @return boolean
+	 */
+	/*public function getEstados()
+	{
+		$estados = $this->find('list',$params);
+		debug($estados);
+		return $estados;
+	}*/
 }

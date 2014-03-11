@@ -70,11 +70,34 @@
 			<input type='button' class='btn btn-success' name='SalvarTodos' id='btSalvarT' value='Salvar Todos' onclick='$("#formLista").submit();' />
 			</div><!-- fim botoes -->
 
-			<div style='line-height: 30px; display: table;'><!-- filtros -->
-				aqui vai os filtros
-			</div><!-- fim filtros -->
-
 			</div><!-- fim ferrametnas -->
+
+			<?php if (isset($filtros)) : ?>
+			<div id='filtros'>
+				<div style='width: 22px; text-align: center;'><img src='<?= $base ?>img/bt_filtro.png' title='filtros' >
+				</div>
+				<form name='formFiltro' id='formFiltro' method='post' action='<?= $base.strtolower($module).'/'.strtolower($controller).'/set_filtro' ?>' >
+				<?php 
+					foreach($filtros as $_cmp => $_arrProp) : 
+					$_arrProp['empty'] = isset($_arrProp['empty']) ? $_arrProp['empty'] : '-- Escolha um Filtro --';
+					array_push($this->viewVars['onRead'], '$("#Filtro'.ucfirst($_cmp).'").click(function() { this.form.submit(); })');
+				?>
+					<div>
+					<select name='filtro[<?= $_cmp ?>]' id='Filtro<?= ucfirst($_cmp) ?>'>
+						<option value=''><?= $_arrProp['empty'] ?></option>
+						<?php 
+							foreach($_arrProp['options'] as $_vlr => $_show) : 
+							$s = isset($_SESSION['Filtros'][$module][$controller][$_cmp]) ? $_SESSION['Filtros'][$module][$controller][$_cmp] : '';
+							if ($_vlr==$s) $s = 'selected="selected"';
+						?>
+						<option <?= $s ?> value='<?= $_vlr ?>'><?= $_show ?></option>
+						<?php endforeach ?>
+					</select>
+					</div>
+				<?php endforeach ?>
+				</form>
+			</div>
+		<?php endif ?>
 		</div>
 
 		<div id='tabela' style='min-height: 200px; min-width: 500px;'><!-- tabela -->
@@ -84,7 +107,7 @@
 		<?php foreach($this->data as $_l => $_arrMods) : ?>
 
 		<?php if (!$_l) : ?>
-		<tr><!-- cabeçalho -->
+		<tr><!-- cabeçalho das linhas -->
 			<th colspan='<?= count($ferramentas); ?>'>
 			#
 			</th>
@@ -104,8 +127,8 @@
 		</tr>
 		<?php endif ?>
 
-		<tr><!-- ferramentas -->
-			<?php
+		<tr><!-- linha a linha -->
+			<?php // loop nas ferramentas
 			foreach($ferramentas as $_fer => $_prop) : 
 			$_prop['title'] = isset($_prop['title']) ? $_prop['title'] : $_fer;
 			$arqBt 			= 'bt_'.$_fer.'.png';
@@ -125,12 +148,12 @@
 			</td>
 			<?php endforeach ?>
 
-			<?php 
+			<?php  // loop nos campos
 				foreach($this->viewVars['fields'] as $_l2 => $_cmp) : 
 				$a = explode('.',$_cmp);
 				$p = $this->viewVars['esquema'][$a['0']][$a['1']];
-				
-				// campos id
+
+				// campos primários
 				foreach($primaryKey as $_l3 => $_cmp3) echo "<input type='hidden' value='".$_arrMods[$a['0']][$_cmp3]."' name='data[".($_l+1)."][".$a['0']."][$_cmp3]' />";
 			?>
 			<td align='center'>

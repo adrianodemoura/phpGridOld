@@ -96,6 +96,10 @@ body
 {
 	min-height: 490px;
 }
+#lista #filtros div
+{
+	float: left;
+}
 #lista table
 {
 	background-color: #fff;
