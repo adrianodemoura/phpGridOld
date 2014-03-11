@@ -1,0 +1,9 @@
+# ignorar todos os diretório e arquivos temporários
+tmp/**/*
+
+# ignorar configurações do banco
+Config/database.php
+
+# ignorar index
+webroot/index.php
+
