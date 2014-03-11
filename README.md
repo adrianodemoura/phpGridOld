@@ -40,8 +40,7 @@ Abra o arquivo e configure o seu banco de dados, caso tenha dificuldades, peça 
 Abra o arquivo e configura as opções do ambiente, caso tenha dificuldades, peça ajuda ao Administrador do Servidor.
 
 
-* Lembre-se do e-mail e senha do usuário padrão:
-
+* Lembre-se do e-mail e senha do usuário padrão:<br />
 email: admin@admin.com.br <br />
 senha: admin
 
