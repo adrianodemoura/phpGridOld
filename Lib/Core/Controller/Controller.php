@@ -210,7 +210,6 @@ class Controller {
 				unset($_SESSION['Pagi']);
 			}
 		}
-		
 
 		// se não tem parâmetros, cria-os-os ...
 		if (	!isset($this->params['pag'])
