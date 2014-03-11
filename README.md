@@ -41,6 +41,7 @@ Abra o arquivo e configura as opções do ambiente, caso tenha dificuldades, pe�
 
 
 * Lembre-se do e-mail e senha do usuário padrão:
+
 email: admin@admin.com.br <br />
 senha: admin
 
