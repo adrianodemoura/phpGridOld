@@ -32,11 +32,11 @@ Copie o código para o diretório do seu servidor Apache.
 
 Corrija o seguintes arquivos:
 
-* <b>Config/database_default.php</b> PARA Config/database.php<br />
+* <b>Config/database_default.php</b> PARA <b>Config/database.php</b><br />
 Abra o arquivo e configure o seu banco de dados, caso tenha dificuldades, peça ajuda ao Administrador do Banco de Dados.
 
 
-* <b>webroot/index_default.php</b> PARA webroot/index.php<br />
+* <b>webroot/index_default.php</b> PARA <b>webroot/index.php</b><br />
 Abra o arquivo e configura as opções do ambiente, caso tenha dificuldades, peça ajuda ao Administrador do Servidor.
 
 
