@@ -31,7 +31,7 @@ Se quiser criar um arquivo JS ou CSS para sua action, crie os arquivos dentro do
 APP/webroot/js/module_controller_action.js<br />
 APP/webroot/css/module_controller_action.css
 
-* troque <b>module</b>b> pelo nome do módulo, <b>controller</b>b> pelo nome do controller e <b>action</b>b> pelo nome da action.
+* troque <b>module</b> pelo nome do módulo, <b>controller</b> pelo nome do controller e <b>action</b> pelo nome da action.
 
 dentro da view execute:
 <?php $this->head('css','action'); ?>
