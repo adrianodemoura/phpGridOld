@@ -24,7 +24,6 @@ COMMENT = 'Tabela que contém todas as cidades do brasil';
 -- Table `perfis`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `perfis` ;
-
 CREATE  TABLE IF NOT EXISTS `perfis` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `nome` VARCHAR(45) NOT NULL ,
@@ -35,9 +34,51 @@ DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
 COMMENT = 'perfis de usuários';
 INSERT INTO perfis (id,nome) VALUES (1,'ADMINISTRADOR');
-INSERT INTO perfis (id,nome) VALUES (2,'MONITOR');
+INSERT INTO perfis (id,nome) VALUES (2,'GERENTE');
 INSERT INTO perfis (id,nome) VALUES (3,'USUARIO');
 INSERT INTO perfis (id,nome) VALUES (4,'VISITANTE');
+
+-- -----------------------------------------------------
+-- Table `regionais`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `regionais` ;
+CREATE  TABLE IF NOT EXISTS `regionais` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `nome` VARCHAR(45) NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `i_nome` (`nome` ASC) )
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'regionais bh';
+INSERT INTO regionais (id,nome) VALUES (1,'BARREIRO');
+INSERT INTO regionais (id,nome) VALUES (2,'CENTRO-SUL');
+INSERT INTO regionais (id,nome) VALUES (3,'LESTE');
+INSERT INTO regionais (id,nome) VALUES (4,'NORDESTE');
+INSERT INTO regionais (id,nome) VALUES (5,'NOROESTE');
+INSERT INTO regionais (id,nome) VALUES (6,'NORTE');
+INSERT INTO regionais (id,nome) VALUES (7,'OESTE');
+INSERT INTO regionais (id,nome) VALUES (8,'PAMPULHA');
+INSERT INTO regionais (id,nome) VALUES (9,'VENDA NOVA');
+
+-- -----------------------------------------------------
+-- Table `bairros`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `bairros` ;
+CREATE  TABLE IF NOT EXISTS `bairros` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `nome` VARCHAR(45) NOT NULL ,
+  `territorio` VARCHAR(3) NOT NULL DEFAULT '',
+  `regional_id` INT NOT NULL DEFAULT 1 ,
+  `cidade_id` INT NOT NULL DEFAULT 2302 ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `i_nome` (`nome` ASC) ,
+  INDEX `i_territorio` (`territorio` ASC) ,
+  INDEX `fk_cidades` (`cidade_id` ASC) )
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'bairros bh';
 
 -- -----------------------------------------------------
 -- Table `usuarios`

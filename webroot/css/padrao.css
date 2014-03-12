@@ -151,6 +151,11 @@ body
 	width: 50px;
 	text-align: center;
 }
+#lista .in_territorio
+{
+	width: 50px;
+	text-align: center;
+}
 #lista .in_celular
 {
 	width: 100px;

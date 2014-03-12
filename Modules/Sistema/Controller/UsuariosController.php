@@ -158,6 +158,13 @@ class UsuariosController extends SistemaAppController {
 					$this->setMsgFlash('Erro ao tentar importar Cidades ...','msgFlashErro');
 					$this->redirect('sistema','usuarios','instalacao');
 				}
+				// importando bairros de bh
+				$arq = APP.'Modules/Sistema/Model/Sql/bairros.csv';
+				if (!$Util->setPopulaTabela($arq,'bairros'))
+				{
+					$this->setMsgFlash('Erro ao tentar importar Bairros ...','msgFlashErro');
+					$this->redirect('sistema','usuarios','instalacao');
+				}
 				$this->setMsgFlash($this->viewVars['msg'],'msgFlashOk');
 				$this->redirect('sistema','usuarios','login');
 			} else

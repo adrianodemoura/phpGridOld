@@ -19,16 +19,18 @@ class SistemaAppController extends Controller {
 	 */
 	public function beforeIndex()
 	{
-		$menu['Usuarios']['tit'] 		= 'Usuários';
-		$menu['Usuarios']['link'] 		= $this->base.'sistema/usuarios';
+		$menu['Bairros']['tit'] 		= 'Bairros';
+		$menu['Bairros']['link'] 		= $this->base.'sistema/bairros';
 		$menu['Cidades']['tit'] 		= 'Cidades';
 		$menu['Cidades']['link'] 		= $this->base.'sistema/cidades';
-		$menu['Perfis']['tit'] 			= 'Perfis';
-		$menu['Perfis']['link'] 		= $this->base.'sistema/perfis';
-		$menu['Modulos']['tit'] 		= 'Módulos';
-		$menu['Modulos']['link'] 		= $this->base.'sistema/modulos';
 		$menu['Configuracoes']['tit'] 	= 'Configurações';
 		$menu['Configuracoes']['link'] 	= $this->base.'sistema/configuracoes';
+		$menu['Modulos']['tit'] 		= 'Módulos';
+		$menu['Modulos']['link'] 		= $this->base.'sistema/modulos';
+		$menu['Perfis']['tit'] 			= 'Perfis';
+		$menu['Perfis']['link'] 		= $this->base.'sistema/perfis';
+		$menu['Usuarios']['tit'] 		= 'Usuários';
+		$menu['Usuarios']['link'] 		= $this->base.'sistema/usuarios';
 
 		$this->viewVars['linksMenu'] 	= $menu;
 		parent::beforeIndex();
