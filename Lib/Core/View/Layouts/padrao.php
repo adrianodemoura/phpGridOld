@@ -91,7 +91,7 @@ $('#contador').chrony({
 	</div>
 	</div><!-- fim cabeçalho -->
 		
-	<div id='conteudo' class="row" style='margin-left: -3px;'>
+	<div id='conteudo' class="container-fluid" style='margin-left: -18px;'>
 		<?= $conteudo; ?>
 
 	</div><!-- fim conteudo -->

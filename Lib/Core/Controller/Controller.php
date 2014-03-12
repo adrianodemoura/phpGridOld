@@ -329,7 +329,7 @@ class Controller {
 				$msg = 'O Registro foi salvo com sucesso ...';
 				if (isset($this->data['1'])) $msg = 'Os Registros foram salvos com sucesso ...';
 				$this->setMsgFlash($msg,'msgFlashOk');
-				//header('Location: '.$this->viewVars['urlRetorno']); die();
+				header('Location: '.$this->viewVars['urlRetorno']); die();
 			}
 		}
 	}
