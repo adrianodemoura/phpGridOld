@@ -262,13 +262,21 @@ class Controller {
 		}
 		$this->viewVars['urlRetorno'] = isset($this->viewVars['urlRetorno']) ? $this->viewVars['urlRetorno'] : $this->viewVars['aqui'];
 
+		// opções para os marcadores
+		$m = isset($this->viewVars['marcadores']) ? $this->viewVars['marcadores'] : array();
+		if (!isset($m['Excluir']))
+		{
+			$m['Excluir'] = $this->base.strtolower($this->module.'/'.$this->controller.'/excluir/');
+		}
+		$this->viewVars['marcadores'] = $m;
+
 		// ferramentas da lista
 		$f = isset($this->viewVars['ferramentas']) ? $this->viewVars['ferramentas'] : array();
-		if (!isset($f['editar']))
+		/*if (!isset($f['editar']))
 		{
-			/*$f['editar']['tit'] 	= 'Editar';
-			$f['editar']['link'] 	= $this->viewVars['base'].strtolower($this->module).'/'.strtolower($this->controller).'/editar/*id*';*/
-		}
+			$f['editar']['tit'] 	= 'Editar';
+			$f['editar']['link'] 	= $this->viewVars['base'].strtolower($this->module).'/'.strtolower($this->controller).'/editar/*id*';
+		}*/
 		if (!isset($f['excluir']))
 		{
 			$f['excluir']['tit'] 	= 'Excluir';
@@ -289,22 +297,40 @@ class Controller {
 	public function salvar()
 	{
 		$modelClass = $this->modelClass;
-		if (!$this->$modelClass->save($this->data))
+		$this->viewVars['urlRetorno'] = isset($_POST['urlRetorno']) ? $_POST['urlRetorno'] : '';
+
+		if (isset($_POST['marcador']) && !empty($_POST['marcador']))
 		{
-			$this->viewVars['msgErro'] = $this->$modelClass->erro;
+			if (isset($_POST['cx']))
+			{
+				foreach($_POST['cx'] as $_ids => $_ok)
+				{
+					
+				}
+				$this->viewVars['dados'] = $_POST['cx'];
+				$msg = 'O Registro aplicados com sucesso ...';
+				//$this->setMsgFlash($msg,'msgFlashOk'); die();
+			} else
+			{
+				$this->viewVars['msgErro'] = 'Nenhum registro foi marcado !!!';
+			}
 		} else
 		{
-			$this->viewVars['msgOk'] = 'Os Registros foram salvos com sucesso !!!';
-			$this->viewVars['dados'] = $this->data;
-		}
-		$this->viewVars['urlRetorno'] = isset($_POST['urlRetorno']) ? $_POST['urlRetorno'] : '';
-		if (!empty($this->viewVars['urlRetorno']))
-		{
-			$msg = 'O Registro foi salvo com sucesso ...';
-			if (isset($this->data['1'])) $msg = 'Os Registros foram salvos com sucesso ...';
-			$this->setMsgFlash($msg,'msgFlashOk');
-			header('Location: '.$this->viewVars['urlRetorno']);
-			die();
+			if (!$this->$modelClass->save($this->data))
+			{
+				$this->viewVars['msgErro'] = $this->$modelClass->erro;
+			} else
+			{
+				$this->viewVars['msgOk'] = 'Os Registros foram salvos com sucesso !!!';
+				$this->viewVars['dados'] = $this->data;
+			}
+			if (!empty($this->viewVars['urlRetorno']))
+			{
+				$msg = 'O Registro foi salvo com sucesso ...';
+				if (isset($this->data['1'])) $msg = 'Os Registros foram salvos com sucesso ...';
+				$this->setMsgFlash($msg,'msgFlashOk');
+				//header('Location: '.$this->viewVars['urlRetorno']); die();
+			}
 		}
 	}
 

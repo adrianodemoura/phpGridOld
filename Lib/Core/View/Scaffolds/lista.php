@@ -68,6 +68,20 @@
 			<div style='float: left; margin: 0px 10px 0px 0px;'><!-- botoes -->
 			<input type='button' class='btn btn-primary' name='ExibirNovo' id='btNovo' value='Novo' onclick='$("#novo").fadeIn(); $("#ferramentas").fadeOut(); $("#tabela").fadeOut();' />
 			<input type='button' class='btn btn-success' name='SalvarTodos' id='btSalvarT' value='Salvar Todos' onclick='$("#formLista").submit();' />
+			
+			<?php if (isset($marcadores)) : 
+				array_push($this->viewVars['onRead'],'$("#cxSel").change(function() 
+				{ $("#marcador").val($(this).val()); $("#formLista").submit(); })');
+			?>
+			
+			<select name='cxSel' id='cxSel' >
+				<option value=''>-- Aplicar aos Marcadores --</option>
+				<?php foreach($marcadores as $_txt => $_link) : ?>
+					<option value='<?= $_link ?>'><?= $_txt ?></option>
+				<?php endforeach ?>
+			</select>
+			
+			<?php endif ?>
 			</div><!-- fim botoes -->
 
 			</div><!-- fim ferrametnas -->
@@ -104,11 +118,12 @@
 		<table id='tabLista'><!-- linhas -->
 		<form name='formLista' id='formLista' method='post' action='<?= $base.strtolower($module).'/'.strtolower($controller).'/salvar' ?>' >
 		<input type='hidden' name='urlRetorno' value='<?= $urlRetorno ?>' style='width: 300px;' />
+		<input type='hidden' name='marcador' value='' id='marcador' style='width: 300px;' />
 		<?php foreach($this->data as $_l => $_arrMods) : ?>
 
 		<?php if (!$_l) : ?>
 		<tr><!-- cabeçalho das linhas -->
-			<th colspan='<?= count($ferramentas); ?>'>
+			<th colspan='<?= count($ferramentas)+1; ?>'>
 			#
 			</th>
 
@@ -128,43 +143,53 @@
 		<?php endif ?>
 
 		<tr><!-- linha a linha -->
+			<td>
+				<?php
+					$ids = '';
+					foreach($primaryKey as $_l3 => $_cmp3) 
+					{
+						if ($_l3) $ids .= ',';
+						$ids .= $_cmp3.'='.$_arrMods[$modelClass][$_cmp3];
+					}
+				?>
+				<input type='checkbox' name='cx[<?= $ids ?>]' id='cx<?= ($_l+1) ?>' />
+			</td>
 			<?php // loop nas ferramentas
 			foreach($ferramentas as $_fer => $_prop) : 
-			$_prop['title'] = isset($_prop['title']) ? $_prop['title'] : $_fer;
-			$arqBt 			= 'bt_'.$_fer.'.png';
-			if (strpos($_prop['link'], '*'))
-			{
-				foreach($primaryKey as $_l2 => $_cmp)
-				{ 
-					$v = $_arrMods[$modelClass][$_cmp];
-					$_prop['link'] = str_replace('*'.$_cmp.'*', $v, $_prop['link']);
+				$_prop['title'] = isset($_prop['title']) ? $_prop['title'] : $_fer;
+				$arqBt 			= 'bt_'.$_fer.'.png';
+				if (strpos($_prop['link'], '*'))
+				{
+					foreach($primaryKey as $_l2 => $_cmp)
+					{ 
+						$v = $_arrMods[$modelClass][$_cmp];
+						$_prop['link'] = str_replace('*'.$_cmp.'*', $v, $_prop['link']);
+					}
 				}
-			}
-			?>
-			<td>
-				<a href='<?= $_prop['link'] ?>'>
-					<img src='<?= $base ?>img/<?= $arqBt ?>' title='<?= $_prop['title'] ?>' /> 
-				</a>
-			</td>
+				?>
+				<td>
+					<a href='<?= $_prop['link'] ?>'>
+						<img src='<?= $base ?>img/<?= $arqBt ?>' title='<?= $_prop['title'] ?>' /> 
+					</a>
+				</td>
 			<?php endforeach ?>
 
-			<?php  // loop nos campos
+			<?php  // loop nos campos para escrever a coluna de cada linha
 				foreach($this->viewVars['fields'] as $_l2 => $_cmp) : 
-				$a = explode('.',$_cmp);
-				$p = $this->viewVars['esquema'][$a['0']][$a['1']];
-
-				// campos primários
-				foreach($primaryKey as $_l3 => $_cmp3) echo "<input type='hidden' value='".$_arrMods[$a['0']][$_cmp3]."' name='data[".($_l+1)."][".$a['0']."][$_cmp3]' />";
+					$a = explode('.',$_cmp);
+					$p = $this->viewVars['esquema'][$a['0']][$a['1']];
+					// campos primários
+					foreach($primaryKey as $_l3 => $_cmp3) echo "<input type='hidden' value='".$_arrMods[$a['0']][$_cmp3]."' name='data[".($_l+1)."][".$a['0']."][$_cmp3]' />";
 			?>
-			<td align='center'>
-				<?php
-					$opcs = array();
-					$opcs['value'] = $_arrMods[$a['0']][$a['1']];
-					$cmp = ($_l+1).'.'.$a['0'].'.'.$a['1'];
-					echo $this->Html->getInput($cmp,$opcs,$p);
-					if (isset($p['mascara']))  array_push($this->viewVars['onRead'],'$("#'.$this->Html->domId($cmp).'").mask("'.str_replace('#','9',$p['mascara']).'")');
-				?>
-			</td>
+				<td align='center'>
+					<?php
+						$opcs = array();
+						$opcs['value'] = $_arrMods[$a['0']][$a['1']];
+						$cmp = ($_l+1).'.'.$a['0'].'.'.$a['1'];
+						echo $this->Html->getInput($cmp,$opcs,$p);
+						if (isset($p['mascara']))  array_push($this->viewVars['onRead'],'$("#'.$this->Html->domId($cmp).'").mask("'.str_replace('#','9',$p['mascara']).'")');
+					?>
+				</td>
 			<?php endforeach ?>
 		</tr>
 		<?php endforeach ?>

@@ -497,14 +497,17 @@ class Model {
 			foreach($where as $_cmp => $_vlr)
 			{
 				if ($l) $sql .= " AND ";
-				$b = strtoupper(substr($_vlr,0,1));
-				switch($b)
+				$b = explode(' ',$_vlr);
+				switch(strtoupper($b['0']))
 				{
-					case 'I':
-					case 'B':
-					case 'N':
-					case 'L':
-						$sql .= $_cmp.$_vlr;
+					case 'IN':
+						$sql .= $_cmp.' IN '.$_vlr;
+					case 'BETWEEN':
+						$sql .= $_cmp.' BETWEEN ('.$_vlr.')';
+					case 'NOT':
+						$sql .= $_cmp.' NOT IN '.$_vlr;
+					case 'LIKE':
+						$sql .= $_cmp." LIKE '%$_vlr%'";
 						break;
 					default:
 						if (is_numeric($_vlr))
