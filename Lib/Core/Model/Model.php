@@ -496,7 +496,11 @@ class Model {
 			$l 		= 0;
 			foreach($where as $_cmp => $_vlr)
 			{
-				if ($l) $sql .= " AND ";
+				if ($l)
+				{
+					$sql  .= " AND ";
+					$sqlC .= " AND ";
+				}
 				$b = explode(' ',$_vlr);
 				switch(strtoupper($b['0']))
 				{

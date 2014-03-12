@@ -285,7 +285,6 @@ class Controller {
 			$f['excluir']['title'] 	= 'Clique aqui para excluir este registro';
 		}
 		$this->viewVars['ferramentas'] = $f;
-
 	}
 
 	/**
@@ -363,8 +362,28 @@ class Controller {
 	{
 		if (isset($_POST['filtro']))
 		{
-			$_SESSION['Filtros'][$this->module][$this->controller] = $_POST['filtro'];
 			unset($_SESSION['Pagi']);
+			$l = 0;
+			foreach($_POST['filtro'] as $_cmp => $_vlr)
+			{
+				/*$vlrAntigo = isset($_SESSION['Filtros'][$this->module][$this->controller][$_cmp]) ? $_SESSION['Filtros'][$this->module][$this->controller][$_cmp] : null;
+				if ($vlrAntigo!=$_vlr) $zerarProximo = $l+1;
+				if ($l && $l==$zerarProximo)
+				{
+					$_vlr 			= null;
+					$zerarProximo 	= 0;
+				}*/
+				
+				if (strlen($_vlr)==0)
+				{
+					unset($_SESSION['Filtros'][$this->module][$this->controller][$_cmp]);
+				} else
+				{
+					$_SESSION['Filtros'][$this->module][$this->controller][$_cmp] = $_vlr;
+				}
+				$l++;
+			}
+			if (!count($_SESSION['Filtros'][$this->module][$this->controller])) unset($_SESSION['Filtros'][$this->module][$this->controller]);
 		}
 		$this->redirect(strtolower($this->module.'/'.$this->controller.'/lista'));
 	}
