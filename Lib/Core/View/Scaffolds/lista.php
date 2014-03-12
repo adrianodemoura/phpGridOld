@@ -99,10 +99,12 @@
 					<div>
 					<select name='filtro[<?= $_cmp ?>]' id='Filtro<?= ucfirst($_cmp) ?>'>
 						<option value=''><?= $_arrProp['empty'] ?></option>
-						<?php 
+						<?php
 							foreach($_arrProp['options'] as $_vlr => $_show) : 
-							$s = isset($_SESSION['Filtros'][$module][$controller][$_cmp]) ? $_SESSION['Filtros'][$module][$controller][$_cmp] : '';
-							if ($_vlr==$s) $s = 'selected="selected"';
+							$s = isset($_SESSION['Filtros'][$module][$controller][$_cmp]) 
+								? $_SESSION['Filtros'][$module][$controller][$_cmp] 
+								: '';
+							if ($_vlr==$s && strlen($s)>0) $s = 'selected="selected"';
 						?>
 						<option <?= $s ?> value='<?= $_vlr ?>'><?= $_show ?></option>
 						<?php endforeach ?>
@@ -123,7 +125,20 @@
 
 		<?php if (!$_l) : ?>
 		<tr><!-- cabeçalho das linhas -->
-			<th colspan='<?= count($ferramentas)+1; ?>'>
+			<th>
+			<input type='checkbox' name='cxAll' id='cxAll' title='clique aqui para selecionar todos'
+				<?php
+				array_push($this->viewVars['onRead'], '$("#cxAll").click(function(event) 
+				{
+					if (this.checked==true)
+						$(".cxLista").each(function() { this.checked = true; });
+					else
+						$(".cxLista").each(function() { this.checked = false; });
+				})');
+			?>
+			/>
+			</th>
+			<th colspan='<?= count($ferramentas); ?>'>
 			#
 			</th>
 
@@ -152,7 +167,7 @@
 						$ids .= $_cmp3.'='.$_arrMods[$modelClass][$_cmp3];
 					}
 				?>
-				<input type='checkbox' name='cx[<?= $ids ?>]' id='cx<?= ($_l+1) ?>' />
+				<input type='checkbox' class='cxLista' name='cx[<?= $ids ?>]' id='cx<?= ($_l+1) ?>' />
 			</td>
 			<?php // loop nas ferramentas
 			foreach($ferramentas as $_fer => $_prop) : 

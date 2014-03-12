@@ -40,6 +40,12 @@ class UsuariosController extends SistemaAppController {
 		,'Usuario.acessos'
 		,'Usuario.senha'
 		,'Usuario.trocar_senha','Usuario.ultimo_ip');
+
+		// filtros
+		$filtros['ativo']['empty'] 	= '-- Todos --';
+		$filtros['ativo']['options']['0'] = 'Não';
+		$filtros['ativo']['options']['1'] = 'Sim';
+		$this->viewVars['filtros'] 	= $filtros;
 		parent::lista();
 	}
 

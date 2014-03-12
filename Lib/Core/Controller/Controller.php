@@ -232,7 +232,7 @@ class Controller {
 		{
 			foreach($_SESSION['Filtros'][$this->module][$this->controller] as $_cmp => $_vlr)
 			{
-				if (!empty($_vlr)) $params['where'][$_cmp] = $_vlr;
+				if (strlen($_vlr)>0) $params['where'][$_cmp] = $_vlr;
 			}
 		}
 
