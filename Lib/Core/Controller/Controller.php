@@ -307,7 +307,7 @@ class Controller {
 					
 				}
 				$this->viewVars['dados'] = $_POST['cx'];
-				$msg = 'O Registro aplicados com sucesso ...';
+				$msg = 'Os Registros foram aplicados com sucesso ...';
 				//$this->setMsgFlash($msg,'msgFlashOk'); die();
 			} else
 			{
@@ -328,7 +328,7 @@ class Controller {
 				$msg = 'O Registro foi salvo com sucesso ...';
 				if (isset($this->data['1'])) $msg = 'Os Registros foram salvos com sucesso ...';
 				$this->setMsgFlash($msg,'msgFlashOk');
-				header('Location: '.$this->viewVars['urlRetorno']); die();
+				//header('Location: '.$this->viewVars['urlRetorno']); die();
 			}
 		}
 	}

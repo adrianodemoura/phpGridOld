@@ -210,7 +210,7 @@
 		<?php endforeach ?>
 		</form>
 		</table><!-- fim linhas -->
-		<div style='margin: 0px 0px 0px 12px; font-size: 10px;'>
+		<div style='margin: 0px 0px 0px 12px; font-size: 14px;'>
 			Total de registros: <?= number_format($paginacao['tot'],0,',','.'); ?>
 		</div>
 		</div><!-- fim tabela -->

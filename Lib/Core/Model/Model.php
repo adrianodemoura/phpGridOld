@@ -176,6 +176,7 @@ class Model {
 				die("<center>!!</center>");
 			}
 			//foreach(PDO::getAvailableDrivers() as $d) echo $d.'<br />';
+			$this->setEsquema();
 		}
 	}
 
@@ -187,6 +188,7 @@ class Model {
 	 */
 	public function save($data=array())
 	{
+		$this->open();
 		$sqls	= array();
 		$sqlTi 	= 'INSERT';
 		$sqlUp 	= '';
@@ -250,7 +252,6 @@ class Model {
 					break;
 			}
 		}
-		$this->open();
 		try
 		{
 			$this->db->beginTransaction();
@@ -407,9 +408,6 @@ class Model {
 		$pag	= isset($params['pag']) 	? $params['pag'] 	: 0;
 		$pagT	= isset($params['pagT']) 	? $params['pagT'] 	: 20;
 		$ali1	= isset($this->alias) ? $this->alias : $this->name;
-
-		// completando o esquema
-		$this->setEsquema($tabela);
 
 		// verificando os campos
 		switch($tipo)
@@ -649,7 +647,6 @@ class Model {
 	 */
 	public function beforeSave()
 	{
-		$this->setEsquema();
 		$_data 	= array();
 		$m		= isset($this->esquema['modificado']) ? true : false;
 		foreach($this->data as $_l => $_arrMods)
