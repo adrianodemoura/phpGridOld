@@ -172,4 +172,20 @@ class Html {
 				break;
 		}
 	}
+
+	/**
+	 * Retorna o primeiro campo de retorno de um relacionamento
+	 * 
+	 * @param	array	$p	Configuração do relacionamento, veja mais no model como é configurado.
+	 * @return	string	$field	Nome do campo
+	 */
+	public function getFieldRel($p=array())
+	{
+		$field = '';
+		foreach($p as $_rel => $_arrProp)
+		{
+			foreach($_arrProp['fields'] as $_l => $_cmp) if (empty($field) && !in_array($_cmp,array('id'))) $field = $_rel.'_'.$_cmp;
+		}
+		return $field;
+	}
 }

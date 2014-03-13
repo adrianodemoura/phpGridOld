@@ -438,42 +438,43 @@ class Model {
 		}
 
 		// início da sql
-		$cmps = '';
-		$join = array();
-		$belongs = array();
+		$cmps 		= '';
+		$join 		= array();
+		$belongs 	= array();
 		foreach($fields as $_l => $_cmp)
 		{
 			$nome = strpos($_cmp,'.') ? explode('.',$_cmp) : ucfirst(strtolower($_cmp));
 			if (is_array($nome)) $nome = $nome['1'];
 			if ($_l) $cmps .= ', ';
 			$cmps .= $_cmp.' AS '.str_replace('.','_',$_cmp);
-		}
+			$a = explode('.',$_cmp);
+			$c = $a['1'];
 
-		// verificando o left join
-		if (!$this->belongsToOff && isset($this->belongsTo))
-		{
-			foreach($this->belongsTo as $_model => $_arrProp)
+			// se é pra pegar todos os campos, pega relacionamentos também
+			if ($tipo=='all')
 			{
-				require_once('Model/'.$_model.'.php');
-				$belo 	= new $_model();
-				if (isset($belo->esquema)) $this->outrosEsquemas[$_model] = $belo->esquema;
-				$tabB	= $belo->tabela;
-				$aliB	= (isset($belo->alias)) ? $belo->alias : $tabB;
-				$keyB	= (isset($_arrProp['key'])) ? $_arrProp['key'] : 'id';
-				$aliA 	= (isset($this->alias)) ? $this->alias : $this->name;
-				$cmpA 	= $_arrProp['foreignKey'];
-				$jSel	= "LEFT JOIN $tabB $aliB ON $aliB.$keyB = $aliA.$cmpA";
-				foreach($_arrProp['fields'] as $_l => $_cmp)
+				// belongsTo
+				if (isset($this->esquema[$c]['belongsTo']))
 				{
-					$cmps .= ', '.$_model.'.'.$_cmp.' AS '.$_model.'_'.$_cmp;
+					foreach($this->esquema[$c]['belongsTo'] as $_model => $_arrProp)
+					{
+						require_once('Model/'.$_model.'.php');
+						$belo 	= new $_model();
+						if (isset($belo->esquema)) $this->outrosEsquemas[$_model] = $belo->esquema;
+						$tabB	= $belo->tabela;
+						$aliB	= $_model;
+						$keyB	= (isset($_arrProp['key'])) ? $_arrProp['key'] : 'id';
+						$aliA 	= (isset($this->alias)) ? $this->alias : $this->name;
+						$cmpA 	= $c;
+						$jSel	= "LEFT JOIN $tabB $aliB ON $aliB.$keyB = $aliA.$cmpA";
+						foreach($_arrProp['fields'] as $_l2 => $_cmp2)
+						{
+							$cmps .= ', '.$_model.'.'.$_cmp2.' AS '.$_model.'_'.$_cmp2;
+						}
+						array_push($join,$jSel);
+					}
 				}
-				array_push($join,$jSel);
 			}
-		}
-
-		// verificando o left join
-		if (!$this->habtmOff)
-		{
 		}
 
 		// iniciando a sql

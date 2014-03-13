@@ -78,7 +78,16 @@ class Usuario extends SistemaAppModel {
 		),
 		'cidade_id'	=> array
 		(
-			'tit'	=> 'Cidade',
+			'tit'		=> 'Cidade',
+			'belongsTo'	=> array
+			(
+				'Cidade'	=> array
+				(
+					'key'			=> 'id',
+					'fields'		=> array('nome','uf'),
+					'order'			=> array('nome')
+				),
+			),
 		),
 		'ultimo_ip'	=> array
 		(
@@ -93,23 +102,6 @@ class Usuario extends SistemaAppModel {
 		'ultimo_acesso'	=> array
 		(
 			'tit'		=> 'Último Acesso',
-		),
-	);
-
-	/**
-	 * Relacionamento 1:n
-	 * 
-	 * @var		array
-	 * @access	public
-	 */
-	public $belongsTo	= array
-	(
-		'Cidade'			=> array
-		(
-			'foreignKey'	=> 'cidade_id',
-			'key'			=> 'id',
-			'fields'		=> array('nome','uf'),
-			'order'			=> array('nome')
 		),
 	);
 

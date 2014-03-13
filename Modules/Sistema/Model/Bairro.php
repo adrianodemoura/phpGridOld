@@ -57,10 +57,52 @@ class Bairro extends SistemaAppModel {
 		'regional_id'		=> array
 		(
 			'tit'	=> 'RegionalId',
+			'belongsTo'	=> array
+			(
+				'Regional'			=> array
+				(
+					'key'			=> 'id',
+					'fields'		=> array('id','nome'),
+					'order'			=> array('nome')
+				),
+			)
 		),
 		'cidade_id'	=> array
 		(
 			'tit'	=> 'CidadeId',
+			'belongsTo' => array
+			(
+				'Cidade'			=> array
+				(
+					'key'			=> 'id',
+					'fields'		=> array('nome','uf'),
+					'order'			=> array('nome')
+				),
+			),
 		)
 	);
+
+	/**
+	 * Relacionamento 1:n
+	 * 
+	 * @var		array
+	 * @access	public
+	 */
+	/*public $belongsTo	= array
+	(
+		'Cidade'			=> array
+		(
+			'foreignKey'	=> 'cidade_id',
+			'key'			=> 'id',
+			'fields'		=> array('nome','uf'),
+			'order'			=> array('nome')
+		),
+		'Regional'			=> array
+		(
+			'foreignKey'	=> 'regional_id',
+			'key'			=> 'id',
+			'fields'		=> array('id','nome'),
+			'order'			=> array('nome')
+		),
+	);*/
 }

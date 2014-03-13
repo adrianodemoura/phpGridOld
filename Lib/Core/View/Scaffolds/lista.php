@@ -144,13 +144,19 @@
 
 			<?php
 			foreach($this->viewVars['fields'] as $_l2 => $_cmp) : 
+			$c = $_cmp;
 			$a = explode('.',$_cmp); 
 			$d = ($params['dir']=='asc') ? 'desc' : 'asc';
-			$l = $base.strtolower($module.'/'.$controller.'/lista/pag:'.$params['pag'].'/ord:'.str_replace('.', '_', $_cmp).'/dir:'.$d);
+			$p = $this->viewVars['esquema'][$a['0']][$a['1']];
+			$t = $p['tit'];
+			if (isset($p['belongsTo'])) $c = $this->Html->getFieldRel($p['belongsTo']);
+			
+			$l = $base.strtolower($module.'/'.$controller.'/lista/pag:'
+				.$params['pag'].'/ord:'.str_replace('.', '_', $c).'/dir:'.$d);
 			?>
 			<th>
 				<a href='<?= $l ?>'>
-					<?= $this->viewVars['esquema'][$a['0']][$a['1']]['tit'] ?>
+					<?= $t ?>
 				</a>
 			</th>
 			<?php endforeach ?>
@@ -201,6 +207,7 @@
 						$opcs = array();
 						$opcs['value'] = $_arrMods[$a['0']][$a['1']];
 						$cmp = ($_l+1).'.'.$a['0'].'.'.$a['1'];
+						if (isset($p['belongsTo'])) if (isset($filtros[$a['1']]['options'])) $p['options'] = $filtros[$a['1']]['options'];
 						echo $this->Html->getInput($cmp,$opcs,$p);
 						if (isset($p['mascara']))  array_push($this->viewVars['onRead'],'$("#'.$this->Html->domId($cmp).'").mask("'.str_replace('#','9',$p['mascara']).'")');
 					?>
