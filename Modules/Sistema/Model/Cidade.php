@@ -49,10 +49,14 @@ class Cidade extends SistemaAppModel {
 		'nome'		=> array
 		(
 			'tit'	=> 'Nome',
+			'edicaoOff'=>true,
 		),
 		'uf'		=> array
 		(
 			'tit'	=> 'Uf',
+			'filtro'=> true,
+			'optionsFunc'=>'getUfs',
+			'edicaoOff'=>true,
 		)
 	);
 
@@ -62,22 +66,25 @@ class Cidade extends SistemaAppModel {
 	 * 
 	 * @return boolean
 	 */
-	/*public function beforeExclude()
+	public function getUfs()
+	{
+		$arr = array();
+		$sql = 'SELECT DISTINCT uf FROM cidades ORDER BY uf';
+		$res = $this->query($sql);
+		foreach($res as $_l => $_a)  $arr[$_a['uf']] = $_a['uf'];
+		return $arr;
+	}
+
+	/**
+	 * Executa código antes da de excluir uma cidade no banco
+	 * - Nenhuma cidade pode ser excluída
+	 * 
+	 * @return boolean
+	 */
+	public function beforeExclude()
 	{
 		$this->erro = 'Nenhuma Cidade pode ser excluída !!!';
 		return false;
 		//return parent::beforeExclude();
-	}*/
-
-	/**
-	 * Retorna uma lista, não duplicada, de estados
-	 * 
-	 * @return boolean
-	 */
-	/*public function getEstados()
-	{
-		$estados = $this->find('list',$params);
-		debug($estados);
-		return $estados;
-	}*/
+	}
 }

@@ -78,6 +78,13 @@ class Html {
 			$opcs['type'] = 'select';
 		}
 
+		// se é ediçãoOff entõa é disabled
+		if (isset($e['edicaoOff']) && $e['edicaoOff']==true)
+		{
+			$opcs['type'] = 'text';
+			unset($opcs['options']);
+		}
+
 		switch($opcs['type'])
 		{
 			case 'select':
@@ -91,18 +98,18 @@ class Html {
 				$input .= '</select>';
 				break;
 			default:
-			$input = "<input ";
-			$tam = isset($e['length']) 	? $e['length'] : 0;
-			$tam = isset($e['mascara']) ? strlen($e['mascara']) : $tam;
-			if ($tam>0)
-			{
-				$opcs['maxlength'] = $tam;
-			}
-			foreach($opcs as $_tag => $_vlr)
-			{
-				$input .= " $_tag='$_vlr'";
-			}
-			$input .= " />";
+				$input = "<input ";
+				$tam = isset($e['length']) 	? $e['length'] : 0;
+				$tam = isset($e['mascara']) ? strlen($e['mascara']) : $tam;
+				if ($tam>0)
+				{
+					$opcs['maxlength'] = $tam;
+				}
+				foreach($opcs as $_tag => $_vlr)
+				{
+					$input .= " $_tag='$_vlr'";
+				}
+				$input .= " />";
 		}
 		$div = "<div";
 		if (!empty($idDiv)) $div .= " id='$idDiv'";
