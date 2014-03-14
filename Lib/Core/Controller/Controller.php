@@ -224,10 +224,10 @@ class Controller {
 			$this->redirect(strtolower($this->module),strtolower($this->controller),'lista',$params);
 		}
 
-		// salvando na sessão
+		// salvando a página na sessão
 		$_SESSION['Pagi'][$this->module][$this->controller]['pag'] = $this->params['pag'];
 
-		// configurando os parâmetros pela sessão
+		// configurando os parâmetros dos filtros na sessão
 		if (isset($_SESSION['Filtros'][$this->module][$this->controller]))
 		{
 			foreach($_SESSION['Filtros'][$this->module][$this->controller] as $_cmp => $_vlr)
@@ -269,6 +269,17 @@ class Controller {
 			$m['Excluir'] = $this->base.strtolower($this->module.'/'.$this->controller.'/excluir/');
 		}
 		$this->viewVars['marcadores'] = $m;
+
+		// configurando os filtros
+		$filtros = array();
+		foreach($this->$modelClass->esquema as $_cmp => $_arrProp)
+		{
+			if (isset($_arrProp['filtro']) && $_arrProp['filtro']==true)
+			{
+				$filtros[$_cmp]['empty'] 	= '-- todos --';
+			}
+		}
+		$this->viewVars['filtros'] 	= $filtros;
 
 		// ferramentas da lista
 		$f = isset($this->viewVars['ferramentas']) ? $this->viewVars['ferramentas'] : array();

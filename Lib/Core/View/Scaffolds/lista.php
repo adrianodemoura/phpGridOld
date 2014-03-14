@@ -93,7 +93,8 @@
 				<form name='formFiltro' id='formFiltro' method='post' action='<?= $base.strtolower($module).'/'.strtolower($controller).'/set_filtro' ?>' >
 				<?php 
 					foreach($filtros as $_cmp => $_arrProp) : 
-					$_arrProp['empty'] = isset($_arrProp['empty']) ? $_arrProp['empty'] : '-- Escolha um Filtro --';
+					$_arrProp['empty']  = isset($_arrProp['empty']) ? $_arrProp['empty'] : '-- Escolha um Filtro --';
+					$_arrProp['options']= isset($esquema[$modelClass][$_cmp]['options']) ? $esquema[$modelClass][$_cmp]['options'] : array();
 					array_push($this->viewVars['onRead'], '$("#Filtro'.ucfirst($_cmp).'").click(function() { this.form.submit(); })');
 				?>
 					<div>
@@ -207,7 +208,8 @@
 						$opcs = array();
 						$opcs['value'] = $_arrMods[$a['0']][$a['1']];
 						$cmp = ($_l+1).'.'.$a['0'].'.'.$a['1'];
-						if (isset($p['belongsTo'])) if (isset($filtros[$a['1']]['options'])) $p['options'] = $filtros[$a['1']]['options'];
+						//if (isset($p['belongsTo'])) 
+						//if (isset($filtros[$a['1']]['options'])) $opcs['options'] = $filtros[$a['1']]['options'];
 						echo $this->Html->getInput($cmp,$opcs,$p);
 						if (isset($p['mascara']))  array_push($this->viewVars['onRead'],'$("#'.$this->Html->domId($cmp).'").mask("'.str_replace('#','9',$p['mascara']).'")');
 					?>

@@ -53,10 +53,13 @@ class Bairro extends SistemaAppModel {
 		'territorio'	=> array
 		(
 			'tit'	=> 'Território',
+			'filtro'	=> true,
+			'optionsFunc' => 'getTerritorios',
 		),
 		'regional_id'		=> array
 		(
 			'tit'	=> 'RegionalId',
+			'filtro'=> true,
 			'belongsTo'	=> array
 			(
 				'Regional'			=> array
@@ -70,39 +73,34 @@ class Bairro extends SistemaAppModel {
 		'cidade_id'	=> array
 		(
 			'tit'	=> 'CidadeId',
+			'filtro'=> true,
 			'belongsTo' => array
 			(
 				'Cidade'			=> array
 				(
 					'key'			=> 'id',
-					'fields'		=> array('nome','uf'),
-					'order'			=> array('nome')
+					'fields'		=> array('id','nome'),
+					'where'			=> array('uf'=>'MG'),
+					'order'			=> array('nome'),
 				),
 			),
 		)
 	);
 
 	/**
-	 * Relacionamento 1:n
-	 * 
-	 * @var		array
-	 * @access	public
+	 * Retorna uma lista de territŕoios
+	 *
+	 * @param integer 	$idReg 	Id da regional
+	 * @return array
 	 */
-	/*public $belongsTo	= array
-	(
-		'Cidade'			=> array
-		(
-			'foreignKey'	=> 'cidade_id',
-			'key'			=> 'id',
-			'fields'		=> array('nome','uf'),
-			'order'			=> array('nome')
-		),
-		'Regional'			=> array
-		(
-			'foreignKey'	=> 'regional_id',
-			'key'			=> 'id',
-			'fields'		=> array('id','nome'),
-			'order'			=> array('nome')
-		),
-	);*/
+	public function getTerritorios($id_reg=0)
+	{
+		$arr = array();
+		$sql = 'SELECT DISTINCT territorio FROM bairros';
+		if (!empty($id_reg)) $sql .= ' WHERE regional_id='.$id_reg;
+		$sql .= ' ORDER BY territorio';
+		$res = $this->query($sql);
+		foreach($res as $_l => $_a)  $arr[$_a['territorio']] = $_a['territorio'];
+		return $arr;
+	}
 }

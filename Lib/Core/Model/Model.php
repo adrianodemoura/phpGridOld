@@ -441,6 +441,8 @@ class Model {
 		$cmps 		= '';
 		$join 		= array();
 		$belongs 	= array();
+		$cmpsBelongs= array();
+		$cmpsBelongsFunc= array();
 		foreach($fields as $_l => $_cmp)
 		{
 			$nome = strpos($_cmp,'.') ? explode('.',$_cmp) : ucfirst(strtolower($_cmp));
@@ -453,6 +455,11 @@ class Model {
 			// se é pra pegar todos os campos, pega relacionamentos também
 			if ($tipo=='all')
 			{
+				if (isset($this->esquema[$c]['optionsFunc']))
+				{
+					array_push($cmpsBelongsFunc, $c);
+				}
+
 				// belongsTo
 				if (isset($this->esquema[$c]['belongsTo']))
 				{
@@ -472,6 +479,7 @@ class Model {
 							$cmps .= ', '.$_model.'.'.$_cmp2.' AS '.$_model.'_'.$_cmp2;
 						}
 						array_push($join,$jSel);
+						array_push($cmpsBelongs,$c);
 					}
 				}
 			}
@@ -565,8 +573,90 @@ class Model {
 				$data[$_l][$c['0']][$c['1']] = $_vlr;
 			}
 		}
+
+		// recuperando options para belongsTo
+		if (!empty($cmpsBelongs))
+		{
+			foreach($cmpsBelongs as $_l => $_cmp)
+			{
+				$this->esquema[$_cmp]['options'] = $this->getOptions($_cmp);
+			}
+		}
+
+		// recuperando options para belongsToFunc
+		if (!empty($cmpsBelongsFunc))
+		{
+			foreach($cmpsBelongsFunc as $_l => $_cmp)
+			{
+				$func = $this->esquema[$_cmp]['optionsFunc'];
+				$this->esquema[$_cmp]['options'] = $this->$func();
+			}
+		}
+
 		return $this->afterFind($data);
 	}
+
+	/**
+	 * Retorna as opções de campo belongsTo ou Habtm
+	 *
+	 * @params 	$cmp 	string 	$nome do campo
+	 * @params 	$linha 	array 	primeira linha de lista
+	 * @return array
+	 */
+	private function getOptions($cmp='')
+	{
+		$options 	= array();
+		$tipo 		= isset($this->esquema[$cmp]['belongsTo']) ? 'belongsTo' : null;
+		$tipo 		= isset($this->esquema[$cmp]['hbatm']) ? 'hbatm' : $tipo;
+		switch($tipo)
+		{
+			case 'belongsTo':
+				foreach($this->esquema[$cmp]['belongsTo'] as $_mod => $_arrProp)
+				{
+					$alias 	= $_mod;
+					$cmps 	= $_arrProp['fields'];
+					$ordem 	= $_arrProp['order'];
+					if (isset($_arrProp['where']))
+					{
+						$where = '';
+						foreach($_arrProp['where'] as $_cmp => $_vlr)
+						{
+							if (!empty($where)) $where .= ' AND ';
+							if (is_numeric($_vlr))
+								$where .= "$_cmp=".$_vlr;
+							else
+								$where .= "$_cmp='$_vlr'";
+						}
+					}
+					$limite = isset($_arrProp['limit']) ? $_arrProp['limit'] : null;
+
+					require_once('Model/'.$_mod.'.php');
+					$belo 	= new $_mod();
+					$tabela = $belo->tabela;
+					$sql 	= "SELECT ".implode(',', $cmps)." FROM $tabela as $alias";
+					if (!empty($where)) $sql .= " WHERE ".$where;
+					$sql .= " ORDER BY ".implode(',', $ordem);
+					if (!empty($limite)) $sql .= ' LIMIT '.$limite;
+
+					$res = $this->query($sql);
+					foreach ($res as $_l => $_a)
+					{
+						$l = 0;
+						$c1='';
+						$c2='';
+						foreach($cmps as $_l2 => $_cmp)
+						{
+							if (!$l) $c1 = $_a[$_cmp]; else $c2 = $_a[$_cmp];
+							$l++;
+						}
+						$options[$c1] = $c2;
+					}
+				}
+				break;
+		}
+		return $options;
+	}
+
 
 	/**
 	 * Atualiza as propriedades de cada campo da tabela
