@@ -49,6 +49,7 @@ class Usuario extends SistemaAppModel {
 		'ativo'=> array
 		(
 			'tit'		=> 'Ativo',
+			'filtro'	=> true,
 			'options'	=> array('1'=>'Sim','0'=>'Não')
 		),
 		'nome'		=> array
