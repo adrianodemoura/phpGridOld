@@ -1,6 +1,20 @@
 <?php
+	$this->Html->setHead('css','lista');
 	$this->Html->setHead('js','jquery.maskedinput.min');
+	$this->Html->setHead('js','lista');
 ?>
+
+<div id='formAjax' class='container'>
+	<input type='text' name='ajaxPesquisa' id='ajaxPesquisa' style='width: 500px;' />
+	<br />
+	<input type='text' name='ajaxDest' id='ajaxDest' value='' style='width: 700px;'/>
+	<div id='ajaxResposta'>
+	</div>
+	<p>
+		<input type='button' name='btAjaxFechar' value='Fechar' onclick='$("#formAjax").fadeOut(); $("#lista").fadeIn();' />
+	</p>
+</div>
+
 <div id='lista' style='display: table; clear: both;'>
 
 	<div style='position: absolute; width: 130px; min-height: 200px;'><!-- menu -->
@@ -200,17 +214,14 @@
 				foreach($this->viewVars['fields'] as $_l2 => $_cmp) : 
 					$a = explode('.',$_cmp);
 					$p = $this->viewVars['esquema'][$a['0']][$a['1']];
+					$cmp = ($_l+1).'.'.$a['0'].'.'.$a['1'];
+					$p['value'] = $_arrMods[$a['0']][$a['1']];
 					// campos primários
 					foreach($primaryKey as $_l3 => $_cmp3) echo "<input type='hidden' value='".$_arrMods[$a['0']][$_cmp3]."' name='data[".($_l+1)."][".$a['0']."][$_cmp3]' />";
 			?>
 				<td align='center'>
 					<?php
-						$opcs = array();
-						$opcs['value'] = $_arrMods[$a['0']][$a['1']];
-						$cmp = ($_l+1).'.'.$a['0'].'.'.$a['1'];
-						//if (isset($p['belongsTo'])) 
-						//if (isset($filtros[$a['1']]['options'])) $opcs['options'] = $filtros[$a['1']]['options'];
-						echo $this->Html->getInput($cmp,$opcs,$p);
+						echo $this->Html->getInput($cmp,$p,$this->data[$_l]);
 						if (isset($p['mascara']))  array_push($this->viewVars['onRead'],'$("#'.$this->Html->domId($cmp).'").mask("'.str_replace('#','9',$p['mascara']).'")');
 					?>
 				</td>

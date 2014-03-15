@@ -450,12 +450,12 @@ class Model {
 			if ($_l) $cmps .= ', ';
 			$cmps .= $_cmp.' AS '.str_replace('.','_',$_cmp);
 			$a = explode('.',$_cmp);
-			$c = $a['1'];
+			$c = isset($a['1']) ? $a['1'] : $_cmp;
 
 			// se é pra pegar todos os campos, pega relacionamentos também
 			if ($tipo=='all')
 			{
-				if (isset($this->esquema[$c]['optionsFunc']))
+				if (isset($this->esquema[$c]['optionsFunc']) && !isset($this->esquema[$c]['belongsTo']['ajax']))
 				{
 					array_push($cmpsBelongsFunc, $c);
 				}
@@ -479,7 +479,10 @@ class Model {
 							$cmps .= ', '.$_model.'.'.$_cmp2.' AS '.$_model.'_'.$_cmp2;
 						}
 						array_push($join,$jSel);
-						array_push($cmpsBelongs,$c);
+						if (!isset($this->esquema[$c]['belongsTo'][$_model]['ajax']))
+						{
+							array_push($cmpsBelongs,$c);
+						}
 					}
 				}
 			}
@@ -518,7 +521,9 @@ class Model {
 					case 'NOT':
 						$sql .= $_cmp.' NOT IN '.$_vlr;
 					case 'LIKE':
+						$_vlr = trim(str_replace('LIKE','',$_vlr));
 						$sql .= $_cmp." LIKE '%$_vlr%'";
+						$sqlC .= $_cmp." LIKE '%$_vlr%'";
 						break;
 					default:
 						if (is_numeric($_vlr))

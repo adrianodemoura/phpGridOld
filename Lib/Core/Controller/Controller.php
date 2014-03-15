@@ -377,14 +377,6 @@ class Controller {
 			$l = 0;
 			foreach($_POST['filtro'] as $_cmp => $_vlr)
 			{
-				/*$vlrAntigo = isset($_SESSION['Filtros'][$this->module][$this->controller][$_cmp]) ? $_SESSION['Filtros'][$this->module][$this->controller][$_cmp] : null;
-				if ($vlrAntigo!=$_vlr) $zerarProximo = $l+1;
-				if ($l && $l==$zerarProximo)
-				{
-					$_vlr 			= null;
-					$zerarProximo 	= 0;
-				}*/
-				
 				if (strlen($_vlr)==0)
 				{
 					unset($_SESSION['Filtros'][$this->module][$this->controller][$_cmp]);
@@ -394,9 +386,46 @@ class Controller {
 				}
 				$l++;
 			}
-			if (!count($_SESSION['Filtros'][$this->module][$this->controller])) unset($_SESSION['Filtros'][$this->module][$this->controller]);
+			if (!count($_SESSION['Filtros'][$this->module][$this->controller]))
+			{
+				unset($_SESSION['Filtros'][$this->module][$this->controller]);
+			}
 		}
+		$this->viewVars['urlRetorno'] = isset($_POST['urlRetorno']) ? $_POST['urlRetorno'] : $_SERVER['REQUEST_URI'];
 		$this->redirect(strtolower($this->module.'/'.$this->controller.'/lista'));
 	}
 
+	/**
+	 * Retorna uma lista para combobox
+	 * - A linha 0, do resultado, conterá os nomes dos campos
+	 * - O resultado será impresso com os valores de cada campo
+	 * - A pesquisa sempre será pelo método LIKE
+	 * - Por segurança, o limite da pesquisa não vai passar 20
+	 * 
+	 * exemplo de uso:
+	 * http://localhost/phpgrid/sistema/cidades/get_options/pag:2/cmps:Cidade.id,Cidade.nome/Cidade.nome:be/ord:Cidade.nome
+	 * 
+	 * @param	fields	Campos que serão listados
+	 * @param	wher	Campos que serão filtrados campo:valor
+	 * @param	debug	se ligado irá imprimir br no final de cada linha, e ainda o sql_dump
+	 * @return	string
+	 */
+	public function get_options()
+	{
+		$this->layout		= 'ajax';
+		$modelClass 		= $this->modelClass;
+		$params				= array();
+		$params['fields']	= explode(',',$this->viewVars['params']['cmps']);
+		$params['where']	= array();
+		$params['pag']		= isset($this->viewVars['params']['pag']) ? $this->viewVars['params']['pag'] : 1;
+		$params['order']	= isset($this->viewVars['params']['ord']) ? explode(',',$this->viewVars['params']['ord']) : null;
+		foreach($this->viewVars['params'] as $_cmp => $_vlr)
+		{
+			if ($_cmp!='cmps')
+			if (!in_array($_cmp,array('cmps','pag','ord','dir'))) $params['where'][$_cmp] = 'LIKE '.$_vlr;
+		}
+		if (empty($params['where'])) unset($params['where']);
+		$this->viewVars['data'] = $this->$modelClass->find('list',$params);
+		$this->viewVars['debug'] = isset($this->viewVars['debug']) ? $this->viewVars['debug'] : false;
+	}
 }

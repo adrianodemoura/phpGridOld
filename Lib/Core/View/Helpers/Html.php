@@ -54,15 +54,19 @@ class Html {
 	 * 
 	 * @param	string	$cmp	Nome do campo
 	 * @param	array	$e		Esquema do campo, que veio do model
+	 * @param	array	$linha	Linha completa do registro
 	 * @return	$input	string
 	 */
-	public function getInput($cmp='', $opcs=array(), $e=array())
+	public function getInput($cmp='', $e=array(), $linha=array())
 	{
 		$e['type'] 		= isset($e['type']) ? $e['type'] :  'text';
+		$pcs			= array();
 		$opcs['name']  	= $this->domId($cmp,'name');
 		$opcs['id']  	= $this->domId($cmp,'id');
-		$opcs['type']	= isset($opcs['type']) ? $opcs['type'] : $e['type'];
+		$opcs['type']	= isset($opcs['type'])  ? $opcs['type']  : $e['type'];
+		$opcs['value']	= isset($e['value']) ? $e['value'] : '';
 		$a = explode('.',$cmp);
+		$a['2'] = isset($a['2']) ? $a['2'] : $cmp;
 
 		if (isset($e['edicaoOff']) && $e['edicaoOff']==true) $opcs['disabled'] = 'disabled';
 		if (isset($e['options'])) $opcs['options'] = $e['options'];
@@ -72,10 +76,26 @@ class Html {
 		$opcs['class'] 	= (isset($opcs['class'])) 	? $opcs['class'] 	: 'lista_input in_'.strtolower($a['2']);
 		$idDiv			= (isset($opcs['idDiv'])) 	? $opcs['idDiv'] 	: null;
 		if (!empty($idDiv)) unset($opcs['idDiv']);
-		
-		if (isset($opcs['options']))
+
+		if (isset($opcs['options'])) $opcs['type'] = 'select';
+
+		// se o campo é belongsTo
+		if (isset($e['belongsTo']))
 		{
-			$opcs['type'] = 'select';
+			foreach($e['belongsTo'] as $_mod => $_arrProp)
+			{
+				if (isset($_arrProp['ajax']))
+				{
+					$fields = array();
+					foreach($_arrProp['fields'] as $_cmp) array_push($fields,$_mod.'.'.$_cmp);
+					$aj				= explode('_',$cmp);
+					$opcs['type'] 	= 'ajax';
+					$ajax['value'] 	= '';
+					$ajax['cmp']	= 'ajax'.$this->domId($cmp,'id');
+					$ajax['url']	= $this->base.$_arrProp['ajax'].'cmps:'.implode(',',$fields);
+					foreach($linha[$_mod] as $_cmp => $_vlr) $ajax['value'] =$_vlr;
+				}
+			}
 		}
 
 		// se é ediçãoOff entõa é disabled
@@ -96,6 +116,18 @@ class Html {
 					$input .= 'value="'.$_vlr.'">'.$_show.'</option>';
 				}
 				$input .= '</select>';
+				break;
+			case 'ajax':
+				$input = "<input ";
+				$opcs['type'] = 'hidden';
+				foreach($opcs as $_tag => $_vlr) $input .= " $_tag='$_vlr'";
+				$input .= " />";
+				$vlr = '';
+				$input .= "<span id='".$ajax['cmp']."'>".$ajax['value']."</span>";
+				//$input .= "<a target='blank' href='".$ajax['url']."'><img src='".$this->base."img/bt_ajax.png' /></a>";
+				$input .= "<img src='".$this->base."img/bt_ajax.png' class='bt_lista_ajax' 
+					onclick='$(\"#ajaxDest\").val(\"".$ajax['url']."\"); $(\"#lista\").fadeOut(); $(\"#formAjax\").fadeIn();' 
+					/>";
 				break;
 			default:
 				$input = "<input ";

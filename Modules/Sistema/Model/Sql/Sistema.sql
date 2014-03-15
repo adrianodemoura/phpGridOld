@@ -27,16 +27,18 @@ DROP TABLE IF EXISTS `perfis` ;
 CREATE  TABLE IF NOT EXISTS `perfis` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `nome` VARCHAR(45) NOT NULL ,
+  `criado` DATETIME NOT NULL ,
+  `modificado` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `i_nome` (`nome` ASC) )
 ENGINE = MyISAM
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
 COMMENT = 'perfis de usuários';
-INSERT INTO perfis (id,nome) VALUES (1,'ADMINISTRADOR');
-INSERT INTO perfis (id,nome) VALUES (2,'GERENTE');
-INSERT INTO perfis (id,nome) VALUES (3,'USUARIO');
-INSERT INTO perfis (id,nome) VALUES (4,'VISITANTE');
+INSERT INTO perfis (id,nome,criado,modificado) VALUES (1,'ADMINISTRADOR',sysdate(),sysdate());
+INSERT INTO perfis (id,nome,criado,modificado) VALUES (2,'GERENTE',sysdate(),sysdate());
+INSERT INTO perfis (id,nome,criado,modificado) VALUES (3,'USUARIO',sysdate(),sysdate());
+INSERT INTO perfis (id,nome,criado,modificado) VALUES (4,'VISITANTE',sysdate(),sysdate());
 
 -- -----------------------------------------------------
 -- Table `regionais`

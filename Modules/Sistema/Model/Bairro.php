@@ -50,12 +50,6 @@ class Bairro extends SistemaAppModel {
 		(
 			'tit'	=> 'Nome',
 		),
-		'territorio'	=> array
-		(
-			'tit'	=> 'Território',
-			'filtro'	=> true,
-			'optionsFunc' => 'getTerritorios',
-		),
 		'regional_id'		=> array
 		(
 			'tit'	=> 'RegionalId',
@@ -70,18 +64,26 @@ class Bairro extends SistemaAppModel {
 				),
 			)
 		),
-		'cidade_id'	=> array
+		'territorio'	=> array
 		(
-			'tit'	=> 'CidadeId',
-			'filtro'=> true,
-			'belongsTo' => array
+			'tit'			=> 'Território',
+			'filtro'		=> true,
+			'optionsFunc' 	=> 'getTerritorios',
+			'optionsCache'	=> true,
+		),
+		'cidade_id'			=> array
+		(
+			'tit'			=> 'CidadeId',
+			'filtro'		=> false,
+			'belongsTo' 	=> array
 			(
-				'Cidade'			=> array
+				'Cidade'	=> array
 				(
-					'key'			=> 'id',
-					'fields'		=> array('id','nome'),
-					'where'			=> array('uf'=>'MG'),
-					'order'			=> array('nome'),
+					'key'	=> 'id',
+					'fields'=> array('id','nome'),
+					'order'	=> array('nome'),
+					'cache'	=> true,
+					'ajax'	=> 'sistema/cidades/get_options/',
 				),
 			),
 		)

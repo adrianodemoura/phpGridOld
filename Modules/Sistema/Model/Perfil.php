@@ -49,6 +49,14 @@ class Perfil extends SistemaAppModel {
 		'nome'			=> array
 		(
 			'tit'		=> 'Nome',
+		),
+		'criado'			=> array
+		(
+			'tit'		=> 'Criado',
+		),
+		'modificado'	=> array
+		(
+			'tit'		=> 'Modificado',
 		)
 	);
 
