@@ -1,6 +1,8 @@
 <?php 
 	$this->head('css','index');
 	$this->head('js','index');
+	$inputUsu['input'] = array('value'=>'admin@admin.com.br','class'=>'form-control','placeholder'=>'e-mail','autofocus'=>'autofocus');
+	$inputEma['input'] = array('value'=>'admin','type'=>'password','placeholder'=>'senha','class'=>'form-control');
 ?>
 <div class='container-fluid'>
 	<br />
@@ -18,8 +20,8 @@
 	<form id='formLogin' method='post' action='' class="form-horizontal">
 
 
-		<?= $this->Html->getInput('Usuario.email',array('value'=>'admin@admin.com.br','class'=>'form-control','placeholder'=>'e-mail','autofocus'=>'autofocus')); ?>
-		<?= $this->Html->getInput('Usuario.senha',array('value'=>'admin','type'=>'password','placeholder'=>'senha','class'=>'form-control')); ?>
+	<?= $this->Html->getInput('Usuario.email',$inputUsu); ?>
+	<?= $this->Html->getInput('Usuario.senha',$inputEma); ?>
 
 	<div style='line-height: 34px; margin: 20px 0px 0px 0px;'>
 		<?= $this->Html->getInput('btEnviar',array('name'=>'btEnviar','idDiv'=>'divEnviar','type'=>'submit','value'=>'Enviar', 'class'=>'btn btn-large btn-primary')); ?>

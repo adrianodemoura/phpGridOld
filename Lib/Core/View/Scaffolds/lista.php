@@ -4,14 +4,14 @@
 	$this->Html->setHead('js','lista');
 ?>
 
-<div id='formAjax' class='container'>
-	<input type='text' name='ajaxPesquisa' id='ajaxPesquisa' style='width: 500px;' />
-	<br />
-	<input type='text' name='ajaxDest' id='ajaxDest' value='' style='width: 700px;'/>
+<div id='ajaxForm' class='container'>
+	<input type='text' 	 name='ajaxPesq' id='ajaxPesq'  value='' style='width: 500px;' />
+	<input type='hidden' name='ajaxDest' id='ajaxDest'  value='' style='width: 800px;' />
+	<input type='hidden' name='ajaxCmp'  id='ajaxCmp' 	value='' style='width: 800px;' />
 	<div id='ajaxResposta'>
 	</div>
 	<p>
-		<input type='button' name='btAjaxFechar' value='Fechar' onclick='$("#formAjax").fadeOut(); $("#lista").fadeIn();' />
+		<input type='button' name='btAjaxFechar' value='Fechar' onclick='showLista();' />
 	</p>
 </div>
 

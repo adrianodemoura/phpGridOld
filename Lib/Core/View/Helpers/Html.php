@@ -59,12 +59,13 @@ class Html {
 	 */
 	public function getInput($cmp='', $e=array(), $linha=array())
 	{
-		$e['type'] 		= isset($e['type']) ? $e['type'] :  'text';
-		$pcs			= array();
+		$e['type'] 		= isset($e['type'])  ? $e['type'] :  'text';
+		$opcs			= isset($e['input']) ? $e['input'] : array();
 		$opcs['name']  	= $this->domId($cmp,'name');
 		$opcs['id']  	= $this->domId($cmp,'id');
 		$opcs['type']	= isset($opcs['type'])  ? $opcs['type']  : $e['type'];
-		$opcs['value']	= isset($e['value']) ? $e['value'] : '';
+		$opcs['value']	= isset($opcs['value']) ? $opcs['value'] : '';
+		$opcs['value']	= isset($e['value']) ? $e['value'] : $opcs['value'];
 		$a = explode('.',$cmp);
 		$a['2'] = isset($a['2']) ? $a['2'] : $cmp;
 
@@ -87,12 +88,17 @@ class Html {
 				if (isset($_arrProp['ajax']))
 				{
 					$fields = array();
-					foreach($_arrProp['fields'] as $_cmp) array_push($fields,$_mod.'.'.$_cmp);
+					$cmpPes	= '';
+					foreach($_arrProp['fields'] as $_cmp)
+					{
+						array_push($fields,$_mod.'.'.$_cmp);
+						$cmpPes = $_cmp;
+					}
 					$aj				= explode('_',$cmp);
 					$opcs['type'] 	= 'ajax';
 					$ajax['value'] 	= '';
 					$ajax['cmp']	= 'ajax'.$this->domId($cmp,'id');
-					$ajax['url']	= $this->base.$_arrProp['ajax'].'cmps:'.implode(',',$fields);
+					$ajax['url']	= $this->base.$_arrProp['ajax'].'cmps:'.implode(',',$fields).'/ord:'.$_mod.'.'.implode(',',$_arrProp['order']).'/'.$_mod.'.'.$cmpPes.':';
 					foreach($linha[$_mod] as $_cmp => $_vlr) $ajax['value'] =$_vlr;
 				}
 			}
@@ -123,11 +129,12 @@ class Html {
 				foreach($opcs as $_tag => $_vlr) $input .= " $_tag='$_vlr'";
 				$input .= " />";
 				$vlr = '';
-				$input .= "<span id='".$ajax['cmp']."'>".$ajax['value']."</span>";
-				//$input .= "<a target='blank' href='".$ajax['url']."'><img src='".$this->base."img/bt_ajax.png' /></a>";
-				$input .= "<img src='".$this->base."img/bt_ajax.png' class='bt_lista_ajax' 
-					onclick='$(\"#ajaxDest\").val(\"".$ajax['url']."\"); $(\"#lista\").fadeOut(); $(\"#formAjax\").fadeIn();' 
-					/>";
+				$input .= "<div id='".$ajax['cmp']."' style='float: left;'>".$ajax['value']."</div>";
+				$input .= "<img src='".$this->base."img/bt_ajax.png' class='bt_lista_ajax' style='float: right;'
+							onclick='
+								$(\"#ajaxCmp\").val(\"".$opcs['id']."\"); 
+								$(\"#ajaxDest\").val(\"".$ajax['url']."\"); 
+								showAjaxForm();' />";
 				break;
 			default:
 				$input = "<input ";

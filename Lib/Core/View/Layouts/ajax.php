@@ -12,7 +12,7 @@
 			}
 		}
 		if ($debug) echo "<br />";
-		echo "\n";
+		echo "*\n";
 	}
 ?>
 

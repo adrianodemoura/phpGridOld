@@ -118,7 +118,7 @@
 	display: block;
 }
 
-#formAjax
+#ajaxForm
 {
 	min-height: 200px;
 	min-width: 500px;
@@ -131,4 +131,15 @@
 	-moz-border-radius: 6px;
 	-webkit-border-radius: 6px;
 	border-radius: 6px;
+}
+#ajaxTab .ajaxTr
+{
+	background-color: #ddd;
+}
+#ajaxTab .ajaxTd
+{
+	padding: 1px 4px 1px 4px;
+	background-color: #fff;
+	cursor: pointer;
+	font-size: 11px;
 }
