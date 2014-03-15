@@ -143,3 +143,10 @@
 	cursor: pointer;
 	font-size: 11px;
 }
+
+.btAlerta
+{
+	font-weight: bold;
+	text-decoration: blink;
+	background-color:#ff0000 !important;
+}

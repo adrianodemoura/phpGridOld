@@ -203,6 +203,8 @@ class Controller {
 		$modelClass = $this->modelClass;
 		$params 	= array();
 
+		$this->viewVars['tituloPagina'] 	= !empty($this->viewVars['tituloPagina']) ? $this->viewVars['tituloPagina'] : 'Lista de '.$this->controller;
+
 		// verificando a sessão de paginação, se for de outro módulo.controller, zera ela.
 		if (isset($_SESSION['Pagi']))
 		{

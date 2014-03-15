@@ -5,12 +5,11 @@ $(document).ready(function()
 		{
 			var txt			= encodeURIComponent($("#ajaxPesq").val());
 			var url			= $('#ajaxDest').val()+txt;
-			console.log(url);
 			$('#ajaxDest').load(url, function(resposta, status, xhr)
 			{
 				if (status=='success')
 				{
-					$("#ajaxResposta").html("");
+					$("#ajaxResp").html("");
 					var jArrResposta 	= resposta.split('*');
 					var table			= '<table border="1px" id="ajaxTab">'+"\n";
 					$.each(jArrResposta, function(i, linha)
@@ -24,18 +23,16 @@ $(document).ready(function()
 							{
 								if (vlr)
 								{
-									table += "\t<td class='ajaxTd' onclick='setItemAjax("+i+"); showLista();'>"+vlr+"</td>\n";
+									table += "\t<td class='ajaxTd' ";
+									if (o==0) table += "style='display: none;' ";
+									table += "onclick='setItemAjax("+i+"); showLista();'>"+vlr+"</td>\n";
 								}
-							});
-							$.each(tds, function(u, prop)
-							{
-								console.log(prop);
 							});
 							table += "</tr>\n";
 						}
 					});
 					table += "</table>\n";
-					$("#ajaxResposta").html(table);
+					$("#ajaxResp").html(table);
 				}
 			});
 		}
@@ -44,6 +41,7 @@ $(document).ready(function()
 
 function showLista()
 {
+	$("#ajaxResp").html("");
 	$("#ajaxForm").fadeOut(); 
 	$("#lista").fadeIn(); 
 }
@@ -58,7 +56,6 @@ function showAjaxForm()
 function setItemAjax(tr)
 {
 	$("#ajaxPesq").val('');
-	//var ajaxTr		= $("#"+tr+"ajaxTr").children('td').text();
 	var ajaxIdDest 	= $("#ajaxCmp").val();
 	var ajaxSpDest 	= "ajax"+ajaxIdDest;
 	var v = '';
@@ -70,4 +67,5 @@ function setItemAjax(tr)
 		$("#"+ajaxSpDest).html(v);
 		l++;
 	});
+	$("#btSalvarT").toggleClass("btAlerta");
 }

@@ -80,8 +80,8 @@ class Bairro extends SistemaAppModel {
 				'Cidade'	=> array
 				(
 					'key'	=> 'id',
-					'fields'=> array('id','nome'),
-					'order'	=> array('nome'),
+					'fields'=> array('id','uf','nome'),
+					'order'	=> array('nome','uf'),
 					'cache'	=> true,
 					'ajax'	=> 'sistema/cidades/get_options/',
 				),

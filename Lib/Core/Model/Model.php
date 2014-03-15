@@ -546,7 +546,13 @@ class Model {
 			$sql   .= " ORDER BY ";
 			if (is_array($order))
 			{
-				foreach($order as $_cmp) $sql .= $_cmp;
+				$l = 0;
+				foreach($order as $_cmp)
+				{
+					if ($l) $sql .= ' AND ';
+					$sql .= $_cmp;
+					$l++;
+				}
 			} else $sql .= $order;
 			$sql .= ' '.strtoupper($direc);
 		}

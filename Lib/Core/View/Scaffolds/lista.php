@@ -5,14 +5,14 @@
 ?>
 
 <div id='ajaxForm' class='container'>
-	<input type='text' 	 name='ajaxPesq' id='ajaxPesq'  value='' style='width: 500px;' />
-	<input type='hidden' name='ajaxDest' id='ajaxDest'  value='' style='width: 800px;' />
-	<input type='hidden' name='ajaxCmp'  id='ajaxCmp' 	value='' style='width: 800px;' />
-	<div id='ajaxResposta'>
+	<center>
+		<input type='text' 	 name='ajaxPesq' id='ajaxPesq'  value='' style='width: 500px; style="float: left;"' />
+		<input type='hidden' name='ajaxDest' id='ajaxDest'  value='' style='width: 800px;' />
+		<input type='hidden' name='ajaxCmp'  id='ajaxCmp' 	value='' style='width: 800px;' />
+		<input type='button' name='btAjaxFechar' value='Fechar' class='btn btn-default' onclick='showLista();' />
+	</center>
+	<div id='ajaxResp'>
 	</div>
-	<p>
-		<input type='button' name='btAjaxFechar' value='Fechar' onclick='showLista();' />
-	</p>
 </div>
 
 <div id='lista' style='display: table; clear: both;'>
