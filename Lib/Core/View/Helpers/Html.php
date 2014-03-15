@@ -89,16 +89,19 @@ class Html {
 				{
 					$fields = array();
 					$cmpPes	= '';
+					$l = 0;
 					foreach($_arrProp['fields'] as $_cmp)
 					{
 						array_push($fields,$_mod.'.'.$_cmp);
-						$cmpPes = $_cmp;
+						if ($l==1) $cmpPes = $_cmp;
+						$l++;
 					}
 					$aj				= explode('_',$cmp);
 					$opcs['type'] 	= 'ajax';
 					$ajax['value'] 	= '';
 					$ajax['cmp']	= 'ajax'.$this->domId($cmp,'id');
 					$ajax['url']	= $this->base.$_arrProp['ajax'].'cmps:'.implode(',',$fields);
+					$ajax['titPesq']= isset($_arrProp['txtPesquisa']) ? $_arrProp['txtPesquisa'] : '';
 					$ajax['url']	.= '/ord:';
 					foreach($_arrProp['order'] as $_l => $_cmpO)
 					{
@@ -106,7 +109,16 @@ class Html {
 						$ajax['url'] .= $_mod.'.'.$_cmpO;
 					}
 					$ajax['url']	.= '/'.$_mod.'.'.$cmpPes.':';
-					foreach($linha[$_mod] as $_cmp => $_vlr) $ajax['value'] =$_vlr;
+					$l = 0;
+					foreach($linha[$_mod] as $_cmp => $_vlr)
+					{
+						if ($l==1) $ajax['value'] =$_vlr;
+						if ($l>1)
+						{
+							$ajax['value'] .= '/'.$_vlr;
+						}
+						$l++;
+					}
 				}
 			}
 		}
@@ -136,16 +148,11 @@ class Html {
 				foreach($opcs as $_tag => $_vlr) $input .= " $_tag='$_vlr'";
 				$input .= " />";
 				$vlr = '';
-				
-				// excessão para cidade_id
-				if ($a['2']=='cidade_id')
-				{
-					if (isset($linha['Cidade']['uf'])) $ajax['value'] .= '/'.$linha['Cidade']['uf'];
-				}
-				
+
 				$input .= "<div id='".$ajax['cmp']."' style='float: left; margin: 0px 8px 0px 0px;'>".$ajax['value']."</div>";
 				$input .= "<img src='".$this->base."img/bt_ajax.png' class='bt_lista_ajax' style='float: right;'
 							onclick='
+								$(\"#ajaxTit\").html(\"".$ajax['titPesq']."\");
 								$(\"#ajaxCmp\").val(\"".$opcs['id']."\"); 
 								$(\"#ajaxDest\").val(\"".$ajax['url']."\"); 
 								showAjaxForm();' />";

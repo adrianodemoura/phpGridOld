@@ -64,7 +64,7 @@ function setItemAjax(tr)
 	{
 		v = $(this).html();
 		if (l==0) $("#"+ajaxIdDest).val(v);
-		$("#"+ajaxSpDest).html(v);
+		if (l==1) $("#"+ajaxSpDest).html(v);
 		l++;
 	});
 	$("#btSalvarT").toggleClass("btAlerta");

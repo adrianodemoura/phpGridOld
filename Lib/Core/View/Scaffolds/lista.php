@@ -6,6 +6,7 @@
 
 <div id='ajaxForm' class='container'>
 	<center>
+		<h4><span id='ajaxTit'></span></h4>
 		<input type='text' 	 name='ajaxPesq' id='ajaxPesq'  value='' style='width: 500px; style="float: left;"' />
 		<input type='hidden' name='ajaxDest' id='ajaxDest'  value='' style='width: 800px;' />
 		<input type='hidden' name='ajaxCmp'  id='ajaxCmp' 	value='' style='width: 800px;' />
@@ -164,7 +165,11 @@
 			$d = ($params['dir']=='asc') ? 'desc' : 'asc';
 			$p = $this->viewVars['esquema'][$a['0']][$a['1']];
 			$t = $p['tit'];
-			if (isset($p['belongsTo'])) $c = $this->Html->getFieldRel($p['belongsTo']);
+			if (isset($p['belongsTo']))
+			{
+				$c = $this->Html->getFieldRel($p['belongsTo']);
+				$t = substr($t,0,strlen($t)-2);
+			}
 			
 			$l = $base.strtolower($module.'/'.$controller.'/lista/pag:'
 				.$params['pag'].'/ord:'.str_replace('.', '_', $c).'/dir:'.$d);

@@ -427,7 +427,7 @@ class Model {
 					$l = 0;
 					foreach($this->esquema as $_cmp => $_arrProp)
 					{
-						if (!in_array($_cmp,array('id')) && $l<2)
+						if (!in_array($_cmp,array('id')))
 						{
 							array_push($fields,$this->name.'.'.$_cmp);
 							$l++;
