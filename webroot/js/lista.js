@@ -1,6 +1,3 @@
-var ajaxCmpId = '';
-var ajaxCmpNo = '';
-
 $(document).ready(function()
 {
 	$("#ajaxPesq").keyup(
@@ -70,7 +67,7 @@ function setItemAjax(tr)
 	{
 		v = $(this).html();
 		if (l==0) $("#"+ajaxIdDest).val(v);
-		$("#"+ajaxSpDest).val(v);
+		$("#"+ajaxSpDest).html(v);
 		l++;
 	});
 }
