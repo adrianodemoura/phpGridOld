@@ -4,6 +4,3 @@ tmp/**/*
 # ignorar configurações do banco
 Config/database.php
 
-# ignorar index
-webroot/index.php
-
