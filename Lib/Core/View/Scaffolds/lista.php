@@ -4,10 +4,10 @@
 	$this->Html->setHead('js','lista');
 ?>
 
-<div id='ajaxForm' class='container'>
+<div id='ajaxForm'>
 	<center>
 		<h4><span id='ajaxTit'></span></h4>
-		<input type='text' 	 name='ajaxPesq' id='ajaxPesq'  value='' style='width: 500px; style="float: left;"' />
+		<input type='text' 	 name='ajaxPesq' id='ajaxPesq'  value='' style='width: 200px; style="float: left;"' />
 		<input type='hidden' name='ajaxDest' id='ajaxDest'  value='' style='width: 800px;' />
 		<input type='hidden' name='ajaxCmp'  id='ajaxCmp' 	value='' style='width: 800px;' />
 		<input type='button' name='btAjaxFechar' value='Fechar' class='btn btn-default' onclick='showLista();' />
@@ -46,10 +46,12 @@
 					foreach($this->viewVars['fields'] as $_l2 => $_cmp) : 
 					$a = explode('.',$_cmp);
 					$p = $this->viewVars['esquema'][$a['0']][$a['1']];
+					$t = $this->viewVars['esquema'][$a['0']][$a['1']]['tit'];
+					if (isset($p['belongsTo'])) $t = substr($t,0,strlen($t)-2);
 					if (!isset($p['edicaoOff'])) :
 				?>
 				<th>
-					<?= $this->viewVars['esquema'][$a['0']][$a['1']]['tit'] ?>
+					<?= $t ?>
 				</th>
 				<?php endif; endforeach ?>
 			</tr>

@@ -42,14 +42,15 @@ $(document).ready(function()
 function showLista()
 {
 	$("#ajaxResp").html("");
+	$("#tampaTudo").fadeOut();
 	$("#ajaxForm").fadeOut(); 
 	$("#lista").fadeIn(); 
 }
 
 function showAjaxForm()
 {
-	$("#lista").fadeOut(); 
-	$("#ajaxForm").fadeIn(); 
+	$("#ajaxForm").fadeIn();
+	showModal("ajaxForm");
 	$("#ajaxPesq").focus();
 }
 

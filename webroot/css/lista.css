@@ -1,6 +1,7 @@
 #lista
 {
 	min-height: 540px;
+	z-index: 900;
 }
 #lista .bt_lista_ajax
 {
@@ -120,14 +121,17 @@
 
 #ajaxForm
 {
-	min-height: 200px;
-	min-width: 500px;
-	margin: 0px auto;
-	z-index: 1001;
-	display: none;
-	padding: 5px;
+	position:absolute;
+	left:50%;
+	top:50%;
+	width:440px;
+	height:auto;
+	margin-top: -220px;
+	margin-left: -220px;
+	display:none;
+	z-index:9999;
+	padding:20px;
 	background-color: #fff;
-	border: 1px solid #ccc;
 	-moz-border-radius: 6px;
 	-webkit-border-radius: 6px;
 	border-radius: 6px;

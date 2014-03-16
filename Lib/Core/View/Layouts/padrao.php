@@ -20,6 +20,7 @@ var aqui = '<?= $aqui ?>';
 </script>
 
 <script type="text/javascript" src="<?= $base ?>js/jquery.min.js"></script>
+<script type="text/javascript" src="<?= $base ?>js/padrao.js"></script>
 <?php if (isset($tempoOn)) : ?>
 <script src="<?= $base ?>js/jquery.chrony.min.js"></script>
 <?php endif ?>
@@ -53,6 +54,7 @@ $('#contador').chrony({
 </head>
 
 <body>
+
 <div id="corpo" class="container-fluid">
 
 <?php if (!empty($msgFlash)) : ?>
@@ -102,6 +104,7 @@ $('#contador').chrony({
 
 
 </div><!-- fim corpo -->
+<div id='tampaTudo'>adfjasdjfklajsdf</div>
 </body>
 </html>
 <!-- tempo de execução <?= round((microtime(true)-INICIO),6) ?> segundos -->
