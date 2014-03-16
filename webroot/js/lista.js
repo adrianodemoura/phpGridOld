@@ -99,13 +99,13 @@ function setAjaxTab()
 	var txt	= encodeURIComponent($("#ajaxPesq").val());
 	var url	= $('#ajaxDest').val();
 	var pag = $('#ajaxPagi').html();
+	var tem = 0; // tem valor
 	url += txt+'/pag:'+pag
 
 	$('#ajaxDest').load(url, function(resposta, status, xhr)
 	{
 		if (status=='success')
 		{
-			var tem = 0; // tem valor
 			$("#ajaxTo").html("");
 			$("#ajaxResp").html("");
 			var jArrResposta 	= resposta.split('*');
@@ -132,7 +132,7 @@ function setAjaxTab()
 			});
 			table += "</table>\n";
 			
-			if (tem==0) $('#ajaxPagi').html(parseInt(pag)-1);
+			if (tem==0) $('#ajaxPagi').html(parseInt(pag));
 			$("#ajaxResp").html(table);
 		}
 	});
