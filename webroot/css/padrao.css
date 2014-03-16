@@ -106,3 +106,21 @@ pre
 	background-color:#000;
 	display:none;
 }
+.paginacao
+{
+	background-color: #ddd;
+}
+.paginacao span
+{
+	display: block;
+	float: left;
+	text-align: center;
+	margin: 0px 2px 0px 2px 0px;
+	cursor: pointer;
+	border: 1px solid #ccc;
+	padding: 5px 15px 5px 15px;
+}
+.paginacao span:hover
+{
+	background-color: #ddd;
+}

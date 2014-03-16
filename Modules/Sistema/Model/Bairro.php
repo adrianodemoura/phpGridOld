@@ -64,12 +64,21 @@ class Bairro extends SistemaAppModel {
 				),
 			)
 		),
-		'territorio'	=> array
+		'territorio_id'	=> array
 		(
 			'tit'			=> 'Território',
 			'filtro'		=> true,
-			'optionsFunc' 	=> 'getTerritorios',
-			'optionsCache'	=> true,
+			'belongsTo' 	=> array
+			(
+				'Territorio'=> array
+				(
+					'key'	=> 'id',
+					'fields'=> array('id','nome'),
+					'order'	=> array('nome'),
+					'ajax'	=> 'sistema/territorios/get_options/',
+					'txtPesquisa' => 'Digite o nome do território desejável ...',
+				),
+			),
 		),
 		'cidade_id'			=> array
 		(

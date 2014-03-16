@@ -228,7 +228,7 @@ class Boot {
 			unset($_SESSION['msgFlash']);
 		}
 
-		// incluindo o conteúdo
+		// incluindo a view 
 		$conteudo = '';
 		$arq = 'Modules/'.$module.'/View/'.$viewPath.'/'.$view.'.php';
 		if (!file_exists(APP.$arq))

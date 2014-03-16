@@ -64,18 +64,33 @@ INSERT INTO regionais (id,nome) VALUES (8,'PAMPULHA');
 INSERT INTO regionais (id,nome) VALUES (9,'VENDA NOVA');
 
 -- -----------------------------------------------------
+-- Table `territorios`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `territorios` ;
+CREATE  TABLE IF NOT EXISTS `territorios` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `nome` VARCHAR(4) NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `i_nome` (`nome` ASC) )
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'territórios de bh';
+
+-- -----------------------------------------------------
 -- Table `bairros`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `bairros` ;
 CREATE  TABLE IF NOT EXISTS `bairros` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `nome` VARCHAR(45) NOT NULL ,
-  `territorio` VARCHAR(3) NOT NULL DEFAULT '',
+  `territorio_id` INT NOT NULL DEFAULT 1,
   `regional_id` INT NOT NULL DEFAULT 1 ,
   `cidade_id` INT NOT NULL DEFAULT 2302 ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `i_nome` (`nome` ASC) ,
-  INDEX `i_territorio` (`territorio` ASC) ,
+  INDEX `fk_territorio` (`territorio_id` ASC) ,
+  INDEX `fk_regional` (`regional_id` ASC) ,
   INDEX `fk_cidades` (`cidade_id` ASC) )
 ENGINE = MyISAM
 DEFAULT CHARACTER SET = utf8

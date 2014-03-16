@@ -50,6 +50,10 @@
 #lista select
 {
 	border: 0px;
+}
+#lista #tabela select,
+#lista #tabela input
+{
 	background-color: #fff;
 }
 
@@ -112,7 +116,7 @@
 {
 	clear: both;
 }
-#tabLista input:focus,
+#lista #tabela input:focus,
 #tabNovo input:focus
 {
 	background-color: #fdffaf;
@@ -142,12 +146,12 @@
 }
 #ajaxTab .ajaxTr
 {
-	background-color: #ddd;
+	/*background-color: #ddd;*/
 }
 #ajaxTab .ajaxTd
 {
 	padding: 1px 4px 1px 4px;
-	background-color: #fff;
+	/*background-color: #fff;*/
 	cursor: pointer;
 	font-size: 11px;
 }

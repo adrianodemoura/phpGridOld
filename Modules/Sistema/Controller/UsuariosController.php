@@ -145,19 +145,14 @@ class UsuariosController extends SistemaAppController {
 				include_once('Model/Util.php');
 				$Util = new Util();
 
-				// importando Cidades
-				$arq = APP.'Modules/Sistema/Model/Sql/cidades.csv';
-				if (!$Util->setPopulaTabela($arq,'cidades'))
+				$tabs = array('cidades','territorios','bairros');
+				foreach($tabs as $_l => $_tabela)
 				{
-					$this->setMsgFlash('Erro ao tentar importar Cidades ...','msgFlashErro');
-					$this->redirect('sistema','usuarios','instalacao');
-				}
-				// importando bairros de bh
-				$arq = APP.'Modules/Sistema/Model/Sql/bairros.csv';
-				if (!$Util->setPopulaTabela($arq,'bairros'))
-				{
-					$this->setMsgFlash('Erro ao tentar importar Bairros ...','msgFlashErro');
-					$this->redirect('sistema','usuarios','instalacao');
+					$arq = APP.'Modules/Sistema/Model/Sql/'.$_tabela.'.csv';
+					if (file_exists($arq))
+					{
+						if (!$Util->setPopulaTabela($arq,$_tabela)) die('erro ao importar '.$_tabela);
+					}
 				}
 				$this->setMsgFlash($this->viewVars['msg'],'msgFlashOk');
 				$this->redirect('sistema','usuarios','login');

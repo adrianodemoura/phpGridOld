@@ -403,12 +403,16 @@ class Controller {
 	 * - O resultado será impresso com os valores de cada campo
 	 * - A pesquisa sempre será pelo método LIKE
 	 * - Por segurança, o limite da pesquisa não vai passar 20
+	 * - Todos os parâmetros serão passados pela url, na nomenclatura parâmetro:valor
 	 * 
 	 * exemplo de uso:
-	 * http://localhost/phpgrid/sistema/cidades/get_options/pag:2/cmps:Cidade.id,Cidade.nome/Cidade.nome:be/ord:Cidade.nome
+	 * http://localhost/phpgrid/sistema/cidades/get_options/cmps:Cidade.id,Cidade.nome,Cidade.uf/ord:Cidade.nome,Cidade.uf/Cidade.nome:maria
+	 * - será retornado uma lista com os campos id, nome e uf do model Cidade, aonde o campo nome possui o texto "maria"
 	 * 
-	 * @param	fields	Campos que serão listados
-	 * @param	wher	Campos que serão filtrados campo:valor
+	 * @param	Campos que serão listados
+	 * @param	Campos que serão filtrados, seguindo a seguinte nomenclauro: Model.campo:valor
+	 * @param	Página, se nenhuma foi informada o padrão é '1'
+	 * @param	Campos que irão ordernar a lista (usado para Order by), com a nomenclautura: ord:Model.campo1,Model.campo2
 	 * @param	debug	se ligado irá imprimir br no final de cada linha, e ainda o sql_dump
 	 * @return	string
 	 */
@@ -421,6 +425,15 @@ class Controller {
 		$params['where']	= array();
 		$params['pag']		= isset($this->viewVars['params']['pag']) ? $this->viewVars['params']['pag'] : 1;
 		$params['order']	= isset($this->viewVars['params']['ord']) ? explode(',',$this->viewVars['params']['ord']) : null;
+		$params['pag']		= isset($this->viewVars['params']['pag']) ? $this->viewVars['params']['pag'] : 1;
+		
+		// pegando a última página
+		if ($params['pag']=='*')
+		{
+			$params['pag']=1;
+			//debug($params['order']);
+		}
+		
 		foreach($this->viewVars['params'] as $_cmp => $_vlr)
 		{
 			if ($_cmp!='cmps')
