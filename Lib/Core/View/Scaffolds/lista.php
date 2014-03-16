@@ -33,8 +33,10 @@
 		<div>
 			<div id='novo' style='position: absolute;  min-height: 30px; display: none;'><!-- novo -->
 			<div style='margin: 0px 0px 5px 0px;'>
-				<input type='button' class='btn' name='CancerNovo' id='btFecNo' value='Cancelar' onclick='$("#novo").fadeOut(); $("#ferramentas").fadeIn(); $("#tabela").fadeIn();' />
-				<input type='button' class='btn btn-success' name='SalvarNovo' id='btSalvarN' value='Salvar Novo' onclick='$("#formLiNo").submit();' />
+				<input type='button' class='btn' name='CancerNovo' id='btFecNo' value='Cancelar' 
+					onclick='$("#novo").fadeOut(); $("#filtros").fadeIn(); $("#ferramentas").fadeIn(); $("#tabela").fadeIn();' />
+				<input type='button' class='btn btn-success' name='SalvarNovo' id='btSalvarN' value='Salvar Novo'
+					onclick='$("#formLiNo").submit();' />
 			</div>
 
 			<table id='tabNovo'>
@@ -50,7 +52,7 @@
 					if (isset($p['belongsTo'])) $t = substr($t,0,strlen($t)-2);
 					if (!isset($p['edicaoOff'])) :
 				?>
-				<th>
+				<th class="th<?= $this->Html->domId($a['1']) ?>">
 					<?= $t ?>
 				</th>
 				<?php endif; endforeach ?>
@@ -66,7 +68,7 @@
 				<?php
 					$cmp = $_l.'.'.$a['0'].'.'.$a['1'];
 					$vlr = isset($p['default']) ? $p['default'] : '';
-					echo $this->Html->getInput($cmp,array('value'=>$vlr),$p);
+					echo $this->Html->getInput($cmp,$p);
 					if (isset($p['mascara'])) array_push($this->viewVars['onRead'],'$("#'.$this->Html->domId($cmp).'").mask("'.str_replace('#','9',$p['mascara']).'")');
 				?>
 				</td>
@@ -83,8 +85,10 @@
 			</div><!-- fim paginação -->
 				
 			<div style='float: left; margin: 0px 10px 0px 0px;'><!-- botoes -->
-			<input type='button' class='btn btn-primary' name='ExibirNovo' id='btNovo' value='Novo' onclick='$("#novo").fadeIn(); $("#ferramentas").fadeOut(); $("#tabela").fadeOut();' />
-			<input type='button' class='btn btn-success' name='SalvarTodos' id='btSalvarT' value='Salvar Todos' onclick='$("#formLista").submit();' />
+			<input type='button' class='btn btn-primary' name='ExibirNovo' id='btNovo' value='Novo' 
+				onclick='$("#novo").fadeIn(); $("#ferramentas").fadeOut(); $("#filtros").fadeOut(); $("#tabela").fadeOut();' />
+			<input type='button' class='btn btn-success' name='SalvarTodos' id='btSalvarT' value='Salvar Todos' 
+				onclick='$("#formLista").submit();' />
 			
 			<?php if (isset($marcadores)) : 
 				array_push($this->viewVars['onRead'],'$("#cxSel").change(function() 
@@ -176,7 +180,7 @@
 			$l = $base.strtolower($module.'/'.$controller.'/lista/pag:'
 				.$params['pag'].'/ord:'.str_replace('.', '_', $c).'/dir:'.$d);
 			?>
-			<th>
+			<th class="th<?= $this->Html->domId($a['1']) ?>">
 				<a href='<?= $l ?>'>
 					<?= $t ?>
 				</a>

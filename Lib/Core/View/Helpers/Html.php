@@ -110,14 +110,17 @@ class Html {
 					}
 					$ajax['url']	.= '/'.$_mod.'.'.$cmpPes.':';
 					$l = 0;
-					foreach($linha[$_mod] as $_cmp => $_vlr)
+					if (!empty($linha))
 					{
-						if ($l==1) $ajax['value'] =$_vlr;
-						if ($l>1)
+						foreach($linha[$_mod] as $_cmp => $_vlr)
 						{
-							$ajax['value'] .= '/'.$_vlr;
+							if ($l==1) $ajax['value'] =$_vlr;
+							if ($l>1)
+							{
+								$ajax['value'] .= '/'.$_vlr;
+							}
+							$l++;
 						}
-						$l++;
 					}
 				}
 			}
@@ -149,7 +152,7 @@ class Html {
 				$input .= " />";
 				$vlr = '';
 
-				$input .= "<div id='".$ajax['cmp']."' style='float: left; margin: 0px 8px 0px 0px;'>".$ajax['value']."</div>";
+				$input .= "<div id='".$ajax['cmp']."' style='width 400px; float: left; margin: 0px 8px 0px 0px;'>".$ajax['value']."</div>";
 				$input .= "<img src='".$this->base."img/bt_ajax.png' class='bt_lista_ajax' style='float: right;'
 							onclick='
 								$(\"#ajaxTit\").html(\"".$ajax['titPesq']."\");

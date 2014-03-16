@@ -33,6 +33,10 @@
 	background-color: #428BCA;
 	color: #fff;
 }
+#lista .thCidade_id
+{
+	width: 200px;
+}
 #lista table tr td
 {
 	padding: 0px 2px 0px 3px;
