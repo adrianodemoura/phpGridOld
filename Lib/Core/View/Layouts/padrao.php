@@ -71,9 +71,9 @@ $('#contador').chrony({
 		<div style='float: left;'>
 			<a href='<?= $base ?>'><?= SISTEMA ?></a>
 			<?php if (AMBIENTE!='PRODUÇÃO') : ?>
-				(<span style='color: red; letter-spacing: 2px; font-weight: bold;'>
-					<?= AMBIENTE ?>
-				</span>)
+				<span style='margin: 0px 0px 0px 5px; float: right; color: red; letter-spacing: 2px; font-weight: bold;'>
+					(<?= AMBIENTE ?>)
+				</span>
 		<?php endif ?>
 		</div>
 		<div style='float: right;'>
