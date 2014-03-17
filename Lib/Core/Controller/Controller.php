@@ -326,7 +326,6 @@ class Controller {
 				}
 				$this->viewVars['dados'] = $_POST['cx'];
 				$msg = 'Os Registros foram aplicados com sucesso ...';
-				//$this->setMsgFlash($msg,'msgFlashOk'); die();
 			} else
 			{
 				$this->viewVars['msgErro'] = 'Nenhum registro foi marcado !!!';

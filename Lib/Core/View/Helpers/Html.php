@@ -130,7 +130,28 @@ class Html {
 		if (isset($e['edicaoOff']) && $e['edicaoOff']==true)
 		{
 			$opcs['type'] = 'text';
-			unset($opcs['options']);
+			if (isset($opcs['options']))
+			{
+				$opcs['value'] = $opcs['options'][$opcs['value']];
+				unset($opcs['options']);
+			} else
+			{
+				if (isset($a['2']))
+				{
+					$b = explode('_',$a['2']);
+					$b['0'] = ucfirst($b['0']);
+					if (isset($linha[$b['0']]))
+					{
+						$l = 0;
+						foreach($linha[$b['0']] as $_cmp => $_vlr)
+						{
+							if ($l>1) $opcs['value'] .= '/'.$_vlr;
+							if ($l==1) $opcs['value'] = $_vlr;
+							$l++;
+						}
+					}
+				}
+			}
 		}
 
 		switch($opcs['type'])
