@@ -278,7 +278,12 @@ class Controller {
 		{
 			if (isset($_arrProp['filtro']) && $_arrProp['filtro']==true)
 			{
-				$filtros[$_cmp]['empty'] 	= '-- todos --';
+				$filtros[$_cmp]['emptyFiltro'] 	= isset($_arrProp['emptyFiltro']) ? $_arrProp['emptyFiltro'] : '-- todos --';
+				$filtros[$_cmp]['options'] 		= isset($_arrProp['options']) ? $_arrProp['options'] : array();
+				if (empty($filtros[$_cmp]['options']))
+				{
+					$filtros[$_cmp]['options'] = $this->$modelClass->getOptions($_cmp);
+				}
 			}
 		}
 		$this->viewVars['filtros'] 	= $filtros;

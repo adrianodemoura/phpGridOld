@@ -608,13 +608,13 @@ class Model {
 	}
 
 	/**
-	 * Retorna as opções de campo belongsTo ou Habtm
+	 * Retorna um lista conforme as opções de campo belongsTo ou Habtm
 	 *
 	 * @params 	$cmp 	string 	$nome do campo
 	 * @params 	$linha 	array 	primeira linha de lista
 	 * @return array
 	 */
-	private function getOptions($cmp='')
+	public function getOptions($cmp='')
 	{
 		$options 	= array();
 		$tipo 		= isset($this->esquema[$cmp]['belongsTo']) ? 'belongsTo' : null;

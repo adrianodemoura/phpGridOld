@@ -116,19 +116,18 @@
 			</div><!-- fim ferrametnas -->
 
 			<?php if (isset($filtros)) : ?>
-			<div id='filtros'>
+			<div id='filtros'><!-- filtros -->
 				<div style='width: 22px; text-align: center;'><img src='<?= $base ?>img/bt_filtro.png' title='filtros' >
 				</div>
 				<form name='formFiltro' id='formFiltro' method='post' action='<?= $base.strtolower($module).'/'.strtolower($controller).'/set_filtro' ?>' >
 				<?php 
 					foreach($filtros as $_cmp => $_arrProp) : 
-					$_arrProp['empty']  = isset($_arrProp['empty']) ? $_arrProp['empty'] : '-- Escolha um Filtro --';
-					$_arrProp['options']= isset($esquema[$modelClass][$_cmp]['options']) ? $esquema[$modelClass][$_cmp]['options'] : array();
-					array_push($this->viewVars['onRead'], '$("#Filtro'.ucfirst($_cmp).'").click(function() { this.form.submit(); })');
+					array_push($this->viewVars['onRead'], 
+						'$("#Filtro'.ucfirst($_cmp).'").change(function() { this.form.submit(); })');
 				?>
 					<div>
 					<select name='filtro[<?= $_cmp ?>]' id='Filtro<?= ucfirst($_cmp) ?>'>
-						<option value=''><?= $_arrProp['empty'] ?></option>
+						<option value=''><?= $_arrProp['emptyFiltro'] ?></option>
 						<?php
 							foreach($_arrProp['options'] as $_vlr => $_show) : 
 							$s = isset($_SESSION['Filtros'][$module][$controller][$_cmp]) 
@@ -257,4 +256,3 @@
 	</div><!-- fim esquerda -->
 
 </div><!-- fim lista -->
-<?= debug($esquema); ?>
