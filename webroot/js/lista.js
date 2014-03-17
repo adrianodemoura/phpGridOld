@@ -91,7 +91,7 @@ function setItemAjax(tr)
 		}
 		l++;
 	});
-	$("#btSalvarT").toggleClass("btAlerta");
+	$("#btSalvarT").addClass("btAlerta");
 }
 
 function setAjaxTab()
