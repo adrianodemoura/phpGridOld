@@ -74,7 +74,7 @@
 				?>
 				<td align='center'>
 				<?php
-					$cmp = $_l.'.'.$a['0'].'.'.$a['1'];
+					$cmp = '0.'.$a['0'].'.'.$a['1'];
 					$vlr = isset($p['default']) ? $p['default'] : '';
 					echo $this->Html->getInput($cmp,$p);
 					if (isset($p['mascara'])) array_push($this->viewVars['onRead'],'$("#'.$this->Html->domId($cmp).'").mask("'.str_replace('#','9',$p['mascara']).'")');
