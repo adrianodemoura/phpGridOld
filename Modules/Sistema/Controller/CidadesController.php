@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Usuários
+ * Class Cidades
  * 
  * @package			Sistema
  * @subpackage		Sistema.Controller
