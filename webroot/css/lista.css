@@ -127,35 +127,6 @@
 	display: block;
 }
 
-#ajaxForm
-{
-	position:absolute;
-	left:50%;
-	top:50%;
-	width:440px;
-	height:auto;
-	margin-top: -220px;
-	margin-left: -220px;
-	display:none;
-	z-index:9999;
-	padding:20px;
-	background-color: #fff;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 6px;
-	border-radius: 6px;
-}
-#ajaxTab .ajaxTr
-{
-	/*background-color: #ddd;*/
-}
-#ajaxTab .ajaxTd
-{
-	padding: 1px 4px 1px 4px;
-	/*background-color: #fff;*/
-	cursor: pointer;
-	font-size: 11px;
-}
-
 .btAlerta
 {
 	font-weight: bold;

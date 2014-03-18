@@ -4,37 +4,11 @@
 	$this->Html->setHead('js','lista');
 ?>
 
-<div id='ajaxForm'>
-	<center>
-		<h4><span id='ajaxTit'></span></h4>
-		<div class='paginacao'>
-			<span id='ajaxP1'  title='primeira página'>&laquo;</span>
-			<span id='ajaxPA' title='pagina anterior'>&lsaquo;</span>
-			<span id='ajaxPagi' title='pagina corrente'>1</span>
-			<span id='ajaxPP' title='próxima página'>&rsaquo;</span>
-			<span id='ajaxPU' title='próxima página'>&raquo;</span>
-		</div>
-		<input type='text' 	 name='ajaxPesq' id='ajaxPesq'  value='' style='width: 400px; style="float: left;"' />
-		<input type='hidden' name='ajaxDest' id='ajaxDest'  value='' style='width: 800px;' />
-		<input type='hidden' name='ajaxCmp'  id='ajaxCmp' 	value='' style='width: 800px;' />
-		<input type='button' name='btAjaxFechar' value='Fechar' class='btn btn-default' onclick='showLista();' />
-	</center>
-	<div id='ajaxResp'>
-	</div>
-	<div id='ajaxTo' title='total'></div>
-</div>
+<?php $this->element('ajax_form'); ?>
 
 <div id='lista' style='display: table; clear: both;'>
 
-	<div style='position: absolute; width: 130px; min-height: 200px;'><!-- menu -->
-	<?php if (isset($linksMenu)) : ?>
-		<div style='position: absolute; width: 130px;'>
-		<?php foreach($linksMenu as $_con => $_arrOpcs) : ?>
-			<a href='<?= $_arrOpcs['link'] ?>' class='list-group-item<?php if ($_con==$controller) echo ' active'; ?>'><?= $_arrOpcs['tit'] ?></a>
-		<?php endforeach; ?>
-		</div>
-	<?php endif; ?>
-	</div><!-- fim menu -->
+<?php $this->element('menu_lista'); ?>
 
 	<div style='position: absolute; width: auto; min-width: 500px; min-height: 200px; display: table; margin-left: 135px;'><!-- esquerda -->
 

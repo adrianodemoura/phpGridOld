@@ -14,33 +14,31 @@ $(document).ready(function()
 		$("#btSalvarT").addClass('btAlerta');
 	});
 	
-	// primeira página
-	$("#ajaxP1").click(function()
+	$("#ajaxP1").click(function()	// primeira página
 	{
-		$('#ajaxPagi').html(1);
-		setAjaxTab();
-	});
-	// página anterior
-	$("#ajaxPA").click(function()
-	{
-		var pag = $('#ajaxPagi').html();
-		pag = pag-1; if (pag<1) pag=1;
-		$('#ajaxPagi').html(pag);
-		setAjaxTab();
-	});
-	// página próxima
-	$("#ajaxPP").click(function()
-	{
-		var pag = $('#ajaxPagi').html();
-		pag = parseInt(pag)+1; if (pag>100000) pag=1;
-		$('#ajaxPagi').html(pag);
+		$('#ajaxPC').html(1);
 		setAjaxTab();
 	});
 
-	// ao digitar
-	$("#ajaxPesq").keyup(function(event)
+	$("#ajaxPA").click(function()	// página anterior
 	{
-		$('#ajaxPagi').html(1);
+		var pag = $('#ajaxPC').html();
+		pag = pag-1; if (pag<1) pag=1;
+		$('#ajaxPC').html(pag);
+		setAjaxTab();
+	});
+
+	$("#ajaxPP").click(function()	// página próxima
+	{
+		var pag = $('#ajaxPC').html();
+		pag = parseInt(pag)+1; if (pag>100000) pag=1;
+		$('#ajaxPC').html(pag);
+		setAjaxTab();
+	});
+
+	$("#ajaxPesq").keyup(function(event) // ao digitar
+	{
+		$('#ajaxPC').html(1);
 		setAjaxTab();
 	});
 });
@@ -55,7 +53,7 @@ function showLista()
 
 function showAjaxForm()
 {
-	$('#ajaxPagi').html(1);
+	$('#ajaxPC').html(1);
 	$('#ajaxPesq').val('');
 	setAjaxTab();
 	$("#ajaxForm").fadeIn();
@@ -98,7 +96,7 @@ function setAjaxTab()
 {
 	var txt	= encodeURIComponent($("#ajaxPesq").val());
 	var url	= $('#ajaxDest').val();
-	var pag = $('#ajaxPagi').html();
+	var pag = $('#ajaxPC').html();
 	var tem = 0; // tem valor
 	url += txt+'/pag:'+pag
 
@@ -132,7 +130,7 @@ function setAjaxTab()
 			});
 			table += "</table>\n";
 			
-			if (tem==0) $('#ajaxPagi').html(parseInt(pag));
+			if (tem==0) $('#ajaxPC').html(parseInt(pag));
 			$("#ajaxResp").html(table);
 		}
 	});

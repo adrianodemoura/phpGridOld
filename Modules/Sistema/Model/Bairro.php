@@ -80,7 +80,7 @@ class Bairro extends SistemaAppModel {
 					'fields'=> array('id','nome'),
 					'order'	=> array('nome'),
 					'ajax'	=> 'sistema/territorios/get_options/',
-					'txtPesquisa' => 'Digite o nome do território desejável ...',
+					'txtPesquisa' => 'Digite o nome do território para pesquisar ...',
 				),
 			),
 		),
@@ -96,26 +96,9 @@ class Bairro extends SistemaAppModel {
 					'fields'=> array('id','nome','uf'),
 					'order'	=> array('nome','uf'),
 					'ajax'	=> 'sistema/cidades/get_options/',
-					'txtPesquisa' => 'Digite o nome da cidade desejável ...',
+					'txtPesquisa' => 'Digite o nome da cidade para pesquisar ...',
 				),
 			),
 		)
 	);
-
-	/**
-	 * Retorna uma lista de territŕoios
-	 *
-	 * @param integer 	$idReg 	Id da regional
-	 * @return array
-	 */
-	public function getTerritorios($id_reg=0)
-	{
-		$arr = array();
-		$sql = 'SELECT DISTINCT territorio FROM bairros';
-		if (!empty($id_reg)) $sql .= ' WHERE regional_id='.$id_reg;
-		$sql .= ' ORDER BY territorio';
-		$res = $this->query($sql);
-		foreach($res as $_l => $_a)  $arr[$_a['territorio']] = $_a['territorio'];
-		return $arr;
-	}
 }
