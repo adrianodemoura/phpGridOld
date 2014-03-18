@@ -196,7 +196,7 @@ class Model {
 		$where 	= '';
 		$lCm	= 0;
 		$lPk	= 0;
-		$this->data = $data;
+		$this->data = $this->getData($data);
 
 		if (!$this->beforeSave()) return false;
 
@@ -340,7 +340,7 @@ class Model {
 	 */
 	public function exclude($data=array())
 	{
-		$this->data = $data;
+		$this->data = $this->getData(data);
 
 		if (!$this->beforeExclude()) return false;
 
@@ -823,5 +823,44 @@ class Model {
 			}
 		}
 		return $resultado;
+	}
+
+	/**
+	 * Retorna o valor data substituindo o título pelo o nome do campo
+	 * - Esta funcionalidade foi apalicada por questões de segurança, não se pode 
+	 *   jogar o nome do campo na view, engão jogas-e o título e depois substitui
+	 *   título pelo nome do campo.
+	 *
+	 * @param 	array 	Matriz com o data oriundo controller
+	 * @return 	array 	Matriz data remasterizada.
+	 */
+	public function getData($data=array())
+	{
+		$_data = array();
+		foreach($data as $_l => $_arrMods)
+		{
+			foreach($_arrMods as $_mod => $_arrCmps)
+			{
+				foreach($_arrCmps as $_tit => $_vlr)
+				{
+					foreach($this->esquema as $_cmp => $_arrProp)
+					{
+						$cmp = null;
+						if ($_arrProp['tit']==$_tit)
+						{
+							$cmp = $_cmp;
+							break;
+						}
+					}
+					if (empty($cmp))
+					{
+						debug($data);
+						die('Erro ao localizar nome do campo !!! não se esqueça de utilizar o título do campo e não o seu nome nos formulários e/ou controller.');
+					}
+					$_data[$_l][$_mod][$cmp] = $_vlr;
+				}
+			}
+		}
+		return $_data;
 	}
 }

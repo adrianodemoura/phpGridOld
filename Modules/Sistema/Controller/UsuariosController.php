@@ -63,10 +63,10 @@ class UsuariosController extends SistemaAppController {
 				$_SESSION['Usuario']['email'] 			= $data['0']['email'];
 				$_SESSION['Usuario']['nome'] 			= $data['0']['nome'];
 				$_SESSION['Usuario']['ultimo_ip'] 		= $data['0']['ultimo_ip'];
-				$novaData['0']['Usuario']['id'] 		= $data['0']['id'];
-				$novaData['0']['Usuario']['acessos'] 	= ($data['0']['acessos']+1);
-				$novaData['0']['Usuario']['ultimo_ip'] 	= (strlen($_SERVER['SERVER_ADDR'])>4) ? $_SERVER['SERVER_ADDR'] : $_SERVER['REMOTE_ADDR'];
-				if ($novaData['0']['Usuario']['ultimo_ip']=='::1') $novaData['0']['Usuario']['ultimo_ip'] = '127.0.0.1';
+				$novaData['0']['Usuario']['Id'] 		= $data['0']['id'];
+				$novaData['0']['Usuario']['Acessos'] 	= ($data['0']['acessos']+1);
+				$novaData['0']['Usuario']['Último IP'] 	= (strlen($_SERVER['SERVER_ADDR'])>4) ? $_SERVER['SERVER_ADDR'] : $_SERVER['REMOTE_ADDR'];
+				if ($novaData['0']['Usuario']['Último IP']=='::1') $novaData['0']['Usuario']['Último IP'] = '127.0.0.1';
 				if (!$this->Usuario->save($novaData))
 				{
 					debug($novaData);

@@ -12,10 +12,9 @@
 <title><?= (isset($tituloPagina)) ? $tituloPagina : 'site' ?></title>
 <meta charset="UTF-8">
 
-
 <script type="text/javascript">
-var base = '<?= $base ?>';
-var aqui = '<?= $aqui ?>';
+	var base = '<?= $base ?>';
+	var aqui = '<?= $aqui ?>';
 
 </script>
 
@@ -31,22 +30,56 @@ var aqui = '<?= $aqui ?>';
 <?php foreach($head as $_l => $_t) echo html_entity_decode($_t)."\n"; ?>
 
 <script type="text/javascript">
-$(document).ready(function()
-{
-
+	<!-- propriedades dos campos -->
 <?php
-if (!empty($msgFlash)) 	echo '$("#msgFlash").fadeOut(4000);'."\n";
-if (!empty($this->viewVars['onRead'])) 	foreach($this->viewVars['onRead'] as $_l => $_line) echo $_line.";\n";
+	$c = '';
+	foreach($esquema as $_mod => $_arrCmps) 
+	{
+		foreach($_arrCmps as $_cmp => $_arrProp)
+		{
+			$t = isset($_arrProp['tit']) ? $_arrProp['tit'] : $_cmp;
+			$p = array();
+
+			if (isset($_arrProp['key']) && $_arrProp['key']=='PRI') array_push($p, array('primary'=>1));
+			if (isset($_arrProp['null']) && $_arrProp['null']=='NO') array_push($p,array('obrigatorio'=>1));
+
+			if (!empty($p) && empty($c)) $c .= "{ $_mod : { ";
+
+			if (!empty($p))
+			{
+				$c .= " $t : { ";
+				foreach($p as $_l => $_arrProp)
+				{
+					foreach($_arrProp as $_cmp => $_vlr)
+					{
+						if ($_l) $c .= ', ';
+						$c .= "$_cmp : $_vlr";
+					}
+				}
+				$c .= '},';
+			}
+		} 
+	}
+	echo "\tvar campos = ".trim($c,',').'}};'."\n\n";
 ?>
 
-<?php if (isset($tempoOn)) :  ?>
-$('#contador').chrony({ 
-	minute: <?= $tempoOn ?>, displayHours: false, finish: function() 
+	<!-- onRead jQuery -->
+	$(document).ready(function()
 	{
-		window.location='<?= $base.'sistema/usuarios/sair'; ?>'
-	}
-});
-<?php endif; ?>
+
+	<?php
+	if (!empty($msgFlash)) 	echo '$("#msgFlash").fadeOut(4000);'."\n";
+	if (!empty($this->viewVars['onRead'])) 	foreach($this->viewVars['onRead'] as $_l => $_line) echo $_line.";\n";
+	?>
+
+	<?php if (isset($tempoOn)) :  ?>
+	$('#contador').chrony({ 
+		minute: <?= $tempoOn ?>, displayHours: false, finish: function() 
+		{
+			window.location='<?= $base.'sistema/usuarios/sair'; ?>'
+		}
+	});
+	<?php endif; ?>
 
 });
 </script>

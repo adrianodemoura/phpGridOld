@@ -13,52 +13,8 @@
 	<div style='position: absolute; width: auto; min-width: 500px; min-height: 200px; display: table; margin-left: 135px;'><!-- esquerda -->
 
 		<div>
-			<div id='novo' style='position: absolute;  min-height: 30px; display: none;'><!-- novo -->
-			<div style='margin: 0px 0px 5px 0px;'>
-				<input type='button' class='btn' name='CancerNovo' id='btFecNo' value='Cancelar' 
-					onclick='$("#novo").fadeOut(); $("#filtros").fadeIn(); $("#ferramentas").fadeIn(); $("#tabela").fadeIn();' />
-				<input type='button' class='btn btn-success' name='SalvarNovo' id='btSalvarN' value='Salvar Novo'
-					onclick='$("#formLiNo").submit();' />
-			</div>
 
-			<table id='tabNovo'>
-			<form name='formLiNo' id='formLiNo' method='post' action='<?= $base.strtolower($module).'/'.strtolower($controller).'/salvar' ?>' >
-			<input type='hidden' name='urlRetorno' value='<?= $urlRetorno ?>' style='width: 300px;' />
-
-			<tr><!-- cabeçalho novo -->
-				<?php
-					foreach($this->viewVars['fields'] as $_l2 => $_cmp) : 
-					$a = explode('.',$_cmp);
-					$p = $this->viewVars['esquema'][$a['0']][$a['1']];
-					$t = $this->viewVars['esquema'][$a['0']][$a['1']]['tit'];
-					if (isset($p['belongsTo'])) $t = substr($t,0,strlen($t)-2);
-					if (!isset($p['edicaoOff'])) :
-				?>
-				<th class="th<?= $this->Html->domId($a['1']) ?>">
-					<?= $t ?>
-				</th>
-				<?php endif; endforeach ?>
-			</tr>
-			<tr><!-- input novo -->
-				<?php
-					foreach($this->viewVars['fields'] as $_l2 => $_cmp) : 
-					$a = explode('.',$_cmp);
-					$p = $this->viewVars['esquema'][$a['0']][$a['1']];
-					if (!isset($p['edicaoOff'])) :
-				?>
-				<td align='center'>
-				<?php
-					$cmp = '0.'.$a['0'].'.'.$a['1'];
-					$vlr = isset($p['default']) ? $p['default'] : '';
-					echo $this->Html->getInput($cmp,$p);
-					if (isset($p['mascara'])) array_push($this->viewVars['onRead'],'$("#'.$this->Html->domId($cmp).'").mask("'.str_replace('#','9',$p['mascara']).'")');
-				?>
-				</td>
-				<?php endif; endforeach ?>
-			</tr>
-			</form>
-			</table>
-			</div><!-- fim novo -->
+			<?php $this->element('lista_novo'); ?>
 
 			<div id='ferramentas' style='width: 100%; min-height: 35px; margin: 0px 0px 5px 0px;'><!-- ferramentas -->
 				
@@ -203,18 +159,25 @@
 			<?php endforeach ?>
 
 			<?php  // loop nos campos para escrever a coluna de cada linha
+				foreach($primaryKey as $_l3 => $_cmp3) // campos primários
+				{
+					$cmp3 = $esquema[$modelClass][$_cmp3]['tit'];
+					echo "<input type='hidden' value='".$_arrMods[$a['0']][$_cmp3]
+						."' name='data[".($_l+1)."][".$modelClass."][".$cmp3."]' />";
+				}
 				foreach($this->viewVars['fields'] as $_l2 => $_cmp) : 
 					$a = explode('.',$_cmp);
 					$p = $this->viewVars['esquema'][$a['0']][$a['1']];
-					$cmp = ($_l+1).'.'.$a['0'].'.'.$a['1'];
+					$cmp = ($_l+1).'.'.$a['0'].'.'.$p['tit'];
 					$p['value'] = $_arrMods[$a['0']][$a['1']];
-					// campos primários
-					foreach($primaryKey as $_l3 => $_cmp3) echo "<input type='hidden' value='".$_arrMods[$a['0']][$_cmp3]."' name='data[".($_l+1)."][".$a['0']."][$_cmp3]' />";
 			?>
 				<td align='center'>
 					<?php
 						echo $this->Html->getInput($cmp,$p,$this->data[$_l]);
-						if (isset($p['mascara']))  array_push($this->viewVars['onRead'],'$("#'.$this->Html->domId($cmp).'").mask("'.str_replace('#','9',$p['mascara']).'")');
+						if (isset($p['mascara']))
+						{
+							array_push($this->viewVars['onRead'],'$("#'.$this->Html->domId($cmp).'").mask("'.str_replace('#','9',$p['mascara']).'")');
+						}
 					?>
 				</td>
 			<?php endforeach ?>

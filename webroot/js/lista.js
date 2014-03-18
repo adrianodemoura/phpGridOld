@@ -7,7 +7,7 @@ $(document).ready(function()
 		$("#btSalvarT").addClass('btAlerta');
 	});
 
-	$("#lista #tabela input").change(function()
+	$("#lista #tabela input:text").change(function()
 	{
 		$(this).css('color','#fff');
 		$(this).css('background-color','red');
