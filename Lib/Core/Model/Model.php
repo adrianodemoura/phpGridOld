@@ -359,10 +359,10 @@ class Model {
 			}
 		}
 		if (empty($where)) die(debug('Impossível excluir registro sem um filtro !!!'));
-		//$sql = 'DELETE FROM '.$this->tabela.' WHERE '.$where;
-		//$this->query($sql);
-		//$erro = $this->db->errorInfo();
-		//if (!empty($erro['1'])) die(debug($erro));
+		$sql = 'DELETE FROM '.$this->tabela.' WHERE '.$where;
+		$this->query($sql);
+		$erro = $this->db->errorInfo();
+		if (!empty($erro['1'])) die(debug($erro));
 		return true;
 	}
 
