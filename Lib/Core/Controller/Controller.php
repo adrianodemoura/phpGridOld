@@ -203,7 +203,7 @@ class Controller {
 		$modelClass = $this->modelClass;
 		$params 	= array();
 
-		$this->viewVars['tituloPagina'] 	= !empty($this->viewVars['tituloPagina']) ? $this->viewVars['tituloPagina'] : 'Lista de '.$this->controller;
+		$this->viewVars['tituloPagina'] = !empty($this->viewVars['tituloPagina']) ? $this->viewVars['tituloPagina'] : 'Lista de '.$this->controller;
 
 		// verificando a sessão de paginação, se for de outro módulo.controller, zera ela.
 		if (isset($_SESSION['Pagi']))
@@ -299,7 +299,7 @@ class Controller {
 		{
 			$f['excluir']['tit'] 	= 'Excluir';
 			$f['excluir']['link'] 	= $this->viewVars['base'].strtolower($this->module).'/'.
-				strtolower($this->controller).'/excluir/id:*id*';
+				strtolower($this->controller).'/excluir/Id:*id*';
 			$f['excluir']['title'] 	= 'Clique aqui para excluir este registro';
 		}
 		$this->viewVars['ferramentas'] = $f;
@@ -332,6 +332,7 @@ class Controller {
 			}
 		} else
 		{
+			//debug($this->data);
 			if (!$this->$modelClass->save($this->data))
 			{
 				$this->viewVars['msgErro'] = $this->$modelClass->erro;

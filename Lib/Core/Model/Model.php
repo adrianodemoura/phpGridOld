@@ -340,13 +340,14 @@ class Model {
 	 */
 	public function exclude($data=array())
 	{
-		$this->data = $this->getData(data);
+		$_data['0'][$this->name] = $data;
+		$this->data = $this->getData($_data);
 
 		if (!$this->beforeExclude()) return false;
 
 		$where = '';
 		// dando um loop na data pra criar cada sql
-		foreach($data as $_cmp => $_vlr)
+		foreach($this->data['0'][$this->name] as $_cmp => $_vlr)
 		{
 			if (!empty($where)) $where .= ' AND ';
 			if (is_numeric($_vlr))
@@ -358,10 +359,10 @@ class Model {
 			}
 		}
 		if (empty($where)) die(debug('Impossível excluir registro sem um filtro !!!'));
-		$sql = 'DELETE FROM '.$this->tabela.' WHERE '.$where;
-		$this->query($sql);
-		$erro = $this->db->errorInfo();
-		if (!empty($erro['1'])) die(debug($erro));
+		//$sql = 'DELETE FROM '.$this->tabela.' WHERE '.$where;
+		//$this->query($sql);
+		//$erro = $this->db->errorInfo();
+		//if (!empty($erro['1'])) die(debug($erro));
 		return true;
 	}
 
@@ -854,7 +855,6 @@ class Model {
 					}
 					if (empty($cmp))
 					{
-						debug($data);
 						die('Erro ao localizar nome do campo !!! não se esqueça de utilizar o título do campo e não o seu nome nos formulários e/ou controller.');
 					}
 					$_data[$_l][$_mod][$cmp] = $_vlr;

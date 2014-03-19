@@ -86,11 +86,11 @@ class Modulo extends SistemaAppModel {
 	 */
 	public function beforeExclude()
 	{
-		if (isset($this->data['id']) && $this->data['id']==1)
+		if (isset($this->data['0'][$this->name]['id']) && $this->data['0'][$this->name]['id']==1)
 		{
 			$this->erro = 'O Módulo SISTEMA não pode ser excluído !!!';
 			return false;
 		}
-		return parent::beforeExclude();
+		return true;
 	}
 }

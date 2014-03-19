@@ -129,12 +129,12 @@ class Usuario extends SistemaAppModel {
 	 */
 	public function beforeExclude()
 	{
-		if (isset($this->data['id']) && $this->data['id']==1)
+		if (isset($this->data['0'][$this->name]['id']) && $this->data['0'][$this->name]['id']==1)
 		{
 			$this->erro = 'O Usuário Administrador não pode ser excluído !!!';
 			return false;
 		}
-		return parent::beforeExclude();
+		return true;
 	}
 
 	/**
@@ -148,25 +148,25 @@ class Usuario extends SistemaAppModel {
 		foreach($this->data as $_l => $_arrMods)
 		{
 			// criptografando a senha
-			if (isset($_arrMods['Usuario']['senha']))
+			if (isset($_arrMods['Usuario']['Senha']))
 			{
-				if (!empty($_arrMods['Usuario']['senha']))
+				if (!empty($_arrMods['Usuario']['Senha']))
 				{
-					$this->data[$_l]['Usuario']['senha'] = md5($_arrMods['Usuario']['senha'].SALT);
+					$this->data[$_l]['Usuario']['Senha'] = md5($_arrMods['Usuario']['Senha'].SALT);
 				} else
 				{
-					unset($this->data[$_l]['Usuario']['senha']);
+					unset($this->data[$_l]['Usuario']['Senha']);
 				}
 			}
 			// admin sempre ativo
-			if (isset($_arrMods['Usuario']['ativo']) && isset($_arrMods['Usuario']['id']))
+			if (isset($_arrMods['Usuario']['Ativo']) && isset($_arrMods['Usuario']['Id']))
 			{
-				if ($_arrMods['Usuario']['id']=='1') $this->data[$_l]['Usuario']['ativo'] = 1;
+				if ($_arrMods['Usuario']['Id']=='1') $this->data[$_l]['Usuario']['Ativo'] = 1;
 			}
 			// removendo acessos
-			if (isset($_arrMods['Usuario']['acessos']))
+			if (isset($_arrMods['Usuario']['Acessos']))
 			{
-				//unset($this->data[$_l]['Usuario']['acessos']);
+				//unset($this->data[$_l]['Usuario']['Acessos']);
 			}
 		}
 		return parent::beforeSave();

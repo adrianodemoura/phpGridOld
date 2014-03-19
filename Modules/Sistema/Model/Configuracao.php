@@ -91,11 +91,11 @@ class Configuracao extends SistemaAppModel {
 	 */
 	public function beforeExclude()
 	{
-		if (isset($this->data['id']) && $this->data['id']==1)
+		if (isset($this->data['0'][$this->name]['id']) && $this->data['0'][$this->name]['id']==1)
 		{
 			$this->erro = 'A Configuração não pode ser excluída !!!';
 			return false;
 		}
-		return parent::beforeExclude();
+		return true;
 	}
 }
