@@ -18,14 +18,14 @@
 
 </script>
 
-<script async type="text/javascript" src="<?= $base ?>js/jquery.min.js"></script>
-<script async type="text/javascript" src="<?= $base ?>js/padrao.js"></script>
+<script type="text/javascript" src="<?= $base ?>js/jquery.min.js"></script>
+<script type="text/javascript" src="<?= $base ?>js/padrao.js"></script>
 <?php if (isset($tempoOn)) : ?>
 <script src="<?= $base ?>js/jquery.chrony.min.js"></script>
 <?php endif ?>
 
-<link async rel="stylesheet" type="text/css" href="<?= $base ?>css/bootstrap.min.css" />
-<link async rel="stylesheet" type="text/css" href="<?= $base ?>css/padrao.css" />
+<link rel="stylesheet" type="text/css" href="<?= $base ?>css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="<?= $base ?>css/padrao.css" />
 
 <?php foreach($head as $_l => $_t) echo html_entity_decode($_t)."\n"; ?>
 
