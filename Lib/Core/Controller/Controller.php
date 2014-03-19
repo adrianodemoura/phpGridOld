@@ -299,7 +299,7 @@ class Controller {
 		{
 			$f['excluir']['tit'] 	= 'Excluir';
 			$f['excluir']['link'] 	= $this->viewVars['base'].strtolower($this->module).'/'.
-				strtolower($this->controller).'/excluir/Id:*id*';
+				strtolower($this->controller).'/excluir/id:*id*';
 			$f['excluir']['title'] 	= 'Clique aqui para excluir este registro';
 		}
 		$this->viewVars['ferramentas'] = $f;
