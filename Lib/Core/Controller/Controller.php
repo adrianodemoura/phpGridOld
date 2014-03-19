@@ -360,7 +360,7 @@ class Controller {
 		$modelClass = $this->modelClass;
 		if ($this->$modelClass->exclude($this->params))
 		{
-			$this->setMsgFlash('O Registro foi excluído com sucesso ...','msgFlashOk');
+			$this->setMsgFlash('O Registro foi excluído com sucesso ...','msgFlashErro');
 			$this->redirect(strtolower($this->module),strtolower($this->controller),'lista');
 		} else
 		{
