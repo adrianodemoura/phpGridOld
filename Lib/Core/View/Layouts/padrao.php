@@ -60,7 +60,7 @@
 			}
 		} 
 	}
-	echo "\tvar campos = ".trim($c,',').'}};'."\n\n";
+	if (!empty($c)) echo "\tvar campos = ".trim($c,',').'}};'."\n\n";
 ?>
 
 	<!-- onRead jQuery -->

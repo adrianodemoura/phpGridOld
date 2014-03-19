@@ -1,5 +1,12 @@
 $(document).ready(function()
 {
+	$("#cxSel").change(function() 
+	{
+		$("#marcador").val($(this).val()); 
+		console.log($(this).val());
+		//$("#formLista").submit(); 
+	});
+
 	$("#lista #tabela select").change(function()
 	{
 		$(this).css('color','#fff');

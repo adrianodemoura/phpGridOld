@@ -21,7 +21,7 @@ $(document).ready(function()
 		    	{
 		    		for(var i=1; i<21; i++)
 		    		{
-		    			var id = "#"+i+index+cmp;
+		    			var id = "#"+i+index+cmp.capitalize();
 		    			vlr = $(id).val();
 		    			if (vlr!=undefined)
 		    			{
@@ -51,13 +51,14 @@ $(document).ready(function()
 
 <?php $this->element('menu_lista'); ?>
 
-	<div style='position: absolute; width: auto; min-width: 500px; min-height: 200px; display: table; margin-left: 135px;'><!-- esquerda -->
+	<div style='position: absolute; width: auto; min-width: 500px; min-height: 200px; 
+				isplay: table; margin-left: 135px;'><!-- esquerda -->
 
 		<div>
 
 			<?php $this->element('lista_novo'); ?>
 
-			<div id='ferramentas' style='width: 100%; min-height: 35px; margin: 0px 0px 5px 0px;'><!-- ferramentas -->
+			<div id='ferramentas' style='width: 100%; min-height: 35px; margin: 0px 0px 5px 0px;'><!-- ferramentas_topo -->
 				
 			<div style='float: left; margin: 0px 10px 0px 0px;'><!-- paginação -->
 			<?= $this->element('paginacao') ?>
@@ -84,7 +85,7 @@ $(document).ready(function()
 			<?php endif ?>
 			</div><!-- fim botoes -->
 
-			</div><!-- fim ferrametnas -->
+			</div><!-- fim ferramentas_topo -->
 
 			<?php if (isset($filtros)) : ?>
 			<div id='filtros'><!-- filtros -->
@@ -179,6 +180,7 @@ $(document).ready(function()
 				?>
 				<input type='checkbox' class='cxLista' name='cx[<?= $ids ?>]' id='cx<?= ($_l+1) ?>' />
 			</td>
+
 			<?php // loop nas ferramentas
 			foreach($ferramentas as $_fer => $_prop) : 
 				$_prop['title'] = isset($_prop['title']) ? $_prop['title'] : $_fer;
