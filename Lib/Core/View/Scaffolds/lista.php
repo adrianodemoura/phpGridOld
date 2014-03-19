@@ -202,14 +202,13 @@ $(document).ready(function()
 			<?php  // loop nos campos para escrever a coluna de cada linha
 				foreach($primaryKey as $_l3 => $_cmp3) // campos primários
 				{
-					$cmp3 = $esquema[$modelClass][$_cmp3]['tit'];
 					echo "<input type='hidden' value='".$_arrMods[$a['0']][$_cmp3]
-						."' name='data[".($_l+1)."][".$modelClass."][".$cmp3."]' />";
+						."' name='data[".($_l+1)."][".$modelClass."][".$_cmp3."]' />";
 				}
 				foreach($this->viewVars['fields'] as $_l2 => $_cmp) : 
 					$a = explode('.',$_cmp);
 					$p = $this->viewVars['esquema'][$a['0']][$a['1']];
-					$cmp = ($_l+1).'.'.$a['0'].'.'.$p['tit'];
+					$cmp = ($_l+1).'.'.$a['0'].'.'.$a['1'];
 					$p['value'] = $_arrMods[$a['0']][$a['1']];
 			?>
 				<td align='center'>

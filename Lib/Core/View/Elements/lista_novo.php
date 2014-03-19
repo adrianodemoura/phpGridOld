@@ -71,7 +71,7 @@ $(document).ready(function()
 	?>
 	<td align='center'>
 	<?php
-		$cmp = '0.'.$a['0'].'.'.$p['tit'];
+		$cmp = '0.'.$a['0'].'.'.$a['1'];
 
 		$vlr = isset($p['default']) ? $p['default'] : '';
 

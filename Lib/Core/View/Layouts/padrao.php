@@ -47,7 +47,7 @@
 
 			if (!empty($p))
 			{
-				$c .= " $t : { ";
+				$c .= " $_cmp : { ";
 				foreach($p as $_l => $_arrProp)
 				{
 					foreach($_arrProp as $_cmp => $_vlr)
@@ -56,7 +56,7 @@
 						$c .= "$_cmp : $_vlr";
 					}
 				}
-				$c .= '},';
+				$c .= '},'."\n";
 			}
 		} 
 	}

@@ -829,15 +829,15 @@ class Model {
 	/**
 	 * Retorna o valor data substituindo o título pelo o nome do campo
 	 * - Esta funcionalidade foi apalicada por questões de segurança, não se pode 
-	 *   jogar o nome do campo na view, engão jogas-e o título e depois substitui
-	 *   título pelo nome do campo.
+	 *   jogar o nome do campo na view, então jogas-se o nome do campo criptografado
+	 *   e depois substitui a cripotografia pelo nome ral do campo.
 	 *
-	 * @param 	array 	Matriz com o data oriundo controller
+	 * @param 	array 	Matriz com o data oriundo do controller
 	 * @return 	array 	Matriz data remasterizada.
 	 */
 	public function getData($data=array())
 	{
-		$_data = array();
+		/*$_data = array();
 		foreach($data as $_l => $_arrMods)
 		{
 			foreach($_arrMods as $_mod => $_arrCmps)
@@ -860,7 +860,7 @@ class Model {
 					$_data[$_l][$_mod][$cmp] = $_vlr;
 				}
 			}
-		}
-		return $_data;
+		}*/
+		return $data;
 	}
 }

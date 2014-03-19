@@ -52,7 +52,7 @@ class Configuracao extends SistemaAppModel {
 		),
 		'email'		=> array
 		(
-			'tit'	=> 'e-mail',
+			'tit'	=> 'email',
 			'upperOff'=> true,
 		),
 		'cep'		=> array
