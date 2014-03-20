@@ -38,7 +38,6 @@ class UsuariosController extends SistemaAppController {
 	{
 		$this->viewVars['fields'] = array('Usuario.ativo','Usuario.nome','Usuario.email','Usuario.celular'
 		,'Usuario.acessos'
-		,'Usuario.senha'
 		,'Usuario.trocar_senha','Usuario.ultimo_ip');
 		parent::lista();
 	}

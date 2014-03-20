@@ -290,11 +290,6 @@ class Controller {
 
 		// ferramentas da lista
 		$f = isset($this->viewVars['ferramentas']) ? $this->viewVars['ferramentas'] : array();
-		/*if (!isset($f['editar']))
-		{
-			$f['editar']['tit'] 	= 'Editar';
-			$f['editar']['link'] 	= $this->viewVars['base'].strtolower($this->module).'/'.strtolower($this->controller).'/editar/*id*';
-		}*/
 		if (!isset($f['excluir']))
 		{
 			$f['excluir']['tit'] 	= 'Excluir';
@@ -305,6 +300,23 @@ class Controller {
 			$f['excluir']['title'] 	= 'Clique aqui para excluir este registro';
 		}
 		$this->viewVars['ferramentas'] = $f;
+
+		// verificando se o módulo_controller_action possui CSS e JS próprio
+		$arq = strtolower($this->module.'_'.$this->controller.'_lista');
+		if (file_exists('./css/'.$arq.'.css'))
+		{
+			$link = htmlentities('<link rel="stylesheet" type="text/css" href="'.$this->viewVars['base'].'css/'
+				.strtolower($this->module).'_'
+				.strtolower($this->controller).'_lista.css" />');
+			array_push($this->viewVars['head'],$link);
+		}
+		if (file_exists('./js/'.$arq.'.js'))
+		{
+			$link = htmlentities('<script type="text/javascript" src="'.$this->viewVars['base'].'js/'
+				.strtolower($this->module).'_'
+				.strtolower($this->controller).'_lista.js"></script>');
+			array_push($this->viewVars['head'],$link);
+		}
 	}
 
 	/**

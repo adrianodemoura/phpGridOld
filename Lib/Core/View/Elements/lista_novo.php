@@ -15,12 +15,16 @@ $(document).ready(function()
 		    	{
 		    		for(var i=0; i<1; i++)
 		    		{
-		    			var id = "#"+i+index+cmp;
+		    			var id = "#"+i+index+cmp.capitalize();
 		    			vlr = $(id).val();
-		    			if (vlr.length==0)
+		    			if (vlr!=undefined)
 		    			{
-		    				msgErro = 'O Campo '+cmp+', é de preenchimento obrigatório !!!';
-		    			}
+			    			if (vlr.length==0)
+			    			{
+			    				msgErro = 'O Campo '+cmp+', é de preenchimento obrigatório !!!';
+			    				$(id).focus();
+			    			}
+			    		}
 		    		}
 		    	}
 		    })
@@ -73,7 +77,7 @@ $(document).ready(function()
 	<?php
 		$cmp = '0.'.$a['0'].'.'.$a['1'];
 
-		$vlr = isset($p['default']) ? $p['default'] : '';
+		$p['value'] = isset($p['default']) ? $p['default'] : null;
 
 		echo $this->Html->getInput($cmp,$p);
 

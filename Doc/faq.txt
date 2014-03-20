@@ -1,0 +1,32 @@
+Perguntas e respostas sobre o phpGrid
+
+Convenções:
+- APP é o diretório aonde se encontra o sistema.
+- valores entre colchetes significa que você pode usar qualquer um dos valores.
+- o sistema sempre trabalha com a convenção de nomes, da seguinte forma: modulo_controller_action
+
+:: Como criar um Js ou CSS para minha action ?
+no diretório APP/webroot/css crie o arquivo seguindo a seguinte convenção :
+módulo_controller_action.css
+
+por exemplo:
+se você precisa de um CSS da action "listar" do controller "usuarios" e módulo "sistema"
+o arquivo deve ficar da seguinte forma:
+
+sistema_usuarios_lista.[css|js]
+
+lembrando que no caso do arquivo "js", o mesmo deve ser criado no diretório "APP/webroot/js".
+
+:: Como definir o JS ou CSS que eu quero usar a partir da minha View ?
+dentro da view, você pode usar o seguinte comando:
+
+$this->Html->setHead('css','login');
+
+Este comando irá incluir dentro do "meta" o arquivo seguindo a "convenção de nomes"
+por exemplo, se você estiver no módulo "sistema", controller "usuarios" e em qualquer view, o seu arquivo 
+deve ter o seguinte nome:
+
+sistema_usuarios_login.[css|js]
+
+e tal arquivo deve ser criado em APP/webroot/[css|js]/sistema_usuarios_login.[css|js]
+
