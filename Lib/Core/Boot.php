@@ -15,35 +15,6 @@ class Boot {
 	public $viewVars = array();
 
 	/**
-	 * Incrementa o Head do layout
-	 * 
-	 * o nome do arquivo será incrementado com o nome do controller
-	 * 
-	 * @param	string	$tipo	Tipo da tab head
-	 * @param	string	$t		Nome do arquivo CSS ou JS
-	 * @return	void
-	 */
-	public function head($tipo='', $t='')
-	{
-		switch($tipo)
-		{
-			case 'css':
-				$link = htmlentities('<link rel="stylesheet" type="text/css" href="'.$this->viewVars['base'].'css/'.strtolower(strtolower($this->viewVars['module'])).'_'.strtolower(strtolower($this->viewVars['controller'])).'_'.$t.'.css" />');
-				break;
-			case 'js':
-				$link = htmlentities('<script type="text/javascript" src="'.$this->viewVars['base'].'js/'.strtolower(strtolower($this->viewVars['module'])).'_'.strtolower(strtolower($this->viewVars['controller'])).'_'.$t.'.js"></script>');
-				break;
-			case 'texto':
-				$link = $t;
-				break;
-		}
-		if (isset($link))
-		{
-			array_push($this->viewVars['head'],$link);
-		}
-	}
-
-	/**
 	 * Renderiza o layout a view solicitada via GET
 	 * 
 	 * @access	public
