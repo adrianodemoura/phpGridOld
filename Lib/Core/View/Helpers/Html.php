@@ -59,6 +59,8 @@ class Html {
 	 */
 	public function getInput($cmp='', $e=array(), $linha=array())
 	{
+		$propDiv 		= isset($e['input']['div']) 	? $e['input']['div'] : null;
+		if (!empty($propDiv)) unset($e['input']['div']);
 		$e['type'] 		= isset($e['type'])  ? $e['type'] :  'text';
 		$opcs			= isset($e['input']) ? $e['input'] : array();
 		$opcs['name']  	= $this->domId($cmp,'name');
@@ -75,8 +77,8 @@ class Html {
 
 		$opcs['type'] 	= (isset($opcs['type']))  	? $opcs['type'] 	: 'text';
 		$opcs['class'] 	= (isset($opcs['class'])) 	? $opcs['class'] 	: 'lista_input in_'.strtolower($a['2']);
-		$idDiv			= (isset($opcs['idDiv'])) 	? $opcs['idDiv'] 	: null;
-		if (!empty($idDiv)) unset($opcs['idDiv']);
+		//$idDiv			= (isset($opcs['idDiv'])) 	? $opcs['idDiv'] 	: null;
+		//if (!empty($idDiv)) unset($opcs['idDiv']);
 
 		if (isset($opcs['options'])) $opcs['type'] = 'select';
 
@@ -196,7 +198,13 @@ class Html {
 				$input .= " />";
 		}
 		$div = "<div";
-		if (!empty($idDiv)) $div .= " id='$idDiv'";
+		if (!empty($propDiv))
+		{
+			foreach($propDiv as $_tag => $_vlr)
+			{
+				$div .= " $_tag='$_vlr'";
+			}
+		}
 		$div .= ">$input</div>\n";
 		return $div;
 	}

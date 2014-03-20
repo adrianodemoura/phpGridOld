@@ -1,6 +1,6 @@
 <?php
 	$this->Html->setHead('css','sistema_usuarios_login');
-	$inputUsu['input'] = array('value'=>'admin@admin.com.br','class'=>'form-control','placeholder'=>'e-mail','autofocus'=>'autofocus');
+	$inputUsu['input'] = array('value'=>'admin@admin.com.br','class'=>'form-control','placeholder'=>'e-mail','autofocus'=>'autofocus','div'=>array('style'=>'margin-bottom: 5px;'));
 	$inputEma['input'] = array('value'=>'admin','type'=>'password','placeholder'=>'senha','class'=>'form-control');
 ?>
 <div class='container-fluid'>
