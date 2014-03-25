@@ -193,7 +193,9 @@ class Controller {
 	/**
 	 * Exibe a tela de listagem do cadastro corrente
 	 * 
-	 * - Os parâmetros pag (página), ord (ordem), dir(direção) são OBRIGATÓRIOS, caso contrário o sistema vai criá-los automaticamente.
+	 * - Os parâmetros pag (página), ord (ordem), dir(direção) são OBRIGATÓRIOS, 
+	 * caso contrário o sistema vai criá-los automaticamente e redirecionár.
+	 * - A página fica na sessão.
 	 *
 	 * @param 	array 	
 	 * @return 	void
@@ -292,12 +294,12 @@ class Controller {
 		$f = isset($this->viewVars['ferramentas']) ? $this->viewVars['ferramentas'] : array();
 		if (!isset($f['excluir']))
 		{
+			$link = $this->viewVars['base'].strtolower($this->module).'/'.strtolower($this->controller).'/excluir/id:*id*';
 			$f['excluir']['tit'] 	= 'Excluir';
-			$f['excluir']['link'] 	= $this->viewVars['base']
-				.strtolower($this->module).'/'
-				.strtolower($this->controller)
-				.'/excluir/id:*id*';
+			$f['excluir']['link'] 	= $link;
 			$f['excluir']['title'] 	= 'Clique aqui para excluir este registro';
+			$f['excluir']['onclick']= "return confirm('Você tem certeza em excluir este registro')";
+			//$f['excluir']['onclick']= 'return false';
 		}
 		$this->viewVars['ferramentas'] = $f;
 

@@ -181,11 +181,11 @@ $(document).ready(function()
 				<input type='checkbox' class='cxLista' name='cx[<?= $ids ?>]' id='cx<?= ($_l+1) ?>' />
 			</td>
 
-			<?php // loop nas ferramentas
+			<?php // loop nas ferramentas de cada linha
 			foreach($ferramentas as $_fer => $_prop) : 
 				$_prop['title'] = isset($_prop['title']) ? $_prop['title'] : $_fer;
 				$arqBt 			= 'bt_'.$_fer.'.png';
-				if (strpos($_prop['link'], '*'))
+				if (strpos($_prop['link'], '*')) // substituindo o campo pelo valor do campo
 				{
 					foreach($primaryKey as $_l2 => $_cmp)
 					{ 
@@ -195,7 +195,11 @@ $(document).ready(function()
 				}
 				?>
 				<td>
-					<a href='<?= $_prop['link'] ?>'>
+					<a href='<?= $_prop['link'] ?>' 
+					<?php if (isset($_prop['onclick'])) : ?>
+						onclick="<?= $_prop['onclick'] ?>"
+					<?php endif; ?>
+					>
 						<img src='<?= $base ?>img/<?= $arqBt ?>' title='<?= $_prop['title'] ?>' /> 
 					</a>
 				</td>
