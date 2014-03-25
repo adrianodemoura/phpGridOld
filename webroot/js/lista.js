@@ -1,10 +1,13 @@
 $(document).ready(function()
 {
 	$("#cxSel").change(function() 
-	{
-		$("#marcador").val($(this).val()); 
-		console.log($(this).val());
-		//$("#formLista").submit(); 
+	{ 
+		if ($(this).val())
+		{
+			$("#marcador").val($(this).val()); 
+			$("#formLista").attr("action",$(this).val());
+			$("#formLista").submit(); 
+		}
 	});
 
 	$("#lista #tabela select").change(function()

@@ -340,30 +340,51 @@ class Model {
 	 */
 	public function exclude($data=array())
 	{
-		$_data['0'][$this->name] = $data;
-		$this->data = $this->getData($_data);
+		$this->data = $this->getData($data);
 
 		if (!$this->beforeExclude()) return false;
 
-		$where = '';
-		// dando um loop na data pra criar cada sql
-		foreach($this->data['0'][$this->name] as $_cmp => $_vlr)
+		$sqls = array();
+		foreach($data as $_l => $_arrMods)
 		{
-			if (!empty($where)) $where .= ' AND ';
-			if (is_numeric($_vlr))
+			$where = '';
+			foreach($_arrMods[$this->name] as $_cmp => $_vlr)
 			{
-				$where .= "$_cmp=$_vlr";
-			} else
-			{
-				$where .= "$_cmp='$_vlr'";
+				if (!empty($where)) $where .= ' AND ';
+				if (is_numeric($_vlr))
+				{
+					$where .= "$_cmp=$_vlr";
+				} else
+				{
+					$where .= "$_cmp='$_vlr'";
+				}
 			}
+			$sql = 'DELETE FROM '.$this->tabela.' WHERE '.$where;
+			array_push($sqls, $sql);
 		}
-		if (empty($where)) die(debug('Impossível excluir registro sem um filtro !!!'));
-		$sql = 'DELETE FROM '.$this->tabela.' WHERE '.$where;
-		$this->query($sql);
-		$erro = $this->db->errorInfo();
-		if (!empty($erro['1'])) die(debug($erro));
-		return true;
+
+		try
+		{
+			$this->open();
+			$this->db->beginTransaction();
+			array_push($this->sqls,array('sql'=>'BEGIN;','ts'=>0.0001));
+			foreach($sqls as $_l => $_sql)
+			{
+				$ini = microtime(true);
+				$this->db->exec($_sql);
+				$ts = microtime(true);
+				$ts = round(($ts-$ini),6);
+				array_push($this->sqls,array('sql'=>$_sql,'ts'=>$ts));
+			}
+			array_push($this->sqls,array('sql'=>'END;','ts'=>0.0001));
+			$this->db->commit();
+			return true;
+		} catch(PDOException $e)
+		{
+			$this->db->rollBack();
+			$this->erro = $e->getMessage();
+			return false;
+		}
 	}
 
 	/**

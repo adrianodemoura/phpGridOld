@@ -298,7 +298,7 @@ class Controller {
 			$f['excluir']['tit'] 	= 'Excluir';
 			$f['excluir']['link'] 	= $link;
 			$f['excluir']['title'] 	= 'Clique aqui para excluir este registro';
-			$f['excluir']['onclick']= "return confirm('Você tem certeza em excluir este registro')";
+			$f['excluir']['onclick']= "return confirm('Você tem certeza em excluir este registro ???')";
 			//$f['excluir']['onclick']= 'return false';
 		}
 		$this->viewVars['ferramentas'] = $f;
@@ -336,9 +336,10 @@ class Controller {
 		{
 			if (isset($_POST['cx']))
 			{
+				debug($_POST['cx']);
+				debug($_POST['marcador']);
 				foreach($_POST['cx'] as $_ids => $_ok)
 				{
-					
 				}
 				$this->viewVars['dados'] = $_POST['cx'];
 				$msg = 'Os Registros foram aplicados com sucesso ...';
@@ -370,20 +371,47 @@ class Controller {
 	/**
 	 * Exibe a tela de exclusão de um registro
 	 *
+	 * @param  array Matriz com os campos e valores a serem excluído no model corrente
 	 * @return void
 	 */
 	public function excluir()
 	{
 		$modelClass = $this->modelClass;
-		if ($this->$modelClass->exclude($this->params))
+		$data		= array();
+		$l 			= 0;
+		foreach($this->params as $_cmp => $_vlr)
 		{
-			$this->setMsgFlash('O Registro foi excluído com sucesso ...','msgFlashErro');
-			$this->redirect(strtolower($this->module),strtolower($this->controller),'lista');
+			$data[$l][$modelClass][$_cmp] = $_vlr;
+			$l++;
+		}
+		if (empty($data))
+		{
+			foreach($_POST['cx'] as $_cmps => $_vlr)
+			{
+				$a = explode('=', $_cmps);
+				$data[$l][$modelClass][$a['0']] = $a['1'];
+				$l++;
+			}
+		}
+
+		if (!empty($data))
+		{
+			if ($this->$modelClass->exclude($data))
+			{
+				$msg = 'O Registro foi excluído com sucesso ...';
+				if (isset($_POST['cx'])) $msg = 'Os registros foram excluídos com sucesso';
+				$this->setMsgFlash($msg,'msgFlashErro');
+				if (!isset($this->redirectOff)) $this->redirect(strtolower($this->module),strtolower($this->controller),'lista');
+			} else
+			{
+				$msg = !empty($this->$modelClass->erro) ? $this->$modelClass->erro : 'Erro ao tentar excluir registro !!!';
+				$this->setMsgFlash($msg,'msgFlashErro');
+				if (!isset($this->redirectOff)) $this->redirect(strtolower($this->module),strtolower($this->controller),'lista');
+			}
 		} else
 		{
-			$msg = !empty($this->$modelClass->erro) ? $this->$modelClass->erro : 'Erro ao tentar excluir registro !!!';
-			$this->setMsgFlash($msg,'msgFlashErro');
-			$this->redirect(strtolower($this->module),strtolower($this->controller),'lista');
+			$this->setMsgFlash('Nenhum registro foi marcado para exclusão !!!','msgFlashErro');
+			if (!isset($this->redirectOff)) $this->redirect(strtolower($this->module),strtolower($this->controller),'lista');
 		}
 	}
 
@@ -452,9 +480,9 @@ class Controller {
 		if ($params['pag']=='*')
 		{
 			$params['pag']=1;
-			//debug($params['order']);
 		}
-		
+
+		// dando um loope nos parâmetros
 		foreach($this->viewVars['params'] as $_cmp => $_vlr)
 		{
 			if ($_cmp!='cmps')

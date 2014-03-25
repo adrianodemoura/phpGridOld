@@ -70,10 +70,7 @@ $(document).ready(function()
 			<input type='button' class='btn btn-success' name='SalvarTodos' id='btSalvarT' value='Salvar Todos' 
 				onclick='$("#formLista").submit();' />
 			
-			<?php if (isset($marcadores)) : 
-				array_push($this->viewVars['onRead'],'$("#cxSel").change(function() 
-				{ $("#marcador").val($(this).val()); $("#formLista").submit(); })');
-			?>
+			<?php if (isset($marcadores)) : ?>
 			
 			<select name='cxSel' id='cxSel' >
 				<option value=''>-- Aplicar aos Marcadores --</option>
