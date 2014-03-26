@@ -197,7 +197,16 @@ class Controller {
 	 * caso contrário o sistema vai criá-los automaticamente e redirecionár.
 	 * - A página fica na sessão.
 	 *
-	 * @param 	array 	
+	 * @param 	modelClass
+	 * @param	params
+	 * @param	título da página
+	 * @param	Parâmetros da página, ordem, direção e página
+	 * @param	Filtros
+	 * @param	Campos que vão compor a lista
+	 * @param	Url Retorno, usada quando o formulário é postado
+	 * @param	Opções para marcadores
+	 * @param	Botões que vão no início da lista (novo, salvarTodos)
+	 * @param	Ferramentas da lista, será repetido em cada linha 	
 	 * @return 	void
 	 */
 	public function lista()
@@ -265,6 +274,25 @@ class Controller {
 			$this->viewVars['fields'] = $fields;
 		}
 		$this->viewVars['urlRetorno'] = isset($this->viewVars['urlRetorno']) ? $this->viewVars['urlRetorno'] : $this->viewVars['aqui'];
+
+		// botões da lista
+		if (!isset($this->viewVars['botoesLista']['0']))
+		{
+			$this->viewVars['botoesLista']['0']['value'] 	= 'Novo';
+			$this->viewVars['botoesLista']['0']['id']		= 'btNovo';
+			$this->viewVars['botoesLista']['0']['type']		= 'button';
+			$this->viewVars['botoesLista']['0']['class'] 	= 'btn btn-primary';
+			$this->viewVars['botoesLista']['0']['onclick']	= '$("#novo").fadeIn(); $("#ferramentas").fadeOut(); $("#filtros").fadeOut(); $("#tabela").fadeOut();';
+		}
+		
+		if (!isset($this->viewVars['botoesLista']['1']))
+		{
+			$this->viewVars['botoesLista']['1']['value'] 	= 'Salvar Todos';
+			$this->viewVars['botoesLista']['1']['id']		= 'btSalvarT';
+			$this->viewVars['botoesLista']['1']['type']		= 'button';
+			$this->viewVars['botoesLista']['1']['class'] 	= 'btn btn-success';
+			$this->viewVars['botoesLista']['1']['onclick']	= '$("#formLista").submit();';
+		}
 
 		// opções para os marcadores
 		$m = isset($this->viewVars['marcadores']) ? $this->viewVars['marcadores'] : array();

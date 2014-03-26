@@ -50,7 +50,8 @@ class Usuario extends SistemaAppModel {
 		(
 			'tit'		=> 'Ativo',
 			'filtro'	=> true,
-			'options'	=> array('1'=>'Sim','0'=>'Não')
+			'options'	=> array('1'=>'Sim','0'=>'Não'),
+			'emptyFiltro'	=> '-- Ativos --',
 		),
 		'nome'		=> array
 		(
@@ -80,13 +81,15 @@ class Usuario extends SistemaAppModel {
 		'cidade_id'	=> array
 		(
 			'tit'		=> 'Cidade',
-			'belongsTo'	=> array
+			'belongsTo' 	=> array
 			(
 				'Cidade'	=> array
 				(
-					'key'			=> 'id',
-					'fields'		=> array('nome','uf'),
-					'order'			=> array('nome')
+					'key'	=> 'id',
+					'fields'=> array('id','nome','uf'),
+					'order'	=> array('nome','uf'),
+					'ajax'	=> 'sistema/cidades/get_options/',
+					'txtPesquisa' => 'Digite o nome da cidade para pesquisar ...',
 				),
 			),
 		),

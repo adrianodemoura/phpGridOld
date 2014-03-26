@@ -63,15 +63,23 @@ $(document).ready(function()
 			<div style='float: left; margin: 0px 10px 0px 0px;'><!-- paginação -->
 			<?= $this->element('paginacao') ?>
 			</div><!-- fim paginação -->
-				
+
+			<?php 
+			if (isset($botoesLista)) : ?>
 			<div style='float: left; margin: 0px 10px 0px 0px;'><!-- botoes -->
-			<input type='button' class='btn btn-primary' name='ExibirNovo' id='btNovo' value='Novo' 
-				onclick='$("#novo").fadeIn(); $("#ferramentas").fadeOut(); $("#filtros").fadeOut(); $("#tabela").fadeOut();' />
-			<input type='button' class='btn btn-success' name='SalvarTodos' id='btSalvarT' value='Salvar Todos' 
-				onclick='$("#formLista").submit();' />
+			<?php
+			foreach($botoesLista as $_l => $_arrProp)
+			{
+				echo "<input";
+				foreach($_arrProp as $_tag => $_vlr) echo " $_tag='$_vlr'";
+				echo " /> \n";
+			}
+			?>
+			</div>
+			<?php endif ?>
 			
 			<?php if (isset($marcadores)) : ?>
-			
+			<div style='float: left; margin: 9px 0px 0px 0px;'><!-- marcadores -->
 			<select name='cxSel' id='cxSel' >
 				<option value=''>-- Aplicar aos Marcadores --</option>
 				<?php foreach($marcadores as $_txt => $_link) : ?>
@@ -80,7 +88,7 @@ $(document).ready(function()
 			</select>
 			
 			<?php endif ?>
-			</div><!-- fim botoes -->
+			</div><!-- fim marcadores -->
 
 			</div><!-- fim ferramentas_topo -->
 
