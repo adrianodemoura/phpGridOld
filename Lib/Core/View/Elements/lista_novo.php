@@ -58,7 +58,6 @@ $(document).ready(function()
 		$a = explode('.',$_cmp);
 		$p = $this->viewVars['esquema'][$a['0']][$a['1']];
 		$t = $this->viewVars['esquema'][$a['0']][$a['1']]['tit'];
-		if (isset($p['belongsTo'])) $t = substr($t,0,strlen($t)-2);
 		if (!isset($p['edicaoOff'])) :
 	?>
 	<th class="th<?= $this->Html->domId($a['1']) ?>">

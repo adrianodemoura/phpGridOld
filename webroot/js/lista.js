@@ -51,6 +51,42 @@ $(document).ready(function()
 		$('#ajaxPC').html(1);
 		setAjaxTab();
 	});
+
+	// validação do form
+	$('#formLista').submit(function() 
+	{
+		var msgErro	= '';
+		var erros	= 0;
+		$.each(campos, function(index, object) 
+		{
+		    $.each(object, function(cmp, arrProp)
+		    {
+		    	var pri = arrProp['primary'];
+		    	var obr = arrProp['obrigatorio'];
+		    	if (pri==undefined && obr!=undefined)
+		    	{
+		    		for(var i=1; i<21; i++)
+		    		{
+		    			var id = "#"+i+index+cmp.capitalize();
+		    			vlr = $(id).val();
+		    			if (vlr!=undefined)
+		    			{
+							if (vlr.length==0)
+							{
+								msgErro = 'O Campo '+cmp+', é de preenchimento obrigatório !!!';
+								erros++;
+							}
+						}
+		    		}
+		    	}
+		    });
+		});
+		if (erros>0)
+		{
+			alert(msgErro);
+			return false;
+		} else return true;
+	});
 });
 
 function showLista()

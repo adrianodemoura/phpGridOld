@@ -4,47 +4,6 @@
 	$this->Html->setHead('js','lista');
 ?>
 
-<script>
-$(document).ready(function()
-{
-	$('#formLista').submit(function() 
-	{
-		var msgErro	= '';
-		var erros	= 0;
-		$.each(campos, function(index, object) 
-		{
-		    $.each(object, function(cmp, arrProp)
-		    {
-		    	var pri = arrProp['primary'];
-		    	var obr = arrProp['obrigatorio'];
-		    	if (pri==undefined && obr!=undefined)
-		    	{
-		    		for(var i=1; i<21; i++)
-		    		{
-		    			var id = "#"+i+index+cmp.capitalize();
-		    			vlr = $(id).val();
-		    			if (vlr!=undefined)
-		    			{
-							if (vlr.length==0)
-							{
-								msgErro = 'O Campo '+cmp+', é de preenchimento obrigatório !!!';
-								erros++;
-							}
-						}
-		    		}
-		    	}
-		    });
-		});
-		if (erros>0)
-		{
-			alert(msgErro);
-			return false;
-		} else return true;
-	});
-});
-
-</script>
-
 <?php $this->element('ajax_form'); ?>
 
 <div id='lista' style='display: table; clear: both;'>
@@ -158,9 +117,8 @@ $(document).ready(function()
 			if (isset($p['belongsTo']))
 			{
 				$c = $this->Html->getFieldRel($p['belongsTo']);
-				$t = substr($t,0,strlen($t)-2);
 			}
-			
+
 			$l = $base.strtolower($module.'/'.$controller.'/lista/pag:'
 				.$params['pag'].'/ord:'.str_replace('.', '_', $c).'/dir:'.$d);
 			?>
@@ -222,7 +180,7 @@ $(document).ready(function()
 					$cmp = ($_l+1).'.'.$a['0'].'.'.$a['1'];
 					$p['value'] = $_arrMods[$a['0']][$a['1']];
 			?>
-				<td align='center'>
+				<td align='center' id='td<?= $this->Html->domId(($_l+1).'.'.$a['1']) ?>' class="td<?= $this->Html->domId($a['1']) ?>">
 					<?php
 						echo $this->Html->getInput($cmp,$p,$this->data[$_l]);
 						if (isset($p['mascara']))

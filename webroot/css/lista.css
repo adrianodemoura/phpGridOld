@@ -134,3 +134,12 @@
 	text-decoration: blink;
 	background-color:#ff0000 !important;
 }
+
+#lista .div_ajax
+{
+	float: left;
+	min-width: 40px;
+	width: auto;
+	/*background-color: #ddd;*/
+	margin: 0px 8px 0px 0px;
+}

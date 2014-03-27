@@ -44,7 +44,7 @@ class Html {
 		foreach($a as $_l => $_n)
 		{
 			$na	.= "[$_n]";
-			$id .= ucfirst("$_n");
+			$id .= str_replace('_id','Id',ucfirst("$_n"));
 		}
 		if ($tipo=='id') return $id; else return $na;
 	}
@@ -175,7 +175,7 @@ class Html {
 				$input .= " />";
 				$vlr = '';
 
-				$input .= "<div id='".$ajax['cmp']."' style='width 400px; float: left; margin: 0px 8px 0px 0px;'>".$ajax['value']."</div>";
+				$input .= "<div id='".$ajax['cmp']."' class='div_ajax'>".$ajax['value']."</div>";
 				$input .= "<img src='".$this->base."img/bt_ajax.png' class='bt_lista_ajax' style='float: right;'
 							onclick='
 								$(\"#ajaxTit\").html(\"".$ajax['titPesq']."\");

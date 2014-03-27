@@ -52,7 +52,7 @@ class Bairro extends SistemaAppModel {
 		),
 		'regional_id'		=> array
 		(
-			'tit'	=> 'RegionalId',
+			'tit'	=> 'Regional',
 			'filtro'=> true,
 			//'edicaoOff'		=> true,
 			'emptyFiltro'	=> '-- Escolha uma Regional --',
@@ -86,7 +86,7 @@ class Bairro extends SistemaAppModel {
 		),
 		'cidade_id'			=> array
 		(
-			'tit'			=> 'CidadeId',
+			'tit'			=> 'Cidade',
 			//'edicaoOff'		=> true,
 			'belongsTo' 	=> array
 			(
