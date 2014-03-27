@@ -106,3 +106,17 @@ pre
 	background-color:#000;
 	display:none;
 }
+
+.erro_sql
+{
+	color: red;
+	font-weight: bold;
+}
+
+.erros_lista
+{
+	margin: 15px 0px 0px 0px;
+	font-size: 10px;
+	font-weight: bold;
+	color: red;
+}

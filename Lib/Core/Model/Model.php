@@ -85,6 +85,14 @@ class Model {
 	public $habtmOff 	= false;
 
 	/**
+	 * Matriz com as propriedades de cada campo do model corrente
+	 * 
+	 * @var		array
+	 * @access	public
+	 */
+	public $esquema 	= array();
+
+	/**
 	 * Matriz com as propriedades de cada campo de belongsTo ou Habtm
 	 * 
 	 * segue o mesmo exemplo de esquema.
@@ -109,6 +117,14 @@ class Model {
 	 * @access	public
 	 */
 	public $dateFormat		= 'd/m/Y H:i:s';
+
+	/**
+	 * Erros, quando na execusão de alguma sql
+	 *
+	 * @var		array
+	 * @access	public
+	 */
+	public $erros			= array();
 
 	/**
 	 * Executa start do Obejeto Model
@@ -259,18 +275,25 @@ class Model {
 			foreach($sqls as $_l => $_sql)
 			{
 				$ini = microtime(true);
-				$this->db->exec($_sql);
+				$res = @$this->db->exec($_sql);
 				$ts = microtime(true);
 				$ts = round(($ts-$ini),6);
+				if (strlen($res)==0)
+				{
+					$err 	= $this->db->errorInfo();
+					$_sql = '<div class="erro_sql">erro: '.$_sql.' '.$err['2'].'</div>';
+					$this->erros[$_l] = $err['1'].' - '.$err['2'];
+				}
 				array_push($this->sqls,array('sql'=>$_sql,'ts'=>$ts));
 			}
 			array_push($this->sqls,array('sql'=>'END;','ts'=>0.0001));
 			$this->db->commit();
 			return true;
-		} catch(PDOException $e)
+		} catch (PDOException $e)
 		{
 			$this->db->rollBack();
-			$this->erro = $e->getMessage();
+			debug($e->getMessage());
+			array_push($this->erros,$e->getMessage());
 			return false;
 		}
 	}

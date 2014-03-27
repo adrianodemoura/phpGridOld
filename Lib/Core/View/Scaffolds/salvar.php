@@ -18,6 +18,10 @@
 </center>
 
 	<div>
+		<?php if (isset($erros)) debug($erros); ?>
+	</div>
+
+	<div>
 		<?php if (isset($dados)) debug($dados); ?>
 	</div>
 </div>

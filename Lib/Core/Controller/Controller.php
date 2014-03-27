@@ -347,6 +347,13 @@ class Controller {
 				.strtolower($this->controller).'_lista.js"></script>');
 			array_push($this->viewVars['head'],$link);
 		}
+		
+		// verifica erros da lista
+		if (isset($_SESSION['errosLista']))
+		{
+			$this->viewVars['erros'] = $_SESSION['errosLista'];
+			unset($_SESSION['errosLista']);
+		}
 	}
 
 	/**
@@ -380,17 +387,25 @@ class Controller {
 			//debug($this->data);
 			if (!$this->$modelClass->save($this->data))
 			{
-				$this->viewVars['msgErro'] = $this->$modelClass->erro;
+				$this->viewVars['erros'] = $this->$modelClass->erros;
 			} else
 			{
 				$this->viewVars['msgOk'] = 'Os Registros foram salvos com sucesso !!!';
 				$this->viewVars['dados'] = $this->data;
+				if (!empty($this->$modelClass->erros))
+				{
+					$this->viewVars['erros'] = $this->$modelClass->erros;
+				}
 			}
 			if (!empty($this->viewVars['urlRetorno']))
 			{
 				$msg = 'O Registro foi salvo com sucesso ...';
 				if (isset($this->data['1'])) $msg = 'Os Registros foram salvos com sucesso ...';
 				$this->setMsgFlash($msg,'msgFlashOk');
+				if (!empty($this->$modelClass->erros))
+				{
+					$_SESSION['errosLista'] = $this->$modelClass->erros;
+				}
 				header('Location: '.$this->viewVars['urlRetorno']); die();
 			}
 		}

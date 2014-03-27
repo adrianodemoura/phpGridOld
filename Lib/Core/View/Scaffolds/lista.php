@@ -131,6 +131,14 @@
 		</tr>
 		<?php endif ?>
 
+		<?php if (isset($erros[$_l])) : ?>
+		<tr>
+			<td colspan='100' class='td_lista_erro'>
+				<?= $erros[$_l] ?>
+			</td>
+		</tr>
+		<?php endif ?>
+
 		<tr><!-- linha a linha -->
 			<td>
 				<?php
@@ -191,6 +199,7 @@
 				</td>
 			<?php endforeach ?>
 		</tr>
+		
 		<?php endforeach ?>
 		</form>
 		</table><!-- fim linhas -->
