@@ -116,6 +116,7 @@
 			$a = explode('.',$_cmp); 
 			$d = ($params['dir']=='asc') ? 'desc' : 'asc';
 			$p = $this->viewVars['esquema'][$a['0']][$a['1']];
+			$i = isset($this->viewVars['esquema'][$a['0']][$a['1']]['key']) ? true : false; // é indice
 			$t = $p['tit'];
 			if (isset($p['belongsTo']))
 			{
@@ -126,9 +127,11 @@
 				.$params['pag'].'/ord:'.str_replace('.', '_', $c).'/dir:'.$d);
 			?>
 			<th class="th<?= $this->Html->domId($a['1']) ?>">
-				<a href='<?= $l ?>'>
-					<?= $t ?>
-				</a>
+				<?php if ($i) : ?>
+				<a href='<?= $l ?>'><?= $t ?></a>
+				<?php else : ?>
+				<?= $t ?>
+				<?php endif ?>
 			</th>
 			<?php endforeach ?>
 		</tr>

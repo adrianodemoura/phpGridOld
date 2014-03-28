@@ -99,6 +99,14 @@ class Bairro extends SistemaAppModel {
 					'txtPesquisa' => 'Digite o nome da cidade para pesquisar ...',
 				),
 			),
+		),
+		'criado'			=> array
+		(
+			'tit'			=> 'Criado',
+		),
+		'modificado'		=> array
+		(
+			'tit'			=> 'Modificado',
 		)
 	);
 }
