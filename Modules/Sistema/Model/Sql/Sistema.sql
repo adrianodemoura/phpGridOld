@@ -87,8 +87,11 @@ CREATE  TABLE IF NOT EXISTS `bairros` (
   `territorio_id` INT NOT NULL DEFAULT 1,
   `regional_id` INT NOT NULL DEFAULT 1 ,
   `cidade_id` INT NOT NULL DEFAULT 2302 ,
+  `criado` DATETIME NOT NULL DEFAULT '2014-03-27 22:10:50',
+  `modificado` DATETIME NOT NULL DEFAULT '2014-03-27 22:10:51',
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `i_nome` (`nome` ASC) ,
+  INDEX `i_modificado` (`modificado` ASC) ,
   INDEX `fk_territorio` (`territorio_id` ASC) ,
   INDEX `fk_regional` (`regional_id` ASC) ,
   INDEX `fk_cidades` (`cidade_id` ASC) )
