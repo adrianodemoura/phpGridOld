@@ -76,6 +76,14 @@ class Model {
 	public $belongsToOff = false;
 
 	/**
+	 * Relacionamento Habtm (HasAndBelongsToMany), n:n
+	 * 
+	 * @var		array
+	 * @access	public
+	 */
+	public $habtm		= array();
+
+	/**
 	 * Não retornar habtm HasAndBelongsToMany, relacionamento n para n
 	 * Este parâmetro é usado no método find
 	 * 
@@ -86,6 +94,37 @@ class Model {
 
 	/**
 	 * Matriz com as propriedades de cada campo do model corrente
+	 * As propriedades do esquema podem ser:
+	 * - tit			Título do campo
+	 * - notempty		Não valores em branco para o campo
+	 * - unique			Não aceita valores duplicados para o campo
+	 * - filtro			Se o campo faz parte do filtro do cadastro
+	 * - emptyFiltro	Mensagem para o comboBox do filtro do campo
+	 * - type			Tipo do campo, pode ser numeric, float, varchar, text
+	 * - edicaoOff		Se verdadeiro o campo não será editável nos formulários de manutenção
+	 * - mascara		Máscara do campo
+	 * - upperOff		Por padrão, todos os campos são salvos em maiúsculo, mas com este parâmetro não.
+	 * - options		Valores possíveis para o campo, no formato [valor][label]. exemplo: array(1=>'Sim',2=>'Não')
+	 * - belongsTo		Se o campo tem relacionamento 1:n
+	 * 
+	 * Sobre o belongsTo:
+	 * O parâmetro belongsTo, possuis algumas opções obrigatórias, como mostrado no exemplo abaixo.
+	 * exemplo:
+	 * 'cidade_id'	=> array
+	 * (
+	 *		'tit'		=> 'Cidade',
+	 *		'belongsTo' 	=> array
+	 *		(
+	 *			'Cidade'	=> array // nome do outro model
+	 *			(
+	 *				'key'	=> 'id',	// chave de relacionamento do outor model
+	 *				'fields'=> array('id','nome','uf'), // campos de exibição do relacionamento
+	 *				'order'	=> array('nome','uf'), // ordem do relacionamento
+	 *				'ajax'	=> 'sistema/cidades/get_options/', // busca via ajax do relacionamento
+	 *				'txtPesquisa' => 'Digite o nome da cidade para pesquisar ...', // texto de pesquisa
+	 *			),
+	 *		),
+	 *	)
 	 * 
 	 * @var		array
 	 * @access	public
@@ -197,6 +236,35 @@ class Model {
 	}
 
 	/**
+	 * Executa a validação de cada campo do model
+	 * As validações podem ser: 
+	 * - notnull, não aceita valores nulos
+	 * - unique, não aceita duplicidades
+	 * 
+	 * @return	boolean
+	 */
+	public function validate()
+	{
+		foreach($this->data as $_l	=> $_arrMods)
+		{
+			foreach($_arrMods[$this->name] as $_mod => $_arrCmps)
+			{
+				foreach($_arrCmps as $_cmp => $_vlr)
+				{
+					$tit	= isset($this->esquema[$_cmp]['tit']) 	? $this->esquema[$_cmp]['tit'] : $_cmp;
+					$empty 	= isset($this->esquema[$_cmp]['notempty']) 	? $this->esquema[$_cmp]['notempty'] : null;
+					if (!empty($empty) && empty($_vlr))
+					{
+						$this->erros[$_l] = 'O Campo '.$tit.' é de preenchimento obrigatório';
+					}
+				}
+			}
+		}
+		
+		return true;
+	}
+
+	/**
 	 * Salva um registro ou conjunto de registros no banco de dados
 	 * 
 	 * @param	array	$data	Matriz com os dados a serem salvos
@@ -213,6 +281,8 @@ class Model {
 		$lCm	= 0;
 		$lPk	= 0;
 		$this->data = $this->getData($data);
+
+		if (!$this->validate()) return false;
 
 		if (!$this->beforeSave()) return false;
 

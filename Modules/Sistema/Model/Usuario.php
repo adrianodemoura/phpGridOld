@@ -35,6 +35,22 @@ class Usuario extends SistemaAppModel {
 	public $alias		= 'Usuario';
 
 	/**
+	 * Relacionamento Habtm
+	 * 
+	 * @var		array
+	 * @access	public
+	 */
+	public $habtm	=> array
+	(
+		'Perfil'	=> array
+		(
+			'table'	=> 'usuarios_perfis',
+			'key'	=> 'usuario_id',
+			'keyFk'	=> 'perfil_id',
+		)
+	);
+
+	/**
 	 * Propriedade de cada campo da tabela usuários
 	 * 
 	 * @var		array
@@ -44,7 +60,7 @@ class Usuario extends SistemaAppModel {
 	(
 		'id'		=> array
 		(
-			'tit'	=> 'Id',
+			'tit'	=> 'Id'
 		),
 		'ativo'=> array
 		(

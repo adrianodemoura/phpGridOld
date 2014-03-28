@@ -406,7 +406,7 @@ class Controller {
 				{
 					$_SESSION['errosLista'] = $this->$modelClass->erros;
 				}
-				header('Location: '.$this->viewVars['urlRetorno']); die();
+				//header('Location: '.$this->viewVars['urlRetorno']); die();
 			}
 		}
 	}
