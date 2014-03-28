@@ -40,7 +40,7 @@ class Usuario extends SistemaAppModel {
 	 * @var		array
 	 * @access	public
 	 */
-	public $habtm	=> array
+	public $habtm	= array
 	(
 		'Perfil'	=> array
 		(
@@ -58,9 +58,9 @@ class Usuario extends SistemaAppModel {
 	 */
 	public $esquema 	= array
 	(
-		'id'		=> array
+		'id'			=> array
 		(
-			'tit'	=> 'Id'
+			'tit'		=> 'Id'
 		),
 		'ativo'=> array
 		(
@@ -69,32 +69,33 @@ class Usuario extends SistemaAppModel {
 			'options'	=> array('1'=>'Sim','0'=>'Não'),
 			'emptyFiltro'	=> '-- Ativos --',
 		),
-		'nome'		=> array
+		'nome'			=> array
 		(
-			'tit'	=> 'Nome',
+			'tit'		=> 'Nome',
+			'notEmpty'	=> true,
 		),
-		'acessos'	=> array
+		'acessos'		=> array
 		(
-			'tit'	=> 'Acessos',
-			'type'	=> 'numeric',
+			'tit'		=> 'Acessos',
+			'type'		=> 'numeric',
 			'edicaoOff'	=> true
 		),
 		'email'	=> array
 		(
-			'tit'	=> 'e-mail',
+			'tit'		=> 'e-mail',
 			'upperOff'	=> true,
 		),
-		'celular'	=> array
+		'celular'		=> array
 		(
-			'tit'	=> 'Celular',
-			'mascara'=> '(##)####-####',
+			'tit'		=> 'Celular',
+			'mascara'	=> '(##)####-####',
 		),
-		'trocar_senha'=> array
+		'trocar_senha'	=> array
 		(
 			'tit'		=> 'Trocar Senha',
 			'options'	=> array('1'=>'Sim','0'=>'Não')
 		),
-		'cidade_id'	=> array
+		'cidade_id'		=> array
 		(
 			'tit'		=> 'Cidade',
 			'belongsTo' 	=> array
@@ -111,13 +112,13 @@ class Usuario extends SistemaAppModel {
 		),
 		'ultimo_ip'	=> array
 		(
-			'tit'	=> 'Último IP',
-			'edicaoOff'=>true
+			'tit'		=> 'Último IP',
+			'edicaoOff'	=>true
 		),
-		'senha'		=> array
+		'senha'			=> array
 		(
-			'tit'	=> 'Senha',
-			'type'	=> 'password',
+			'tit'		=> 'Senha',
+			'type'		=> 'password',
 		),
 		'ultimo_acesso'	=> array
 		(

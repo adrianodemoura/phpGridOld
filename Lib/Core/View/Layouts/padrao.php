@@ -41,7 +41,7 @@
 			$p = array();
 
 			if (isset($_arrProp['key']) && $_arrProp['key']=='PRI') array_push($p, array('primary'=>1));
-			if (isset($_arrProp['null']) && $_arrProp['null']=='NO') array_push($p,array('obrigatorio'=>1));
+			if (isset($_arrProp['notEmpty'])) array_push($p,array('obrigatorio'=>1));
 
 			if (!empty($p) && empty($c)) $c .= "{ $_mod : { ";
 

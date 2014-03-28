@@ -49,6 +49,7 @@ class Perfil extends SistemaAppModel {
 		'nome'			=> array
 		(
 			'tit'		=> 'Nome',
+			'notEmpty'	=> true,
 		),
 		'criado'			=> array
 		(

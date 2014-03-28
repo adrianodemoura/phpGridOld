@@ -247,16 +247,13 @@ class Model {
 	{
 		foreach($this->data as $_l	=> $_arrMods)
 		{
-			foreach($_arrMods[$this->name] as $_mod => $_arrCmps)
+			foreach($_arrMods[$this->name] as $_cmp => $_vlr)
 			{
-				foreach($_arrCmps as $_cmp => $_vlr)
+				$tit	= isset($this->esquema[$_cmp]['tit']) 	? $this->esquema[$_cmp]['tit'] : $_cmp;
+				$empty 	= isset($this->esquema[$_cmp]['notEmpty']) 	? $this->esquema[$_cmp]['notEmpty'] : null;
+				if (!empty($empty) && empty($_vlr))
 				{
-					$tit	= isset($this->esquema[$_cmp]['tit']) 	? $this->esquema[$_cmp]['tit'] : $_cmp;
-					$empty 	= isset($this->esquema[$_cmp]['notempty']) 	? $this->esquema[$_cmp]['notempty'] : null;
-					if (!empty($empty) && empty($_vlr))
-					{
-						$this->erros[$_l] = 'O Campo '.$tit.' é de preenchimento obrigatório';
-					}
+					$this->erros[$_l] = 'O Campo '.$tit.' é de preenchimento obrigatório';
 				}
 			}
 		}
