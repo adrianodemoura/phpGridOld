@@ -29,9 +29,12 @@
 			<?php
 			foreach($botoesLista as $_l => $_arrProp)
 			{
-				echo "<input";
-				foreach($_arrProp as $_tag => $_vlr) echo " $_tag='$_vlr'";
-				echo " /> \n";
+				if (!empty($_arrProp))
+				{
+					echo "<input";
+					foreach($_arrProp as $_tag => $_vlr) echo " $_tag='$_vlr'";
+					echo " /> \n";
+				}
 			}
 			?>
 			</div>

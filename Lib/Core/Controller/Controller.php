@@ -384,7 +384,6 @@ class Controller {
 			}
 		} else
 		{
-			//debug($this->data);
 			if (!$this->$modelClass->save($this->data))
 			{
 				$this->viewVars['erros'] = $this->$modelClass->erros;
@@ -406,7 +405,7 @@ class Controller {
 				{
 					$_SESSION['errosLista'] = $this->$modelClass->erros;
 				}
-				header('Location: '.$this->viewVars['urlRetorno']); die();
+				//header('Location: '.$this->viewVars['urlRetorno']); die();
 			}
 		}
 	}

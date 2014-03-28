@@ -42,13 +42,14 @@ class Modulo extends SistemaAppModel {
 	 */
 	public $esquema = array
 	(
-		'id'		=> array
+		'id'			=> array
 		(
-			'tit'	=> 'Id',
+			'tit'		=> 'Id',
 		),
-		'nome'		=> array
+		'nome'			=> array
 		(
-			'tit'	=> 'Nome',
+			'tit'		=> 'Nome',
+			'notEmpty'	=> true,
 		),
 		'ativo'=> array
 		(

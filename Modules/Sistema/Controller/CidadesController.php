@@ -16,4 +16,14 @@ class CidadesController extends SistemaAppController {
 	 * @var		array
 	 */
 	public $Model = array('Cidade');
+
+	/**
+	 * 
+	 */
+	public function lista()
+	{
+		parent::lista();
+		$this->viewVars['botoesLista']['0'] = array();
+		$this->viewVars['botoesLista']['1'] = array();
+	}
 }
