@@ -7,6 +7,11 @@
 }
 .tabela .div_ajax
 {
+	text-align: left;
+}
+.tabela .div_ajax img
+{
+	float: right;
 }
 .tabela table
 {
