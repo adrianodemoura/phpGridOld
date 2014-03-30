@@ -1,0 +1,23 @@
+<div class='titFiltro'>Filtros:&nbsp;&nbsp;</div>
+<form name='formFiltro' id='formFiltro' method='post' action='<?= $base.strtolower($module).'/'.strtolower($controller).'/set_filtro' ?>' >
+<?php 
+	foreach($this->viewVars['filtros'] as $_cmp => $_arrProp) : 
+	array_push($this->viewVars['onRead'], 
+		'$("#Filtro'.ucfirst($_cmp).'").change(function() { this.form.submit(); })');
+?>
+	<div>
+	<select name='filtro[<?= $_cmp ?>]' id='Filtro<?= ucfirst($_cmp) ?>'>
+		<option value=''><?= $_arrProp['emptyFiltro'] ?></option>
+		<?php
+			foreach($_arrProp['options'] as $_vlr => $_show) : 
+			$s = isset($_SESSION['Filtros'][$module][$controller][$_cmp]) 
+				? $_SESSION['Filtros'][$module][$controller][$_cmp] 
+				: '';
+			if ($_vlr==$s && strlen($s)>0) $s = 'selected="selected"';
+		?>
+		<option <?= $s ?> value='<?= $_vlr ?>'><?= $_show ?></option>
+		<?php endforeach ?>
+	</select>
+	</div>
+<?php endforeach ?>
+</form>

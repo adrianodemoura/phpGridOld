@@ -1,0 +1,84 @@
+.tabela
+{
+}
+.tabela .in_nome
+{
+	width: 300px;
+}
+.tabela .div_ajax
+{
+}
+.tabela table
+{
+	clear: both;
+	background-color: #fff;
+	border-top: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+}
+.tabela table th,
+.tabela table td
+{
+	border-left: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+.tabela table td
+{
+	padding: 0px 5px 0px 5px;
+}
+.tabela table tr:hover
+{
+	cursor: pointer;
+	background-color: #ccc;
+}
+
+.tabela table input,
+.tabela table select
+{
+	border: none;
+	background-color: transparent;
+	border: 1px solid transparent;
+}
+.tabela table input:focus
+{
+	border: 1px solid #ccc;
+	background-color: yellow;
+}
+
+.tabela table th
+{
+	background-color: #535759;
+	color: #fff;
+	text-align: center;
+}
+.tabela table th a
+{
+	color: #fff;
+}
+
+.filtro
+{
+	clear: both;
+	background-color: #ddd;
+	line-height: 30px;
+}
+.filtro div
+{
+
+	float: left;
+	margin: 0px 5px 0px 0px;
+}
+.filtro .titFiltro
+{
+	float: left;
+}
+.filtro select
+{
+	background-color: #fff;
+	border: none;
+}
+
+.tabela .tdCriado input,
+.tabela .tdModificado input
+{
+	text-align: center;
+}
