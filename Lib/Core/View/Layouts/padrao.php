@@ -122,7 +122,7 @@
 	</div>
 	</div><!-- fim cabeçalho -->
 		
-	<div id='conteudo' class="container-fluid" style='margin-left: -18px;'>
+	<div id='conteudo'>
 		<?= $conteudo; ?>
 
 	</div><!-- fim conteudo -->

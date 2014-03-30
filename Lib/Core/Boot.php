@@ -243,7 +243,7 @@ class Boot {
 
 		// atualizando as variáveis locais
 		foreach($vars as $_var => $_vlr) ${$_var} = $_vlr;
-		$arq = 'View/Elements/'.$e.'.php';
+		$arq = 'View/Elements/'.$e.'.phtml';
 
 		require_once($arq);
 	}
