@@ -160,7 +160,7 @@ class Boot {
 			{
 				$this->$controller->viewVars['sql_dump'] 	= $this->$controller->$_mod->sqls;
 				$this->$controller->viewVars['primaryKey'] 	= $this->$controller->$_mod->primaryKey;
-				if (isset($this->$controller->$_mod->pag)) $this->$controller->viewVars['paginacao'] 	= $this->$controller->$_mod->pag;
+				if (isset($this->$controller->$_mod->pag) && isset($this->$controller->viewVars['paginacao'])) $this->$controller->viewVars['paginacao'] 	= $this->$controller->$_mod->pag;
 				if (isset($this->$controller->$_mod->esquema))
 				{
 					$this->$controller->viewVars['esquema'][$_mod] = $this->$controller->$_mod->esquema;

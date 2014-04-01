@@ -17,23 +17,23 @@
 
 		<?php $this->element('tabela_novo'); ?>
 
-		<div id='ferramentas'><!-- ferramentas_topo -->
-				
-			<div  style='float: left;'><!-- paginação -->
+		<div class='row ferramentas'><!-- ferramentas_topo -->
+			
+			<?php if (isset($this->viewVars['paginacao'])) : ?>
+			<div><!-- paginação -->
 			<?= $this->element('paginacao') ?>
 			</div><!-- fim paginação -->
+			<?php endif ?>
 
 			<?php 
 			if (isset($this->viewVars['botoesLista'])) : ?>
-			<div style='float: left; margin: 0px 10px 0px 0px;'><!-- botoes -->
+			<div class=''><!-- botoes -->
 			<?php
 			foreach($this->viewVars['botoesLista'] as $_l => $_arrProp)
 			{
 				if (!empty($_arrProp))
 				{
-					echo "<input";
-					foreach($_arrProp as $_tag => $_vlr) echo " $_tag='$_vlr'";
-					echo " /> \n";
+					echo "<input"; foreach($_arrProp as $_tag => $_vlr) echo " $_tag='$_vlr'"; echo " /> \n";
 				}
 			}
 			?>
@@ -41,26 +41,25 @@
 			<?php endif ?>
 				
 			<?php if (isset($this->viewVars['marcadores'])) : ?>
-			<div style='float: left; margin: 9px 0px 0px 0px;'><!-- marcadores -->
+			<div class=''><!-- marcadores -->
 			<select name='cxSel' id='cxSel' >
 				<option value=''>-- Aplicar aos Marcadores --</option>
 				<?php foreach($this->viewVars['marcadores'] as $_txt => $_link) : ?>
 					<option value='<?= $_link ?>'><?= $_txt ?></option>
 				<?php endforeach ?>
 			</select>
-				
-			<?php endif ?>
 			</div><!-- fim marcadores -->
+			<?php endif ?>
 
 		</div><!-- fim ferramentas_topo -->
 
-		<?php if (isset($this->viewVars['filtros'])) : ?>
-		<div class='filtro'>
+		<?php if (isset($this->viewVars['filtros']) && !empty($this->viewVars['filtros'])) : ?>
+		<div class='row filtro'>
 			<?php echo $this->element('filtro'); ?>
 		</div><!-- fim filtro -->
 		<?php endif ?>
 
-		<div class='tabela'><!-- tabela -->
+		<div class='row tabela'><!-- tabela -->
 		<?php echo $this->element('tabela'); ?>
 		</div><!-- fim tabela -->
 

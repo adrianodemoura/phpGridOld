@@ -92,7 +92,7 @@ function showLista()
 	$("#ajaxResp").html("");
 	$("#tampaTudo").fadeOut();
 	$("#ajaxForm").fadeOut(); 
-	$("#lista").fadeIn(); 
+	$(".lista").fadeIn(); 
 }
 
 function showAjaxForm()

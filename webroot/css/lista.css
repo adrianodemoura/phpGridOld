@@ -1,3 +1,60 @@
+/*----------------------------------------------------*/
+.ferramentas div
+{
+	float: left;
+	display: block;
+	margin-right: 10px;
+	line-height: 40px;
+}
+.ferramentas ul
+{
+	list-style: none;
+	margin: 6px 0px 0px 0px;
+	padding: 0px;
+}
+.ferramentas ul li
+{
+	float: left;
+	width: 30px;
+	line-height: 30px;
+	background-color: #fff;
+	text-align: center;
+	margin: 0px 6px 0px 0px;
+	border: 1px solid #ccc;
+}
+.ferramentas ul li a
+{
+	display: block;
+}
+.ferramentas ul li a:hover
+{
+	background-color: #428BCA;
+}
+
+/*----------------------------------------------------*/
+
+.filtro
+{
+	line-height: 30px;
+}
+.filtro div
+{
+
+	float: left;
+	margin: 0px 5px 0px 0px;
+}
+.filtro .titFiltro
+{
+	float: left;
+}
+.filtro select
+{
+	background-color: #fff;
+	border: none;
+}
+
+/*----------------------------------------------------*/
+
 .tabela
 {
 }
@@ -64,28 +121,6 @@
 .tabela table th a
 {
 	color: #fff;
-}
-
-.filtro
-{
-	clear: both;
-	background-color: #ddd;
-	line-height: 30px;
-}
-.filtro div
-{
-
-	float: left;
-	margin: 0px 5px 0px 0px;
-}
-.filtro .titFiltro
-{
-	float: left;
-}
-.filtro select
-{
-	background-color: #fff;
-	border: none;
 }
 
 .tabela .tdCriado input,

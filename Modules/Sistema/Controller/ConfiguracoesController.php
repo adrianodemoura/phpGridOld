@@ -40,8 +40,10 @@ class ConfiguracoesController extends SistemaAppController {
 	{
 		parent::lista();
 		$this->viewVars['botoesLista']['0'] = array();
-		$this->viewVars['botoesLista']['1'] = array();
-		$this->viewVars['marcadores'] = null;
+		$this->viewVars['marcadores'] 		= null;
+		unset($this->viewVars['paginacao']);
+		unset($this->viewVars['filtros']);
+		unset($this->viewVars['ferramentas']);
 	}
 
 	/**

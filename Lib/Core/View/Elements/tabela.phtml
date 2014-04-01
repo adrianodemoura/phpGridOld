@@ -7,8 +7,9 @@
 
 <?php if (!$_l) : ?>
 <tr><!-- cabeçalho das linhas -->
-	<th>
-	<input type='checkbox' name='cxAll' id='cxAll' title='clique aqui para selecionar todos'
+	<?php if (isset($this->viewVars['marcadores'])) : ?>
+		<th>
+		<input type='checkbox' name='cxAll' id='cxAll' title='clique aqui para selecionar todos'
 		<?php
 		array_push($this->viewVars['onRead'], '$("#cxAll").click(function(event) 
 		{
@@ -17,11 +18,14 @@
 			else
 				$(".cxLista").each(function() { this.checked = false; });
 		})');
-	?>
-	/>
-	</th>
-	<th style='text-align: center;' colspan='<?= count($ferramentas); ?>'>#
-	</th>
+		?>
+		/>
+		</th>
+	<?php endif ?>
+
+	<?php if (isset($this->viewVars['ferramentas'])) : ?>
+	<th style='text-align: center;' colspan='<?= count($ferramentas); ?>'>#</th>
+	<?php endif ?>
 
 	<?php
 	foreach($this->viewVars['fields'] as $_l2 => $_cmp) : 
@@ -59,6 +63,7 @@
 <?php endif ?>
 
 <tr><!-- linha a linha -->
+	<?php if (isset($this->viewVars['marcadores'])) : ?>
 	<td>
 		<?php
 			$ids = '';
@@ -70,9 +75,11 @@
 		?>
 		<input type='checkbox' class='cxLista' name='cx[<?= $ids ?>]' id='cx<?= ($_l+1) ?>' />
 	</td>
+	<?php endif ?>
 
 	<?php // loop nas ferramentas de cada linha
-	foreach($this->viewVars['ferramentas'] as $_fer => $_prop) : 
+		if (isset($this->viewVars['ferramentas'])) :
+		foreach($this->viewVars['ferramentas'] as $_fer => $_prop) : 
 		$_prop['title'] = isset($_prop['title']) ? $_prop['title'] : $_fer;
 		$arqBt 			= 'bt_'.$_fer.'.png';
 		if (strpos($_prop['link'], '*')) // substituindo o campo pelo valor do campo
@@ -93,7 +100,7 @@
 				<img src='<?= $base ?>img/<?= $arqBt ?>' title='<?= $_prop['title'] ?>' /> 
 			</a>
 		</td>
-	<?php endforeach ?>
+	<?php endforeach; endif ?>
 
 	<?php  // loop nos campos para escrever a coluna de cada linha
 		foreach($this->viewVars['primaryKey'] as $_l3 => $_cmp3) // campos primários
@@ -122,6 +129,11 @@
 <?php endforeach ?>
 </form>
 </table><!-- fim linhas -->
+
+<?php if (isset($this->viewVars['paginacao']['tot'])) : ?>
+
 <div style='margin: 0px 0px 0px 12px; font-size: 14px;'>
 	Total de registros: <?= number_format($this->viewVars['paginacao']['tot'],0,',','.'); ?>
 </div>
+
+<?php endif ?>
