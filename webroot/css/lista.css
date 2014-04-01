@@ -37,7 +37,8 @@
 .tabela table tr:hover
 {
 	cursor: pointer;
-	background-color: #ccc;
+	background-color: #428BCA;
+	color: #fff;
 }
 
 .tabela table input,
@@ -50,7 +51,8 @@
 .tabela table input:focus
 {
 	border: 1px solid #ccc;
-	background-color: yellow;
+	background-color: #535759;
+	color: #fff;
 }
 
 .tabela table th
