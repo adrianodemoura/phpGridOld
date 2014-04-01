@@ -49,6 +49,7 @@ class Bairro extends SistemaAppModel {
 		'nome'		=> array
 		(
 			'tit'	=> 'Nome',
+			'notEmpty'=>true,
 		),
 		'regional_id'		=> array
 		(
