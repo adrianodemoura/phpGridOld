@@ -1,6 +1,11 @@
-.thTrocar_senha
+.in_acessos,
+.in_ultimo_ip
 {
-	width: 120px;
-	display: block;
-	line-height: 22px;
+	width: 60px;
+	text-align: center;
+}
+
+.in_ultimo_ip
+{
+	width: 60px;
 }

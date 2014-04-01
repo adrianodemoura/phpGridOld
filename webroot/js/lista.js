@@ -10,17 +10,15 @@ $(document).ready(function()
 		}
 	});
 
-	$("#lista #tabela select").change(function()
+	$("#lista .tabela select").change(function()
 	{
-		$(this).css('color','#fff');
-		$(this).css('background-color','red');
+		$(this).addClass('inAlerta');
 		$("#btSalvarT").addClass('btAlerta');
 	});
 
-	$("#lista #tabela input:text").change(function()
+	$("#lista .tabela input:text").change(function()
 	{
-		$(this).css('color','#fff');
-		$(this).css('background-color','red');
+		$(this).addClass('inAlerta');
 		$("#btSalvarT").addClass('btAlerta');
 	});
 	

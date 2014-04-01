@@ -51,8 +51,8 @@
 .tabela table input:focus
 {
 	border: 1px solid #ccc;
-	background-color: #535759;
-	color: #fff;
+	background-color: #ccc;
+	color: #000;
 }
 
 .tabela table th
@@ -92,4 +92,11 @@
 .tabela .tdModificado input
 {
 	text-align: center;
+}
+
+.inAlerta
+{
+	color: #000;
+	font-weight: bold;
+	background-color: red;
 }
