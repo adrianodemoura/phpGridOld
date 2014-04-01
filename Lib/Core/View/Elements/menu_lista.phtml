@@ -1,10 +1,8 @@
 <?php $linksMenu = isset($this->viewVars['linksMenu']) ? $this->viewVars['linksMenu'] : null; ?>
 
-<div style='position: absolute; width: 130px; min-height: 200px;'><!-- menu -->
-
 <?php if (isset($linksMenu)) : ?>
 
-	<div style='position: absolute; width: 130px;'>
+	<div style='width: 220px;'>
 
 	<?php foreach($linksMenu as $_con => $_arrOpcs) : ?>
 
@@ -17,5 +15,3 @@
 	</div>
 
 <?php endif; ?>
-
-</div><!-- fim menu -->
