@@ -30,11 +30,8 @@ body
 }
 #conteudo
 {
-	/*background-color: #fff;
-	display: table;
-	min-height: 550px;*/
-	display: table;
-	min-height: 500px;
+	/*display: table;
+	min-height: 500px;*/
 }
 .msgFlashErro
 {
