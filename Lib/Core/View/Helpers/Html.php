@@ -76,7 +76,7 @@ class Html {
 		if ($e['type']=='password') $opcs['value'] = '';
 
 		$opcs['type'] 	= (isset($opcs['type']))  	? $opcs['type'] 	: 'text';
-		$opcs['class'] 	= (isset($opcs['class'])) 	? $opcs['class'] 	: 'lista_input in_'.strtolower($a['2']);
+		$opcs['class'] 	= (isset($opcs['class'])) 	? $opcs['class'] 	: 'in_'.strtolower($a['2']). ' lista_input';
 		//$idDiv			= (isset($opcs['idDiv'])) 	? $opcs['idDiv'] 	: null;
 		//if (!empty($idDiv)) unset($opcs['idDiv']);
 
@@ -197,7 +197,7 @@ class Html {
 				}
 				$input .= " />";
 		}
-		$div = "<div";
+		//$div = "<div";
 		if (!empty($propDiv))
 		{
 			foreach($propDiv as $_tag => $_vlr)
@@ -205,7 +205,9 @@ class Html {
 				$div .= " $_tag='$_vlr'";
 			}
 		}
-		$div .= ">$input</div>\n";
+		//$div .= ">";
+		$div = $input;
+		//$div .= </div>\n";
 		return $div;
 	}
 

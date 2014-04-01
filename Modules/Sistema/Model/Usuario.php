@@ -179,9 +179,9 @@ class Usuario extends SistemaAppModel {
 				}
 			}
 			// admin sempre ativo
-			if (isset($_arrMods['Usuario']['Ativo']) && isset($_arrMods['Usuario']['Id']))
+			if (isset($_arrMods['Usuario']['ativo']) && isset($_arrMods['Usuario']['id']))
 			{
-				if ($_arrMods['Usuario']['Id']=='1') $this->data[$_l]['Usuario']['Ativo'] = 1;
+				if ($_arrMods['Usuario']['id']=='1') $this->data[$_l]['Usuario']['ativo'] = 1;
 			}
 			// removendo acessos
 			if (isset($_arrMods['Usuario']['Acessos']))

@@ -1,6 +1,10 @@
 .tabela
 {
 }
+.tabela .in_uf
+{
+	width: 30px;
+}
 .tabela .in_nome
 {
 	width: 300px;
