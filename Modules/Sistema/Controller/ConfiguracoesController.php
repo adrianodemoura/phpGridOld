@@ -32,6 +32,19 @@ class ConfiguracoesController extends SistemaAppController {
 	}
 
 	/**
+	 * Exibe a lista de configuração
+	 *
+	 * @return void
+	 */
+	public function lista()
+	{
+		parent::lista();
+		$this->viewVars['botoesLista']['0'] = array();
+		$this->viewVars['botoesLista']['1'] = array();
+		$this->viewVars['marcadores'] = null;
+	}
+
+	/**
 	 * Salva o registro de configração no banco de dados
 	 * 
 	 * - Altera o valor da sessão sql_dump

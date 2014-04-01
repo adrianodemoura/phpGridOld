@@ -24,10 +24,10 @@
 			</div><!-- fim paginação -->
 
 			<?php 
-			if (isset($botoesLista)) : ?>
+			if (isset($this->viewVars['botoesLista'])) : ?>
 			<div style='float: left; margin: 0px 10px 0px 0px;'><!-- botoes -->
 			<?php
-			foreach($botoesLista as $_l => $_arrProp)
+			foreach($this->viewVars['botoesLista'] as $_l => $_arrProp)
 			{
 				if (!empty($_arrProp))
 				{
@@ -40,11 +40,11 @@
 			</div><!-- fim botoes -->
 			<?php endif ?>
 				
-			<?php if (isset($marcadores)) : ?>
+			<?php if (isset($this->viewVars['marcadores'])) : ?>
 			<div style='float: left; margin: 9px 0px 0px 0px;'><!-- marcadores -->
 			<select name='cxSel' id='cxSel' >
 				<option value=''>-- Aplicar aos Marcadores --</option>
-				<?php foreach($marcadores as $_txt => $_link) : ?>
+				<?php foreach($this->viewVars['marcadores'] as $_txt => $_link) : ?>
 					<option value='<?= $_link ?>'><?= $_txt ?></option>
 				<?php endforeach ?>
 			</select>
@@ -56,8 +56,8 @@
 
 		<?php if (isset($this->viewVars['filtros'])) : ?>
 		<div class='filtro'>
-		<?php echo $this->element('filtro'); ?>
-		</div>
+			<?php echo $this->element('filtro'); ?>
+		</div><!-- fim filtro -->
 		<?php endif ?>
 
 		<div class='tabela'><!-- tabela -->

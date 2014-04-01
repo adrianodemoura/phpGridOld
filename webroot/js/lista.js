@@ -123,9 +123,8 @@ function setItemAjax(tr)
 			if (l==1)
 			{
 				$("#"+ajaxSpDest).html(v);
-				$("#"+ajaxSpDest).css("font-weight", "bold" );
-				$("#"+ajaxSpDest).css("color", "#fff" );
-				$("#"+ajaxSpDest).css("background-color", "red" );
+				$("#"+ajaxSpDest).addClass('inAlerta');
+				$("#btSalvarT").addClass('btAlerta');
 			}
 		} catch(err)
 		{

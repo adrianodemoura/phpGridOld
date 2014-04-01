@@ -18,7 +18,9 @@ class CidadesController extends SistemaAppController {
 	public $Model = array('Cidade');
 
 	/**
-	 * 
+	 * Exibe a lista de cidades
+	 *
+	 * @return void
 	 */
 	public function lista()
 	{

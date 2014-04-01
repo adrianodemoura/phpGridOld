@@ -282,7 +282,7 @@ class Controller {
 			$this->viewVars['botoesLista']['0']['id']		= 'btNovo';
 			$this->viewVars['botoesLista']['0']['type']		= 'button';
 			$this->viewVars['botoesLista']['0']['class'] 	= 'btn btn-primary';
-			$this->viewVars['botoesLista']['0']['onclick']	= '$("#novo").fadeIn(); $("#ferramentas").fadeOut(); $("#filtros").fadeOut(); $("#tabela").fadeOut();';
+			$this->viewVars['botoesLista']['0']['onclick']	= '$("#novo").fadeIn(); $("#ferramentas").fadeOut(); $(".filtros").fadeOut(); $(".tabela").fadeOut();';
 		}
 		
 		if (!isset($this->viewVars['botoesLista']['1']))
