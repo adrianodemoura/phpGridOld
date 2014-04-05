@@ -1,26 +1,29 @@
-/*----------------------------------------------------*/
-.ferramentas div
+/**********************************************/
+.ferramentas
 {
-	float: left;
-	display: block;
-	margin-right: 10px;
-	line-height: 40px;
+	line-height: 50px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
 }
 .ferramentas ul
 {
-	list-style: none;
-	margin: 6px 0px 0px 0px;
+	margin: 0px 15px 0px 5px;
 	padding: 0px;
+	list-style: none;
+	float: left;
 }
+
 .ferramentas ul li
 {
-	float: left;
-	width: 30px;
-	line-height: 30px;
-	background-color: #fff;
+	display: inline-block;
+	width: 32px;
+	height: 32px;
+	line-height: 32px;
 	text-align: center;
-	margin: 0px 6px 0px 0px;
-	border: 1px solid #ccc;
+	background-color: #fff;
 }
 .ferramentas ul li a
 {
@@ -28,109 +31,63 @@
 }
 .ferramentas ul li a:hover
 {
-	background-color: #428BCA;
+	background-color: #535759;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	color: #fff;
+	text-decoration: none;
 }
 
-/*----------------------------------------------------*/
-
+/**********************************************/
 .filtro
 {
 	line-height: 30px;
-}
-.filtro div
-{
-
-	float: left;
-	margin: 0px 5px 0px 0px;
 }
 .filtro .titFiltro
 {
 	float: left;
 }
-.filtro select
-{
-	background-color: #fff;
-	border: none;
-}
 
-/*----------------------------------------------------*/
-
+/**********************************************/
 .tabela
 {
+	/*background-color: #fff;
+	padding: 4px;*/
 }
-.tabela .in_uf
+.tabLista
 {
-	width: 30px;
-}
-.tabela .in_nome
-{
-	width: 300px;
-}
-.tabela .div_ajax
-{
-	text-align: left;
-}
-.tabela .div_ajax img
-{
-	float: right;
-}
-.tabela table
-{
-	clear: both;
 	background-color: #fff;
 	border-top: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	margin: 5px 0px 0px 0px;
+}
+.tabLista th
+{
+	text-align: center;
+	color: #92c5ef;
+}
+.tabLista tr th,
+.tabLista tr td
+{
+	border-bottom: 1px solid #ccc;
 	border-right: 1px solid #ccc;
 }
-.tabela table th,
-.tabela table td
-{
-	border-left: 1px solid #ccc;
-	border-bottom: 1px solid #ccc;
-}
-.tabela table td
-{
-	padding: 0px 5px 0px 5px;
-}
-.tabela table tr:hover
-{
-	cursor: pointer;
-	background-color: #428BCA;
-	color: #fff;
-}
-
-.tabela table input,
-.tabela table select
+.tabLista input,
+.tabLista select
 {
 	border: none;
 	background-color: transparent;
-	border: 1px solid transparent;
 }
-.tabela table input:focus
+.tabLista input
 {
-	border: 1px solid #ccc;
-	background-color: #ccc;
-	color: #000;
+	padding: 0px 0px 0px 5px;
 }
-
-.tabela table th
+.tabLista input:focus
 {
-	background-color: #535759;
-	color: #fff;
-	text-align: center;
+	background-color: #fff6a8;
 }
-.tabela table th a
+.tabLista .in_nome
 {
-	color: #fff;
-}
-
-.tabela .tdCriado input,
-.tabela .tdModificado input
-{
-	text-align: center;
-}
-
-.inAlerta
-{
-	color: #000;
-	font-weight: bold;
+	width: 300px;
 }

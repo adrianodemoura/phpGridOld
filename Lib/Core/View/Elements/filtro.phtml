@@ -1,6 +1,5 @@
 <div class='titFiltro'>Filtros:&nbsp;&nbsp;</div>
-<form name='formFiltro' id='formFiltro' method='post' 
-	action='<?= $base.strtolower($module).'/'.strtolower($controller).'/set_filtro' ?>' >
+<form name='formFiltro' id='formFiltro' method='post' action='<?= $base.strtolower($module).'/'.strtolower($controller).'/set_filtro' ?>' >
 
 <?php 
 	foreach($this->viewVars['filtros'] as $_cmp => $_arrProp) : 
@@ -8,7 +7,6 @@
 		'$("#Filtro'.ucfirst($_cmp).'").change(function() { this.form.submit(); })');
 ?>
 
-	<div>
 	<select name='filtro[<?= $_cmp ?>]' id='Filtro<?= ucfirst($_cmp) ?>'>
 		<option value=''><?= $_arrProp['emptyFiltro'] ?></option>
 		<?php
@@ -21,7 +19,6 @@
 		<option <?= $s ?> value='<?= $_vlr ?>'><?= $_show ?></option>
 		<?php endforeach ?>
 	</select>
-	</div>
 
 <?php endforeach ?>
 </form>

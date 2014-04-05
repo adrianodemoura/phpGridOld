@@ -6,28 +6,25 @@
 
 <?php $this->element('ajax_form'); ?>
 
-<div id='lista' class='row'>
+<div id='lista'>
 
-	<div class='col-md-2'><!-- menu lista -->
+	<div style='width: 200px; min-height: 500px; float: left; margin: 0px 3px 0px 0px;'><!-- menu lista -->
 		<?php $this->element('menu_lista'); ?>
 
 	</div><!-- fim menu lista -->
 
-	<div class='col-md-10'><!-- direita -->
+	<div style='display: table;'><!-- direita -->
 
-		<?php $this->element('tabela_novo'); ?>
+		<?php //$this->element('tabela_novo'); ?>
 
-		<div class='row ferramentas'><!-- ferramentas_topo -->
+		<div class='ferramentas'><!-- ferramentas_topo -->
 			
 			<?php if (isset($this->viewVars['paginacao'])) : ?>
-			<div><!-- paginação -->
 			<?= $this->element('paginacao') ?>
-			</div><!-- fim paginação -->
 			<?php endif ?>
 
 			<?php 
 			if (isset($this->viewVars['botoesLista'])) : ?>
-			<div class=''><!-- botoes -->
 			<?php
 			foreach($this->viewVars['botoesLista'] as $_l => $_arrProp)
 			{
@@ -37,29 +34,26 @@
 				}
 			}
 			?>
-			</div><!-- fim botoes -->
 			<?php endif ?>
 				
 			<?php if (isset($this->viewVars['marcadores'])) : ?>
-			<div class=''><!-- marcadores -->
 			<select name='cxSel' id='cxSel' >
 				<option value=''>-- Aplicar aos Marcadores --</option>
 				<?php foreach($this->viewVars['marcadores'] as $_txt => $_link) : ?>
 					<option value='<?= $_link ?>'><?= $_txt ?></option>
 				<?php endforeach ?>
 			</select>
-			</div><!-- fim marcadores -->
 			<?php endif ?>
 
 		</div><!-- fim ferramentas_topo -->
 
 		<?php if (isset($this->viewVars['filtros']) && !empty($this->viewVars['filtros'])) : ?>
-		<div class='row filtro'>
+		<div class='filtro'>
 			<?php echo $this->element('filtro'); ?>
 		</div><!-- fim filtro -->
 		<?php endif ?>
 
-		<div class='row tabela'><!-- tabela -->
+		<div class='tabela'><!-- tabela -->
 		<?php echo $this->element('tabela'); ?>
 		</div><!-- fim tabela -->
 

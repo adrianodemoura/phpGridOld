@@ -1,17 +1,9 @@
 <?php $linksMenu = isset($this->viewVars['linksMenu']) ? $this->viewVars['linksMenu'] : null; ?>
 
-<?php if (isset($linksMenu)) : ?>
+<?php if (isset($linksMenu)) : foreach($linksMenu as $_con => $_arrOpcs) : ?>
 
-	<div style='width: 220px;'>
+	<a href='<?= $_arrOpcs['link'] ?>' class='list-group-item<?php if ($_con==$controller) echo ' active'; ?>'>
+	<?= $_arrOpcs['tit'] ?>
+	</a>
 
-	<?php foreach($linksMenu as $_con => $_arrOpcs) : ?>
-
-		<a href='<?= $_arrOpcs['link'] ?>' class='list-group-item<?php if ($_con==$controller) echo ' active'; ?>'>
-			<?= $_arrOpcs['tit'] ?>
-		</a>
-
-	<?php endforeach; ?>
-
-	</div>
-
-<?php endif; ?>
+<?php endforeach; endif; ?>

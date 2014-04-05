@@ -1,5 +1,5 @@
 
-<table id='tabLista'><!-- linhas -->
+<table class='tabLista'><!-- linhas -->
 <form name='formLista' id='formLista' method='post' action='<?= $base.strtolower($module).'/'.strtolower($controller).'/salvar' ?>' >
 <input type='hidden' name='urlRetorno' value='<?= $this->viewVars['urlRetorno'] ?>' style='width: 300px;' />
 <input type='hidden' name='marcador' value='' id='marcador' style='width: 300px;' />
@@ -132,7 +132,7 @@
 
 <?php if (isset($this->viewVars['paginacao']['tot'])) : ?>
 
-<div style='margin: 0px 0px 0px 12px; font-size: 14px;'>
+<div style='background-color: transparent; margin: 0px 0px 0px 12px; font-size: 14px;'>
 	Total de registros: <?= number_format($this->viewVars['paginacao']['tot'],0,',','.'); ?>
 </div>
 
