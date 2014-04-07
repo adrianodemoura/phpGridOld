@@ -1,4 +1,9 @@
 <?php
+	// configurando o ambiente
+	define('AMBIENTE','DESENVOLVIMENTO');
+	//define('AMBIENTE','HOMOLOGAÇÃO');
+	//define('AMBIENTE','PRODUÇÃO');
+
 	// sistema
 	define('SISTEMA','phpGrid');
 
