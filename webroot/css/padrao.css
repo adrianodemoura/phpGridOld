@@ -30,7 +30,7 @@ body
 }
 #conteudo
 {
-	min-height: 570px;
+	min-height: 590px;
 }
 .msgFlashErro
 {
@@ -91,10 +91,6 @@ body
 	margin: 0px 5px 0px 0px;
 	min-width: 120px;
 }
-/*pre
-{
-	font-size: 10px;
-}*/
 
 #tampaTudo
 {

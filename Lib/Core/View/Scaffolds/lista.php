@@ -15,7 +15,7 @@
 
 	<div style='display: table;'><!-- direita -->
 
-		<?php //$this->element('tabela_novo'); ?>
+		<?php $this->element('tabela_novo'); ?>
 
 		<div class='ferramentas'><!-- ferramentas_topo -->
 			

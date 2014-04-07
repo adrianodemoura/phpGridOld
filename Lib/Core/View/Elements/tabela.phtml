@@ -128,12 +128,14 @@
 
 <?php endforeach ?>
 </form>
-</table><!-- fim linhas -->
 
 <?php if (isset($this->viewVars['paginacao']['tot'])) : ?>
-
-<div style='background-color: transparent; margin: 0px 0px 0px 12px; font-size: 14px;'>
+<tr><td colspan='100'>
+<div style='background-color: transparent; border: none;'>
 	Total de registros: <?= number_format($this->viewVars['paginacao']['tot'],0,',','.'); ?>
 </div>
-
+</td></tr>
 <?php endif ?>
+
+</table><!-- fim linhas -->
+
