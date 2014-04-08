@@ -125,6 +125,7 @@ function setItemAjax(tr)
 				$("#"+ajaxSpDest).html(v);
 				$("#"+ajaxSpDest).addClass('inAlerta');
 				$("#btSalvarT").addClass('btAlerta');
+				console.log(ajaxSpDest);
 			}
 		} catch(err)
 		{

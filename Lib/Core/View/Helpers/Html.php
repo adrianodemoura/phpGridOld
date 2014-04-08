@@ -175,13 +175,13 @@ class Html {
 				$input .= " />";
 				$vlr = '';
 
-				$input .= "<div id='".$ajax['cmp']."' class='div_ajax'>".$ajax['value'];
-				$input .= "&nbsp;<img src='".$this->base."img/bt_ajax.png' class='bt_lista_ajax'
+				$input .= "<div id='".$ajax['cmp']."' class='div_ajax'>".$ajax['value']."</div>";
+				$input .= "<img src='".$this->base."img/bt_ajax.png' class='bt_lista_ajax'
 							onclick='
 								$(\"#ajaxTit\").html(\"".$ajax['titPesq']."\");
 								$(\"#ajaxCmp\").val(\"".$opcs['id']."\"); 
 								$(\"#ajaxDest\").val(\"".$ajax['url']."\"); 
-								showAjaxForm();' /></div>";
+								showAjaxForm();' />";
 				break;
 			default:
 				$input = "<input ";
