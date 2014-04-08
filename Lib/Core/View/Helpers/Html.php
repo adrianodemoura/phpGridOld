@@ -266,11 +266,11 @@ class Html {
 		{
 			case 'css':
 				$_arq = htmlentities('<link rel="stylesheet" type="text/css" href="'.$this->base.'css/'.$arq.'.css" />');
-				array_push($this->head,$_arq);
+				array_unshift($this->head,$_arq);
 				break;
 			case 'js':
 				$_arq = htmlentities('<script type="text/javascript" src="'.$this->base.'js/'.$arq.'.js"></script>');
-				array_push($this->head,$_arq);
+				array_unshift($this->head,$_arq);
 				break;
 		}
 	}

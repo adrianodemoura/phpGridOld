@@ -215,7 +215,8 @@ class Boot {
 		$conteudo = ob_get_contents();
 		ob_end_clean();
 
-		foreach($this->Html->head as $_l => $_head) array_push($this->viewVars['head'],$_head);
+		// configurando o head da página
+		foreach($this->Html->head as $_l => $_head) array_unshift($this->viewVars['head'],$_head);
 		foreach($this->viewVars['head'] as $_l => $_line) $head[$_l] = $_line;
 
 		// incluindo o layout
@@ -231,7 +232,7 @@ class Boot {
 	 * Inclui o bloco de elemento
 	 * 
 	 * @param	string	$e		Nome do elemento
-	 * @param	array	$vars	Variáveis quer serão importadas para dentro do element
+	 * @param	array	$vars	Variáveis quer serão importadas para dentro do element, mas se usar this->viewVars você pega dos as variáveis da view
 	 * @return	void
 	 */
 	function element($e='',$vars=array())
