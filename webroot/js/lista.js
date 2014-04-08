@@ -116,23 +116,25 @@ function setItemAjax(tr)
 	var l = 0;
 	$("#"+tr+"ajaxTr").children('td').each(function()
 	{
-		v = $(this).html();
-		if (l==0) $("#"+ajaxIdDest).val(v);
-		try
+		if (l==0) $("#"+ajaxIdDest).val($(this).html()); // atualiza o input hidden com o valor do id do campo
+		else
 		{
-			if (l==1)
-			{
-				$("#"+ajaxSpDest).html(v);
-				$("#"+ajaxSpDest).addClass('inAlerta');
-				$("#btSalvarT").addClass('btAlerta');
-				console.log(ajaxSpDest);
-			}
-		} catch(err)
-		{
-			alert('ocorreu algum erro ao tentar configurar o item !!!');
+			if (v) v += '/';
+			v += $(this).html();
 		}
 		l++;
 	});
+
+	try
+	{
+		$("#"+ajaxSpDest).html(v);
+		$("#"+ajaxSpDest).addClass('inAlerta');
+		$("#btSalvarT").addClass('btAlerta');
+	} catch(err)
+	{
+		alert('ocorreu algum erro ao tentar configurar o item !!!');
+	}
+
 	$("#btSalvarT").addClass("btAlerta");
 }
 

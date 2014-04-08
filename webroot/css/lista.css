@@ -57,6 +57,16 @@
 	/*background-color: #fff;
 	padding: 4px;*/
 }
+.tabLista .lista_input
+{
+	width: 100px;
+}
+.tabLista .inAlerta
+{
+	background-color: red;
+	color: #fff;
+	font-weight: bold;
+}
 .tabLista
 {
 	background-color: #fff;
