@@ -74,11 +74,6 @@ class Configuracao extends SistemaAppModel {
 		(
 			'tit'	=> 'Celular',
 			'mascara'=> '(##)####-####',
-		),
-		'sql_dump'=> array
-		(
-			'tit'		=> 'SqlDump',
-			'options'	=> array('1'=>'Sim','0'=>'Não')
 		)
 	);
 

@@ -7,6 +7,14 @@
  */
 class Model {
 	/**
+	 * Prefixo no nome da tabela
+	 * 
+	 * @var		string
+	 * @access	public
+	 */
+	public $prefixo		= '';
+
+	/**
 	 * Nome do model
 	 * 
 	 * @var		string
@@ -328,10 +336,10 @@ class Model {
 			switch($sqlTi)
 			{
 				case 'UPDATE':
-					$sqls[$_l] = 'UPDATE '.$this->tabela.' SET '.$sqlUp.' WHERE '.$where.';';
+					$sqls[$_l] = 'UPDATE '.$this->prefixo.$this->tabela.' SET '.$sqlUp.' WHERE '.$where.';';
 					break;
 				case 'INSERT':
-					$sqls[$_l] = 'INSERT INTO '.$this->tabela.' ('.implode(',',$sqlInC).') VALUES ('.implode(',',$sqlInV).');';
+					$sqls[$_l] = 'INSERT INTO '.$this->prefixo.$this->tabela.' ('.implode(',',$sqlInC).') VALUES ('.implode(',',$sqlInV).');';
 					break;
 			}
 		}
@@ -449,7 +457,7 @@ class Model {
 					$where .= "$_cmp='$_vlr'";
 				}
 			}
-			$sql = 'DELETE FROM '.$this->tabela.' WHERE '.$where;
+			$sql = 'DELETE FROM '.$this->prefixo.$this->tabela.' WHERE '.$where;
 			array_push($sqls, $sql);
 		}
 
@@ -512,7 +520,7 @@ class Model {
 		$sql 	= '';
 		$sqlC	= '';
 		$join 	= array();
-		$tabela = isset($params['tabela']) 	? $params['tabela'] : $this->tabela;
+		$tabela = isset($params['tabela']) 	? $params['tabela'] : $this->prefixo.$this->tabela;
 		$fields = isset($params['fields']) 	? $params['fields'] : array();
 		$where	= isset($params['where']) 	? $params['where'] 	: array();
 		$order	= isset($params['order']) 	? $params['order'] 	: array();
@@ -580,7 +588,7 @@ class Model {
 						require_once('Model/'.$_model.'.php');
 						$belo 	= new $_model();
 						if (isset($belo->esquema)) $this->outrosEsquemas[$_model] = $belo->esquema;
-						$tabB	= $belo->tabela;
+						$tabB	= $belo->prefixo.$belo->tabela;
 						$aliB	= $_model;
 						$keyB	= (isset($_arrProp['key'])) ? $_arrProp['key'] : 'id';
 						$aliA 	= (isset($this->alias)) ? $this->alias : $this->name;
@@ -755,7 +763,7 @@ class Model {
 
 					require_once('Model/'.$_mod.'.php');
 					$belo 	= new $_mod();
-					$tabela = $belo->tabela;
+					$tabela = $belo->prefixo.$belo->tabela;
 					$sql 	= "SELECT ".implode(',', $cmps)." FROM $tabela as $alias";
 					if (!empty($where)) $sql .= " WHERE ".$where;
 					$sql .= " ORDER BY ".implode(',', $ordem);
@@ -790,7 +798,7 @@ class Model {
 	public function setEsquema($tabela='')
 	{
 		$this->open();
-		$tabela = !empty($tabela) ? $tabela : $this->tabela;
+		$tabela = !empty($tabela) ? $tabela : $this->prefixo.$this->tabela;
 		// completando o esquema
 		switch($this->driver)
 		{

@@ -115,7 +115,7 @@ class UsuariosController extends SistemaAppController {
 		ini_set('display_errors', 0);
 
 		$this->layout = 'publico';
-		$sql = 'SELECT id from usuarios where id=1';
+		$sql = 'SELECT id from sis_usuarios where id=1';
 		$data = $this->Usuario->query($sql);
 		if (count($data))
 		{
@@ -145,7 +145,7 @@ class UsuariosController extends SistemaAppController {
 				include_once('Model/Util.php');
 				$Util = new Util();
 
-				$tabs = array('cidades','territorios','bairros');
+				$tabs = array('sis_cidades','sis_territorios','sis_bairros');
 				foreach($tabs as $_l => $_tabela)
 				{
 					$arq = APP.'Modules/Sistema/Model/Sql/'.$_tabela.'.csv';

@@ -69,7 +69,7 @@ class Cidade extends SistemaAppModel {
 	public function getUfs()
 	{
 		$arr = array();
-		$sql = 'SELECT DISTINCT uf FROM cidades ORDER BY uf';
+		$sql = 'SELECT DISTINCT uf FROM sis_cidades ORDER BY uf';
 		$res = $this->query($sql);
 		foreach($res as $_l => $_a)  $arr[$_a['uf']] = $_a['uf'];
 		return $arr;

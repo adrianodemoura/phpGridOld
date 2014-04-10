@@ -59,7 +59,7 @@
 }
 .tabLista .lista_input
 {
-	width: 100px;
+	width: 120px;
 }
 .tabLista .inAlerta
 {
@@ -108,4 +108,9 @@
 .tabLista .in_modificado
 {
 	text-align: center;
+	width: 150px;
+}
+.tabLista .in_email
+{
+	width: 200px;
 }

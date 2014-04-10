@@ -7,9 +7,13 @@
  * @package			Sistema
  * @subpackage		Sistema.Model
  */
-/**
- * Include files
- */
 require_once(CORE.'Model/Model.php');
 class SistemaAppModel extends Model {
+	/**
+	 * Prefixo para as tabelas do módulo sistema
+	 * 
+	 * @var		string
+	 * @access	public
+	 */
+	public $prefixo = 'sis_';
 }

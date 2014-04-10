@@ -135,7 +135,7 @@ class Usuario extends SistemaAppModel {
 	public function autentica($e='', $s='')
 	{
 		$s = md5($s.SALT);
-		$sql = "SELECT u.* FROM usuarios u WHERE u.email='$e' AND u.senha='$s'";
+		$sql = "SELECT u.* FROM sis_usuarios u WHERE u.email='$e' AND u.senha='$s'";
 		$data = $this->query($sql);
 		return $data;
 	}
