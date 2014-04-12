@@ -112,3 +112,40 @@ body
 {
 	background-color: red;
 }
+#padrao_ferramentas
+{
+	float: right; 
+	margin: 0px 10px 0px 0px;
+}
+#padrao_ferramentas a
+{
+	text-decoration: none;
+	display: block;
+	float: left;
+	padding: 0px 4px 0px 4px;
+}
+#padrao_ferramentas a:hover
+{
+	background-color: #000;
+}
+#permissoes
+{
+	display: none;
+	position: absolute;
+	width: 100%;
+	z-index: 9000;
+	background-color: #535759;
+	line-height: 26px;
+	text-align: center;
+}
+#permissoes label
+{
+	cursor: pointer;
+	margin: 0px 5px 0px 0px;
+}
+#permissoes input
+{
+	color: #fff;
+	border: none;
+	background-color: transparent;
+}

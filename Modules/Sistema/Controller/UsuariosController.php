@@ -216,14 +216,16 @@ class UsuariosController extends SistemaAppController {
 	 */
 	public function set_sqldump()
 	{
-		$retorno = $_SERVER['HTTP_REFERER'];
-
 		if (!isset($_SESSION['sqldump']))
+		{
 			$_SESSION['sqldump'] = true;
-		else
+			$this->setMsgFlash('Sql Dump Habilitado !!!','msgFlashOk');
+		} else
+		{
 			unset($_SESSION['sqldump']);
-
-		header('Location: '.$retorno);
+			$this->setMsgFlash('Sql Dump Desabilitado !!!','msgFlashOk');
+		}
+		header('Location: '.$_SERVER['HTTP_REFERER']);
 	}
 
 	/**
@@ -234,10 +236,11 @@ class UsuariosController extends SistemaAppController {
 	public function permissoes()
 	{
 		// se não é administrado não vai ...
-		
-		
-		$retorno = $_SERVER['HTTP_REFERER'];
+		if (!$_SESSION['Usuario']['perfil']=='ADMINISTRADOR')
+		{
+			header('Location: '.$_SERVER['HTTP_REFERER']);
+		}
 
-		header('Location: '.$retorno);
+		$this->viewVars['url'] = $_SERVER['HTTP_REFERER'];
 	}
 }

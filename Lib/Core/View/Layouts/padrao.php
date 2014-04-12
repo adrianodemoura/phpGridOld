@@ -111,6 +111,11 @@
 		</div>
 
 	</div>
+
+	<?php if ($_SESSION['Usuario']['perfil']=='ADMINISTRADOR') : ?>
+	<?= $this->element('permissoes'); ?>
+	<?php endif ?>
+	
 	<div id='cab2' class='container-fluid'>
 		<div style='float: left;'>
 			<?= html_entity_decode($position) ?>
@@ -120,7 +125,7 @@
 			<?= $this->element('login_usuario',array('base'=>$base,'module'=>$module)) ?>
 		</div>
 		
-		<div style='float: right; margin: 0px 10px 0px 0px;'>
+		<div id="padrao_ferramentas">
 			<?= $this->element('padrao_ferramentas'); ?>
 		</div>
 
@@ -138,7 +143,7 @@
 
 
 </div><!-- fim corpo -->
-<div id='tampaTudo'>adfjasdjfklajsdf</div>
+<div id='tampaTudo'>tampaTudo</div>
 </body>
 </html>
 <!-- tempo de execução <?= round((microtime(true)-INICIO),6) ?> segundos -->

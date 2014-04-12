@@ -199,12 +199,23 @@ class Boot {
 			unset($_SESSION['msgFlash']);
 		}
 
+		// configurando o css da action
+		$arq = strtolower($module.'_'.$controller.'_'.$action);
+		if (file_exists('./css/'.$arq.'.css'))
+		{
+			array_push($head,'<link rel="stylesheet" type="text/css" href="'.getBase().'css/'.$arq.'.css" />');
+		}
+		if (file_exists('./js/'.$arq.'.js'))
+		{
+			array_push($head,'<script type="text/javascript" src="'.getBase().'js/'.$arq.'.js"></script>');
+		}
+
 		// incluindo a view 
 		$conteudo = '';
-		$arq = 'Modules/'.$module.'/View/'.$viewPath.'/'.$view.'.php';
+		$arq = 'Modules/'.$module.'/View/'.$viewPath.'/'.$view.'.phtml';
 		if (!file_exists(APP.$arq))
 		{
-			$arq = CORE.'View/Scaffolds/'.$view.'.php';
+			$arq = CORE.'View/Scaffolds/'.$view.'.phtml';
 			if (!file_exists($arq))
 			{
 				die('<center>N&atilde;o foi poss&iacute;vel localizar a view <b>'.$arq.'</b></center>');
