@@ -115,8 +115,13 @@
 		<div style='float: left;'>
 			<?= html_entity_decode($position) ?>
 		</div>
+
 		<div style='font-size: 10px; float: right;'>
 			<?= $this->element('login_usuario',array('base'=>$base,'module'=>$module)) ?>
+		</div>
+		
+		<div style='float: right; margin: 0px 10px 0px 0px;'>
+			<?= $this->element('padrao_ferramentas'); ?>
 		</div>
 
 	</div>
@@ -128,7 +133,7 @@
 	</div><!-- fim conteudo -->
 
 	<div id="rodape" class="row">
-		<?php if (!empty($_SESSION['sql_dump'])) echo $this->element('sql_dump',array('sql_dump'=>$sql_dump,'module'=>$module)) ?>
+		<?php if (!empty($_SESSION['sqldump'])) echo $this->element('sql_dump',array('sql_dump'=>$sql_dump,'module'=>$module)) ?>
 	</div><!-- fim rodapé -->
 
 

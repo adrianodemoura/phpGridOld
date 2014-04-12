@@ -1,0 +1,8 @@
+<?php if ($_SESSION['Usuario']['perfil']=='ADMINISTRADOR') : ?>
+<a href='<?= $this->viewVars['base'] ?>sistema/usuarios/set_sqldump'>
+	<img src='<?= $this->viewVars['base'] ?>img/bt_sqldump.png' />
+</a>
+<a href='<?= $this->viewVars['base'] ?>sistema/usuarios/permissoes'>
+	<img src='<?= $this->viewVars['base'] ?>img/bt_permissoes.png' />
+</a>
+<?php endif ?>

@@ -63,6 +63,7 @@ class UsuariosController extends SistemaAppController {
 				$_SESSION['Usuario']['email'] 			= $data['0']['email'];
 				$_SESSION['Usuario']['nome'] 			= $data['0']['nome'];
 				$_SESSION['Usuario']['ultimo_ip'] 		= $data['0']['ultimo_ip'];
+				$_SESSION['Usuario']['perfil'] 			= 'ADMINISTRADOR';
 				$novaData['0']['Usuario']['id'] 		= $data['0']['id'];
 				$novaData['0']['Usuario']['acessos'] 	= ($data['0']['acessos']+1);
 				$novaData['0']['Usuario']['ultimo_ip'] 	= (strlen($_SERVER['SERVER_ADDR'])>4) ? $_SERVER['SERVER_ADDR'] : $_SERVER['REMOTE_ADDR'];
@@ -206,5 +207,37 @@ class UsuariosController extends SistemaAppController {
 		$this->viewVars['txt'] = isset($_SESSION['sistemaErro']['txt']) ? $_SESSION['sistemaErro']['txt'] : '';
 		$this->viewVars['tip'] = isset($_SESSION['sistemaErro']['tip']) ? $_SESSION['sistemaErro']['tip'] : '';
 		unset($_SESSION['sistemaErro']);
+	}
+
+	/**
+	 * Liga ou desliga o sql_dump
+	 * 
+	 * @return	void
+	 */
+	public function set_sqldump()
+	{
+		$retorno = $_SERVER['HTTP_REFERER'];
+
+		if (!isset($_SESSION['sqldump']))
+			$_SESSION['sqldump'] = true;
+		else
+			unset($_SESSION['sqldump']);
+
+		header('Location: '.$retorno);
+	}
+
+	/**
+	 * Liga ou desliga o sql_dump
+	 * 
+	 * @return	void
+	 */
+	public function permissoes()
+	{
+		// se não é administrado não vai ...
+		
+		
+		$retorno = $_SERVER['HTTP_REFERER'];
+
+		header('Location: '.$retorno);
 	}
 }
