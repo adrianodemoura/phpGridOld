@@ -240,6 +240,9 @@ class Controller {
 		// salvando a página na sessão
 		$_SESSION['Pagi'][$this->module][$this->controller]['pag'] = $this->params['pag'];
 
+		// configurando filtro da página
+		$params['where'] = isset($this->filtros) ? $this->filtros : array();
+
 		// configurando os parâmetros dos filtros na sessão
 		if (isset($_SESSION['Filtros'][$this->module][$this->controller]))
 		{
@@ -256,7 +259,7 @@ class Controller {
 		$params['direc'] 	= isset($this->params['dir']) ? $this->params['dir'] : 'ASC';
 
 		// recuperando o data
-		$this->data 		= $this->$modelClass->find('all',$params);
+		$this->data = $this->$modelClass->find('all',$params);
 		if (!isset($this->viewVars['fields']))
 		{
 			$fields = array();
@@ -276,7 +279,7 @@ class Controller {
 		$this->viewVars['urlRetorno'] = isset($this->viewVars['urlRetorno']) ? $this->viewVars['urlRetorno'] : $this->viewVars['aqui'];
 
 		// botões da lista
-		if (!isset($this->viewVars['botoesLista']['0']))
+		if (!isset($this->viewVars['botoesLista']['0']) && $this->pode('incluir'))
 		{
 			$this->viewVars['botoesLista']['0']['value'] 	= 'Novo';
 			$this->viewVars['botoesLista']['0']['id']		= 'btNovo';
@@ -285,7 +288,7 @@ class Controller {
 			$this->viewVars['botoesLista']['0']['onclick']	= '$("#novo").fadeIn(); $(".ferramentas").fadeOut(); $(".filtro").fadeOut(); $(".tabela").fadeOut();';
 		}
 		
-		if (!isset($this->viewVars['botoesLista']['1']))
+		if (!isset($this->viewVars['botoesLista']['1']) && $this->pode('alterar'))
 		{
 			$this->viewVars['botoesLista']['1']['value'] 	= 'Salvar Todos';
 			$this->viewVars['botoesLista']['1']['id']		= 'btSalvarT';
@@ -320,7 +323,7 @@ class Controller {
 
 		// ferramentas da lista
 		$f = isset($this->viewVars['ferramentas']) ? $this->viewVars['ferramentas'] : array();
-		if (!isset($f['excluir']))
+		if (!isset($f['excluir']) && $this->pode('excluir'))
 		{
 			$link = $this->viewVars['base'].strtolower($this->module).'/'.strtolower($this->controller).'/excluir/id:*id*';
 			$f['excluir']['tit'] 	= 'Excluir';
@@ -534,5 +537,19 @@ class Controller {
 		if (empty($params['where'])) unset($params['where']);
 		$this->viewVars['data'] = $this->$modelClass->find('list',$params);
 		$this->viewVars['debug'] = isset($this->viewVars['debug']) ? $this->viewVars['debug'] : false;
+	}
+
+	/**
+	 * Retorna o valor da permissão de uma determinada ação
+	 * 
+	 * @param	string	$acao	Nome da ação, que pode ser visualizar, incluir, alterar, excluir, imprimir e pesquisar
+	 * @return	int		$pode	Valor da permissão, 1 para SIM e 0 para NÃO
+	 */
+	public function pode($acao='')
+	{
+		if (in_array($_SESSION['Usuario']['perfil'],array('ADMINISTRADOR'))) return 1;
+		$minhasPermissoes = $this->viewVars['minhasPermissoes'];
+		$pode = (isset($minhasPermissoes[$acao])) ? $minhasPermissoes[$acao] : 0;
+		return $pode;
 	}
 }

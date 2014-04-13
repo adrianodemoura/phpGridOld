@@ -42,6 +42,10 @@ class UsuariosController extends SistemaAppController {
 		,'Usuario.trocar_senha'
 		,'Usuario.ultimo_ip'
 		,'Usuario.cidade_id');
+		if (!in_array($_SESSION['Usuario']['perfil'],array('ADMINISTRADOR','GERENTE')))
+		{
+			$this->filtros['Usuario.id'] = $_SESSION['Usuario']['id'];
+		}
 		parent::lista();
 	}
 
