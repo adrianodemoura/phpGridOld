@@ -8,7 +8,7 @@
 /**********************************************/
 .ferramentas
 {
-	line-height: 50px;
+	display: table;
 }
 .ferramentas ul
 {
@@ -44,7 +44,7 @@
 /**********************************************/
 .filtro
 {
-	line-height: 30px;
+	padding: 10px 0px 6px 0px;
 }
 .filtro .titFiltro
 {

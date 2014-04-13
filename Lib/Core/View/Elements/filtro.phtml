@@ -1,12 +1,10 @@
-<div class='titFiltro'>Filtros:&nbsp;&nbsp;</div>
 <form name='formFiltro' id='formFiltro' method='post' action='<?= $base.strtolower($module).'/'.strtolower($controller).'/set_filtro' ?>' >
-
+<span style='float: left; margin: 0px 5px 0px 0px;'>Filtros: </span>
 <?php 
 	foreach($this->viewVars['filtros'] as $_cmp => $_arrProp) : 
 	array_push($this->viewVars['onRead'], 
 		'$("#Filtro'.ucfirst($_cmp).'").change(function() { this.form.submit(); })');
 ?>
-
 	<select name='filtro[<?= $_cmp ?>]' id='Filtro<?= ucfirst($_cmp) ?>'>
 		<option value=''><?= $_arrProp['emptyFiltro'] ?></option>
 		<?php

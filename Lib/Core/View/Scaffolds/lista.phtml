@@ -20,23 +20,24 @@
 		<div class='ferramentas'><!-- ferramentas_topo -->
 			
 			<?php if (isset($this->viewVars['paginacao'])) : ?>
-			<?= $this->element('paginacao') ?>
+			<?php $this->element('paginacao') ?>
 			<?php endif ?>
 
-			<?php 
-			if (isset($this->viewVars['botoesLista'])) : ?>
+			<?php if (isset($this->viewVars['botoesLista'])) : ?>
+			<div style='float: left; margin: 0px 10px 0px 0px;'>
 			<?php
-			foreach($this->viewVars['botoesLista'] as $_l => $_arrProp)
-			{
-				if (!empty($_arrProp))
+				foreach($this->viewVars['botoesLista'] as $_l => $_arrProp)
 				{
-					echo "<input"; foreach($_arrProp as $_tag => $_vlr) echo " $_tag='$_vlr'"; echo " /> \n";
+					if (!empty($_arrProp))
+					{
+						echo "<input"; foreach($_arrProp as $_tag => $_vlr) echo " $_tag='$_vlr'"; echo " /> \n";
+					}
 				}
-			}
 			?>
+			</div>
 			<?php endif ?>
 				
-			<?php if (isset($this->viewVars['marcadores'])) : ?>
+			<?php if (isset($this->viewVars['marcadores']) && count($this->viewVars['marcadores'])) : ?>
 			<select name='cxSel' id='cxSel' >
 				<option value=''>-- Aplicar aos Marcadores --</option>
 				<?php foreach($this->viewVars['marcadores'] as $_txt => $_link) : ?>

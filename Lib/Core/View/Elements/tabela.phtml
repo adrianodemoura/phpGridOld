@@ -23,7 +23,7 @@
 		</th>
 	<?php endif ?>
 
-	<?php if (isset($this->viewVars['ferramentas'])) : ?>
+	<?php if (isset($this->viewVars['ferramentas']) && count($this->viewVars['ferramentas'])) : ?>
 	<th style='text-align: center;' colspan='<?= count($ferramentas); ?>'>#</th>
 	<?php endif ?>
 

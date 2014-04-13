@@ -299,7 +299,7 @@ class Controller {
 
 		// opções para os marcadores
 		$m = isset($this->viewVars['marcadores']) ? $this->viewVars['marcadores'] : array();
-		if (!isset($m['Excluir']))
+		if (!isset($m['Excluir']) && $this->pode('excluir'))
 		{
 			$m['Excluir'] = $this->base.strtolower($this->module.'/'.$this->controller.'/excluir/');
 		}
@@ -330,7 +330,6 @@ class Controller {
 			$f['excluir']['link'] 	= $link;
 			$f['excluir']['title'] 	= 'Clique aqui para excluir este registro';
 			$f['excluir']['onclick']= "return confirm('Você tem certeza em excluir este registro ???')";
-			//$f['excluir']['onclick']= 'return false';
 		}
 		$this->viewVars['ferramentas'] = $f;
 
