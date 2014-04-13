@@ -136,10 +136,26 @@ class Boot {
 			// recuperando as permissões da tela
 			if (isset($_SESSION['Usuario']['perfil']))
 			{
+				$model = $this->$controller->modelClass;
+				
+				// recuperando minhas permissoes, conforme meu perfil, módulo e controller corrente
+				$minhasPermissoes = array();
+				$idPerfil = 0;
+				foreach($_SESSION['Perfis'] as $_id => $_perfil) if ($_perfil==$_SESSION['Usuario']['perfil']) $idPerfil = $_id;
+				$sql = 'SELECT * FROM sis_permissoes';
+				$sql .= ' WHERE perfil_id='.$idPerfil;
+				$sql .= ' AND modulo="'.strtoupper($module).'"';
+				$sql .= ' AND controller="'.strtoupper($controller).'"';
+				$_minhasPermissoes = $this->$controller->$model->query($sql);
+				if (!empty($_minhasPermissoes))
+				{
+					$minhasPermissoes = $_minhasPermissoes['0'];
+				}
+				$this->$controller->viewVars['minhasPermissoes'] = $minhasPermissoes;
+
+				// recuperando os parâmetros para a tela de configuração de permissões de cada perfil
 				if ($_SESSION['Usuario']['perfil']=='ADMINISTRADOR')
 				{
-					$model = $this->$controller->modelClass;
-
 					// recuperando todos os perfis
 					$_perfis = $this->$controller->$model->query('SELECT id, nome FROM '.$this->$controller->$model->prefixo.'perfis WHERE id>1 ORDER BY nome');
 					$perfis = array();
@@ -165,6 +181,24 @@ class Boot {
 						}
 					}
 				}
+			}
+		}
+		
+		// validando a permissão
+		if (isset($_SESSION['Usuario']) && $_SESSION['Usuario']['perfil'] != 'ADMINISTRADOR')
+		{
+			if (!in_array(strtolower($action),array('erros'))
+				)
+			{
+				$pode = isset($minhasPermissoes['visualizar']) ? $minhasPermissoes['visualizar'] : 0;
+				if (!$pode)
+				{
+					$_SESSION['sistemaErro']['tip'] = 'Acesso';
+					$_SESSION['sistemaErro']['txt'] = 'Caro '.$_SESSION['Usuario']['nome'].', o seu perfil não possui privilégios suficientes para acessar a página '.strtolower($module.'/'.$controller.'/'.$action);
+					//debug($minhasPermissoes);
+					header('Location: '.$this->$controller->base.'sistema/usuarios/erros');
+				}
+				//debug($minhasPermissoes); debug($controller.' '.$action);
 			}
 		}
 

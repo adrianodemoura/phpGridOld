@@ -144,4 +144,5 @@
 <div id='tampaTudo'>tampaTudo</div>
 </body>
 </html>
+<?= debug($minhasPermissoes); ?>
 <!-- tempo de execução <?= round((microtime(true)-INICIO),6) ?> segundos -->

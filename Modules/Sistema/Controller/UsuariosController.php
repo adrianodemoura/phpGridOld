@@ -277,7 +277,7 @@ class UsuariosController extends SistemaAppController {
 	public function set_permissao()
 	{
 		$this->layout 			= 'ajax';
-		$this->viewVars['ok'] 	= 'ok';
+		$this->viewVars['tipo'] = $this->params['tipo'];
 		$modulo 				= strtoupper($this->params['modulo']);
 		$controller 			= strtoupper($this->params['controller']);
 		$arrPermissao			= explode('_',$this->params['permissao']);
@@ -303,7 +303,6 @@ class UsuariosController extends SistemaAppController {
 			$sql .= ' VALUE';
 			$sql .= ' ("'.$modulo.'","'.$controller.'",'.$vlr.','.$perfilId.')';
 		}
-		debug($sql);
 		$this->Usuario->query($sql);
 	}
 
