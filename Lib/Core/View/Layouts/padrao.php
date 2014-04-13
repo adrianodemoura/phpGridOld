@@ -121,9 +121,7 @@
 			<?= $this->element('login_usuario',array('base'=>$base,'module'=>$module)) ?>
 		</div>
 		
-		<div id="padrao_ferramentas">
-			<?= $this->element('padrao_ferramentas'); ?>
-		</div>
+		<?= $this->element('padrao_ferramentas'); ?>
 
 	</div>
 	</div><!-- fim cabeçalho -->

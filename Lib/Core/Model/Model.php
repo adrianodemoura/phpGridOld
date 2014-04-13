@@ -541,13 +541,29 @@ class Model {
 					}
 				}
 				break;
-			case 'list':
+			case 'first':
 				if (empty($fields))
 				{
 					$l = 0;
 					foreach($this->esquema as $_cmp => $_arrProp)
 					{
-						if (!in_array($_cmp,array('id')))
+						array_push($fields,$this->name.'.'.$_cmp);
+						$l++;
+					}
+				}
+				break;
+			case 'list':
+				if (empty($fields))
+				{
+					foreach($this->primaryKey as $_cmp)
+					{
+						array_push($fields,$this->name.'.'.$_cmp);
+					}
+					$l = 0;
+					foreach($this->esquema as $_cmp => $_arrProp)
+					{
+						if ($l>0) break;
+						if (!in_array($_cmp,$this->primaryKey))
 						{
 							array_push($fields,$this->name.'.'.$_cmp);
 							$l++;
@@ -702,6 +718,44 @@ class Model {
 				if (isset($c['2'])) $c['1'] .= '_'.$c['2'];
 				if (!isset($data[$_l][$c['0']])) $data[$_l][$c['0']] = array();
 				$data[$_l][$c['0']][$c['1']] = $_vlr;
+			}
+			
+			// incrementando habtm, caso poussua
+			if ($tipo=='all' AND isset($this->habtm) && !empty($this->habtm))
+			{
+				foreach($this->habtm as $_mod => $_arrProp)
+				{
+					$tabEsquerda= $_arrProp['tableFk'];
+					$tabLiga	= $_arrProp['table'];
+					$arrTab		= explode('_',$tabLiga);
+					$cmpEsquerda= $_arrProp['key'];
+					
+					$tabDireita = $arrTab['2'];
+					$cmpDireita = $_arrProp['keyFk'];
+					$sql = ' SELECT * FROM '.$tabEsquerda.' '.$_mod;
+					$sql .= ' INNER JOIN '.$tabLiga.' t1 ON ';
+					$l = 0;
+					foreach($cmpDireita as $_cmp)
+					{
+						if ($l) $sqlHabtm .= ' AND ';
+						$arrCmp = explode('_',$_cmp);
+						$sql .= $_mod.'.'.$arrCmp['1'].'= t1.'.$_cmp;
+						$l++;
+					}
+					$l = 0;
+					foreach($cmpEsquerda as $_cmp)
+					{
+						if ($l) $sql .= ' AND ';
+						$vlrCmpEsquerda = $_arrCmps[ucfirst($_cmp)];
+						$sql .= ' WHERE t1.'.$_cmp.'='.$vlrCmpEsquerda;
+						$l++;
+					}
+					$dataHbtm = $this->query($sql);
+					foreach($dataHbtm as $_lHa => $_arrCmHa)
+					{
+						$data[$_l][$_mod][$_lHa] = $_arrCmHa;
+					}
+				}
 			}
 		}
 

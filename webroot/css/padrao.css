@@ -112,15 +112,28 @@ body
 {
 	background-color: red;
 }
+/*******************************************/
 #padrao_ferramentas
 {
 	float: right; 
-	margin: 0px 10px 0px 0px;
+	margin: 0px 20px 0px 0px;
+	color: #000;
+	display: inline;
+	width: auto;
 }
 #padrao_ferramentas img
 {
 	cursor: pointer;
 }
+#padrao_ferramentas select
+{
+	background-color: #fff;
+	width: 120px;
+	border: none;
+}
+
+
+/*******************************************/
 #permissoes
 {
 	display: none;

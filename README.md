@@ -15,8 +15,8 @@ Corrija o seguintes arquivos:<br />
 Abra o arquivo e altere o seu banco de dados, caso tenha dificuldades, peça ajuda ao Administrador do Banco de Dados.
 
 * Lembre-se do e-mail e senha do usuário padrão:<br />
-email: admin@admin.com.br <br />
-senha: admin
+email: admin@phpgrid.com <br />
+senha: 1234567
 
 
 <b>3 - Considerações:</b><br />

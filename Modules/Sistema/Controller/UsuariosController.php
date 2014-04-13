@@ -38,8 +38,10 @@ class UsuariosController extends SistemaAppController {
 	{
 		$this->viewVars['fields'] = array('Usuario.ativo','Usuario.nome','Usuario.email','Usuario.celular'
 		,'Usuario.acessos'
-		,'Usuario.cidade_id'
-		,'Usuario.trocar_senha','Usuario.ultimo_ip');
+		,'Usuario.senha'
+		,'Usuario.trocar_senha'
+		,'Usuario.ultimo_ip'
+		,'Usuario.cidade_id');
 		parent::lista();
 	}
 
@@ -59,15 +61,25 @@ class UsuariosController extends SistemaAppController {
 			if (count($data))
 			{
 				$msg = 'Usuário autenticado com sucesso !!!';
-				$_SESSION['Usuario']['id'] 				= $data['0']['id'];
-				$_SESSION['Usuario']['email'] 			= $data['0']['email'];
-				$_SESSION['Usuario']['nome'] 			= $data['0']['nome'];
-				$_SESSION['Usuario']['ultimo_ip'] 		= $data['0']['ultimo_ip'];
-				$_SESSION['Usuario']['perfil'] 			= 'ADMINISTRADOR';
-				$novaData['0']['Usuario']['id'] 		= $data['0']['id'];
-				$novaData['0']['Usuario']['acessos'] 	= ($data['0']['acessos']+1);
+				$_SESSION['Usuario']['id'] 				= $data['0']['Usuario']['id'];
+				$_SESSION['Usuario']['email'] 			= $data['0']['Usuario']['email'];
+				$_SESSION['Usuario']['nome'] 			= $data['0']['Usuario']['nome'];
+				$_SESSION['Usuario']['ultimo_ip'] 		= $data['0']['Usuario']['ultimo_ip'];
+				$_SESSION['Usuario']['perfil'] 			= $data['0']['Perfil']['0']['nome'];
+				$novaData['0']['Usuario']['id'] 		= $data['0']['Usuario']['id'];
+				$novaData['0']['Usuario']['acessos'] 	= ($data['0']['Usuario']['acessos']+1);
 				$novaData['0']['Usuario']['ultimo_ip'] 	= (strlen($_SERVER['SERVER_ADDR'])>4) ? $_SERVER['SERVER_ADDR'] : $_SERVER['REMOTE_ADDR'];
 				if ($novaData['0']['Usuario']['ultimo_ip']=='::1') $novaData['0']['Usuario']['ultimo_ip'] = '127.0.0.1';
+				
+				// salvando meus perfis na sessão
+				$meusPerfis = array();
+				foreach($data['0']['Perfil'] as $_l => $_arrCmps)
+				{
+					$meusPerfis[$_arrCmps['id']] = $_arrCmps['nome'];
+				}
+				$_SESSION['Perfis'] = $meusPerfis;
+
+				// atualizando usuário
 				if (!$this->Usuario->save($novaData))
 				{
 					debug($novaData);
@@ -79,6 +91,7 @@ class UsuariosController extends SistemaAppController {
 					$data = $Conf->find('all');
 					$_SESSION['sql_dump'] = $data['0']['Configuracao']['sql_dump'];
 				}
+
 				$this->setMsgFlash('Usuário autenticado com sucesso !!!','msgFlashOk');
 				$this->redirect('sistema','usuarios','info');
 			} else
@@ -103,6 +116,15 @@ class UsuariosController extends SistemaAppController {
 		unset($this->data['0']['Usuario']['senha']);
 		$this->Usuario->outrosEsquemas['Cidade']['nome']['tit'] = 'Cidade';
 		$this->data['0']['Usuario']['ultimo_ip'] = $_SESSION['Usuario']['ultimo_ip'];
+		$perfis = $this->data['0']['Perfil'];
+		unset($this->data['0']['Perfil']);
+		$meusPerfis = '';
+		foreach($perfis as $_l => $_arrCmps)
+		{
+			if ($_l) $meusPerfis .= ', ';
+			$meusPerfis .= $_arrCmps['nome'];
+		}
+		$this->data['0']['Usuario']['Perfis'] = $meusPerfis;
 	}
 
 	/**
@@ -283,5 +305,19 @@ class UsuariosController extends SistemaAppController {
 		}
 		debug($sql);
 		$this->Usuario->query($sql);
+	}
+
+	/**
+	 * Troca o perfil corrente do usuário logado
+	 * 
+	 * @param	id do perfil
+	 * @return	void
+	 */
+	public function set_perfil()
+	{
+		$idPerfil = $this->params['perfil'];
+		$this->setMsgFlash('O Perfil foi alterado com sucesso !!!','msgFlashOk');
+		$_SESSION['Usuario']['perfil'] = $_SESSION['Perfis'][$idPerfil];
+		header('Location: '.$_SERVER['HTTP_REFERER']);
 	}
 }

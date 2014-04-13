@@ -50,3 +50,10 @@ function setPermissao(id)
 		});
 	}
 }
+
+function setPerfil(idPerfil)
+{
+	var url = base+'sistema/usuarios/set_perfil/perfil:'+idPerfil;
+	console.log(url);
+	document.location.href= url;
+}
