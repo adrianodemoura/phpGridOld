@@ -218,12 +218,12 @@ class UsuariosController extends SistemaAppController {
 	{
 		if (!isset($_SESSION['sqldump']))
 		{
-			$_SESSION['sqldump'] = true;
 			$this->setMsgFlash('Sql Dump Habilitado !!!','msgFlashOk');
+			$_SESSION['sqldump'] = true;
 		} else
 		{
-			unset($_SESSION['sqldump']);
 			$this->setMsgFlash('Sql Dump Desabilitado !!!','msgFlashOk');
+			unset($_SESSION['sqldump']);
 		}
 		header('Location: '.$_SERVER['HTTP_REFERER']);
 	}
@@ -242,5 +242,46 @@ class UsuariosController extends SistemaAppController {
 		}
 
 		$this->viewVars['url'] = $_SERVER['HTTP_REFERER'];
+	}
+
+	/**
+	 * Configura uma permissão de acesso
+	 * 
+	 * @param	string	Nome do módulo
+	 * @param	string	Nome do controller
+	 * @param	string	Nome da permissão (visualizar, incluir, alterar, excluir, imprimir ou pesquisar)
+	 * @param	string	Incluir ou Excluir permissão (Ok=incluir,Fa=excluir)
+	 */
+	public function set_permissao()
+	{
+		$this->layout 			= 'ajax';
+		$this->viewVars['ok'] 	= 'ok';
+		$modulo 				= strtoupper($this->params['modulo']);
+		$controller 			= strtoupper($this->params['controller']);
+		$arrPermissao			= explode('_',$this->params['permissao']);
+		$permissao				= $arrPermissao['0'];
+		$perfilId				= $arrPermissao['1'];
+		$vlr					= ($this->params['tipo']=='ok') ? 0 : 1;
+		
+		$sql = 'SELECT id FROM sis_permissoes';
+		$sql .= ' WHERE modulo="'.$modulo.'"';
+		$sql .= ' AND controller="'.$controller.'"';
+		$sql .= ' AND perfil_id='.$perfilId;
+		$data = $this->Usuario->query($sql);
+		$id = isset($data['0']['id']) ? $data['0']['id'] : 0;
+		if ($id>0)
+		{
+			$sql = 'UPDATE sis_permissoes';
+			$sql .= ' SET '.$permissao.'='.$vlr;
+			$sql .= ' WHERE id='.$id;
+		} else
+		{
+			$sql = 'INSERT INTO sis_permissoes';
+			$sql .= ' (modulo,controller,'.$permissao.',perfil_id)';
+			$sql .= ' VALUE';
+			$sql .= ' ("'.$modulo.'","'.$controller.'",'.$vlr.','.$perfilId.')';
+		}
+		debug($sql);
+		$this->Usuario->query($sql);
 	}
 }

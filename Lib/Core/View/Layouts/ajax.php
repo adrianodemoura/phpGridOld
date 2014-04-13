@@ -1,19 +1,24 @@
 <?php
-	foreach($data as $_l => $_arrMods)
+	if (isset($data))
 	{
-		foreach($_arrMods as $_mod => $_arrCmps)
+		 foreach($data as $_l => $_arrMods)
 		{
-			$l = 0;
-			foreach($_arrCmps as $_cmp => $_vlr)
+			foreach($_arrMods as $_mod => $_arrCmps)
 			{
-				if ($l) echo ';';
-				echo $_vlr;
-				$l++;
+				$l = 0;
+				foreach($_arrCmps as $_cmp => $_vlr)
+				{
+					if ($l) echo ';';
+					echo $_vlr;
+					$l++;
+				}
 			}
+			if ($debug) echo "<br />";
+			echo "*\n";
 		}
-		if ($debug) echo "<br />";
-		echo "*\n";
 	}
 ?>
 
-<?php if ($debug) echo $this->element('sql_dump',array('sql_dump'=>$sql_dump,'module'=>$module)) ?>
+<?= $conteudo; ?>
+
+<?php if (isset($debug) && $debug==true) echo $this->element('sql_dump',array('sql_dump'=>$sql_dump,'module'=>$module)) ?>

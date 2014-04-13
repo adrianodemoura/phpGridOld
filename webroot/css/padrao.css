@@ -117,35 +117,25 @@ body
 	float: right; 
 	margin: 0px 10px 0px 0px;
 }
-#padrao_ferramentas a
+#padrao_ferramentas img
 {
-	text-decoration: none;
-	display: block;
-	float: left;
-	padding: 0px 4px 0px 4px;
-}
-#padrao_ferramentas a:hover
-{
-	background-color: #000;
+	cursor: pointer;
 }
 #permissoes
 {
 	display: none;
 	position: absolute;
-	width: 100%;
-	z-index: 9000;
-	background-color: #535759;
-	line-height: 26px;
-	text-align: center;
+	left: 50%;
+	top: 30px;
+	width: 800px;
+	margin-left: -420px;
+	background-color: #fff;
+	z-index: 9001;
+	min-height: 500px;
+	padding: 4px;
 }
 #permissoes label
 {
 	cursor: pointer;
 	margin: 0px 5px 0px 0px;
-}
-#permissoes input
-{
-	color: #fff;
-	border: none;
-	background-color: transparent;
 }

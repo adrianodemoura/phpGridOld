@@ -3,6 +3,33 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
 -- -----------------------------------------------------
+-- Table `permissoes`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `sis_permissoes` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `modulo` VARCHAR(45) NOT NULL COMMENT 'nome do módulo' ,
+  `controller` VARCHAR(45) NOT NULL COMMENT 'nome do controller' ,
+  `visualizar` TINYINT(1) NOT NULL DEFAULT 0 ,
+  `incluir` TINYINT(1) NOT NULL DEFAULT 0 ,
+  `alterar` TINYINT(1) NOT NULL DEFAULT 0 ,
+  `excluir` TINYINT(1) NOT NULL DEFAULT 0 ,
+  `imprimir` TINYINT(1) NOT NULL DEFAULT 0 ,
+  `pesquisar` TINYINT(1) NOT NULL DEFAULT 0 ,
+  `perfil_id` INT NOT NULL DEFAULT 1 ,
+  PRIMARY KEY (`id`) ,
+  INDEX `i_modulo` (`modulo` ASC) ,
+  INDEX `i_controller` (`controller` ASC) ,
+  INDEX `fk_perfil` (`perfil_id` ASC) )
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Tabela que contém as permissões de cada perfil';
+INSERT INTO sis_permissoes (id,modulo,controller,visualizar,incluir,alterar,excluir,imprimir,pesquisar,perfil_id) VALUES (1,'SISTEMA','CIDADES',1,0,0,0,1,1,2);
+INSERT INTO sis_permissoes (id,modulo,controller,visualizar,incluir,alterar,excluir,imprimir,pesquisar,perfil_id) VALUES (2,'SISTEMA','CIDADES',1,0,0,0,1,1,3);
+INSERT INTO sis_permissoes (id,modulo,controller,visualizar,incluir,alterar,excluir,imprimir,pesquisar,perfil_id) VALUES (3,'SISTEMA','CIDADES',1,0,0,0,1,1,4);
+
+
+-- -----------------------------------------------------
 -- Table `cidades`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `sis_cidades` ;

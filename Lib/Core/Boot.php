@@ -133,6 +133,39 @@ class Boot {
 				$this->$controller->modelClass 				= $_mod;
 				$this->$controller->viewVars['modelClass'] 	= $_mod;
 			}
+			// recuperando as permissões da tela
+			if (isset($_SESSION['Usuario']['perfil']))
+			{
+				if ($_SESSION['Usuario']['perfil']=='ADMINISTRADOR')
+				{
+					$model = $this->$controller->modelClass;
+
+					// recuperando todos os perfis
+					$_perfis = $this->$controller->$model->query('SELECT id, nome FROM '.$this->$controller->$model->prefixo.'perfis WHERE id>1 ORDER BY nome');
+					$perfis = array();
+					foreach($_perfis as $_l => $_arrCmps)
+					{
+						$perfis[$_arrCmps['id']] = $_arrCmps['nome'];
+					}
+					$this->$controller->viewVars['permissoes']['perfis'] = $perfis;
+					
+					// recuperando as permissões da página corrente
+					$_permissoes = $this->$controller->$model->query('SELECT 
+						visualizar, incluir, alterar, excluir, imprimir, pesquisar, perfil_id
+						FROM '.$this->$controller->$model->prefixo.'permissoes 
+						WHERE modulo="'.strtolower($module).'" 
+						AND controller="'.strtolower($controller).'" ORDER BY modulo, controller');
+					foreach($_permissoes as $_l => $_arrCmps)
+					{
+						$idPerfil = $_arrCmps['perfil_id'];
+						foreach($_arrCmps as $_cmp => $_vlr)
+						{
+							if ($_cmp!='perfil_id')
+								$this->$controller->viewVars['permissoes']['acao'][$idPerfil][$_cmp] = $_vlr;
+						}
+					}
+				}
+			}
 		}
 
 		// executando a action

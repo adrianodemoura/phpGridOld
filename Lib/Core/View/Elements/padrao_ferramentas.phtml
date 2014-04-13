@@ -1,8 +1,9 @@
 <?php if ($_SESSION['Usuario']['perfil']=='ADMINISTRADOR') : ?>
 
-	<a href='<?= $this->viewVars['base'] ?>sistema/usuarios/set_sqldump'>
-		<img src='<?= $this->viewVars['base'] ?>img/bt_sqldump.png' />
-	</a>
+	<img title='Clique aqui para habilitar o Sql Dump' src='<?= $this->viewVars['base'] ?>img/bt_sqldump.png' 
+		onclick='document.location.href="<?= $this->viewVars['base'] ?>sistema/usuarios/set_sqldump"' />
 
-	<img src='<?= $this->viewVars['base'] ?>img/bt_permissoes.png' onclick='$("#permissoes").fadeIn(200);' />
+	<img title='Clique aqui para configurar as permissões da tela atual' src='<?= $this->viewVars['base'] ?>img/bt_permissoes.png'
+		onclick='showModal("permissoes");' />
+
 <?php endif ?>

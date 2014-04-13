@@ -111,10 +111,6 @@
 		</div>
 
 	</div>
-
-	<?php if ($_SESSION['Usuario']['perfil']=='ADMINISTRADOR') : ?>
-	<?= $this->element('permissoes'); ?>
-	<?php endif ?>
 	
 	<div id='cab2' class='container-fluid'>
 		<div style='float: left;'>
@@ -136,6 +132,10 @@
 		<?= $conteudo; ?>
 
 	</div><!-- fim conteudo -->
+	
+	<?php if ($_SESSION['Usuario']['perfil']=='ADMINISTRADOR') : ?>
+	<?= $this->element('permissoes'); ?>
+	<?php endif ?>
 
 	<div id="rodape" class="row">
 		<?php if (!empty($_SESSION['sqldump'])) echo $this->element('sql_dump',array('sql_dump'=>$sql_dump,'module'=>$module)) ?>
