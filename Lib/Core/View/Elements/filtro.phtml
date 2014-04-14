@@ -1,5 +1,6 @@
+<div class='filtro'>
 <form name='formFiltro' id='formFiltro' method='post' action='<?= $base.strtolower($module).'/'.strtolower($controller).'/set_filtro' ?>' >
-<span style='float: left; margin: 0px 5px 0px 0px;'>Filtros: </span>
+<span style='float: left; margin: 0px 5px 0px 0px; font-weight: bold;'>Filtros: </span>
 <?php 
 	foreach($this->viewVars['filtros'] as $_cmp => $_arrProp) : 
 	array_push($this->viewVars['onRead'], 
@@ -20,3 +21,4 @@
 
 <?php endforeach ?>
 </form>
+</div>
