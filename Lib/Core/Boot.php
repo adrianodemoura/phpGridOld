@@ -193,7 +193,7 @@ class Boot {
 				$pode = isset($minhasPermissoes['visualizar']) ? $minhasPermissoes['visualizar'] : 0;
 				if (!$pode)
 				{
-					$_SESSION['sistemaErro']['tip'] = 'Acesso';
+					$_SESSION['sistemaErro']['tip'] = 'Acesso Negado';
 					$_SESSION['sistemaErro']['txt'] = 'Caro '.$_SESSION['Usuario']['nome'].', o seu perfil não possui privilégios suficientes para acessar a página '.strtolower($module.'/'.$controller.'/'.$action);
 					//debug($minhasPermissoes);
 					header('Location: '.$this->$controller->base.'sistema/usuarios/erros');
