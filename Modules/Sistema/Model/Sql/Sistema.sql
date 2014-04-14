@@ -24,9 +24,12 @@ ENGINE = MyISAM
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
 COMMENT = 'Tabela que contém as permissões de cada perfil';
-INSERT INTO sis_permissoes (id,modulo,controller,visualizar,incluir,alterar,excluir,imprimir,pesquisar,perfil_id) VALUES (1,'SISTEMA','CIDADES',1,0,0,0,1,1,2);
-INSERT INTO sis_permissoes (id,modulo,controller,visualizar,incluir,alterar,excluir,imprimir,pesquisar,perfil_id) VALUES (2,'SISTEMA','CIDADES',1,0,0,0,1,1,3);
-INSERT INTO sis_permissoes (id,modulo,controller,visualizar,incluir,alterar,excluir,imprimir,pesquisar,perfil_id) VALUES (3,'SISTEMA','CIDADES',1,0,0,0,1,1,4);
+INSERT INTO sis_permissoes (id,modulo,controller,visualizar,incluir,alterar,excluir,imprimir,pesquisar,perfil_id) VALUES (1,'SISTEMA','USUARIOS',1,0,1,0,1,1,2);
+INSERT INTO sis_permissoes (id,modulo,controller,visualizar,incluir,alterar,excluir,imprimir,pesquisar,perfil_id) VALUES (2,'SISTEMA','USUARIOS',1,0,1,0,1,1,3);
+INSERT INTO sis_permissoes (id,modulo,controller,visualizar,incluir,alterar,excluir,imprimir,pesquisar,perfil_id) VALUES (3,'SISTEMA','USUARIOS',1,0,1,0,1,1,4);
+INSERT INTO sis_permissoes (id,modulo,controller,visualizar,incluir,alterar,excluir,imprimir,pesquisar,perfil_id) VALUES (4,'SISTEMA','CIDADES',1,0,0,0,1,1,2);
+INSERT INTO sis_permissoes (id,modulo,controller,visualizar,incluir,alterar,excluir,imprimir,pesquisar,perfil_id) VALUES (5,'SISTEMA','CIDADES',1,0,0,0,1,1,3);
+INSERT INTO sis_permissoes (id,modulo,controller,visualizar,incluir,alterar,excluir,imprimir,pesquisar,perfil_id) VALUES (6,'SISTEMA','CIDADES',1,0,0,0,1,1,4);
 
 
 -- -----------------------------------------------------
