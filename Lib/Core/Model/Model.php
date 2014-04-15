@@ -389,7 +389,7 @@ class Model {
 			debug($erro);
 			debug($sql);
 			die();
-		}
+		}// else debug($this->db->rowCount());
 
 		$l 		= 0;
 		$data 	= array();
@@ -399,6 +399,7 @@ class Model {
 			$linhas = @$_data->fetchAll(PDO::FETCH_NAMED);
 			if (is_array($linhas))
 			{
+				$l = 0;
 				foreach($linhas as $_l => $_arrCmps)
 				{
 					foreach($_arrCmps as $_cmp => $_vlr)
@@ -414,13 +415,14 @@ class Model {
 					{
 						$data[$_l][$_cmp] = $_vlr;
 					}
+					$l++;
 				}
 			}
 		}
 
 		$ts = microtime(true);
 		$ts = round(($ts-$ini)*360,4);
-		array_push($this->sqls,array('sql'=>$sql,'ts'=>$ts));
+		array_push($this->sqls,array('sql'=>$sql,'ts'=>$ts,'li'=>$l));
 		return $data;
 	}
 
