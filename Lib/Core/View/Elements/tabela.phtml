@@ -7,7 +7,8 @@
 
 <?php if (!$_l) : ?>
 <tr><!-- cabeçalho das linhas -->
-	<?php if ($this->Html->pode('alterar') && isset($this->viewVars['marcadores'])) : ?>
+	<?php if ($this->Html->pode('alterar',$this->viewVars['minhasPermissoes']) 
+			&& isset($this->viewVars['marcadores'])) : ?>
 		<th>
 		<input type='checkbox' name='cxAll' id='cxAll' title='clique aqui para selecionar todos'
 		<?php
@@ -63,7 +64,7 @@
 <?php endif ?>
 
 <tr><!-- linha a linha -->
-	<?php if ($this->Html->pode('alterar') && isset($this->viewVars['marcadores'])) : ?>
+	<?php if ($this->Html->pode('alterar',$this->viewVars['minhasPermissoes']) && isset($this->viewVars['marcadores'])) : ?>
 	<td>
 		<?php
 			$ids = '';

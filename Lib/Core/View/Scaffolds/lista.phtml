@@ -37,7 +37,9 @@
 			</div>
 			<?php endif ?>
 
-			<?php if ($this->Html->pode('pesquisar') && isset($this->viewVars['filtros']) && !empty($this->viewVars['filtros'])) : ?>
+			<?php if ($this->Html->pode('pesquisar',$this->viewVars['minhasPermissoes']) && 
+					 (isset($this->viewVars['filtros']) && !empty($this->viewVars['filtros']))) : 
+			?>
 			<?php echo $this->element('filtro'); ?>
 			<?php endif ?>
 

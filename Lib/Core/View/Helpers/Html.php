@@ -298,11 +298,12 @@ class Html {
 	 * @param	string	$acao	Ação a ser testada: visualizar, incluir, alterar, excluir, imprimir e pesquisar
 	 * @return	int		1 se sim, 0 se não
 	 */
-	public function pode($acao='')
+	public function pode($acao='', $minhasPermissoes=array())
 	{
-		if (isset($this->viewVars['minhasPermissoes'][$acao]))
+		if ($_SESSION['Usuario']['perfil']=='ADMINISTRADOR') return true;
+		if (isset($minhasPermissoes[$acao]))
 		{
-			if ($this->viewVars['minhasPermissoes'][$acao]==1) return true;
+			if ($minhasPermissoes[$acao]==1) return true;
 		}
 		return false;
 	}
