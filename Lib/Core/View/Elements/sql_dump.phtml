@@ -4,12 +4,14 @@
 	<tr>
 		<th>##</th>
 		<th>sql</th>
+		<th>linhas</th>
 		<th>tempo (seg)</th>
 	</tr>
 	<?php foreach($sql_dump as $_l => $_arrSqls) : ?>
 	<tr>
 		<td align='center' width='50px'><?= ($_l+1) ?></td>
 		<td><?= $_arrSqls['sql'] ?></td>
+		<td align='center' width='50px'><?= $_arrSqls['li'] ?></td>
 		<td align='center' width='110px'><?= $_arrSqls['ts'] ?></td>
 	</tr>
 	<?php endforeach ?>

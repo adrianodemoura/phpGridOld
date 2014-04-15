@@ -2,7 +2,7 @@
 
 <?php if (isset($linksMenu)) : foreach($linksMenu as $_con => $_arrOpcs) : ?>
 
-	<a href='<?= $_arrOpcs['link'] ?>' class='list-group-item<?php if ($_con==$controller) echo ' active'; ?>'>
+	<a href='<?= $_arrOpcs['link'] ?>' class='list-group-item<?php if ($_con==strtoupper($controller)) echo ' active'; ?>'>
 	<?= $_arrOpcs['tit'] ?>
 	</a>
 

@@ -5,33 +5,41 @@
 	padding: 0px 2px 0px 3px;
 	float: left;
 }
+
 /**********************************************/
-.ferramentas
+.filtro
 {
-	line-height: 50px;
-}
-.ferramentas ul
-{
-	margin: 0px 15px 0px 5px;
-	padding: 0px;
-	list-style: none;
 	float: left;
+	margin: 0px 10px 0px 0px;
 }
 
-.ferramentas ul li
+
+/**********************************************/
+.paginacao
+{
+	float: left;
+}
+.paginacao ul
+{
+	margin: 0px 15px 0px 0px;
+	padding: 0px;
+	list-style: none;
+}
+
+.paginacao ul li
 {
 	display: inline-block;
 	width: 32px;
-	height: 32px;
-	line-height: 32px;
+	height: 26px;
+	line-height: 26px;
 	text-align: center;
 	background-color: #fff;
 }
-.ferramentas ul li a
+.paginacao ul li a
 {
 	display: block;
 }
-.ferramentas ul li a:hover
+.paginacao ul li a:hover
 {
 	background-color: #535759;
 	-moz-border-radius: 6px;
@@ -42,13 +50,10 @@
 }
 
 /**********************************************/
-.filtro
-{
-	line-height: 30px;
-}
-.filtro .titFiltro
+.marcadores
 {
 	float: left;
+	margin: 0px 10px 0px 0px;
 }
 
 /**********************************************/
@@ -56,10 +61,16 @@
 {
 	/*background-color: #fff;
 	padding: 4px;*/
+	clear: both;
+	display: table;
+}
+.tabela tr th
+{
+	background-color: #eee;
 }
 .tabLista .lista_input
 {
-	width: 100px;
+	width: 120px;
 }
 .tabLista .inAlerta
 {
@@ -69,11 +80,15 @@
 }
 .tabLista
 {
-	background-color: #fff;
+	/*background-color: #fff;*/
 	border-top: 1px solid #ccc;
 	border-left: 1px solid #ccc;
 	margin: 5px 0px 0px 0px;
 	position: absolute;
+}
+.tabLista tr
+{
+	background-color: #fff;
 }
 .tabLista th
 {
@@ -108,4 +123,9 @@
 .tabLista .in_modificado
 {
 	text-align: center;
+	width: 150px;
+}
+.tabLista .in_email
+{
+	width: 200px;
 }

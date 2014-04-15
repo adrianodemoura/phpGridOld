@@ -38,8 +38,14 @@ class UsuariosController extends SistemaAppController {
 	{
 		$this->viewVars['fields'] = array('Usuario.ativo','Usuario.nome','Usuario.email','Usuario.celular'
 		,'Usuario.acessos'
-		,'Usuario.cidade_id'
-		,'Usuario.trocar_senha','Usuario.ultimo_ip');
+		,'Usuario.senha'
+		,'Usuario.trocar_senha'
+		,'Usuario.ultimo_ip'
+		,'Usuario.cidade_id');
+		if (!in_array($_SESSION['Usuario']['perfil'],array('ADMINISTRADOR','GERENTE')))
+		{
+			$this->filtros['Usuario.id'] = $_SESSION['Usuario']['id'];
+		}
 		parent::lista();
 	}
 
@@ -59,14 +65,26 @@ class UsuariosController extends SistemaAppController {
 			if (count($data))
 			{
 				$msg = 'Usuário autenticado com sucesso !!!';
-				$_SESSION['Usuario']['id'] 				= $data['0']['id'];
-				$_SESSION['Usuario']['email'] 			= $data['0']['email'];
-				$_SESSION['Usuario']['nome'] 			= $data['0']['nome'];
-				$_SESSION['Usuario']['ultimo_ip'] 		= $data['0']['ultimo_ip'];
-				$novaData['0']['Usuario']['id'] 		= $data['0']['id'];
-				$novaData['0']['Usuario']['acessos'] 	= ($data['0']['acessos']+1);
+				$_SESSION['Usuario']['id'] 				= $data['0']['Usuario']['id'];
+				$_SESSION['Usuario']['email'] 			= $data['0']['Usuario']['email'];
+				$_SESSION['Usuario']['nome'] 			= $data['0']['Usuario']['nome'];
+				$_SESSION['Usuario']['ultimo_ip'] 		= $data['0']['Usuario']['ultimo_ip'];
+				$_SESSION['Usuario']['perfil'] 			= $data['0']['Perfil']['0']['nome'];
+				$_SESSION['Usuario']['perfil_id'] 		= $data['0']['Perfil']['0']['id'];
+				$novaData['0']['Usuario']['id'] 		= $data['0']['Usuario']['id'];
+				$novaData['0']['Usuario']['acessos'] 	= ($data['0']['Usuario']['acessos']+1);
 				$novaData['0']['Usuario']['ultimo_ip'] 	= (strlen($_SERVER['SERVER_ADDR'])>4) ? $_SERVER['SERVER_ADDR'] : $_SERVER['REMOTE_ADDR'];
 				if ($novaData['0']['Usuario']['ultimo_ip']=='::1') $novaData['0']['Usuario']['ultimo_ip'] = '127.0.0.1';
+
+				// salvando meus perfis na sessão
+				$meusPerfis = array();
+				foreach($data['0']['Perfil'] as $_l => $_arrCmps)
+				{
+					$meusPerfis[$_arrCmps['id']] = $_arrCmps['nome'];
+				}
+				$_SESSION['Perfis'] = $meusPerfis;
+
+				// atualizando usuário
 				if (!$this->Usuario->save($novaData))
 				{
 					debug($novaData);
@@ -78,6 +96,7 @@ class UsuariosController extends SistemaAppController {
 					$data = $Conf->find('all');
 					$_SESSION['sql_dump'] = $data['0']['Configuracao']['sql_dump'];
 				}
+
 				$this->setMsgFlash('Usuário autenticado com sucesso !!!','msgFlashOk');
 				$this->redirect('sistema','usuarios','info');
 			} else
@@ -102,6 +121,15 @@ class UsuariosController extends SistemaAppController {
 		unset($this->data['0']['Usuario']['senha']);
 		$this->Usuario->outrosEsquemas['Cidade']['nome']['tit'] = 'Cidade';
 		$this->data['0']['Usuario']['ultimo_ip'] = $_SESSION['Usuario']['ultimo_ip'];
+		$perfis = $this->data['0']['Perfil'];
+		unset($this->data['0']['Perfil']);
+		$meusPerfis = '';
+		foreach($perfis as $_l => $_arrCmps)
+		{
+			if ($_l) $meusPerfis .= ', ';
+			$meusPerfis .= $_arrCmps['nome'];
+		}
+		$this->data['0']['Usuario']['Perfis'] = $meusPerfis;
 	}
 
 	/**
@@ -115,7 +143,7 @@ class UsuariosController extends SistemaAppController {
 		ini_set('display_errors', 0);
 
 		$this->layout = 'publico';
-		$sql = 'SELECT id from usuarios where id=1';
+		$sql = 'SELECT id from sis_usuarios where id=1';
 		$data = $this->Usuario->query($sql);
 		if (count($data))
 		{
@@ -145,7 +173,7 @@ class UsuariosController extends SistemaAppController {
 				include_once('Model/Util.php');
 				$Util = new Util();
 
-				$tabs = array('cidades','territorios','bairros');
+				$tabs = array('sis_cidades','sis_territorios','sis_bairros');
 				foreach($tabs as $_l => $_tabela)
 				{
 					$arq = APP.'Modules/Sistema/Model/Sql/'.$_tabela.'.csv';
@@ -206,5 +234,95 @@ class UsuariosController extends SistemaAppController {
 		$this->viewVars['txt'] = isset($_SESSION['sistemaErro']['txt']) ? $_SESSION['sistemaErro']['txt'] : '';
 		$this->viewVars['tip'] = isset($_SESSION['sistemaErro']['tip']) ? $_SESSION['sistemaErro']['tip'] : '';
 		unset($_SESSION['sistemaErro']);
+	}
+
+	/**
+	 * Liga ou desliga o sql_dump
+	 * 
+	 * @return	void
+	 */
+	public function set_sqldump()
+	{
+		if (!isset($_SESSION['sqldump']))
+		{
+			$this->setMsgFlash('Sql Dump Habilitado !!!','msgFlashOk');
+			$_SESSION['sqldump'] = true;
+		} else
+		{
+			$this->setMsgFlash('Sql Dump Desabilitado !!!','msgFlashOk');
+			unset($_SESSION['sqldump']);
+		}
+		header('Location: '.$_SERVER['HTTP_REFERER']);
+	}
+
+	/**
+	 * Liga ou desliga o sql_dump
+	 * 
+	 * @return	void
+	 */
+	public function permissoes()
+	{
+		// se não é administrado não vai ...
+		if (!$_SESSION['Usuario']['perfil']=='ADMINISTRADOR')
+		{
+			header('Location: '.$_SERVER['HTTP_REFERER']);
+		}
+
+		$this->viewVars['url'] = $_SERVER['HTTP_REFERER'];
+	}
+
+	/**
+	 * Configura uma permissão de acesso
+	 * 
+	 * @param	string	Nome do módulo
+	 * @param	string	Nome do controller
+	 * @param	string	Nome da permissão (visualizar, incluir, alterar, excluir, imprimir ou pesquisar)
+	 * @param	string	Incluir ou Excluir permissão (Ok=incluir,Fa=excluir)
+	 */
+	public function set_permissao()
+	{
+		$this->layout 			= 'ajax';
+		$this->viewVars['tipo'] = $this->params['tipo'];
+		$modulo 				= strtoupper($this->params['modulo']);
+		$controller 			= strtoupper($this->params['controller']);
+		$arrPermissao			= explode('_',$this->params['permissao']);
+		$permissao				= $arrPermissao['0'];
+		$perfilId				= $arrPermissao['1'];
+		$vlr					= ($this->params['tipo']=='ok') ? 0 : 1;
+		
+		$sql = 'SELECT id FROM sis_permissoes';
+		$sql .= ' WHERE modulo="'.$modulo.'"';
+		$sql .= ' AND controller="'.$controller.'"';
+		$sql .= ' AND perfil_id='.$perfilId;
+		$data = $this->Usuario->query($sql);
+		$id = isset($data['0']['id']) ? $data['0']['id'] : 0;
+		if ($id>0)
+		{
+			$sql = 'UPDATE sis_permissoes';
+			$sql .= ' SET '.$permissao.'='.$vlr;
+			$sql .= ' WHERE id='.$id;
+		} else
+		{
+			$sql = 'INSERT INTO sis_permissoes';
+			$sql .= ' (modulo,controller,'.$permissao.',perfil_id)';
+			$sql .= ' VALUE';
+			$sql .= ' ("'.$modulo.'","'.$controller.'",'.$vlr.','.$perfilId.')';
+		}
+		$this->Usuario->query($sql);
+	}
+
+	/**
+	 * Troca o perfil corrente do usuário logado
+	 * 
+	 * @param	id do perfil
+	 * @return	void
+	 */
+	public function set_perfil()
+	{
+		$idPerfil = $this->params['perfil'];
+		$this->setMsgFlash('O Perfil foi alterado com sucesso !!!','msgFlashOk');
+		$_SESSION['Usuario']['perfil'] 		= $_SESSION['Perfis'][$idPerfil];
+		$_SESSION['Usuario']['perfil_id'] 	= $idPerfil;
+		header('Location: '.$_SERVER['HTTP_REFERER']);
 	}
 }

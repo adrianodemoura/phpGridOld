@@ -1,0 +1,59 @@
+<?php
+	$per = array('visualizar','incluir','alterar','excluir','imprimir','pesquisar');
+?>
+<div id='permissoes'>
+	<div style='padding: 5px;'>
+
+		<input type='button' name='btPerFec' id='btPerFec' value='Fechar' 
+			class='btn btn-danger' onclick='$("#permissoes").fadeOut(400); $("#tampaTudo").fadeOut();' >
+
+		<span style='float: right; cursor: pointer; text-align: center; width: 30px; color: red; font-weight: bold;' 
+			onclick='$("#permissoes").fadeOut(400); $("#tampaTudo").fadeOut();'>(x)</span>
+	</div>
+
+	<div style='padding: 15px 5px 15px 5px; text-align: center; '>
+		<label>Modulo:</label>
+		<input type='text' disabled='disabled' name='data[Permissao][module]' id='PermissaoModule'
+			value='<?= strtolower($this->viewVars['module']) ?>' />
+
+		<label>Cadastro:</label>
+		<input type='text' disabled='disabled' name='data[Permissao][controller]' id='PermissaoController'
+			value='<?= strtolower($this->viewVars['controller']) ?>' />
+
+	</div>
+
+	<div>
+		<table border='1px' align='center'>
+		<tr>
+			<th width='130px' style='text-align: center;'>
+				Perfil
+			</th>
+			<?php foreach($per as $_l => $_permissao) : ?>
+			<th style='text-align: center; width: 90px;'>
+				<?= ucfirst($_permissao) ?>
+			</th>
+			<?php endforeach ?>
+		</tr>
+		
+		<?php 
+			foreach($this->viewVars['permissoes']['perfis'] as $_id => $_perfil) : 
+		?>
+		<tr>
+			<td style='padding: 0px 0px 0px 5px;'><?= $_perfil ?></td>
+			<?php foreach($per as $_l => $_permissao) : 
+				$ok = isset($this->viewVars['permissoes']['acao'][$_id][$_permissao]) 
+					? $this->viewVars['permissoes']['acao'][$_id][strtolower($_permissao)]
+					: 0; 
+			?>
+			<td style='text-align: center; width: 90px;'>
+				<?php $id = $_permissao.'_'.$_id; ?>
+				<img src='<?= $this->viewVars['base'] ?>img/bt_permissao_ok.png'   <?php if ($ok==0) echo "hidden=true" ?> id='ok<?= $id ?>' onclick='setPermissao("ok<?= $id ?>")' />
+				<img src='<?= $this->viewVars['base'] ?>img/bt_permissao_erro.png' <?php if ($ok==1) echo "hidden=true" ?> id='fa<?= $id ?>' onclick='setPermissao("fa<?= $id ?>")' />
+			</td>
+			<?php endforeach ?>
+			
+		</tr>
+		<?php endforeach ?>
+		</table>
+	</div>
+</div>

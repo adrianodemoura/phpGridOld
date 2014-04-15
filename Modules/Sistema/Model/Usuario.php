@@ -37,6 +37,8 @@ class Usuario extends SistemaAppModel {
 	/**
 	 * Relacionamento Habtm
 	 * 
+	 * - O nome da tabela de ligação já deve levar o prefixo caso possua, a regra foi definida assim para que haja ligação entre os módulos
+	 * 
 	 * @var		array
 	 * @access	public
 	 */
@@ -44,9 +46,10 @@ class Usuario extends SistemaAppModel {
 	(
 		'Perfil'	=> array
 		(
-			'table'	=> 'usuarios_perfis',
-			'key'	=> 'usuario_id',
-			'keyFk'	=> 'perfil_id',
+			'table'	=> 'sis_usuarios_perfis',
+			'key'	=> array('usuario_id'),
+			'tableFk'=> 'sis_perfis',
+			'keyFk'	=> array('perfil_id'),
 		)
 	);
 
@@ -62,17 +65,17 @@ class Usuario extends SistemaAppModel {
 		(
 			'tit'		=> 'Id'
 		),
+		'nome'			=> array
+		(
+			'tit'		=> 'Nome',
+			'notEmpty'	=> true,
+		),
 		'ativo'=> array
 		(
 			'tit'		=> 'Ativo',
 			'filtro'	=> true,
 			'options'	=> array('1'=>'Sim','0'=>'Não'),
 			'emptyFiltro'	=> '-- Ativos --',
-		),
-		'nome'			=> array
-		(
-			'tit'		=> 'Nome',
-			'notEmpty'	=> true,
 		),
 		'acessos'		=> array
 		(
@@ -135,8 +138,10 @@ class Usuario extends SistemaAppModel {
 	public function autentica($e='', $s='')
 	{
 		$s = md5($s.SALT);
-		$sql = "SELECT u.* FROM usuarios u WHERE u.email='$e' AND u.senha='$s'";
-		$data = $this->query($sql);
+		$opcs = array();
+		$opcs['where']['email'] = $e;
+		$opcs['where']['senha'] = $s;
+		$data = $this->find('all',$opcs);
 		return $data;
 	}
 
@@ -168,14 +173,14 @@ class Usuario extends SistemaAppModel {
 		foreach($this->data as $_l => $_arrMods)
 		{
 			// criptografando a senha
-			if (isset($_arrMods['Usuario']['Senha']))
+			if (isset($_arrMods['Usuario']['senha']))
 			{
-				if (!empty($_arrMods['Usuario']['Senha']))
+				if (!empty($_arrMods['Usuario']['senha']))
 				{
-					$this->data[$_l]['Usuario']['Senha'] = md5($_arrMods['Usuario']['Senha'].SALT);
+					$this->data[$_l]['Usuario']['senha'] = md5($_arrMods['Usuario']['senha'].SALT);
 				} else
 				{
-					unset($this->data[$_l]['Usuario']['Senha']);
+					unset($this->data[$_l]['Usuario']['senha']);
 				}
 			}
 			// admin sempre ativo

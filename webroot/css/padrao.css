@@ -112,3 +112,43 @@ body
 {
 	background-color: red;
 }
+/*******************************************/
+#padrao_ferramentas
+{
+	float: right; 
+	margin: 0px 20px 0px 0px;
+	color: #000;
+	display: inline;
+	width: auto;
+}
+#padrao_ferramentas img
+{
+	cursor: pointer;
+}
+#padrao_ferramentas select
+{
+	background-color: #fff;
+	width: 120px;
+	border: none;
+}
+
+
+/*******************************************/
+#permissoes
+{
+	display: none;
+	position: absolute;
+	left: 50%;
+	top: 30px;
+	width: 800px;
+	margin-left: -420px;
+	background-color: #fff;
+	z-index: 9001;
+	min-height: 500px;
+	padding: 4px;
+}
+#permissoes label
+{
+	cursor: pointer;
+	margin: 0px 5px 0px 0px;
+}

@@ -12,6 +12,7 @@
 	$linkU = $this->viewVars['base'].strtolower($module.'/'.$controller.'/lista/pag:'.$this->viewVars['paginacao']['pagU'].'/ord:'.$this->viewVars['params']['ord'].'/dir:'.$this->viewVars['params']['dir']);
 
 ?>
+<div class='paginacao'>
 <ul>
   <li><a href="<?= $link1 ?>">&laquo;</a></li>
   <li><a href="<?= $linkA ?>">&lsaquo;</a></li>
@@ -21,3 +22,5 @@
   <li><a href="<?= $linkP ?>">&rsaquo;</a></li>
   <li><a href="<?= $linkU ?>">&raquo;</a></li>
 </ul>
+
+</div>

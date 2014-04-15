@@ -133,6 +133,73 @@ class Boot {
 				$this->$controller->modelClass 				= $_mod;
 				$this->$controller->viewVars['modelClass'] 	= $_mod;
 			}
+			// recuperando as permissões da tela
+			if (isset($_SESSION['Usuario']['perfil']))
+			{
+				$model = $this->$controller->modelClass;
+				
+				// recuperando minhas permissoes, conforme meu perfil, módulo e controller corrente
+				$minhasPermissoes = array();
+				$idPerfil = 0;
+				foreach($_SESSION['Perfis'] as $_id => $_perfil) if ($_perfil==$_SESSION['Usuario']['perfil']) $idPerfil = $_id;
+				$sql = 'SELECT id, modulo, controller, perfil_id, visualizar, incluir, alterar, excluir, imprimir, pesquisar FROM sis_permissoes';
+				$sql .= ' WHERE perfil_id='.$idPerfil;
+				$sql .= ' AND modulo="'.strtoupper($module).'"';
+				$sql .= ' AND controller="'.strtoupper($controller).'"';
+				$_minhasPermissoes = $this->$controller->$model->query($sql);
+				if (!empty($_minhasPermissoes))
+				{
+					$minhasPermissoes = $_minhasPermissoes['0'];
+				}
+				$this->$controller->viewVars['minhasPermissoes'] = $minhasPermissoes;
+
+				// recuperando os parâmetros para a tela de configuração de permissões de cada perfil
+				if ($_SESSION['Usuario']['perfil']=='ADMINISTRADOR')
+				{
+					// recuperando todos os perfis
+					$_perfis = $this->$controller->$model->query('SELECT id, nome FROM '.$this->$controller->$model->prefixo.'perfis WHERE id>1 ORDER BY nome');
+					$perfis = array();
+					foreach($_perfis as $_l => $_arrCmps)
+					{
+						$perfis[$_arrCmps['id']] = $_arrCmps['nome'];
+					}
+					$this->$controller->viewVars['permissoes']['perfis'] = $perfis;
+					
+					// recuperando as permissões da página corrente
+					$_permissoes = $this->$controller->$model->query('SELECT 
+						visualizar, incluir, alterar, excluir, imprimir, pesquisar, perfil_id
+						FROM '.$this->$controller->$model->prefixo.'permissoes 
+						WHERE modulo="'.strtolower($module).'" 
+						AND controller="'.strtolower($controller).'" ORDER BY modulo, controller');
+					foreach($_permissoes as $_l => $_arrCmps)
+					{
+						$idPerfil = $_arrCmps['perfil_id'];
+						foreach($_arrCmps as $_cmp => $_vlr)
+						{
+							if ($_cmp!='perfil_id')
+								$this->$controller->viewVars['permissoes']['acao'][$idPerfil][$_cmp] = $_vlr;
+						}
+					}
+				}
+			}
+		}
+		
+		// validando a permissão
+		if (isset($_SESSION['Usuario']) && $_SESSION['Usuario']['perfil'] != 'ADMINISTRADOR')
+		{
+			if (!in_array(strtolower($action),array('erros'))
+				)
+			{
+				$pode = isset($minhasPermissoes['visualizar']) ? $minhasPermissoes['visualizar'] : 0;
+				if (!$pode)
+				{
+					$_SESSION['sistemaErro']['tip'] = 'Acesso Negado';
+					$_SESSION['sistemaErro']['txt'] = 'Caro '.$_SESSION['Usuario']['nome'].', o seu perfil não possui privilégios suficientes para acessar a página '.strtolower($module.'/'.$controller.'/'.$action);
+					//debug($minhasPermissoes);
+					header('Location: '.$this->$controller->base.'sistema/usuarios/erros');
+				}
+				//debug($minhasPermissoes); debug($controller.' '.$action);
+			}
 		}
 
 		// executando a action
@@ -158,7 +225,6 @@ class Boot {
 		{
 			foreach($this->$controller->Model as $_mod)
 			{
-				$this->$controller->viewVars['sql_dump'] 	= $this->$controller->$_mod->sqls;
 				$this->$controller->viewVars['primaryKey'] 	= $this->$controller->$_mod->primaryKey;
 				if (isset($this->$controller->$_mod->pag) && isset($this->$controller->viewVars['paginacao'])) $this->$controller->viewVars['paginacao'] 	= $this->$controller->$_mod->pag;
 				if (isset($this->$controller->$_mod->esquema))
@@ -175,6 +241,13 @@ class Boot {
 			}
 		}
 
+		// executando código antes da renderização e depois da action
+		$this->$controller->beforeRender();
+
+		// atualizando as sqls do model na view
+		$modelClass = $this->$controller->modelClass;
+		$this->$controller->viewVars['sql_dump'] 	= $this->$controller->$modelClass->sqls;
+
 		// atualizando as variáveis locais
 		$this->data		= $this->$controller->data;
 		$this->viewVars = $this->$controller->viewVars;
@@ -182,9 +255,6 @@ class Boot {
 		$this->viewVars['module']	 	= $module;
 		$this->viewVars['controller'] 	= $controller;
 		$this->viewVars['action'] 		= $action;
-
-		// executando código antes da renderização e depois da action
-		$this->$controller->beforeRender();
 
 		// salvando dados da view e dando adeus ao controller, ele não vai pra view
 		$viewPath 		= $this->$controller->viewPath;
@@ -199,12 +269,23 @@ class Boot {
 			unset($_SESSION['msgFlash']);
 		}
 
+		// configurando o css da action
+		$arq = strtolower($module.'_'.$controller.'_'.$action);
+		if (file_exists('./css/'.$arq.'.css'))
+		{
+			array_push($head,'<link rel="stylesheet" type="text/css" href="'.getBase().'css/'.$arq.'.css" />');
+		}
+		if (file_exists('./js/'.$arq.'.js'))
+		{
+			array_push($head,'<script type="text/javascript" src="'.getBase().'js/'.$arq.'.js"></script>');
+		}
+
 		// incluindo a view 
 		$conteudo = '';
-		$arq = 'Modules/'.$module.'/View/'.$viewPath.'/'.$view.'.php';
+		$arq = 'Modules/'.$module.'/View/'.$viewPath.'/'.$view.'.phtml';
 		if (!file_exists(APP.$arq))
 		{
-			$arq = CORE.'View/Scaffolds/'.$view.'.php';
+			$arq = CORE.'View/Scaffolds/'.$view.'.phtml';
 			if (!file_exists($arq))
 			{
 				die('<center>N&atilde;o foi poss&iacute;vel localizar a view <b>'.$arq.'</b></center>');

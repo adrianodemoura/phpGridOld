@@ -7,6 +7,14 @@
  */
 class Model {
 	/**
+	 * Prefixo no nome da tabela
+	 * 
+	 * @var		string
+	 * @access	public
+	 */
+	public $prefixo		= '';
+
+	/**
 	 * Nome do model
 	 * 
 	 * @var		string
@@ -328,10 +336,10 @@ class Model {
 			switch($sqlTi)
 			{
 				case 'UPDATE':
-					$sqls[$_l] = 'UPDATE '.$this->tabela.' SET '.$sqlUp.' WHERE '.$where.';';
+					$sqls[$_l] = 'UPDATE '.$this->prefixo.$this->tabela.' SET '.$sqlUp.' WHERE '.$where.';';
 					break;
 				case 'INSERT':
-					$sqls[$_l] = 'INSERT INTO '.$this->tabela.' ('.implode(',',$sqlInC).') VALUES ('.implode(',',$sqlInV).');';
+					$sqls[$_l] = 'INSERT INTO '.$this->prefixo.$this->tabela.' ('.implode(',',$sqlInC).') VALUES ('.implode(',',$sqlInV).');';
 					break;
 			}
 		}
@@ -374,8 +382,15 @@ class Model {
 	public function query($sql='')
 	{
 		$this->open();
-		$_data 	= $this->db->query($sql);
+		$_data 	= @$this->db->query($sql);
 		$erro 	= $this->db->errorInfo();
+		if (isset($erro['2']))
+		{
+			//debug($erro);
+			debug($sql);
+			//debug($this->name);
+			//if ($this->name!='Util') die();
+		}
 
 		$l 		= 0;
 		$data 	= array();
@@ -385,6 +400,7 @@ class Model {
 			$linhas = @$_data->fetchAll(PDO::FETCH_NAMED);
 			if (is_array($linhas))
 			{
+				$l = 0;
 				foreach($linhas as $_l => $_arrCmps)
 				{
 					foreach($_arrCmps as $_cmp => $_vlr)
@@ -400,13 +416,14 @@ class Model {
 					{
 						$data[$_l][$_cmp] = $_vlr;
 					}
+					$l++;
 				}
 			}
 		}
 
 		$ts = microtime(true);
 		$ts = round(($ts-$ini)*360,4);
-		array_push($this->sqls,array('sql'=>$sql,'ts'=>$ts));
+		array_push($this->sqls,array('sql'=>$sql,'ts'=>$ts,'li'=>$l));
 		return $data;
 	}
 
@@ -449,7 +466,7 @@ class Model {
 					$where .= "$_cmp='$_vlr'";
 				}
 			}
-			$sql = 'DELETE FROM '.$this->tabela.' WHERE '.$where;
+			$sql = 'DELETE FROM '.$this->prefixo.$this->tabela.' WHERE '.$where;
 			array_push($sqls, $sql);
 		}
 
@@ -512,14 +529,28 @@ class Model {
 		$sql 	= '';
 		$sqlC	= '';
 		$join 	= array();
-		$tabela = isset($params['tabela']) 	? $params['tabela'] : $this->tabela;
+		$tabela = isset($params['tabela']) 	? $params['tabela'] : $this->prefixo.$this->tabela;
 		$fields = isset($params['fields']) 	? $params['fields'] : array();
 		$where	= isset($params['where']) 	? $params['where'] 	: array();
 		$order	= isset($params['order']) 	? $params['order'] 	: array();
 		$direc	= isset($params['direc']) 	? $params['direc'] 	: 'asc';
 		$pag	= isset($params['pag']) 	? $params['pag'] 	: 0;
 		$pagT	= isset($params['pagT']) 	? $params['pagT'] 	: 20;
-		$ali1	= isset($this->alias) ? $this->alias : $this->name;
+		$distinct = isset($params['distinct']) ? $params['distinct'] : null;
+		$ali1	= $this->name;
+
+		// verifica o nome de cada campo
+		if (!empty($fields))
+		{
+			foreach($fields as $_l => $_cmp)
+			{
+				if (!strpos($_cmp,'.'))
+				{
+					unset($fields[$_l]);
+					array_unshift($fields,$this->name.'.'.$_cmp);
+				}
+			}
+		}
 
 		// verificando os campos
 		switch($tipo)
@@ -533,13 +564,29 @@ class Model {
 					}
 				}
 				break;
-			case 'list':
+			case 'first':
 				if (empty($fields))
 				{
 					$l = 0;
 					foreach($this->esquema as $_cmp => $_arrProp)
 					{
-						if (!in_array($_cmp,array('id')))
+						array_push($fields,$this->name.'.'.$_cmp);
+						$l++;
+					}
+				}
+				break;
+			case 'list':
+				if (empty($fields))
+				{
+					foreach($this->primaryKey as $_cmp)
+					{
+						array_push($fields,$this->name.'.'.$_cmp);
+					}
+					$l = 0;
+					foreach($this->esquema as $_cmp => $_arrProp)
+					{
+						if ($l>0) break;
+						if (!in_array($_cmp,$this->primaryKey))
 						{
 							array_push($fields,$this->name.'.'.$_cmp);
 							$l++;
@@ -580,7 +627,7 @@ class Model {
 						require_once('Model/'.$_model.'.php');
 						$belo 	= new $_model();
 						if (isset($belo->esquema)) $this->outrosEsquemas[$_model] = $belo->esquema;
-						$tabB	= $belo->tabela;
+						$tabB	= $belo->prefixo.$belo->tabela;
 						$aliB	= $_model;
 						$keyB	= (isset($_arrProp['key'])) ? $_arrProp['key'] : 'id';
 						$aliA 	= (isset($this->alias)) ? $this->alias : $this->name;
@@ -601,7 +648,9 @@ class Model {
 		}
 
 		// iniciando a sql
-		$sql  .= "SELECT ".$cmps." FROM $tabela ".$ali1;
+		$sql  .= "SELECT ";
+		if (!empty($distinct)) $sql .= ' DISTINCT ';
+		$sql .= $cmps." FROM $tabela ".$ali1;
 		$sqlC .= "SELECT COUNT(1) as tot FROM $tabela ".$ali1;
 
 		// join
@@ -623,17 +672,24 @@ class Model {
 					$sql  .= " AND ";
 					$sqlC .= " AND ";
 				}
-				$b = explode(' ',$_vlr);
-				switch(strtoupper($b['0']))
+				$b = explode(' ',$_cmp);
+				$b['1'] = isset($b['1']) ? $b['1'] : null;
+				switch(strtoupper($b['1']))
 				{
 					case 'IN':
-						$sql .= $_cmp.' IN '.$_vlr;
+						$_cmp = trim(str_replace('IN','',$_cmp));
+						$sql .= $_cmp." IN ('".implode("','",$_vlr)."') ";
+						break;
 					case 'BETWEEN':
+						$_cmp = trim(str_replace('BETWEEN','',$_cmp));
 						$sql .= $_cmp.' BETWEEN ('.$_vlr.')';
+						break;
 					case 'NOT':
+						$_cmp = trim(str_replace('NOT IN','',$_cmp));
 						$sql .= $_cmp.' NOT IN '.$_vlr;
+						break;
 					case 'LIKE':
-						$_vlr = trim(str_replace('LIKE','',$_vlr));
+						$_cmp = trim(str_replace('LIKE','',$_cmp));
 						$sql .= $_cmp." LIKE '%$_vlr%'";
 						$sqlC .= $_cmp." LIKE '%$_vlr%'";
 						break;
@@ -652,6 +708,8 @@ class Model {
 				$l++;
 			}
 		}
+
+		//
 		if (count($order))
 		{
 			$l 		= 0;
@@ -694,6 +752,44 @@ class Model {
 				if (isset($c['2'])) $c['1'] .= '_'.$c['2'];
 				if (!isset($data[$_l][$c['0']])) $data[$_l][$c['0']] = array();
 				$data[$_l][$c['0']][$c['1']] = $_vlr;
+			}
+			
+			// incrementando habtm, caso poussua
+			if ($tipo=='all' AND isset($this->habtm) && !empty($this->habtm))
+			{
+				foreach($this->habtm as $_mod => $_arrProp)
+				{
+					$tabEsquerda= $_arrProp['tableFk'];
+					$tabLiga	= $_arrProp['table'];
+					$arrTab		= explode('_',$tabLiga);
+					$cmpEsquerda= $_arrProp['key'];
+					
+					$tabDireita = $arrTab['2'];
+					$cmpDireita = $_arrProp['keyFk'];
+					$sql = ' SELECT * FROM '.$tabEsquerda.' '.$_mod;
+					$sql .= ' INNER JOIN '.$tabLiga.' t1 ON ';
+					$l = 0;
+					foreach($cmpDireita as $_cmp)
+					{
+						if ($l) $sqlHabtm .= ' AND ';
+						$arrCmp = explode('_',$_cmp);
+						$sql .= $_mod.'.'.$arrCmp['1'].'= t1.'.$_cmp;
+						$l++;
+					}
+					$l = 0;
+					foreach($cmpEsquerda as $_cmp)
+					{
+						if ($l) $sql .= ' AND ';
+						$vlrCmpEsquerda = $_arrCmps[ucfirst($_cmp)];
+						$sql .= ' WHERE t1.'.$_cmp.'='.$vlrCmpEsquerda;
+						$l++;
+					}
+					$dataHbtm = $this->query($sql);
+					foreach($dataHbtm as $_lHa => $_arrCmHa)
+					{
+						$data[$_l][$_mod][$_lHa] = $_arrCmHa;
+					}
+				}
 			}
 		}
 
@@ -755,7 +851,7 @@ class Model {
 
 					require_once('Model/'.$_mod.'.php');
 					$belo 	= new $_mod();
-					$tabela = $belo->tabela;
+					$tabela = $belo->prefixo.$belo->tabela;
 					$sql 	= "SELECT ".implode(',', $cmps)." FROM $tabela as $alias";
 					if (!empty($where)) $sql .= " WHERE ".$where;
 					$sql .= " ORDER BY ".implode(',', $ordem);
@@ -790,7 +886,7 @@ class Model {
 	public function setEsquema($tabela='')
 	{
 		$this->open();
-		$tabela = !empty($tabela) ? $tabela : $this->tabela;
+		$tabela = !empty($tabela) ? $tabela : $this->prefixo.$this->tabela;
 		// completando o esquema
 		switch($this->driver)
 		{

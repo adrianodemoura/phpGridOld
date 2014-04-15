@@ -17,44 +17,36 @@
 
 		<?php $this->element('tabela_novo'); ?>
 
-		<div class='ferramentas'><!-- ferramentas_topo -->
-			
+		<div id='dir1' style='margin: 0px 0px 5px 0px;'>
+			<?php $this->element('botoes_lista'); ?>
+		</div>
+
+		<div id='dir11' style='line-height: 30px;'>
 			<?php if (isset($this->viewVars['paginacao'])) : ?>
-			<?= $this->element('paginacao') ?>
+				<?php $this->element('paginacao') ?>
 			<?php endif ?>
 
-			<?php 
-			if (isset($this->viewVars['botoesLista'])) : ?>
-			<?php
-			foreach($this->viewVars['botoesLista'] as $_l => $_arrProp)
-			{
-				if (!empty($_arrProp))
-				{
-					echo "<input"; foreach($_arrProp as $_tag => $_vlr) echo " $_tag='$_vlr'"; echo " /> \n";
-				}
-			}
-			?>
-			<?php endif ?>
-				
-			<?php if (isset($this->viewVars['marcadores'])) : ?>
+			<?php if (isset($this->viewVars['marcadores']) && count($this->viewVars['marcadores'])) : ?>
+			<div class='marcadores'>
 			<select name='cxSel' id='cxSel' >
 				<option value=''>-- Aplicar aos Marcadores --</option>
 				<?php foreach($this->viewVars['marcadores'] as $_txt => $_link) : ?>
 					<option value='<?= $_link ?>'><?= $_txt ?></option>
 				<?php endforeach ?>
 			</select>
+			</div>
 			<?php endif ?>
 
-		</div><!-- fim ferramentas_topo -->
-
-		<?php if (isset($this->viewVars['filtros']) && !empty($this->viewVars['filtros'])) : ?>
-		<div class='filtro'>
+			<?php if ($this->Html->pode('pesquisar',$this->viewVars['minhasPermissoes']) && 
+					 (isset($this->viewVars['filtros']) && !empty($this->viewVars['filtros']))) : 
+			?>
 			<?php echo $this->element('filtro'); ?>
-		</div><!-- fim filtro -->
-		<?php endif ?>
+			<?php endif ?>
 
-		<div class='tabela'><!-- tabela -->
-		<?php echo $this->element('tabela'); ?>
+		</div>
+
+		<div id='dir2' class='tabela'><!-- tabela -->
+			<?php $this->element('tabela'); ?>
 		</div><!-- fim tabela -->
 
 	</div><!-- fim direita -->

@@ -75,11 +75,21 @@ class Configuracao extends SistemaAppModel {
 			'tit'	=> 'Celular',
 			'mascara'=> '(##)####-####',
 		),
-		'sql_dump'=> array
+		'cidade_id'		=> array
 		(
-			'tit'		=> 'SqlDump',
-			'options'	=> array('1'=>'Sim','0'=>'Não')
-		)
+			'tit'		=> 'Cidade',
+			'belongsTo' 	=> array
+			(
+				'Cidade'	=> array
+				(
+					'key'	=> 'id',
+					'fields'=> array('id','nome','uf'),
+					'order'	=> array('nome','uf'),
+					'ajax'	=> 'sistema/cidades/get_options/',
+					'txtPesquisa' => 'Digite o nome da cidade para pesquisar ...',
+				),
+			),
+		),
 	);
 
 	/**

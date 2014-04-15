@@ -45,20 +45,4 @@ class ConfiguracoesController extends SistemaAppController {
 		unset($this->viewVars['filtros']);
 		unset($this->viewVars['ferramentas']);
 	}
-
-	/**
-	 * Salva o registro de configração no banco de dados
-	 * 
-	 * - Altera o valor da sessão sql_dump
-	 * 
-	 * @return	void
-	 */
-	public function salvar()
-	{
-		if (isset($this->data['1']['Configuracao']['sql_dump']))
-		{
-			$_SESSION['sql_dump'] = $this->data['1']['Configuracao']['sql_dump'];
-		}
-		parent::salvar();
-	}
 }

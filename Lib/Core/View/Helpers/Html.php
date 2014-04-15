@@ -290,4 +290,21 @@ class Html {
 		}
 		return $field;
 	}
+
+	/**
+	 * Retorna o valor da permissão da ação desejada
+	 * 
+	 * @param	array	$minhasPermissoes	Atributo do objeto View com as devidas permissões do módulo/cadastro para teste
+	 * @param	string	$acao	Ação a ser testada: visualizar, incluir, alterar, excluir, imprimir e pesquisar
+	 * @return	int		1 se sim, 0 se não
+	 */
+	public function pode($acao='', $minhasPermissoes=array())
+	{
+		if ($_SESSION['Usuario']['perfil']=='ADMINISTRADOR') return true;
+		if (isset($minhasPermissoes[$acao]))
+		{
+			if ($minhasPermissoes[$acao]==1) return true;
+		}
+		return false;
+	}
 }

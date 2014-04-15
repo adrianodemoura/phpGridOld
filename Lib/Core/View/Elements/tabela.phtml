@@ -7,7 +7,8 @@
 
 <?php if (!$_l) : ?>
 <tr><!-- cabeçalho das linhas -->
-	<?php if (isset($this->viewVars['marcadores'])) : ?>
+	<?php if ($this->Html->pode('alterar',$this->viewVars['minhasPermissoes']) 
+			&& isset($this->viewVars['marcadores'])) : ?>
 		<th>
 		<input type='checkbox' name='cxAll' id='cxAll' title='clique aqui para selecionar todos'
 		<?php
@@ -23,7 +24,7 @@
 		</th>
 	<?php endif ?>
 
-	<?php if (isset($this->viewVars['ferramentas'])) : ?>
+	<?php if (isset($this->viewVars['ferramentas']) && count($this->viewVars['ferramentas'])) : ?>
 	<th style='text-align: center;' colspan='<?= count($ferramentas); ?>'>#</th>
 	<?php endif ?>
 
@@ -63,7 +64,7 @@
 <?php endif ?>
 
 <tr><!-- linha a linha -->
-	<?php if (isset($this->viewVars['marcadores'])) : ?>
+	<?php if ($this->Html->pode('alterar',$this->viewVars['minhasPermissoes']) && isset($this->viewVars['marcadores'])) : ?>
 	<td>
 		<?php
 			$ids = '';
@@ -130,10 +131,9 @@
 </form>
 
 <?php if (isset($this->viewVars['paginacao']['tot'])) : ?>
-<tr><td colspan='100'>
-<div style='background-color: transparent; border: none;'>
+<tr style='background-color: transparent; border: none;'>
+	<td colspan='100' style='padding-left: 5px; background-color: transparent; border: none;'>
 	Total de registros: <?= number_format($this->viewVars['paginacao']['tot'],0,',','.'); ?>
-</div>
 </td></tr>
 <?php endif ?>
 

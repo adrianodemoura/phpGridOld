@@ -111,13 +111,17 @@
 		</div>
 
 	</div>
+	
 	<div id='cab2' class='container-fluid'>
 		<div style='float: left;'>
 			<?= html_entity_decode($position) ?>
 		</div>
+
 		<div style='font-size: 10px; float: right;'>
 			<?= $this->element('login_usuario',array('base'=>$base,'module'=>$module)) ?>
 		</div>
+		
+		<?= $this->element('padrao_ferramentas'); ?>
 
 	</div>
 	</div><!-- fim cabeçalho -->
@@ -126,14 +130,19 @@
 		<?= $conteudo; ?>
 
 	</div><!-- fim conteudo -->
+	
+	<?php if ($_SESSION['Usuario']['perfil']=='ADMINISTRADOR') : ?>
+	<?= $this->element('permissoes'); ?>
+	<?php endif ?>
 
 	<div id="rodape" class="row">
-		<?php if (!empty($_SESSION['sql_dump'])) echo $this->element('sql_dump',array('sql_dump'=>$sql_dump,'module'=>$module)) ?>
+		<?php if (!empty($_SESSION['sqldump'])) echo $this->element('sql_dump',array('sql_dump'=>$sql_dump,'module'=>$module)) ?>
 	</div><!-- fim rodapé -->
 
 
 </div><!-- fim corpo -->
-<div id='tampaTudo'>adfjasdjfklajsdf</div>
+<div id='tampaTudo'>tampaTudo</div>
 </body>
 </html>
+<?php //debug($minhasPermissoes); ?>
 <!-- tempo de execução <?= round((microtime(true)-INICIO),6) ?> segundos -->

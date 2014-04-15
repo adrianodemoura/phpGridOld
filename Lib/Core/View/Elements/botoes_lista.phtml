@@ -1,0 +1,14 @@
+
+<?php if (isset($this->viewVars['botoesLista']) && count($this->viewVars['botoesLista']) ) : ?>
+<div class='botoes_lista'>
+<?php
+	foreach($this->viewVars['botoesLista'] as $_l => $_arrProp)
+	{
+		if (!empty($_arrProp))
+		{
+			echo "<input"; foreach($_arrProp as $_tag => $_vlr) echo " $_tag='$_vlr'"; echo " /> \n";
+		}
+	}
+?>
+</div>
+<?php endif ?>

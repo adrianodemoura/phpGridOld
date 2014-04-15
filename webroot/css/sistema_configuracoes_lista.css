@@ -1,0 +1,18 @@
+.tabLista .lista_input
+{
+	text-align: center;
+}
+.tabLista .in_email
+{
+	text-align: left;
+}
+.tabLista .in_empresa
+{
+	width: 300px;
+	text-align: left;
+}
+.tabLista .thCidadeId
+{
+	width: 260px;
+	display: block;
+}
