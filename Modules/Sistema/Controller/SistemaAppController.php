@@ -22,6 +22,7 @@ class SistemaAppController extends Controller {
 			include_once('Model/Permissao.php');
 			$Permissao = new Permissao();
 			$opcs = array();
+			$opcs['distinct'] 				= true;
 			$opcs['where']['visualizar'] 	= 1;
 			$opcs['where']['modulo']		= 'SISTEMA';
 			if ($_SESSION['Usuario']['perfil']!='ADMINISTRADOR') $opcs['where']['perfil_id']		= $_SESSION['Usuario']['perfil_id'];

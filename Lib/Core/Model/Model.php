@@ -535,6 +535,7 @@ class Model {
 		$direc	= isset($params['direc']) 	? $params['direc'] 	: 'asc';
 		$pag	= isset($params['pag']) 	? $params['pag'] 	: 0;
 		$pagT	= isset($params['pagT']) 	? $params['pagT'] 	: 20;
+		$distinct = isset($params['distinct']) ? $params['distinct'] : null;
 		$ali1	= $this->name;
 
 		// verifica o nome de cada campo
@@ -646,7 +647,9 @@ class Model {
 		}
 
 		// iniciando a sql
-		$sql  .= "SELECT ".$cmps." FROM $tabela ".$ali1;
+		$sql  .= "SELECT ";
+		if (!empty($distinct)) $sql .= ' DISTINCT ';
+		$sql .= $cmps." FROM $tabela ".$ali1;
 		$sqlC .= "SELECT COUNT(1) as tot FROM $tabela ".$ali1;
 
 		// join
