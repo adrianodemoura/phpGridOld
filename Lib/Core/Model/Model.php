@@ -388,7 +388,7 @@ class Model {
 		{
 			debug($erro);
 			debug($sql);
-			die();
+			if ($this->name!='Usuario') die();
 		}// else debug($this->db->rowCount());
 
 		$l 		= 0;
