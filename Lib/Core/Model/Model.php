@@ -386,9 +386,9 @@ class Model {
 		$erro 	= $this->db->errorInfo();
 		if (isset($erro['2']))
 		{
-			debug($erro);
+			//debug($erro);
 			debug($sql);
-			debug($this->name);
+			//debug($this->name);
 			//if ($this->name!='Util') die();
 		}
 
@@ -677,16 +677,19 @@ class Model {
 				switch(strtoupper($b['1']))
 				{
 					case 'IN':
-						$sql .= $_cmp." ('".implode("','",$_vlr)."') ";
+						$_cmp = trim(str_replace('IN','',$_cmp));
+						$sql .= $_cmp." IN ('".implode("','",$_vlr)."') ";
 						break;
 					case 'BETWEEN':
+						$_cmp = trim(str_replace('BETWEEN','',$_cmp));
 						$sql .= $_cmp.' BETWEEN ('.$_vlr.')';
 						break;
 					case 'NOT':
+						$_cmp = trim(str_replace('NOT IN','',$_cmp));
 						$sql .= $_cmp.' NOT IN '.$_vlr;
 						break;
 					case 'LIKE':
-						$_vlr = trim(str_replace('LIKE','',$_vlr));
+						$_cmp = trim(str_replace('LIKE','',$_cmp));
 						$sql .= $_cmp." LIKE '%$_vlr%'";
 						$sqlC .= $_cmp." LIKE '%$_vlr%'";
 						break;

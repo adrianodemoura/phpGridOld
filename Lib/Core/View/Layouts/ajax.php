@@ -19,6 +19,4 @@
 	}
 ?>
 
-<?= $conteudo; ?>
-
 <?php if (isset($debug) && $debug==true) echo $this->element('sql_dump',array('sql_dump'=>$sql_dump,'module'=>$module)) ?>

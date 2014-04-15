@@ -531,11 +531,17 @@ class Controller {
 		foreach($this->viewVars['params'] as $_cmp => $_vlr)
 		{
 			if ($_cmp!='cmps')
-			if (!in_array($_cmp,array('cmps','pag','ord','dir'))) $params['where'][$_cmp] = 'LIKE '.rawurldecode($_vlr);
+			{
+				if (!in_array($_cmp,array('cmps','pag','ord','dir')))
+				{
+					$params['where'][$_cmp.' LIKE'] = rawurldecode($_vlr);
+				}
+			}
 		}
 		if (empty($params['where'])) unset($params['where']);
-		$this->viewVars['data'] = $this->$modelClass->find('list',$params);
-		$this->viewVars['debug'] = isset($this->viewVars['debug']) ? $this->viewVars['debug'] : false;
+
+		$this->viewVars['data'] 	= $this->$modelClass->find('list',$params);
+		$this->viewVars['debug'] 	= isset($this->viewVars['debug']) ? $this->viewVars['debug'] : false;
 	}
 
 	/**
