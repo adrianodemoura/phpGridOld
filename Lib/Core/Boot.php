@@ -142,7 +142,7 @@ class Boot {
 				$minhasPermissoes = array();
 				$idPerfil = 0;
 				foreach($_SESSION['Perfis'] as $_id => $_perfil) if ($_perfil==$_SESSION['Usuario']['perfil']) $idPerfil = $_id;
-				$sql = 'SELECT * FROM sis_permissoes';
+				$sql = 'SELECT id, modulo, controller, perfil_id, visualizar, incluir, alterar, excluir, imprimir, pesquisar FROM sis_permissoes';
 				$sql .= ' WHERE perfil_id='.$idPerfil;
 				$sql .= ' AND modulo="'.strtoupper($module).'"';
 				$sql .= ' AND controller="'.strtoupper($controller).'"';
@@ -225,7 +225,6 @@ class Boot {
 		{
 			foreach($this->$controller->Model as $_mod)
 			{
-				$this->$controller->viewVars['sql_dump'] 	= $this->$controller->$_mod->sqls;
 				$this->$controller->viewVars['primaryKey'] 	= $this->$controller->$_mod->primaryKey;
 				if (isset($this->$controller->$_mod->pag) && isset($this->$controller->viewVars['paginacao'])) $this->$controller->viewVars['paginacao'] 	= $this->$controller->$_mod->pag;
 				if (isset($this->$controller->$_mod->esquema))
@@ -242,6 +241,13 @@ class Boot {
 			}
 		}
 
+		// executando código antes da renderização e depois da action
+		$this->$controller->beforeRender();
+
+		// atualizando as sqls do model na view
+		$modelClass = $this->$controller->modelClass;
+		$this->$controller->viewVars['sql_dump'] 	= $this->$controller->$modelClass->sqls;
+
 		// atualizando as variáveis locais
 		$this->data		= $this->$controller->data;
 		$this->viewVars = $this->$controller->viewVars;
@@ -249,9 +255,6 @@ class Boot {
 		$this->viewVars['module']	 	= $module;
 		$this->viewVars['controller'] 	= $controller;
 		$this->viewVars['action'] 		= $action;
-
-		// executando código antes da renderização e depois da action
-		$this->$controller->beforeRender();
 
 		// salvando dados da view e dando adeus ao controller, ele não vai pra view
 		$viewPath 		= $this->$controller->viewPath;

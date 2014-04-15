@@ -382,8 +382,14 @@ class Model {
 	public function query($sql='')
 	{
 		$this->open();
-		$_data 	= $this->db->query($sql);
+		$_data 	= @$this->db->query($sql);
 		$erro 	= $this->db->errorInfo();
+		if (isset($erro['2']))
+		{
+			debug($erro);
+			debug($sql);
+			die();
+		}
 
 		$l 		= 0;
 		$data 	= array();
@@ -527,7 +533,20 @@ class Model {
 		$direc	= isset($params['direc']) 	? $params['direc'] 	: 'asc';
 		$pag	= isset($params['pag']) 	? $params['pag'] 	: 0;
 		$pagT	= isset($params['pagT']) 	? $params['pagT'] 	: 20;
-		$ali1	= isset($this->alias) ? $this->alias : $this->name;
+		$ali1	= $this->name;
+
+		// verifica o nome de cada campo
+		if (!empty($fields))
+		{
+			foreach($fields as $_l => $_cmp)
+			{
+				if (!strpos($_cmp,'.'))
+				{
+					unset($fields[$_l]);
+					array_unshift($fields,$this->name.'.'.$_cmp);
+				}
+			}
+		}
 
 		// verificando os campos
 		switch($tipo)
@@ -647,15 +666,19 @@ class Model {
 					$sql  .= " AND ";
 					$sqlC .= " AND ";
 				}
-				$b = explode(' ',$_vlr);
-				switch(strtoupper($b['0']))
+				$b = explode(' ',$_cmp);
+				$b['1'] = isset($b['1']) ? $b['1'] : null;
+				switch(strtoupper($b['1']))
 				{
 					case 'IN':
-						$sql .= $_cmp.' IN '.$_vlr;
+						$sql .= $_cmp." ('".implode("','",$_vlr)."') ";
+						break;
 					case 'BETWEEN':
 						$sql .= $_cmp.' BETWEEN ('.$_vlr.')';
+						break;
 					case 'NOT':
 						$sql .= $_cmp.' NOT IN '.$_vlr;
+						break;
 					case 'LIKE':
 						$_vlr = trim(str_replace('LIKE','',$_vlr));
 						$sql .= $_cmp." LIKE '%$_vlr%'";
@@ -676,6 +699,8 @@ class Model {
 				$l++;
 			}
 		}
+
+		//
 		if (count($order))
 		{
 			$l 		= 0;

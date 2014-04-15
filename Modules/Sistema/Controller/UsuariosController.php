@@ -70,11 +70,12 @@ class UsuariosController extends SistemaAppController {
 				$_SESSION['Usuario']['nome'] 			= $data['0']['Usuario']['nome'];
 				$_SESSION['Usuario']['ultimo_ip'] 		= $data['0']['Usuario']['ultimo_ip'];
 				$_SESSION['Usuario']['perfil'] 			= $data['0']['Perfil']['0']['nome'];
+				$_SESSION['Usuario']['perfil_id'] 		= $data['0']['Perfil']['0']['id'];
 				$novaData['0']['Usuario']['id'] 		= $data['0']['Usuario']['id'];
 				$novaData['0']['Usuario']['acessos'] 	= ($data['0']['Usuario']['acessos']+1);
 				$novaData['0']['Usuario']['ultimo_ip'] 	= (strlen($_SERVER['SERVER_ADDR'])>4) ? $_SERVER['SERVER_ADDR'] : $_SERVER['REMOTE_ADDR'];
 				if ($novaData['0']['Usuario']['ultimo_ip']=='::1') $novaData['0']['Usuario']['ultimo_ip'] = '127.0.0.1';
-				
+
 				// salvando meus perfis na sessão
 				$meusPerfis = array();
 				foreach($data['0']['Perfil'] as $_l => $_arrCmps)
@@ -320,7 +321,8 @@ class UsuariosController extends SistemaAppController {
 	{
 		$idPerfil = $this->params['perfil'];
 		$this->setMsgFlash('O Perfil foi alterado com sucesso !!!','msgFlashOk');
-		$_SESSION['Usuario']['perfil'] = $_SESSION['Perfis'][$idPerfil];
+		$_SESSION['Usuario']['perfil'] 		= $_SESSION['Perfis'][$idPerfil];
+		$_SESSION['Usuario']['perfil_id'] 	= $idPerfil;
 		header('Location: '.$_SERVER['HTTP_REFERER']);
 	}
 }
