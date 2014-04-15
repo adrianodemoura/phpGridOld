@@ -19,6 +19,19 @@ class SistemaAppController extends Controller {
 	{
 		if (isset($_SESSION['Usuario']))
 		{
+			$menu['BAIRROS']['tit'] 		= 'Bairros';
+			$menu['BAIRROS']['link'] 		= $this->base.'sistema/bairros';
+			$menu['CIDADES']['tit'] 		= 'Cidades';
+			$menu['CIDADES']['link'] 		= $this->base.'sistema/cidades';
+			$menu['CONFIGURACOES']['tit'] 	= 'Configurações';
+			$menu['CONFIGURACOES']['link'] 	= $this->base.'sistema/configuracoes';
+			$menu['MODULOS']['tit'] 		= 'Módulos';
+			$menu['MODULOS']['link'] 		= $this->base.'sistema/modulos';
+			$menu['PERFIS']['tit'] 			= 'Perfis';
+			$menu['PERFIS']['link'] 		= $this->base.'sistema/perfis';
+			$menu['USUARIOS']['tit'] 		= 'Usuários';
+			$menu['USUARIOS']['link'] 		= $this->base.'sistema/usuarios';
+
 			include_once('Model/Permissao.php');
 			$Permissao = new Permissao();
 			$opcs = array();
@@ -37,35 +50,13 @@ class SistemaAppController extends Controller {
 			$modelClass = $this->modelClass;
 			foreach($Permissao->sqls as $_l => $_sql) array_push($this->$modelClass->sqls,$_sql);
 
-			if (isset($data['BAIRROS']))
+			if ($_SESSION['Usuario']['perfil']!='ADMINISTRADOR')
 			{
-				$menu['Bairros']['tit'] 		= 'Bairros';
-				$menu['Bairros']['link'] 		= $this->base.'sistema/bairros';
-			}
-			if (isset($data['CIDADES']))
-			{
-				$menu['Cidades']['tit'] 		= 'Cidades';
-				$menu['Cidades']['link'] 		= $this->base.'sistema/cidades';
-			}
-			if (isset($data['CONFIGURACOES']))
-			{
-				$menu['Configuracoes']['tit'] 	= 'Configurações';
-				$menu['Configuracoes']['link'] 	= $this->base.'sistema/configuracoes';
-			}
-			if (isset($data['MODULOS']))
-			{
-				$menu['Modulos']['tit'] 		= 'Módulos';
-				$menu['Modulos']['link'] 		= $this->base.'sistema/modulos';
-			}
-			if (isset($data['PERFIS']))
-			{
-				$menu['Perfis']['tit'] 			= 'Perfis';
-				$menu['Perfis']['link'] 		= $this->base.'sistema/perfis';
-			}
-			if (isset($data['USUARIOS']))
-			{
-				$menu['Usuarios']['tit'] 		= 'Usuários';
-				$menu['Usuarios']['link'] 		= $this->base.'sistema/usuarios';
+
+				foreach($menu as $_cad => $_arrProp)
+				{
+					if (!isset($data[$_cad])) unset($menu[$_cad]);
+				}
 			}
 
 			$this->viewVars['linksMenu'] 	= $menu;
