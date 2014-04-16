@@ -387,7 +387,7 @@ class Model {
 		if (isset($erro['2']))
 		{
 			//debug($erro);
-			debug($sql);
+			//debug($sql);
 			//debug($this->name);
 			//if ($this->name!='Util') die();
 		}
