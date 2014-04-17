@@ -101,7 +101,12 @@ class Controller {
 		$this->viewVars['esquema'] 			= array();
 		
 		// configurando o base
-		$this->viewVars['base'] = getBase();
+		$base = '';
+		$base = isset($_SERVER['REQUEST_SCHEME'])?$_SERVER['REQUEST_SCHEME']:'http';
+		$base .= '://'.$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF'];
+		$base = str_replace('webroot/','',$base);
+		$base = str_replace('index.php','',$base);
+		$this->viewVars['base'] = $base;
 
 		// configura o aqui
 		$aqui = isset($_SERVER['REQUEST_SCHEME'])?$_SERVER['REQUEST_SCHEME']:'http';

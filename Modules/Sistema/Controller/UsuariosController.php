@@ -237,6 +237,17 @@ class UsuariosController extends SistemaAppController {
 	}
 
 	/**
+	 * Exibe a tela de Acesso Negado
+	 * 
+	 * @param	chaveMCA negada (ModuloControllerAction)
+	 * @return	void
+	 */
+	public function acesso_negado()
+	{
+		$this->viewVars['mvcRetorno'] = isset($_SESSION['acessoNegado']) ? $_SESSION['acessoNegado'] : null;
+	}
+
+	/**
 	 * Liga ou desliga o sql_dump
 	 * 
 	 * @return	void
