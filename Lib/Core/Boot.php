@@ -16,6 +16,8 @@ class Boot {
 
 	/**
 	 * Renderiza o layout a view solicitada via GET
+	 *
+	 * - Verifica a permissão do perfil logado
 	 * 
 	 * @access	public
 	 * @return	void
@@ -79,10 +81,9 @@ class Boot {
 		$arq = 'Modules/'.$module.'/Config/bootstrap.php';
 		if (!file_exists(APP.$arq))
 		{
-			$url = getBase().'sistema/usuarios/erros';
 			$_SESSION['sistemaErro']['tip'] = 'module';
 			$_SESSION['sistemaErro']['txt'] = 'Não foi possível localizar o seguinte arquivo: <br /><br />'.$arq;
-			die('<script>document.location.href="'.$url.'"</script>');
+			die('<script>document.location.href="'.$this->$controller->base.'sistema/usuarios/erros'.'"</script>');
 		} else
 		{
 			require_once(APP.$arq);
@@ -90,7 +91,7 @@ class Boot {
 		$arq = 'Modules/'.$module.'/Controller/'.$controller.'Controller.php';
 		if (!include_once($arq))
 		{
-			$url = getBase().'sistema/usuarios/erros';
+			$url = $this->$controller->base.'sistema/usuarios/erros';
 			$_SESSION['sistemaErro']['tip'] = 'controller';
 			$_SESSION['sistemaErro']['txt'] = 'Não foi possível localizar o Controller <b>'.$controller.'</b> do módulo <b>'.$module.'</b>: <br /><br />'.$arq;
 			die('<script>document.location.href="'.$url.'"</script>');
@@ -183,7 +184,17 @@ class Boot {
 				}
 			}
 		}
-		
+
+		// excluindo acessoNegado
+		if (isset($_SESSION['acessoNegado']))
+		{
+			$chaveMCA = strtolower($module.'/'.$controller.'/'.$action);
+			if ($chaveMCA!='sistema/usuarios/acesso_negado')
+			{
+				unset($_SESSION['acessoNegado']);
+			}
+		}
+
 		// validando a permissão
 		if (isset($_SESSION['Usuario']) && $_SESSION['Usuario']['perfil'] != 'ADMINISTRADOR')
 		{
@@ -193,22 +204,28 @@ class Boot {
 				$pode = isset($minhasPermissoes['visualizar']) ? $minhasPermissoes['visualizar'] : 0;
 				if (!$pode)
 				{
+					$_SESSION['acessoNegado'] = strtolower($module.'/'.$controller.'/'.$action);
 					$_SESSION['sistemaErro']['tip'] = 'Acesso Negado';
 					$_SESSION['sistemaErro']['txt'] = 'Caro '.$_SESSION['Usuario']['nome'].', o seu perfil não possui privilégios suficientes para acessar a página '.strtolower($module.'/'.$controller.'/'.$action);
 					//debug($minhasPermissoes);
-					header('Location: '.$this->$controller->base.'sistema/usuarios/erros');
+					header('Location: '.$this->$controller->base.'sistema/usuarios/acesso_negado');
 				}
 				//debug($minhasPermissoes); debug($controller.' '.$action);
 			}
 		}
 
+		// verificando se o perfil logado pode filtrar, se não, deleta os registros
+		if (isset($_SESSION['Filtros'][$module][$controller]) && $_SESSION['Usuario']['perfil'] != 'ADMINISTRADOR')
+		{
+			if (!$minhasPermissoes['pesquisar']) unset($_SESSION['Filtros'][$module][$controller]);
+		}
+
 		// executando a action
 		if (!method_exists($this->$controller,$action))
 		{
-			$url = getBase().'sistema/usuarios/erros';
 			$_SESSION['sistemaErro']['tip'] = 'action';
 			$_SESSION['sistemaErro']['txt'] = 'Não foi possível localizar a Action <b>'.$action.'</b> do Controller <b>'.$controller.'</b> do módulo <b>'.$module.'</b>: <br />';
-			die('<script>document.location.href="'.$url.'"</script>');
+			die('<script>document.location.href="'.$this->$controller->base.'sistema/usuarios/erros'.'"</script>');
 		}
 		$this->$controller->$action();
 
@@ -273,11 +290,11 @@ class Boot {
 		$arq = strtolower($module.'_'.$controller.'_'.$action);
 		if (file_exists('./css/'.$arq.'.css'))
 		{
-			array_push($head,'<link rel="stylesheet" type="text/css" href="'.getBase().'css/'.$arq.'.css" />');
+			array_push($head,'<link rel="stylesheet" type="text/css" href="'.$base.'css/'.$arq.'.css" />');
 		}
 		if (file_exists('./js/'.$arq.'.js'))
 		{
-			array_push($head,'<script type="text/javascript" src="'.getBase().'js/'.$arq.'.js"></script>');
+			array_push($head,'<script type="text/javascript" src="'.$base.'js/'.$arq.'.js"></script>');
 		}
 
 		// incluindo a view 
@@ -285,12 +302,14 @@ class Boot {
 		$arq = 'Modules/'.$module.'/View/'.$viewPath.'/'.$view.'.phtml';
 		if (!file_exists(APP.$arq))
 		{
+			$msg = 'N&atilde;o foi poss&iacute;vel localizar a view <b>'.$arq.'</b>';
 			$arq = CORE.'View/Scaffolds/'.$view.'.phtml';
 			if (!file_exists($arq))
 			{
-				die('<center>N&atilde;o foi poss&iacute;vel localizar a view <b>'.$arq.'</b></center>');
+				die('<center>'.$msg.'</center>');
 			}
 		}
+
 		ob_start();
 		include_once($arq);
 		$conteudo = ob_get_contents();

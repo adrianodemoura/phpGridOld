@@ -94,7 +94,10 @@ class UsuariosController extends SistemaAppController {
 					require_once('Model/Configuracao.php');
 					$Conf = new Configuracao();
 					$data = $Conf->find('all');
-					$_SESSION['sql_dump'] = $data['0']['Configuracao']['sql_dump'];
+					if (isset($data['0']['Configuracao']['sql_dump']))
+					{
+						$_SESSION['sql_dump'] = $data['0']['Configuracao']['sql_dump'];
+					}
 				}
 
 				$this->setMsgFlash('Usuário autenticado com sucesso !!!','msgFlashOk');
@@ -234,6 +237,17 @@ class UsuariosController extends SistemaAppController {
 		$this->viewVars['txt'] = isset($_SESSION['sistemaErro']['txt']) ? $_SESSION['sistemaErro']['txt'] : '';
 		$this->viewVars['tip'] = isset($_SESSION['sistemaErro']['tip']) ? $_SESSION['sistemaErro']['tip'] : '';
 		unset($_SESSION['sistemaErro']);
+	}
+
+	/**
+	 * Exibe a tela de Acesso Negado
+	 * 
+	 * @param	chaveMCA negada (ModuloControllerAction)
+	 * @return	void
+	 */
+	public function acesso_negado()
+	{
+		$this->viewVars['mvcRetorno'] = isset($_SESSION['acessoNegado']) ? $_SESSION['acessoNegado'] : null;
 	}
 
 	/**
