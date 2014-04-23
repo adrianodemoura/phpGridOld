@@ -16,6 +16,8 @@ class Boot {
 
 	/**
 	 * Renderiza o layout a view solicitada via GET
+	 *
+	 * - Verifica a permissão do perfil logado
 	 * 
 	 * @access	public
 	 * @return	void
@@ -108,7 +110,7 @@ class Boot {
 		$this->$controller->params				= $params;
 
 		// letra de separação
-		//$this->$controller->viewVars['se'] = !empty($this->$controller->viewVars['se']) ? $this->$controller->viewVars['se'] : ':';
+		$this->$controller->viewVars['se'] = !empty($this->$controller->viewVars['se']) ? $this->$controller->viewVars['se'] : ':';
 
 		// recuperando o data
 		$this->$controller->data = isset($_POST['data']) ? $_POST['data'] : array();
@@ -210,6 +212,12 @@ class Boot {
 				}
 				//debug($minhasPermissoes); debug($controller.' '.$action);
 			}
+		}
+
+		// verificando se o perfil logado pode filtrar, se não, deleta os registros
+		if (isset($_SESSION['Filtros'][$module][$controller]))
+		{
+			if (!$minhasPermissoes['pesquisar']) unset($_SESSION['Filtros'][$module][$controller]);
 		}
 
 		// executando a action
