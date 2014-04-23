@@ -94,7 +94,10 @@ class UsuariosController extends SistemaAppController {
 					require_once('Model/Configuracao.php');
 					$Conf = new Configuracao();
 					$data = $Conf->find('all');
-					$_SESSION['sql_dump'] = $data['0']['Configuracao']['sql_dump'];
+					if (isset($data['0']['Configuracao']['sql_dump']))
+					{
+						$_SESSION['sql_dump'] = $data['0']['Configuracao']['sql_dump'];
+					}
 				}
 
 				$this->setMsgFlash('Usuário autenticado com sucesso !!!','msgFlashOk');
