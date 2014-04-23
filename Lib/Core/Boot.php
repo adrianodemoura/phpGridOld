@@ -215,7 +215,7 @@ class Boot {
 		}
 
 		// verificando se o perfil logado pode filtrar, se não, deleta os registros
-		if (isset($_SESSION['Filtros'][$module][$controller]))
+		if (isset($_SESSION['Filtros'][$module][$controller]) && $_SESSION['Usuario']['perfil'] != 'ADMINISTRADOR')
 		{
 			if (!$minhasPermissoes['pesquisar']) unset($_SESSION['Filtros'][$module][$controller]);
 		}
