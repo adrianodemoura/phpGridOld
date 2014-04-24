@@ -1,7 +1,7 @@
 <div id="padrao_ferramentas">
 
 	<div style='float: left;'>
-	<?php if (isset($this->viewVars['ferramentasLayout'])) : foreach($this->viewVars['ferramentasLayout'] as $_l => $_arrProp) : ?>
+	<?php if (isset($this->viewVars['ferramentasLayout'])) : ksort($this->viewVars['ferramentasLayout']); foreach($this->viewVars['ferramentasLayout'] as $_l => $_arrProp) : ?>
 		<img title='<?= $_arrProp['title'] ?>' src='<?= $_arrProp['icone'] ?>' onclick='<?= $_arrProp['onclick'] ?>' />
 	<?php endforeach; endif ?>
 	</div>

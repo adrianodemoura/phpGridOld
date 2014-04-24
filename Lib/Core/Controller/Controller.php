@@ -158,33 +158,26 @@ class Controller {
 	{
 		if ($this->layout=='padrao')
 		{
-		if ($_SESSION['Usuario']['perfil_id']==1)
-		{
-			$this->viewVars['ferramentasLayout']['0']['title'] 		= 'Clique aqui para configurar as permissões do cadastro';
-			$this->viewVars['ferramentasLayout']['0']['icone'] 		= $this->viewVars['base'].'img/bt_permissoes.png';
-			$this->viewVars['ferramentasLayout']['0']['onclick'] 	= 'showModal("permissoes");';
-		}
+			if ($_SESSION['Usuario']['perfil_id']==1)
+			{
+				$this->viewVars['ferramentasLayout']['0']['title'] 		= 'Clique aqui para configurar as permissões do cadastro';
+				$this->viewVars['ferramentasLayout']['0']['icone'] 		= $this->viewVars['base'].'img/bt_permissoes.png';
+				$this->viewVars['ferramentasLayout']['0']['onclick'] 	= 'showModal("permissoes");';
+			}
 
-		if ($_SESSION['Usuario']['perfil_id']<4)
-		{
-			$this->viewVars['ferramentasLayout']['1']['title'] 		= 'Clique aqui para habilitar o Sql Dump';
-			$this->viewVars['ferramentasLayout']['1']['icone'] 		= $this->viewVars['base'].'img/bt_sqldump.png';
-			$this->viewVars['ferramentasLayout']['1']['onclick'] 	= 'document.location.href="'.$this->viewVars['base'].'sistema/usuarios/set_sqldump"';
-		}
+			if ($_SESSION['Usuario']['perfil_id']<4)
+			{
+				$this->viewVars['ferramentasLayout']['1']['title'] 		= 'Clique aqui para habilitar o Sql Dump';
+				$this->viewVars['ferramentasLayout']['1']['icone'] 		= $this->viewVars['base'].'img/bt_sqldump.png';
+				$this->viewVars['ferramentasLayout']['1']['onclick'] 	= 'document.location.href="'.$this->viewVars['base'].'sistema/usuarios/set_sqldump"';
+			}
 
-		if ($this->viewVars['minhasPermissoes']['imprimir']==1)
-		{
-			$this->viewVars['ferramentasLayout']['2']['title'] 		= 'Relatórios';
-			$this->viewVars['ferramentasLayout']['2']['icone'] 		= $this->viewVars['base'].'img/bt_relatorios.png';
-			$this->viewVars['ferramentasLayout']['2']['onclick'] 	= 'document.location.href="'.$this->viewVars['base'].strtolower($this->module).'/'.strtolower($this->controller).'/relatorios"';
-		}
-		
-		if ($_SESSION['Usuario']['perfil_id']==1)
-		{
-			$this->viewVars['ferramentasLayout']['3']['title'] 		= 'Clique aqui para exportar o cadastro';
-			$this->viewVars['ferramentasLayout']['3']['icone'] 		= $this->viewVars['base'].'img/bt_exportar.png';
-			$this->viewVars['ferramentasLayout']['3']['onclick'] 	= 'document.location.href="'.$this->viewVars['base'].strtolower($this->module).'/'.strtolower($this->controller).'/exportar"';
-		}
+			if ($this->viewVars['minhasPermissoes']['imprimir']==1)
+			{
+				$this->viewVars['ferramentasLayout']['2']['title'] 		= 'Relatórios';
+				$this->viewVars['ferramentasLayout']['2']['icone'] 		= $this->viewVars['base'].'img/bt_relatorios.png';
+				$this->viewVars['ferramentasLayout']['2']['onclick'] 	= 'document.location.href="'.$this->viewVars['base'].strtolower($this->module).'/'.strtolower($this->controller).'/relatorios"';
+			}
 		}
 	}
 
@@ -384,7 +377,14 @@ class Controller {
 				.strtolower($this->controller).'_lista.js"></script>');
 			array_push($this->viewVars['head'],$link);
 		}
-		
+
+		if ($_SESSION['Usuario']['perfil_id']==1)
+		{
+			$this->viewVars['ferramentasLayout']['3']['title'] 		= 'Clique aqui para exportar o cadastro';
+			$this->viewVars['ferramentasLayout']['3']['icone'] 		= $this->viewVars['base'].'img/bt_exportar.png';
+			$this->viewVars['ferramentasLayout']['3']['onclick'] 	= 'document.location.href="'.$this->viewVars['base'].strtolower($this->module).'/'.strtolower($this->controller).'/exportar"';
+		}
+
 		// verifica erros da lista
 		if (isset($_SESSION['errosLista']))
 		{
