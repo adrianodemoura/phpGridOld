@@ -1,2 +1,43 @@
-mas será o benedito ? eu estou no csv mesmo uai ???
-<?php debug(get_include_path()); ?>
+<?php
+// cabeçalho
+foreach($this->data as $_l => $_arrMods)
+{
+	foreach($_arrMods as $_mod => $_arrCmps)
+	{
+		foreach($_arrCmps as $_cmp => $_vlr)
+		{
+			if (!is_array($_vlr))
+			{
+				$tit = isset($esquema[$_mod][$_cmp]['tit']) ? $esquema[$_mod][$_cmp]['tit'] : $_cmp;
+				echo $tit.";";
+			}
+		}
+	}
+	echo "\n";
+	break;
+}
+
+// linha a linha
+foreach($this->data as $_l => $_arrMods)
+{
+	foreach($_arrMods as $_mod => $_arrCmps)
+	{
+		foreach($_arrCmps as $_cmp => $_vlr)
+		{
+			if (!is_array($_vlr))
+			{
+				$prop = isset($esquema[$_mod][$_cmp]) ? $esquema[$_mod][$_cmp] : array();
+				echo $this->Html->getMascara($_vlr,$prop).";";
+			}/* else
+			{
+				foreach($_vlr as $_cmp => $_vlr2)
+				{
+					echo $_vlr2.";";
+				}
+				echo "\n";
+			}*/
+		}
+	}
+	echo "\n";
+}
+?>

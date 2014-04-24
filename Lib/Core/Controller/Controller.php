@@ -602,8 +602,20 @@ class Controller {
 	 */
 	public function exportar()
 	{
-		$this->layout = 'csv';
-		$this->viewVars['teste'] = 'oi silvio ...';
+		$modelClass		= $this->modelClass;
+		$this->layout 	= 'csv';
+		$params			= array();
+
+		// configurando os parâmetros dos filtros na sessão
+		if (isset($_SESSION['Filtros'][$this->module][$this->controller]))
+		{
+			foreach($_SESSION['Filtros'][$this->module][$this->controller] as $_cmp => $_vlr)
+			{
+				if (strlen($_vlr)>0) $params['where'][$_cmp] = $_vlr;
+			}
+		}
+
+		$this->data = $this->$modelClass->find('all',$params);
 	}
 
 	/**
