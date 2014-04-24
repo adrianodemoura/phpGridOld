@@ -33,15 +33,15 @@ class Boot {
 		error_reporting(E_ALL);
 		ini_set('display_errors', 1);
 
+		// incluido utilitários
+		require_once(CORE.'Util/Util.php');
+
 		// incluindo bootstrap
 		require_once(APP.'Config/bootstrap.php');
 
 		// sessão
 		session_name(SESSAO); 
 		session_start();
-
-		// incluido utilitários
-		require_once(CORE.'Util/Util.php');
 
 		// configurando, módulo, controler, action e parâmetros
 		$_url 	= explode('/',$_SERVER['REQUEST_URI']);
