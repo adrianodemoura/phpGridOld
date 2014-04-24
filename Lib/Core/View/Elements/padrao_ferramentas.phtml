@@ -1,27 +1,21 @@
 <div id="padrao_ferramentas">
-<div style='float: left;'>
-<?php if ($_SESSION['Usuario']['perfil']=='ADMINISTRADOR') : ?>
 
-	<img title='Clique aqui para habilitar o Sql Dump' src='<?= $this->viewVars['base'] ?>img/bt_sqldump.png' 
-		onclick='document.location.href="<?= $this->viewVars['base'] ?>sistema/usuarios/set_sqldump"' />
+	<div style='float: left;'>
+	<?php if (isset($this->viewVars['ferramentasLayout'])) : foreach($this->viewVars['ferramentasLayout'] as $_l => $_arrProp) : ?>
+		<img title='<?= $_arrProp['title'] ?>' src='<?= $_arrProp['icone'] ?>' onclick='<?= $_arrProp['onclick'] ?>' />
+	<?php endforeach; endif ?>
+	</div>
 
-	<?php if ($action=='Lista') : ?>
-	<img title='Clique aqui para configurar as permissões do cadastro <?= $controller ?>' src='<?= $this->viewVars['base'] ?>img/bt_permissoes.png'
-		onclick='showModal("permissoes");' />
-	<?php endif ?>
-
-<?php endif ?>
-</div>
-<div style='float: left; margin: 0px 0px 0px 10px;'>
-<form name='formPerfil' method='post' action='<?= getBase() ?>sistema/usuarios/troca_perfil/'>
-<select name='data[Usuario][perfil]' id='UsuarioTPerfil' title='Clique aqui para trocar o perfil ...' onchange='setPerfil(this.value);'>
-	<?php foreach($_SESSION['Perfis'] as $_id => $_nome) : ?>
-	<option value='<?= $_id ?>' <?php if ($_nome==$_SESSION['Usuario']['perfil']) echo ' selected="selected"'; ?> >
-		<?= $_nome ?>
-	</option>
-	<?php endforeach ?>
-</select>
-</form>
-</div>
+	<div style='float: left; margin: 0px 0px 0px 10px;'>
+		<form name='formPerfil' method='post' action='<?= getBase() ?>sistema/usuarios/troca_perfil/'>
+		<select name='data[Usuario][perfil]' id='UsuarioTPerfil' title='Clique aqui para trocar o perfil ...' onchange='setPerfil(this.value);'>
+			<?php foreach($_SESSION['Perfis'] as $_id => $_nome) : ?>
+			<option value='<?= $_id ?>' <?php if ($_nome==$_SESSION['Usuario']['perfil']) echo ' selected="selected"'; ?> >
+				<?= $_nome ?>
+			</option>
+			<?php endforeach ?>
+		</select>
+		</form>
+	</div>
 
 </div>

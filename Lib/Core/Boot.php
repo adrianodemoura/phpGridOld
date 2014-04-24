@@ -152,11 +152,21 @@ class Boot {
 				{
 					$minhasPermissoes = $_minhasPermissoes['0'];
 				}
-				$this->$controller->viewVars['minhasPermissoes'] = $minhasPermissoes;
 
 				// recuperando os parâmetros para a tela de configuração de permissões de cada perfil
 				if ($_SESSION['Usuario']['perfil']=='ADMINISTRADOR')
 				{
+					// todas as permissões pro bonitão da bala chita
+					$minhasPermissoes['id'] 			= 1;
+					$minhasPermissoes['modulo'] 		= $module;
+					$minhasPermissoes['controller'] 	= $controller;
+					$minhasPermissoes['perfil_id'] 		= 1;
+					$minhasPermissoes['incluir'] 		= 1;
+					$minhasPermissoes['alterar'] 		= 1;
+					$minhasPermissoes['excluir'] 		= 1;
+					$minhasPermissoes['imprimir'] 		= 1;
+					$minhasPermissoes['pesquisar'] 		= 1;
+
 					// recuperando todos os perfis
 					$_perfis = $this->$controller->$model->query('SELECT id, nome FROM '.$this->$controller->$model->prefixo.'perfis WHERE id>1 ORDER BY nome');
 					$perfis = array();
@@ -182,6 +192,7 @@ class Boot {
 						}
 					}
 				}
+				$this->$controller->viewVars['minhasPermissoes'] = $minhasPermissoes;
 			}
 		}
 
@@ -223,8 +234,8 @@ class Boot {
 		// executando a action
 		if (!method_exists($this->$controller,$action))
 		{
-			$_SESSION['sistemaErro']['tip'] = 'action';
-			$_SESSION['sistemaErro']['txt'] = 'Não foi possível localizar a Action <b>'.$action.'</b> do Controller <b>'.$controller.'</b> do módulo <b>'.$module.'</b>: <br />';
+			$_SESSION['sistemaErro']['tip'] = 'Página';
+			$_SESSION['sistemaErro']['txt'] = 'Não foi possível localizar a Página <b>'.$action.'</b> do Cadastro <b>'.$controller.'</b> do módulo <b>'.$module.'</b>: <br />';
 			die('<script>document.location.href="'.$this->$controller->base.'sistema/usuarios/erros'.'"</script>');
 		}
 		$this->$controller->$action();
