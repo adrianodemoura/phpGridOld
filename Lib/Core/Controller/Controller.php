@@ -592,4 +592,17 @@ class Controller {
 		$pode = (isset($minhasPermissoes[$acao])) ? $minhasPermissoes[$acao] : 0;
 		return $pode;
 	}
+
+	/**
+	 * Executa a exportação do cadastro ativo
+	 *
+	 * - Leva em consideração os Filtros da sessão
+	 *
+	 * @return void
+	 */
+	public function exportar()
+	{
+		$this->layout = 'csv';
+		$this->viewVars['teste'] = 'oi silvio ...';
+	}
 }

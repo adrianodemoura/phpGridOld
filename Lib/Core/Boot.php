@@ -40,6 +40,9 @@ class Boot {
 		session_name(SESSAO); 
 		session_start();
 
+		// incluido utilitários
+		require_once(CORE.'Util/Util.php');
+
 		// configurando, módulo, controler, action e parâmetros
 		$_url 	= explode('/',$_SERVER['REQUEST_URI']);
 		$url 	= array();
@@ -75,7 +78,7 @@ class Boot {
 					} else $params[$_tag] = $_tag;
 				}
 			}
-		} 
+		}
 
 		// identificando o controller
 		$arq = 'Modules/'.$module.'/Config/bootstrap.php';
@@ -88,6 +91,12 @@ class Boot {
 		{
 			require_once(APP.$arq);
 		}
+
+		// atualizando path
+		set_include_path(get_include_path() . PATH_SEPARATOR . APP.'Modules/'.$module.'/');
+		set_include_path(get_include_path() . PATH_SEPARATOR . CORE);
+
+		// instanciando o controller
 		$arq = 'Modules/'.$module.'/Controller/'.$controller.'Controller.php';
 		if (!include_once($arq))
 		{
@@ -218,10 +227,8 @@ class Boot {
 					$_SESSION['acessoNegado'] = strtolower($module.'/'.$controller.'/'.$action);
 					$_SESSION['sistemaErro']['tip'] = 'Acesso Negado';
 					$_SESSION['sistemaErro']['txt'] = 'Caro '.$_SESSION['Usuario']['nome'].', o seu perfil não possui privilégios suficientes para acessar a página '.strtolower($module.'/'.$controller.'/'.$action);
-					//debug($minhasPermissoes);
 					header('Location: '.$this->$controller->base.'sistema/usuarios/acesso_negado');
 				}
-				//debug($minhasPermissoes); debug($controller.' '.$action);
 			}
 		}
 
@@ -297,7 +304,7 @@ class Boot {
 			unset($_SESSION['msgFlash']);
 		}
 
-		// configurando o css da action
+		// configurando o css e js da action
 		$arq = strtolower($module.'_'.$controller.'_'.$action);
 		if (file_exists('./css/'.$arq.'.css'))
 		{
@@ -336,6 +343,7 @@ class Boot {
 		$html = ob_get_contents();
 		ob_end_clean();
 
+		// retornando a página renderizada
 		return $html;
 	}
 	
