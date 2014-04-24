@@ -605,4 +605,15 @@ class Controller {
 		$this->layout = 'csv';
 		$this->viewVars['teste'] = 'oi silvio ...';
 	}
+
+	/**
+	 * Exibe a pagina de apresentação dos relatórios
+	 *
+	 * @return 	void
+	 */
+	public function relatorios()
+	{
+		$relatorios = isset($this->viewVars['relatorios']) ? $this->viewVars['relatorios'] : array();
+		$this->viewVars['relatorios'] = $relatorios;
+	}
 }
