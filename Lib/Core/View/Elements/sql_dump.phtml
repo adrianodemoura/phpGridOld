@@ -10,7 +10,13 @@
 	<?php foreach($sql_dump as $_l => $_arrSqls) : ?>
 	<tr>
 		<td align='center' width='50px'><?= ($_l+1) ?></td>
-		<td><?= $_arrSqls['sql'] ?></td>
+		<td
+		<?php 
+			if ($_arrSqls['sql']=='BEGIN;') echo "class='td_begin'"; 
+			if ($_arrSqls['sql']=='COMMIT;') echo "class='td_commit'"; 
+			if ($_arrSqls['sql']=='ROLLBACK;') echo "class='td_rollback'"; 
+		?>
+		><?= $_arrSqls['sql'] ?></td>
 		<td align='center' width='50px'><?= $_arrSqls['li'] ?></td>
 		<td align='center' width='110px'><?= $_arrSqls['ts'] ?></td>
 	</tr>

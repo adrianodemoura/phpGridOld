@@ -73,6 +73,26 @@ body
 	background-color: #fff;
 	font-size: 10px;
 }
+#sql_dump .td_begin,
+#sql_dump .td_commit,
+#sql_dump .td_rollback
+{
+	font-weight: bold;
+	letter-spacing: 2px;
+	background-color: #eee;
+}
+#sql_dump .td_begin
+{
+	color: green;
+}
+#sql_dump .td_commit
+{
+	color: green;
+}
+#sql_dump .td_rollback
+{
+	color: red;
+}
 
 #registro
 {

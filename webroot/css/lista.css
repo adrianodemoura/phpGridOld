@@ -129,3 +129,10 @@
 {
 	width: 200px;
 }
+
+.tabLista .td_lista_erro
+{
+	background-color: red;
+	color: #fff;
+	font-size: 10px;
+}

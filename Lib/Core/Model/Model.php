@@ -212,7 +212,6 @@ class Model {
 			try
 			{
 				$this->db = new PDO($dsn,$banco['user'],$banco['password'],$params);
-				$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 			} catch (PDOException $e) 
 			{
 				switch($e->getCode())
@@ -270,7 +269,8 @@ class Model {
 	}
 
 	/**
-	 * Salva um registro ou conjunto de registros no banco de dados
+	 * Salva um registro ou conjunto de registros no banco de dados.
+	 * As querys serão executadas dentro de uma transação, certifique-se de que o banco de dados possui o devido suporte.
 	 * 
 	 * @param	array	$data	Matriz com os dados a serem salvos
 	 * @return	boolean	Retorna verdadeiro em caso de sucesso
@@ -343,34 +343,34 @@ class Model {
 					break;
 			}
 		}
+
+		// iniciando a transação
+		array_push($this->sqls,array('sql'=>'BEGIN;','ts'=>0.0001,'li'=>1));
+		$lE = 0; // linha erro
 		try
 		{
 			$this->db->beginTransaction();
-			array_push($this->sqls,array('sql'=>'BEGIN;','ts'=>0.0001));
+			$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			foreach($sqls as $_l => $_sql)
 			{
+				$lE = $_l;
 				$ini = microtime(true);
-				$res = @$this->db->exec($_sql);
-				$ts = microtime(true);
-				$ts = round(($ts-$ini),6);
-				if (strlen($res)==0)
-				{
-					$err 	= $this->db->errorInfo();
-					$_sql = '<div class="erro_sql">erro: '.$_sql.' '.$err['2'].'</div>';
-					$this->erros[$_l] = $err['1'].' - '.$err['2'];
-				}
-				array_push($this->sqls,array('sql'=>$_sql,'ts'=>$ts));
+				$this->db->exec($_sql);
+				$ts  = round((microtime(true)-$ini),6);
+				array_push($this->sqls,array('sql'=>$_sql,'ts'=>$ts,'li'=>1));
 			}
-			array_push($this->sqls,array('sql'=>'END;','ts'=>0.0001));
 			$this->db->commit();
-			return true;
-		} catch (PDOException $e)
+		} catch (Exception $e) 
 		{
 			$this->db->rollBack();
-			debug($e->getMessage());
-			array_push($this->erros,$e->getMessage());
-			return false;
+			array_push($this->sqls,array('sql'=>'ROLLBACK;','ts'=>0.0001,'li'=>1));
+			$this->erros[$lE] = $e->getMessage();
 		}
+		if (empty($this->erros))
+		{
+			array_push($this->sqls,array('sql'=>'COMMIT;','ts'=>0.0001,'li'=>1));
+			return true;
+		} else return false;
 	}
 
 	/**

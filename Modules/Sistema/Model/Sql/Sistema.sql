@@ -156,7 +156,7 @@ CREATE  TABLE IF NOT EXISTS `sis_usuarios` (
   INDEX `i_modificado` (`modificado` ASC) ,
   INDEX `i_criado` (`criado` ASC) ,
   INDEX `fk_usuarios_cidades` (`cidade_id` ASC) )
-ENGINE = MyISAM;
+ENGINE = InnoDB;
 INSERT INTO `sis_usuarios` (`id`, `senha`, `ativo`, `nome`, `email`, `cidade_id`, `celular`, `ultimo_ip`,`ultimo_acesso`,`criado`,`modificado`) VALUES ('1', 'e527fc321d4e4166deee7c8a318a586b', 1,'ADMINISTRADOR PHPGRID', 'admin@phpgrid.com', '2302','3112345678','127.0.0.1',sysdate(),sysdate(),sysdate());
 INSERT INTO `sis_usuarios` (`id`, `senha`, `ativo`, `nome`, `email`, `cidade_id`, `celular`, `ultimo_ip`,`ultimo_acesso`,`criado`,`modificado`) VALUES ('2', 'e527fc321d4e4166deee7c8a318a586b', 1,'GERENTE PHPGRID', 'gerente@phpgrid.com', '2301','31323245467','127.0.0.1',sysdate(),sysdate(),sysdate());
 INSERT INTO `sis_usuarios` (`id`, `senha`, `ativo`, `nome`, `email`, `cidade_id`, `celular`, `ultimo_ip`,`ultimo_acesso`,`criado`,`modificado`) VALUES ('3', 'e527fc321d4e4166deee7c8a318a586b', 1,'USUÁRIO PHPGRID', 'usuario@phpgrid.com', '2303','31111122222','127.0.0.1',sysdate(),sysdate(),sysdate());

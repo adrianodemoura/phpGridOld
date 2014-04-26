@@ -424,24 +424,21 @@ class Controller {
 			if (!$this->$modelClass->save($this->data))
 			{
 				$this->viewVars['erros'] = $this->$modelClass->erros;
+				$_SESSION['errosLista'] = $this->$modelClass->erros;
+				$msg = 'Erro ao tentar atualizar registro !!!';
+				if (isset($this->data['1'])) $msg = 'Erros ao tentar atualizar registros !!!';
+				$this->setMsgFlash($msg,'msgFlashErro');
 			} else
-			{
-				$this->viewVars['msgOk'] = 'Os Registros foram salvos com sucesso !!!';
-				$this->viewVars['dados'] = $this->data;
-				if (!empty($this->$modelClass->erros))
-				{
-					$this->viewVars['erros'] = $this->$modelClass->erros;
-				}
-			}
-			if (!empty($this->viewVars['urlRetorno']))
 			{
 				$msg = 'O Registro foi salvo com sucesso ...';
 				if (isset($this->data['1'])) $msg = 'Os Registros foram salvos com sucesso ...';
 				$this->setMsgFlash($msg,'msgFlashOk');
-				if (!empty($this->$modelClass->erros))
-				{
-					$_SESSION['errosLista'] = $this->$modelClass->erros;
-				}
+
+				$this->viewVars['msgOk'] = $msg;
+				$this->viewVars['dados'] = $this->data;
+			}
+			if (!empty($this->viewVars['urlRetorno']))
+			{
 				//debug($this->viewVars['urlRetorno']);
 				header('Location: '.$this->viewVars['urlRetorno']); die();
 			}
