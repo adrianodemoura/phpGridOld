@@ -279,6 +279,16 @@ class Controller {
 				if (strlen($_vlr)>0) $params['where'][$_cmp] = $_vlr;
 			}
 		}
+		// configurando o filtro pelos parâmetros de pesquisa
+		if (isset($this->params['pes']))
+		{
+			$pes = explode(',',$this->params['pes']);
+			foreach($pes as $_l => $_pes)
+			{
+				$a = explode('=',$_pes);
+				$params['where'][$modelClass.'.'.strtolower($a['0'])] = urldecode($a['1']);
+			}
+		}
 
 		// recuperando os parâmetros da GET
 		$params['pag'] 		= isset($this->params['pag']) ? $this->params['pag'] : 1;
