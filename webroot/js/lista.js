@@ -1,5 +1,29 @@
 $(document).ready(function()
 {
+	//
+	$(document).on("click",function()
+	{
+		//$(".cmpPesquisa").fadeOut();
+		//console.log(this.id);
+	});
+	
+	// execua a pesquisa Ajax, do campo em questão
+	/*$(".cmpPesquisa").keydown(function(e)
+	{
+		var cmpPes 		= this.id;
+		var cmpPesRes 	= cmpPes+'Res';
+		var e 			= e || window.event;
+
+		if (e.keyCode==27)
+		{
+			$('#'+cmpPes).fadeOut();
+			$('#'+cmpPesRes).fadeOut();
+		} else
+		{
+			$('#'+cmpPesRes).html($('#'+cmpPes).val());
+		}
+	});*/
+	
 	$("#cxSel").change(function() 
 	{ 
 		if ($(this).val())
@@ -16,7 +40,7 @@ $(document).ready(function()
 		$("#btSalvarT").addClass('btAlerta');
 	});
 
-	$("#lista .tabela input:text").change(function()
+	$("#lista .tabela .lista_input").change(function()
 	{
 		$(this).addClass('inAlerta');
 		$("#btSalvarT").addClass('btAlerta');

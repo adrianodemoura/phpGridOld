@@ -382,22 +382,14 @@ class Model {
 	public function query($sql='')
 	{
 		$this->open();
-		$_data 	= @$this->db->query($sql);
+		$_data 	= $this->db->query($sql);
 		$erro 	= $this->db->errorInfo();
-		if (isset($erro['2']))
-		{
-			//debug($erro);
-			//debug($sql);
-			//debug($this->name);
-			//if ($this->name!='Util') die();
-		}
-
 		$l 		= 0;
 		$data 	= array();
 		$ini	= microtime(true);
 		if (empty($erro['2']))
 		{
-			$linhas = @$_data->fetchAll(PDO::FETCH_NAMED);
+			$linhas = $_data->fetchAll(PDO::FETCH_NAMED);
 			if (is_array($linhas))
 			{
 				$l = 0;

@@ -74,9 +74,8 @@
 }
 .tabLista .inAlerta
 {
-	background-color: red;
-	color: #fff;
-	font-weight: bold;
+	background-color: #ff9872;
+	color: #000;
 }
 .tabLista
 {
@@ -114,6 +113,8 @@
 .tabLista input:focus
 {
 	background-color: #fff6a8;
+	color: #000;
+	font-weight: normal;
 }
 .tabLista .in_nome
 {
@@ -136,3 +137,16 @@
 	color: #fff;
 	font-size: 10px;
 }
+/*
+.tabLista .cmpPesquisa
+{
+	position: absolute;
+}
+.tabLista .cmpPesquisaRes
+{
+	position: absolute;
+	background-color: #fff;
+	padding: 5px;
+	display: none;
+	border: 1px solid #ddd;
+}*/
