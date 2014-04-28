@@ -360,11 +360,16 @@ class Controller {
 			$this->viewVars['botoesLista']['1']['onclick']	= '$("#formLista").submit();';
 		}
 
-		// opções para os marcadores
+		// opções Excluir para os marcadores
 		$m = isset($this->viewVars['marcadores']) ? $this->viewVars['marcadores'] : array();
 		if (!isset($m['Excluir']) && $this->pode('excluir'))
 		{
 			$m['Excluir'] = $this->base.strtolower($this->module.'/'.$this->controller.'/excluir/');
+		}
+		// opções Exportar para os marcadores
+		if (!isset($m['Exportar']) && $this->pode('imprimir'))
+		{
+			$m['Exportar'] = $this->base.strtolower($this->module.'/'.$this->controller.'/exportar/');
 		}
 		$this->viewVars['marcadores'] = $m;
 
@@ -646,7 +651,31 @@ class Controller {
 				if (strlen($_vlr)>0) $params['where'][$_cmp] = $_vlr;
 			}
 		}
+		// configurando os parâmetros dos filtros pelos marcadores
+		if (isset($_POST['marcador']))
+		{
+			if (!empty($_POST['marcador']))
+			{
+				if (isset($_POST['cx']))
+				{
+					$ids = array();
+					$cmp = '';
+					foreach($_POST['cx'] as $_ids => $_ok)
+					{
+						$a = explode('=', $_ids);
+						$cmp = $a['0'];
+						array_push($ids, $a['1']);
+					}
+					$params['where'][$modelClass.'.'.$cmp.' IN'] = $ids;
+				} else
+				{
+					$this->setMsgFlash('Nenhum registro foi marcado para exportação !!!','msgFlashErro');
+					$this->redirect(strtolower($this->module),strtolower($this->controller),'lista');
+				}
+			}
+		}
 
+		// populando a view com o resultado da exportação
 		$this->data = $this->$modelClass->find('all',$params);
 	}
 

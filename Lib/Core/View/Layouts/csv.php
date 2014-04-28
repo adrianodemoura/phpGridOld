@@ -6,4 +6,6 @@
 	header('Content-Disposition: attachment; filename="'.$arqCsv.'.csv"');
 
 	echo $conteudo;
+
+	//echo $this->element('sql_dump',array('sql_dump'=>$sql_dump,'module'=>$module));
 ?>
