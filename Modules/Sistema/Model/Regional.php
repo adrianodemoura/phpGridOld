@@ -49,6 +49,7 @@ class Regional extends SistemaAppModel {
 		'nome'		=> array
 		(
 			'tit'	=> 'Nome',
+			'pesquisar'=>true,
 		)
 	);
 }

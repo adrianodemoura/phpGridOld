@@ -112,6 +112,7 @@ class Model {
 	 * - edicaoOff		Se verdadeiro o campo não será editável nos formulários de manutenção
 	 * - mascara		Máscara do campo
 	 * - upperOff		Por padrão, todos os campos são salvos em maiúsculo, mas com este parâmetro não.
+	 * - pesquisar		Se o campo pode ser pesquisado, os valores são [=|&] o padrão é "=", valor "&" executará uma pesquisa LIKE
 	 * - options		Valores possíveis para o campo, no formato [valor][label]. exemplo: array(1=>'Sim',2=>'Não')
 	 * - belongsTo		Se o campo tem relacionamento 1:n
 	 * 

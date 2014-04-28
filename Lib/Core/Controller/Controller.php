@@ -285,8 +285,16 @@ class Controller {
 			$pes = explode(',',$this->params['pes']);
 			foreach($pes as $_l => $_pes)
 			{
-				$a = explode('=',$_pes);
-				$params['where'][$modelClass.'.'.strtolower($a['0'])] = urldecode($a['1']);
+				if (strpos($_pes,'='))
+				{
+					$a = explode('=',$_pes);
+					$params['where'][$modelClass.'.'.strtolower($a['0'])] = urldecode($a['1']);
+				}
+				if (strpos($_pes,'&'))
+				{
+					$a = explode('&',$_pes);
+					$params['where'][$modelClass.'.'.strtolower($a['0']).' LIKE'] = urldecode($a['1']);
+				}
 			}
 		}
 

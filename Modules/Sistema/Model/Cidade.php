@@ -50,6 +50,7 @@ class Cidade extends SistemaAppModel {
 		(
 			'tit'	=> 'Nome',
 			'edicaoOff'=>true,
+			'pesquisar'=>true,
 		),
 		'uf'		=> array
 		(

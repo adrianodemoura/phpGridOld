@@ -50,13 +50,14 @@
 		<?= $t ?>
 		<?php endif ?>
 
-		<?php if (isset($p['pesquisar'])) : ?>
+		<?php if (isset($p['pesquisar'])) : if ($p['pesquisar']==true) $p['pesquisar']=='='; ?>
 		<img id='imgFormPes<?= $a['1'] ?>' class='imgFormPes' 
 			src='<?= $this->viewVars['base'] ?>img/bt_pesquisar.png' onclick='showFormPesquisa("<?= $a['1'] ?>")' 
 			title='Clique aqui para executar uma pesquisa no campo <?= $t ?>';
 		/>
 		<div id='divFormPes<?= $a['1'] ?>' class='clFormPes'>
-		 <input type='text' name='' id='cmpFormPes<?= $a['1'] ?>' class='cmpFormPes' />
+			<input type='hidden' id='tipFormPes<?= $a['1'] ?>' value='<?= $p['pesquisar'] ?>' class='tipFormPes' />
+			<input type='text' 	 id='cmpFormPes<?= $a['1'] ?>' class='cmpFormPes' />
 		 <!--
 		 <img src='<?= $this->viewVars['base'] ?>img/bt_fechar.png' onclick='$("#divFormPes<?= $a['1'] ?>").fadeOut();' />
 		 -->

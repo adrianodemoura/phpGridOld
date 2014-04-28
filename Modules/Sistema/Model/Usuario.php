@@ -69,7 +69,7 @@ class Usuario extends SistemaAppModel {
 		(
 			'tit'		=> 'Nome',
 			'notEmpty'	=> true,
-			'pesquisar'	=> true
+			'pesquisar'	=> '&'
 		),
 		'ativo'=> array
 		(
@@ -88,6 +88,7 @@ class Usuario extends SistemaAppModel {
 		(
 			'tit'		=> 'e-mail',
 			'upperOff'	=> true,
+			'pesquisar'	=> '&'
 		),
 		'celular'		=> array
 		(

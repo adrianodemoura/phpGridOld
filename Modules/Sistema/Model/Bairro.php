@@ -50,7 +50,7 @@ class Bairro extends SistemaAppModel {
 		(
 			'tit'	=> 'Nome',
 			'notEmpty'=>true,
-			'pesquisar'=>true,
+			'pesquisar'=>'&',
 		),
 		'regional_id'		=> array
 		(

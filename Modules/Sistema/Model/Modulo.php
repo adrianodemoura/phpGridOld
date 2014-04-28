@@ -50,6 +50,7 @@ class Modulo extends SistemaAppModel {
 		(
 			'tit'		=> 'Nome',
 			'notEmpty'	=> true,
+			'pesquisar'=>true,
 		),
 		'ativo'=> array
 		(

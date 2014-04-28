@@ -4,7 +4,7 @@ $(document).ready(function()
 	$(document).on("click",function()
 	{
 		//$(".clFormPes").fadeOut();
-		console.log(this.id);
+		//console.log(this.id);
 		//console.log($(".clFormPes").css("visibility"));
 	});
 	
@@ -14,8 +14,16 @@ $(document).ready(function()
 		var e 			= e || window.event;
 		var idCmp 		= this.id;
 		var cmp			= idCmp.replace(/cmpFormPes/g, '');
+		var tip			= $('#tipFormPes'+cmp).val();
+		if (tip==true) tip='=';
 		var divCmp		= 'divFormPes'+cmp;
-		var url			= aqui+'/pes:'+cmp+'=';
+		var url			= aqui;
+		var corta		= url.indexOf('/pes:',0);
+		if (corta>0)
+		{
+			url = url.substring(0,corta);
+		}
+		url += '/pes:'+cmp+tip;
 
 		if (e.keyCode==27)
 		{
@@ -25,6 +33,7 @@ $(document).ready(function()
 		{
 			url += $('#'+idCmp).val();
 			document.location.href= url;
+			console.log(corta+' '+url);
 		}
 	});
 	

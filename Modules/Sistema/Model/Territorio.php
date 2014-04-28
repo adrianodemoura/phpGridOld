@@ -49,6 +49,7 @@ class Territorio extends SistemaAppModel {
 		'nome'		=> array
 		(
 			'tit'	=> 'Nome',
+			'pesquisar'=>true,
 		)
 	);
 }
