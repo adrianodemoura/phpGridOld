@@ -137,6 +137,28 @@
 	color: #fff;
 	font-size: 10px;
 }
+.tabLista .clFormPes
+{
+	float: left;
+	display: none;
+}
+.tabLista .imgFormPes:hover
+{
+	cursor: pointer;
+}
+.tabLista .clFormPes input
+{
+	float: left;
+	background-color: #fff;
+}
+.tabLista .clFormPes img
+{
+	float: right;
+}
+.tabLista .clFormPes img:hover
+{
+	cursor: pointer;
+}
 /*
 .tabLista .cmpPesquisa
 {

@@ -69,6 +69,7 @@ class Usuario extends SistemaAppModel {
 		(
 			'tit'		=> 'Nome',
 			'notEmpty'	=> true,
+			'pesquisar'	=> true
 		),
 		'ativo'=> array
 		(

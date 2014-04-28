@@ -298,6 +298,24 @@ class Controller {
 
 		// recuperando o data
 		$this->data = $this->$modelClass->find('all',$params);
+
+		// configurando a url de retorno
+		$this->viewVars['urlRetorno'] = isset($this->viewVars['urlRetorno']) ? $this->viewVars['urlRetorno'] : $this->viewVars['aqui'];
+
+		// se foi feita uma pesquisa, e não achou nada retorna pra cá mesmo exibindo o erro
+		if (isset($this->params['pes']))
+		{
+			if(!count($this->data))
+			{
+				$retorno = $this->viewVars['urlRetorno'];
+				$retorno = substr($retorno,0,strpos($retorno,'/pes:'));
+				$this->setMsgFlash('A pesquisa não retornou nenhum valor !!!','msgFlashErro');
+				header('location: '.$retorno);
+				die();
+			}
+		}
+		
+		// configurando os campos a serem exibidos
 		if (!isset($this->viewVars['fields']))
 		{
 			$fields = array();
@@ -314,7 +332,6 @@ class Controller {
 			}
 			$this->viewVars['fields'] = $fields;
 		}
-		$this->viewVars['urlRetorno'] = isset($this->viewVars['urlRetorno']) ? $this->viewVars['urlRetorno'] : $this->viewVars['aqui'];
 
 		// botões da lista
 		if (!isset($this->viewVars['botoesLista']['0']) && $this->pode('incluir'))

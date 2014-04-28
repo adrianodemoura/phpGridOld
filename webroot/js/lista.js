@@ -7,22 +7,25 @@ $(document).ready(function()
 		//console.log(this.id);
 	});
 	
-	// execua a pesquisa Ajax, do campo em questão
-	/*$(".cmpPesquisa").keydown(function(e)
+	// executa a pesquisa pelo campo do formPes
+	$(".cmpFormPes").keydown(function(e)
 	{
-		var cmpPes 		= this.id;
-		var cmpPesRes 	= cmpPes+'Res';
 		var e 			= e || window.event;
+		var idCmp 		= this.id;
+		var cmp			= idCmp.replace(/cmpFormPes/g, '');
+		var divCmp		= 'divFormPes'+cmp;
+		var url			= aqui+'/pes:'+cmp+'=';
 
 		if (e.keyCode==27)
 		{
-			$('#'+cmpPes).fadeOut();
-			$('#'+cmpPesRes).fadeOut();
-		} else
+			$('#'+divCmp).fadeOut();
+			$('#'+idCmp).val('');
+		} else if(e.keyCode==13)
 		{
-			$('#'+cmpPesRes).html($('#'+cmpPes).val());
+			url += $('#'+idCmp).val();
+			document.location.href= url;
 		}
-	});*/
+	});
 	
 	$("#cxSel").change(function() 
 	{ 
@@ -205,4 +208,18 @@ function setAjaxTab()
 		}
 	});
 	return false;
+}
+
+/**
+ * Exibe o formulário de pesquisa de um campo
+ * 
+ * @return	void
+ */
+function showFormPesquisa(cmp)
+{
+	var idDiv = 'divFormPes'+cmp;
+	var idCmp = 'cmpFormPes'+cmp;
+	$("#"+idCmp).val();
+	$("#"+idDiv).fadeIn();
+	$("#"+idCmp).focus();
 }
