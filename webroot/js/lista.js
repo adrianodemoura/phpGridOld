@@ -3,8 +3,9 @@ $(document).ready(function()
 	//
 	$(document).on("click",function()
 	{
-		//$(".cmpPesquisa").fadeOut();
-		//console.log(this.id);
+		//$(".clFormPes").fadeOut();
+		console.log(this.id);
+		//console.log($(".clFormPes").css("visibility"));
 	});
 	
 	// executa a pesquisa pelo campo do formPes

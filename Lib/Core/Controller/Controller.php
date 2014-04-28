@@ -309,7 +309,7 @@ class Controller {
 			{
 				$retorno = $this->viewVars['urlRetorno'];
 				$retorno = substr($retorno,0,strpos($retorno,'/pes:'));
-				$this->setMsgFlash('A pesquisa não retornou nenhum valor !!!','msgFlashErro');
+				$this->setMsgFlash('A pesquisa retornou vazio !!!','msgFlashErro');
 				header('location: '.$retorno);
 				die();
 			}
