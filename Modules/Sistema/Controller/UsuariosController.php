@@ -339,4 +339,24 @@ class UsuariosController extends SistemaAppController {
 		$_SESSION['Usuario']['perfil_id'] 	= $idPerfil;
 		header('Location: '.$_SERVER['HTTP_REFERER']);
 	}
+
+	/**
+	 * Executa o upload e redimensiona uma image
+	 * 
+	 * - As novas Imagens serão salvas no diretório webroot/uploads
+	 * 
+	 * @param	array	$files			Matriz com as propriedades da imagem que sofreu o upload
+	 * @param	array	$_POST['red'] 	Porcentagem de dimensionamento que a nova imagem irá receber
+	 * @return	void
+	 */
+	public function upload()
+	{
+		if (isset($_POST['red']))
+		{
+			require_once('Controller/Component/ImagemComponent.php');
+			$Img = new ImagemComponent();
+			$arqImg = $Img->Redimensionar($_FILES['img'], $_POST['red']);
+			$this->viewVars['arqImg'] = $arqImg;
+		}
+	}
 }

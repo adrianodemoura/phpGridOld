@@ -1,0 +1,39 @@
+<style>
+	.upload
+	{
+		margin: 10px auto;
+		width: 500px;
+		border: 1px solid #ccc;
+		padding: 5px;
+		background-color: #fff;
+	}
+	.upload label
+	{
+		display: block;
+		float: left;
+		text-align: right;
+		min-width: 150px;
+		margin: 0px 5px 0px 0px;
+	}
+</style>
+<div class='upload'>
+	<form method="post" action="" enctype="multipart/form-data">
+		<div>
+			<label>Imagem: </label>
+			<input type="file" name="img" />
+		</div>
+		
+		<div style='clear: both; margin-top: 10px;'>
+			<label>Redimensionar: </label>
+			<input type="text" name="red" value='100' style='width: 30px; text-align: center;' />&nbsp; pixels
+		</div>
+		<br />
+		<input type="submit" value="Enviar" />
+	</form>
+</div>
+
+<?php if (isset($arqImg)) : ?>
+<center>
+<img src='<?= $base.'uploads/'.$arqImg ?>' />
+</center>
+<?php endif ?>

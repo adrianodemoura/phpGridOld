@@ -97,7 +97,7 @@ class Boot {
 		set_include_path(get_include_path() . PATH_SEPARATOR . CORE);
 
 		// instanciando o controller
-		$arq = 'Modules/'.$module.'/Controller/'.$controller.'Controller.php';
+		$arq  = 'Modules/'.$module.'/Controller/'.$controller.'Controller.php';
 		if (!include_once($arq))
 		{
 			$url = $this->$controller->base.'sistema/usuarios/erros';
@@ -123,6 +123,30 @@ class Boot {
 
 		// recuperando o data
 		$this->$controller->data = isset($_POST['data']) ? $_POST['data'] : array();
+
+		// instanciando os componentes
+		/*if (!empty($this->$controller->Components))
+		{
+			foreach($this->$controller->Components as $_l => $_comp)
+			{
+				$achei= false;
+				$arq  = $_comp.'Component.php';
+				$file = APP.'Modules/'.$module.'/Controller/Component/'.$arq;
+				if (!file_exists($file))
+				{
+					$file = CORE.'Controller/Component/'.$arq;
+					if (!file_exists($file))
+					{
+					} else $achei = true;
+				} else $achei = true;
+				if ($achei)
+				{
+					$class = $_comp.'Component';
+					require_once('Controller/Component/'.$arq);
+					$this->$_comp = new $class();
+				}
+			}
+		}*/
 
 		// executando código antes de tudo
 		$this->$controller->beforeIndex();
