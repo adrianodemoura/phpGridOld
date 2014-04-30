@@ -45,15 +45,15 @@ class ImagemComponent {
 		if ($imagem['type']=="image/jpeg") 
 		{
 			$img = imagecreatefromjpeg($imagem['tmp_name']);
-			$name = str_replace('.jpg','',strtolower($name)).$largura;
+			$name = str_replace('.jpg','',strtolower($name)).'-'.$largura;
 		} else if ($imagem['type']=="image/gif")
 		{
 			$img = imagecreatefromgif($imagem['tmp_name']);
-			$name = str_replace('.gif','',strtolower($name)).$largura;
+			$name = str_replace('.gif','',strtolower($name)).'-'.$largura;
 		} else if ($imagem['type']=="image/png")
 		{
 			$img = imagecreatefrompng($imagem['tmp_name']);
-			$name = str_replace('.png','',strtolower($name)).$largura;
+			$name = str_replace('.png','',strtolower($name)).'-'.$largura;
 		}
 		$x   = imagesx($img);
 		$y   = imagesy($img);
