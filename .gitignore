@@ -1,6 +1,9 @@
 # ignorar todos os diretório e arquivos temporários
 tmp/**/*
 
+# ignorar todos os diretórios e arquivos de uploads
+webroot/uplodads/**/*
+
 # ignorar configurações do banco
 Config/database.php
 
