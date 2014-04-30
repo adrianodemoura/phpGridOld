@@ -355,8 +355,13 @@ class UsuariosController extends SistemaAppController {
 		{
 			require_once('Controller/Component/ImagemComponent.php');
 			$Img = new ImagemComponent();
-			$arqImg = $Img->Redimensionar($_FILES['img'], $_POST['red']);
-			$this->viewVars['arqImg'] = $arqImg;
+			if ($Img->Redimensionar($_FILES['img'], $_POST['red']))
+			{
+				$this->viewVars['name'] = $Img->name;
+			} elseif (!empty($Img->erro))
+			{
+				$this->viewVars['erro'] = $Img->erro;
+			}
 		}
 	}
 }

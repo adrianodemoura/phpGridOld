@@ -32,8 +32,16 @@
 	</form>
 </div>
 
-<?php if (isset($arqImg)) : ?>
+<?php if (isset($name)) : ?>
 <center>
-<img src='<?= $base.'uploads/'.$arqImg ?>' />
+<img src='<?= $base.'uploads/'.$name ?>' />
+</center>
+<?php endif ?>
+
+<?php if (isset($erro)) : ?>
+<center>
+<p style="color: red;">
+<?= $erro ?>
+</p>
 </center>
 <?php endif ?>
