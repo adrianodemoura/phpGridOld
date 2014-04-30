@@ -170,6 +170,10 @@ class Controller {
 				$this->viewVars['ferramentasLayout']['1']['title'] 		= 'Clique aqui para habilitar o Sql Dump';
 				$this->viewVars['ferramentasLayout']['1']['icone'] 		= $this->viewVars['base'].'img/bt_sqldump.png';
 				$this->viewVars['ferramentasLayout']['1']['onclick'] 	= 'document.location.href="'.$this->viewVars['base'].'sistema/usuarios/set_sqldump"';
+				
+				$this->viewVars['ferramentasLayout']['4']['title'] 		= 'Clique aqui enviar uma imagem';
+				$this->viewVars['ferramentasLayout']['4']['icone'] 		= $this->viewVars['base'].'img/bt_upload.png';
+				$this->viewVars['ferramentasLayout']['4']['onclick'] 	= 'document.location.href="'.$this->viewVars['base'].'sistema/usuarios/upload"';
 			}
 
 			if ($this->viewVars['minhasPermissoes']['imprimir']==1)
