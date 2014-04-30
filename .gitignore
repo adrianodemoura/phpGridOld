@@ -2,7 +2,7 @@
 tmp/**/*
 
 # ignorar todos os diretórios e arquivos de uploads
-webroot/uplodads/**/*
+webroot/uploads/**/*
 
 # ignorar configurações do banco
 Config/database.php
