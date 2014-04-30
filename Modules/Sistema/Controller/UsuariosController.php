@@ -56,7 +56,7 @@ class UsuariosController extends SistemaAppController {
 	 */
 	public function login()
 	{
-		$this->viewVars['tituloPagina'] 	= 'Página Inicial';
+		$this->viewVars['tituloPagina'] 	= SISTEMA.' - login';
 		$this->layout						= 'publico';
 		if (isset($_SESSION['Usuario']['id'])) $this->redirect('sistema','usuarios','info');
 		if (!empty($this->data['Usuario']['senha']))
