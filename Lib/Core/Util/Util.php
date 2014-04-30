@@ -72,3 +72,25 @@ function router($rota='', $destino=array(), $params=array())
 	}
 }
 
+/**
+ * inclui na aplicação o tipo de objeto conforme o tipo
+ * 
+ * @param 	string	$tipo	Tipo a ser incluído
+ * @param	string	$class	Classe a ser incluída
+ * @return	void
+ */
+function appUses($tipo='',$class='')
+{
+	switch(strtolower($tipo))
+	{
+		case 'component':
+			require_once('Controller/Component/'.ucfirst($class).'Component.php');
+			break;
+		case 'model':
+			require_once('Model/'.ucfirst($class).'.php');
+			break;
+		case 'controller':
+			require_once('Controller/'.ucfirst($class).'Controller.php');
+			break;
+	}
+}

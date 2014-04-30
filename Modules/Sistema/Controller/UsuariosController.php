@@ -353,7 +353,7 @@ class UsuariosController extends SistemaAppController {
 	{
 		if (isset($_POST['red']))
 		{
-			require_once('Controller/Component/ImagemComponent.php');
+			appUses('component','Imagem');
 			$Img = new ImagemComponent();
 			if ($Img->Redimensionar($_FILES['img'], $_POST['red']))
 			{
