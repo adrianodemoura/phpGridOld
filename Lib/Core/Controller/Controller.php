@@ -127,7 +127,7 @@ class Controller {
 			$params['pag'] = 1;
 			$params['ord'] = $this->$modelClass->getDisplayField();
 			$params['dir'] = 'asc';
-			$this->redirect(strtolower($this->module), strtolower($this->controller), 'lista',$params);
+			$this->redirect(strtolower($this->module), strtolower($this->controller), 'listar',$params);
 		} else $this->redirect('sistema', 'usuarios', 'login');
 	}
 
@@ -241,7 +241,7 @@ class Controller {
 	 * @param	Ferramentas da lista, será repetido em cada linha 	
 	 * @return 	void
 	 */
-	public function lista()
+	public function listar()
 	{
 		$modelClass = $this->modelClass;
 		$params 	= array();
@@ -266,7 +266,7 @@ class Controller {
 			$params['pag'] = isset($_SESSION['Pagi'][$this->module][$this->controller]['pag']) ? $_SESSION['Pagi'][$this->module][$this->controller]['pag'] : 1;
 			$params['ord'] = $this->$modelClass->getDisplayField();
 			$params['dir'] = 'asc';
-			$this->redirect(strtolower($this->module),strtolower($this->controller),'lista',$params);
+			$this->redirect(strtolower($this->module),strtolower($this->controller),'listar',$params);
 		}
 
 		// salvando a página na sessão
@@ -406,19 +406,19 @@ class Controller {
 		$this->viewVars['ferramentas'] = $f;
 
 		// verificando se o módulo_controller_action possui CSS e JS próprio
-		$arq = strtolower($this->module.'_'.$this->controller.'_lista');
+		$arq = strtolower($this->module.'_'.$this->controller.'_listar');
 		if (file_exists('./css/'.$arq.'.css'))
 		{
 			$link = htmlentities('<link rel="stylesheet" type="text/css" href="'.$this->viewVars['base'].'css/'
 				.strtolower($this->module).'_'
-				.strtolower($this->controller).'_lista.css" />');
+				.strtolower($this->controller).'_listar.css" />');
 			array_push($this->viewVars['head'],$link);
 		}
 		if (file_exists('./js/'.$arq.'.js'))
 		{
 			$link = htmlentities('<script type="text/javascript" src="'.$this->viewVars['base'].'js/'
 				.strtolower($this->module).'_'
-				.strtolower($this->controller).'_lista.js"></script>');
+				.strtolower($this->controller).'_listar.js"></script>');
 			array_push($this->viewVars['head'],$link);
 		}
 
@@ -522,17 +522,17 @@ class Controller {
 				$msg = 'O Registro foi excluído com sucesso ...';
 				if (isset($_POST['cx'])) $msg = 'Os registros foram excluídos com sucesso';
 				$this->setMsgFlash($msg,'msgFlashErro');
-				if (!isset($this->redirectOff)) $this->redirect(strtolower($this->module),strtolower($this->controller),'lista');
+				if (!isset($this->redirectOff)) $this->redirect(strtolower($this->module),strtolower($this->controller),'listar');
 			} else
 			{
 				$msg = !empty($this->$modelClass->erro) ? $this->$modelClass->erro : 'Erro ao tentar excluir registro !!!';
 				$this->setMsgFlash($msg,'msgFlashErro');
-				if (!isset($this->redirectOff)) $this->redirect(strtolower($this->module),strtolower($this->controller),'lista');
+				if (!isset($this->redirectOff)) $this->redirect(strtolower($this->module),strtolower($this->controller),'listar');
 			}
 		} else
 		{
 			$this->setMsgFlash('Nenhum registro foi marcado para exclusão !!!','msgFlashErro');
-			if (!isset($this->redirectOff)) $this->redirect(strtolower($this->module),strtolower($this->controller),'lista');
+			if (!isset($this->redirectOff)) $this->redirect(strtolower($this->module),strtolower($this->controller),'listar');
 		}
 	}
 
@@ -564,7 +564,7 @@ class Controller {
 			}
 		}
 		$this->viewVars['urlRetorno'] = isset($_POST['urlRetorno']) ? $_POST['urlRetorno'] : $_SERVER['REQUEST_URI'];
-		$this->redirect(strtolower($this->module.'/'.$this->controller.'/lista'));
+		$this->redirect(strtolower($this->module.'/'.$this->controller.'/listar'));
 	}
 
 	/**
@@ -674,7 +674,7 @@ class Controller {
 				} else
 				{
 					$this->setMsgFlash('Nenhum registro foi marcado para exportação !!!','msgFlashErro');
-					$this->redirect(strtolower($this->module),strtolower($this->controller),'lista');
+					$this->redirect(strtolower($this->module),strtolower($this->controller),'listar');
 				}
 			}
 		}

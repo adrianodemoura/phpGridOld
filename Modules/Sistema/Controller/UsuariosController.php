@@ -34,7 +34,7 @@ class UsuariosController extends SistemaAppController {
 	 * 
 	 * @return	void
 	 */
-	public function lista()
+	public function listar()
 	{
 		$this->viewVars['fields'] = array('Usuario.ativo','Usuario.nome','Usuario.email','Usuario.celular'
 		,'Usuario.acessos'
@@ -46,7 +46,7 @@ class UsuariosController extends SistemaAppController {
 		{
 			$this->filtros['Usuario.id'] = $_SESSION['Usuario']['id'];
 		}
-		parent::lista();
+		parent::listar();
 	}
 
 	/**
