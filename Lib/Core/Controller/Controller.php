@@ -424,7 +424,7 @@ class Controller {
 
 		if ($_SESSION['Usuario']['perfil_id']==1)
 		{
-			$this->viewVars['ferramentasLayout']['3']['title'] 		= 'Clique aqui para exportar o cadastro';
+			$this->viewVars['ferramentasLayout']['3']['title'] 		= 'Clique aqui para exportar todo o cadastro com filtros';
 			$this->viewVars['ferramentasLayout']['3']['icone'] 		= $this->viewVars['base'].'img/bt_exportar.png';
 			$this->viewVars['ferramentasLayout']['3']['onclick'] 	= 'document.location.href="'.$this->viewVars['base'].strtolower($this->module).'/'.strtolower($this->controller).'/exportar"';
 		}
