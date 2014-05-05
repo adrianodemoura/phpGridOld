@@ -24,7 +24,7 @@ class CidadesController extends SistemaAppController {
 	 */
 	public function listar()
 	{
-		parent::lista();
+		parent::listar();
 		$this->viewVars['botoesLista']['0'] = array();
 		$this->viewVars['botoesLista']['1'] = array();
 	}

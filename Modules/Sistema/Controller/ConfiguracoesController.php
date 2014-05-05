@@ -38,7 +38,7 @@ class ConfiguracoesController extends SistemaAppController {
 	 */
 	public function listar()
 	{
-		parent::lista();
+		parent::listar();
 		$this->viewVars['botoesLista']['0'] = array();
 		$this->viewVars['marcadores'] 		= null;
 		unset($this->viewVars['paginacao']);
