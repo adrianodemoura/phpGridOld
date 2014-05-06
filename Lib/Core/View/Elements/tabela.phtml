@@ -40,7 +40,7 @@
 		$c = $this->Html->getFieldRel($p['belongsTo']);
 	}
 
-	$l = $base.strtolower($module.'/'.$controller.'/lista/pag:'
+	$l = $base.strtolower($module.'/'.$controller.'/listar/pag:'
 		.$this->viewVars['params']['pag'].'/ord:'.str_replace('.', '_', $c).'/dir:'.$d);
 	?>
 	<th class="th<?= $this->Html->domId($a['1']) ?>">

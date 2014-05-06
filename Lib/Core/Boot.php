@@ -124,30 +124,6 @@ class Boot {
 		// recuperando o data
 		$this->$controller->data = isset($_POST['data']) ? $_POST['data'] : array();
 
-		// instanciando os componentes
-		/*if (!empty($this->$controller->Components))
-		{
-			foreach($this->$controller->Components as $_l => $_comp)
-			{
-				$achei= false;
-				$arq  = $_comp.'Component.php';
-				$file = APP.'Modules/'.$module.'/Controller/Component/'.$arq;
-				if (!file_exists($file))
-				{
-					$file = CORE.'Controller/Component/'.$arq;
-					if (!file_exists($file))
-					{
-					} else $achei = true;
-				} else $achei = true;
-				if ($achei)
-				{
-					$class = $_comp.'Component';
-					require_once('Controller/Component/'.$arq);
-					$this->$_comp = new $class();
-				}
-			}
-		}*/
-
 		// executando código antes de tudo
 		$this->$controller->beforeIndex();
 
@@ -176,7 +152,7 @@ class Boot {
 				$minhasPermissoes = array();
 				$idPerfil = 0;
 				foreach($_SESSION['Perfis'] as $_id => $_perfil) if ($_perfil==$_SESSION['Usuario']['perfil']) $idPerfil = $_id;
-				$sql = 'SELECT id, modulo, controller, perfil_id, visualizar, incluir, alterar, excluir, imprimir, pesquisar FROM sis_permissoes';
+				$sql = 'SELECT id, modulo, controller, perfil_id, visualizar, incluir, alterar, excluir, imprimir, pesquisar, exportar FROM sis_permissoes';
 				$sql .= ' WHERE perfil_id='.$idPerfil;
 				$sql .= ' AND modulo="'.strtoupper($module).'"';
 				$sql .= ' AND controller="'.strtoupper($controller).'"';
@@ -194,11 +170,13 @@ class Boot {
 					$minhasPermissoes['modulo'] 		= $module;
 					$minhasPermissoes['controller'] 	= $controller;
 					$minhasPermissoes['perfil_id'] 		= 1;
+					$minhasPermissoes['visualizar']		= 1;
 					$minhasPermissoes['incluir'] 		= 1;
 					$minhasPermissoes['alterar'] 		= 1;
 					$minhasPermissoes['excluir'] 		= 1;
 					$minhasPermissoes['imprimir'] 		= 1;
 					$minhasPermissoes['pesquisar'] 		= 1;
+					$minhasPermissoes['exportar'] 		= 1;
 
 					// recuperando todos os perfis
 					$_perfis = $this->$controller->$model->query('SELECT id, nome FROM '.$this->$controller->$model->prefixo.'perfis WHERE id>1 ORDER BY nome');
@@ -211,7 +189,7 @@ class Boot {
 					
 					// recuperando as permissões da página corrente
 					$_permissoes = $this->$controller->$model->query('SELECT 
-						visualizar, incluir, alterar, excluir, imprimir, pesquisar, perfil_id
+						visualizar, incluir, alterar, excluir, imprimir, pesquisar, exportar, perfil_id
 						FROM '.$this->$controller->$model->prefixo.'permissoes 
 						WHERE modulo="'.strtolower($module).'" 
 						AND controller="'.strtolower($controller).'" ORDER BY modulo, controller');
@@ -226,7 +204,7 @@ class Boot {
 					}
 				}
 				$this->$controller->viewVars['minhasPermissoes'] = $minhasPermissoes;
-			}
+			}// else die('tchau');
 		}
 
 		// excluindo acessoNegado
@@ -251,7 +229,7 @@ class Boot {
 					$_SESSION['acessoNegado'] = strtolower($module.'/'.$controller.'/'.$action);
 					$_SESSION['sistemaErro']['tip'] = 'Acesso Negado';
 					$_SESSION['sistemaErro']['txt'] = 'Caro '.$_SESSION['Usuario']['nome'].', o seu perfil não possui privilégios suficientes para acessar a página '.strtolower($module.'/'.$controller.'/'.$action);
-					header('Location: '.$this->$controller->base.'sistema/usuarios/acesso_negado');
+					//header('Location: '.$this->$controller->base.'sistema/usuarios/acesso_negado');
 				}
 			}
 		}

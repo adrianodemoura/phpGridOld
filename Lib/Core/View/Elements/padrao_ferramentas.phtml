@@ -1,10 +1,38 @@
 <div id="padrao_ferramentas">
 
 	<div style='float: left;'>
-	<?php if (isset($this->viewVars['ferramentasLayout'])) : ksort($this->viewVars['ferramentasLayout']); foreach($this->viewVars['ferramentasLayout'] as $_l => $_arrProp) : ?>
+
+	<?php if ($_SESSION['Usuario']['perfil_id']==1) : ?>
+		<img title='Clique aqui para configurar as permissões do cadastro' 
+			src='<?= $this->viewVars['base'] ?>img/bt_permissoes.png'
+			onclick='showModal("permissoes")' />
+	<?php endif ?>
+
+	<?php if ($_SESSION['Usuario']['perfil_id']<4) : ?>
+		<img title='Clique aqui para habilitar o Sql Dump' 
+			src='<?= $this->viewVars['base'] ?>img/bt_sqldump.png'
+			onclick='document.location.href="<?= $this->viewVars['base'] ?>sistema/usuarios/set_sqldump"' />
+	<?php endif ?>
+
+	<?php if ($_SESSION['Usuario']['perfil_id']<3) : ?>
+		<img title='Clique aqui enviar uma imagem' 
+			src='<?= $this->viewVars['base'] ?>img/bt_upload.png'
+			onclick='document.location.href="<?= $this->viewVars['base'] ?>sistema/usuarios/upload"' />
+	<?php endif ?>
+&nbsp;&nbsp;&nbsp;
+	<?php if (isset($this->viewVars['ferramentasLayout'])) 
+		: ksort($this->viewVars['ferramentasLayout']); foreach($this->viewVars['ferramentasLayout'] as $_l => $_arrProp) 
+		: $permissao = isset($_arrProp['permissao']) ? $_arrProp['permissao'] : 0; 
+		  $p 		 = isset ($this->viewVars['minhasPermissoes'][$permissao])
+		  	? $this->viewVars['minhasPermissoes'][$permissao]
+		  	: 0;
+		if ($p) :
+	?>
 		<img title='<?= $_arrProp['title'] ?>' src='<?= $_arrProp['icone'] ?>' onclick='<?= $_arrProp['onclick'] ?>' />
-	<?php endforeach; endif ?>
+	<?php endif; endforeach; endif ?>
+
 	</div>
+
 
 	<div style='float: left; margin: 0px 0px 0px 10px;'>
 		<form name='formPerfil' method='post' action='<?= getBase() ?>sistema/usuarios/troca_perfil/'>

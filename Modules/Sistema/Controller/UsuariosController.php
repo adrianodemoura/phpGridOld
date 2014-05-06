@@ -82,6 +82,7 @@ class UsuariosController extends SistemaAppController {
 				{
 					$meusPerfis[$_arrCmps['id']] = $_arrCmps['nome'];
 				}
+				if (empty($meusPerfis)) $meusPerfis['0'] = 'VISITATNE';
 				$_SESSION['Perfis'] = $meusPerfis;
 
 				// atualizando usuário
@@ -345,8 +346,8 @@ class UsuariosController extends SistemaAppController {
 	 * 
 	 * - As novas Imagens serão salvas no diretório webroot/uploads
 	 * 
-	 * @param	array	$files			Matriz com as propriedades da imagem que sofreu o upload
-	 * @param	array	$_POST['red'] 	Porcentagem de dimensionamento que a nova imagem irá receber
+	 * @param	array	$files		Matriz com as propriedades da imagem que sofreu o upload
+	 * @param	integer	$red 		Porcentagem de dimensionamento que a nova imagem irá receber
 	 * @return	void
 	 */
 	public function upload()

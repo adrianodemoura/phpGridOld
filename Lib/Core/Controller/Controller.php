@@ -158,30 +158,10 @@ class Controller {
 	{
 		if ($this->layout=='padrao')
 		{
-			if ($_SESSION['Usuario']['perfil_id']==1)
-			{
-				$this->viewVars['ferramentasLayout']['0']['title'] 		= 'Clique aqui para configurar as permissões do cadastro';
-				$this->viewVars['ferramentasLayout']['0']['icone'] 		= $this->viewVars['base'].'img/bt_permissoes.png';
-				$this->viewVars['ferramentasLayout']['0']['onclick'] 	= 'showModal("permissoes");';
-			}
-
-			if ($_SESSION['Usuario']['perfil_id']<4)
-			{
-				$this->viewVars['ferramentasLayout']['1']['title'] 		= 'Clique aqui para habilitar o Sql Dump';
-				$this->viewVars['ferramentasLayout']['1']['icone'] 		= $this->viewVars['base'].'img/bt_sqldump.png';
-				$this->viewVars['ferramentasLayout']['1']['onclick'] 	= 'document.location.href="'.$this->viewVars['base'].'sistema/usuarios/set_sqldump"';
-				
-				$this->viewVars['ferramentasLayout']['4']['title'] 		= 'Clique aqui enviar uma imagem';
-				$this->viewVars['ferramentasLayout']['4']['icone'] 		= $this->viewVars['base'].'img/bt_upload.png';
-				$this->viewVars['ferramentasLayout']['4']['onclick'] 	= 'document.location.href="'.$this->viewVars['base'].'sistema/usuarios/upload"';
-			}
-
-			if ($this->viewVars['minhasPermissoes']['imprimir']==1)
-			{
-				$this->viewVars['ferramentasLayout']['2']['title'] 		= 'Relatórios';
-				$this->viewVars['ferramentasLayout']['2']['icone'] 		= $this->viewVars['base'].'img/bt_relatorios.png';
-				$this->viewVars['ferramentasLayout']['2']['onclick'] 	= 'document.location.href="'.$this->viewVars['base'].strtolower($this->module).'/'.strtolower($this->controller).'/relatorios"';
-			}
+			$this->viewVars['ferramentasLayout']['2']['permissao']	= 'imprimir';
+			$this->viewVars['ferramentasLayout']['2']['title'] 		= 'Relatórios';
+			$this->viewVars['ferramentasLayout']['2']['icone'] 		= $this->viewVars['base'].'img/bt_relatorios.png';
+			$this->viewVars['ferramentasLayout']['2']['onclick'] 	= 'document.location.href="'.$this->viewVars['base'].strtolower($this->module).'/'.strtolower($this->controller).'/relatorios"';
 		}
 	}
 
@@ -371,7 +351,7 @@ class Controller {
 			$m['Excluir'] = $this->base.strtolower($this->module.'/'.$this->controller.'/excluir/');
 		}
 		// opções Exportar para os marcadores
-		if (!isset($m['Exportar']) && $this->pode('imprimir'))
+		if (!isset($m['Exportar']) && $this->pode('exportar'))
 		{
 			$m['Exportar'] = $this->base.strtolower($this->module.'/'.$this->controller.'/exportar/');
 		}
@@ -422,12 +402,10 @@ class Controller {
 			array_push($this->viewVars['head'],$link);
 		}
 
-		if ($_SESSION['Usuario']['perfil_id']==1)
-		{
-			$this->viewVars['ferramentasLayout']['3']['title'] 		= 'Clique aqui para exportar todo o cadastro com filtros';
-			$this->viewVars['ferramentasLayout']['3']['icone'] 		= $this->viewVars['base'].'img/bt_exportar.png';
-			$this->viewVars['ferramentasLayout']['3']['onclick'] 	= 'document.location.href="'.$this->viewVars['base'].strtolower($this->module).'/'.strtolower($this->controller).'/exportar"';
-		}
+		$this->viewVars['ferramentasLayout']['3']['permissao']	= 'exportar';
+		$this->viewVars['ferramentasLayout']['3']['title'] 		= 'Clique aqui para exportar todo o cadastro com filtros';
+		$this->viewVars['ferramentasLayout']['3']['icone'] 		= $this->viewVars['base'].'img/bt_exportar.png';
+		$this->viewVars['ferramentasLayout']['3']['onclick'] 	= 'document.location.href="'.$this->viewVars['base'].strtolower($this->module).'/'.strtolower($this->controller).'/exportar"';
 
 		// verifica erros da lista
 		if (isset($_SESSION['errosLista']))

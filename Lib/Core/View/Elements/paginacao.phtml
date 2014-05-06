@@ -6,10 +6,10 @@
 	$pagP = ($this->viewVars['paginacao']['pag']+1);
 	if ($pagP>$this->viewVars['paginacao']['pagU']) $pagP = $this->viewVars['paginacao']['pagU'];
 
-	$link1 = $this->viewVars['base'].strtolower($module.'/'.$controller.'/lista/pag:1/ord:'.$this->viewVars['params']['ord'].'/dir:'.$this->viewVars['params']['dir']);
-	$linkA = $this->viewVars['base'].strtolower($module.'/'.$controller.'/lista/pag:'.$pagA.'/ord:'.$this->viewVars['params']['ord'].'/dir:'.$this->viewVars['params']['dir']);
-	$linkP = $this->viewVars['base'].strtolower($module.'/'.$controller.'/lista/pag:'.$pagP.'/ord:'.$this->viewVars['params']['ord'].'/dir:'.$this->viewVars['params']['dir']);
-	$linkU = $this->viewVars['base'].strtolower($module.'/'.$controller.'/lista/pag:'.$this->viewVars['paginacao']['pagU'].'/ord:'.$this->viewVars['params']['ord'].'/dir:'.$this->viewVars['params']['dir']);
+	$link1 = $this->viewVars['base'].strtolower($module.'/'.$controller.'/listar/pag:1/ord:'.$this->viewVars['params']['ord'].'/dir:'.$this->viewVars['params']['dir']);
+	$linkA = $this->viewVars['base'].strtolower($module.'/'.$controller.'/listar/pag:'.$pagA.'/ord:'.$this->viewVars['params']['ord'].'/dir:'.$this->viewVars['params']['dir']);
+	$linkP = $this->viewVars['base'].strtolower($module.'/'.$controller.'/listar/pag:'.$pagP.'/ord:'.$this->viewVars['params']['ord'].'/dir:'.$this->viewVars['params']['dir']);
+	$linkU = $this->viewVars['base'].strtolower($module.'/'.$controller.'/listar/pag:'.$this->viewVars['paginacao']['pagU'].'/ord:'.$this->viewVars['params']['ord'].'/dir:'.$this->viewVars['params']['dir']);
 
 ?>
 <div class='paginacao'>
