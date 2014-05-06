@@ -100,7 +100,7 @@ class Boot {
 		$arq  = 'Modules/'.$module.'/Controller/'.$controller.'Controller.php';
 		if (!include_once($arq))
 		{
-			$url = $this->$controller->base.'sistema/usuarios/erros';
+			$url = getBase().'sistema/usuarios/erros';
 			$_SESSION['sistemaErro']['tip'] = 'controller';
 			$_SESSION['sistemaErro']['txt'] = 'Não foi possível localizar o Controller <b>'.$controller.'</b> do módulo <b>'.$module.'</b>: <br /><br />'.$arq;
 			die('<script>document.location.href="'.$url.'"</script>');
@@ -283,7 +283,10 @@ class Boot {
 
 		// atualizando as sqls do model na view
 		$modelClass = $this->$controller->modelClass;
-		$this->$controller->viewVars['sql_dump'] 	= $this->$controller->$modelClass->sqls;
+		if (isset($this->$controller->$modelClass->sqls))
+		{
+			$this->$controller->viewVars['sql_dump'] 	= $this->$controller->$modelClass->sqls;
+		}
 
 		// atualizando as variáveis locais
 		$this->data		= $this->$controller->data;

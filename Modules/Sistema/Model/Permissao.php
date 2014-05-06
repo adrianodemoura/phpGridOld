@@ -5,8 +5,8 @@
  * @package		Sistema
  * @package		Sistema.Model
  */
-require_once(APP.'Modules/Sistema/Model/SistemaAppModel.php');
-class Permissao extends SistemaAppModel {
+appUses('Model','SistemaApp');
+class Permissao extends SistemaApp {
 	/**
 	 * Nome da tabela
 	 * 

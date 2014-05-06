@@ -7,8 +7,8 @@
  * @package			Sistema
  * @subpackage		Sistema.Model
  */
-require_once(CORE.'Model/Model.php');
-class SistemaAppModel extends Model {
+appUses('Model','Model');
+class SistemaApp extends Model {
 	/**
 	 * Prefixo para as tabelas do módulo sistema
 	 * 

@@ -68,6 +68,7 @@ function router($rota='', $destino=array(), $params=array())
 				}
 			}
 			header('Location: '.$base.$url);
+			die();
 		}
 	}
 }

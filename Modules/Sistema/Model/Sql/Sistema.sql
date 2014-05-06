@@ -202,6 +202,33 @@ ENGINE = MyISAM;
 INSERT INTO sis_modulos (id,nome,ativo) VALUES (1,'SISTEMA',1);
 
 -- -----------------------------------------------------
+-- Table `cadastros`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `sis_cadastros` ;
+CREATE  TABLE IF NOT EXISTS `sis_cadastros` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `cadastro` VARCHAR(45) NOT NULL ,
+  `titulo` VARCHAR(45) NOT NULL ,
+  `ativo` TINYINT(1) NOT NULL DEFAULT 1 ,
+  `modulo_id` INT NOT NULL ,
+  `criado` DATETIME NOT NULL ,
+  `modificado` DATETIME NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `i_cadastro` (`cadastro` ASC) ,
+  INDEX `i_ativo` (`ativo` ASC) ,
+  INDEX `i_modificado` (`modificado` ASC) ,
+  INDEX `i_criado` (`criado` ASC) ,
+  INDEX `fk_modulos` (`modulo_id` ASC) )
+ENGINE = MyISAM;
+INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (1,'BAIRROS','Bairros',1,1,sysdate(),sysdate());
+INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (2,'CADASTROS','Cadastros',1,1,sysdate(),sysdate());
+INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (3,'CIDADES','Cidades',1,1,sysdate(),sysdate());
+INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (4,'CONFIGURACOES','Configurações',1,1,sysdate(),sysdate());
+INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (5,'MODULOS','Módulos',1,1,sysdate(),sysdate());
+INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (6,'PERFIS','Perfis',1,1,sysdate(),sysdate());
+INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (7,'USUARIOS','Usuários',1,1,sysdate(),sysdate());
+
+-- -----------------------------------------------------
 -- Table `configuracoes`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `sis_configuracoes` ;

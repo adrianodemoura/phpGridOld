@@ -12,25 +12,30 @@
  */
 include_once(CORE.'Controller/Controller.php');
 class SistemaAppController extends Controller {
+
 	/**
-	 * 
+	 * Exibe a tela inicial do cadastro ativo
+	 *
+	 * @return void
 	 */
-	public function beforeRender()
+	public function listar()
 	{
 		if (isset($_SESSION['Usuario']))
 		{
 			$menu['BAIRROS']['tit'] 		= 'Bairros';
-			$menu['BAIRROS']['link'] 		= $this->base.'sistema/bairros';
+			$menu['BAIRROS']['link'] 		= $this->base.'sistema/bairros/listar';
+			$menu['CADASTROS']['tit'] 		= 'Cadastros';
+			$menu['CADASTROS']['link'] 		= $this->base.'sistema/cadastros/listar';
 			$menu['CIDADES']['tit'] 		= 'Cidades';
-			$menu['CIDADES']['link'] 		= $this->base.'sistema/cidades';
+			$menu['CIDADES']['link'] 		= $this->base.'sistema/cidades/listar';
 			$menu['CONFIGURACOES']['tit'] 	= 'Configurações';
-			$menu['CONFIGURACOES']['link'] 	= $this->base.'sistema/configuracoes';
+			$menu['CONFIGURACOES']['link'] 	= $this->base.'sistema/configuracoes/listar';
 			$menu['MODULOS']['tit'] 		= 'Módulos';
-			$menu['MODULOS']['link'] 		= $this->base.'sistema/modulos';
+			$menu['MODULOS']['link'] 		= $this->base.'sistema/modulos/listar';
 			$menu['PERFIS']['tit'] 			= 'Perfis';
-			$menu['PERFIS']['link'] 		= $this->base.'sistema/perfis';
+			$menu['PERFIS']['link'] 		= $this->base.'sistema/perfis/listar';
 			$menu['USUARIOS']['tit'] 		= 'Usuários';
-			$menu['USUARIOS']['link'] 		= $this->base.'sistema/usuarios';
+			$menu['USUARIOS']['link'] 		= $this->base.'sistema/usuarios/listar';
 
 			include_once('Model/Permissao.php');
 			$Permissao = new Permissao();
@@ -48,7 +53,10 @@ class SistemaAppController extends Controller {
 				$data[$_arrMod['Permissao']['controller']] = $_arrMod['Permissao']['visualizar'];
 			}
 			$modelClass = $this->modelClass;
-			foreach($Permissao->sqls as $_l => $_sql) array_push($this->$modelClass->sqls,$_sql);
+			if (!empty($this->Model))
+			{
+				foreach($Permissao->sqls as $_l => $_sql) array_push($this->$modelClass->sqls,$_sql);
+			}
 
 			if ($_SESSION['Usuario']['perfil']!='ADMINISTRADOR')
 			{
@@ -61,6 +69,24 @@ class SistemaAppController extends Controller {
 
 			$this->viewVars['linksMenu'] 	= $menu;
 		}
-		parent::beforeRender();
+
+		if (isset($_SESSION['Usuario']))
+		{
+			$modelClass = $this->modelClass;
+			if (!empty($modelClass))
+			{
+				$params['pag'] = 1;
+				$params['ord'] = $this->$modelClass->getDisplayField();
+				$params['dir'] = 'asc';
+				if (!isset($this->viewVars['params']))
+				{
+					$this->redirect(strtolower($this->module), strtolower($this->controller), 'listar',$params);
+				}
+			}
+		} else
+		{
+			$this->redirect('sistema', 'usuarios', 'login');
+		}
+		parent::listar();
 	}
 }

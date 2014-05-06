@@ -8,8 +8,8 @@
 /**
  * Include files
  */
-require_once(APP.'Modules/Sistema/Model/SistemaAppModel.php');
-class Bairro extends SistemaAppModel {
+appUses('Model','SistemaApp');
+class Bairro extends SistemaApp {
 	/**
 	 * Nome da tabela de bairros
 	 * 

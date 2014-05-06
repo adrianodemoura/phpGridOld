@@ -121,14 +121,6 @@ class Controller {
 	 */
 	public function index()
 	{
-		if (isset($_SESSION['Usuario']))
-		{
-			$modelClass = $this->modelClass;
-			$params['pag'] = 1;
-			$params['ord'] = $this->$modelClass->getDisplayField();
-			$params['dir'] = 'asc';
-			$this->redirect(strtolower($this->module), strtolower($this->controller), 'listar',$params);
-		} else $this->redirect('sistema', 'usuarios', 'login');
 	}
 
 	/**
@@ -225,6 +217,12 @@ class Controller {
 	{
 		$modelClass = $this->modelClass;
 		$params 	= array();
+		
+		if (empty($modelClass))
+		{
+			$this->setMsgFlash('Este cadastro não pode ser listado','msgFlashErro');
+			$this->redirect(strtolower($this->module),'usuarios','erros');
+		}
 
 		$this->viewVars['tituloPagina'] = !empty($this->viewVars['tituloPagina']) ? $this->viewVars['tituloPagina'] : 'Lista de '.$this->controller;
 

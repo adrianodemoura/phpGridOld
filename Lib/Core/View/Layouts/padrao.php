@@ -143,5 +143,5 @@
 </div><!-- fim corpo -->
 <div id='tampaTudo'>tampaTudo</div>
 </body>
-</html><?php //debug($_SESSION['Perfis']); debug($minhasPermissoes); ?>
+</html><?php debug($this->data) ?>
 <!-- tempo de execução <?= round((microtime(true)-INICIO),6) ?> segundos -->

@@ -8,8 +8,8 @@
 /**
  * Include files
  */
-require_once('Model/SistemaAppModel.php');
-class Usuario extends SistemaAppModel {
+appUses('Model','SistemaApp');
+class Usuario extends SistemaApp {
 	/**
 	 * Nome da tabela de usuários
 	 * 

@@ -30,6 +30,14 @@ class UsuariosController extends SistemaAppController {
 	}
 
 	/**
+	 *
+	 */
+	public function index()
+	{
+		parent::index();
+	}
+
+	/**
 	 * Exibe a tela de lista do cadastro de usuários
 	 * 
 	 * @return	void

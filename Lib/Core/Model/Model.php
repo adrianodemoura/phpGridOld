@@ -182,6 +182,7 @@ class Model {
 	public function __construct()
 	{
 		$this->name = get_class($this);
+		if (empty($this->alias)) $this->alias = $this->name;
 	}
 
 	/**
@@ -232,7 +233,7 @@ class Model {
 							grant all privileges on '.$banco['database'].'.* to '.$banco['user'].'@'.$banco['host'].' identified by "'.$banco['password'].'" with grant option;
 							flush privileges;
 							</pre>
-							<p><center>Clique <a href="../usuarios/instalacao">aqui</a> para tentar novamente.</center></p>';
+							<p><center>Clique <a href="./instalacao">aqui</a> para tentar novamente.</center></p>';
 						echo $msg;
 						break;
 				}
@@ -951,7 +952,10 @@ class Model {
 	public function beforeSave()
 	{
 		$_data 	= array();
+		$c		= isset($this->esquema['criado']) ? true : false;
 		$m		= isset($this->esquema['modificado']) ? true : false;
+		$u		= isset($this->esquema['usuario_id']) ? true : false;
+		$id 	= false;
 		foreach($this->data as $_l => $_arrMods)
 		{
 			foreach($_arrMods as $_mod => $_arrCmps)
@@ -970,12 +974,26 @@ class Model {
 						{
 							$v = str_replace(array('-','_','(',')','/','\\','.'),'',$v);
 						}
+
+						// testando a primaryKey
+						if (in_array($_cmp, $this->primaryKey))
+						{
+							$id = true;
+						}
 					}
 					$_data[$_l][$_mod][$_cmp] = $v;
 				}
 			}
+			// campo criado
+			if ($c)
+			{
+				$_data[$_l][$_mod]['criado'] = date($this->dateFormatBD);
+				if ($id) unset($_data[$_l][$_mod]['criado']);
+			}
 			// campo modificado
 			if ($m) $_data[$_l][$_mod]['modificado'] = date($this->dateFormatBD);
+			// campo modificado
+			if ($u) $_data[$_l][$_mod]['usuario_id'] = $_SESSION['Usuario']['id'];
 		}
 		$this->data = $_data;
 		return true;
@@ -1015,7 +1033,10 @@ class Model {
 						switch($t)
 						{
 							case 'datetime':
-								$v = date($this->dateFormat,strtotime($v));
+								if ($v=='0000-00-00 00:00:00')
+									$v = '';
+								else
+									$v = date($this->dateFormat,strtotime($v));
 								break;
 						}
 					}
