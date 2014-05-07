@@ -361,6 +361,21 @@ class UsuariosController extends SistemaAppController {
 	}
 
 	/**
+	 * Troca o módulo corrente
+	 *
+	 * @param 	string 	$modulo 	Nome do módulo
+	 * @return 	void
+	 */
+	public function set_modulo()
+	{
+		$this->layout = 'ajax';
+		$url = getBase();
+		$url .= $this->data['modulo'];
+		debug($url);
+		header('Location: '.$url);
+	}
+
+	/**
 	 * Executa o upload e redimensiona uma image
 	 * 
 	 * - As novas Imagens serão salvas no diretório webroot/uploads

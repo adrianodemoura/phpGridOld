@@ -95,4 +95,51 @@ class Modulo extends SistemaApp {
 		}
 		return true;
 	}
+
+	/**
+	 * Executa código depois do método save
+	 *
+	 * - Executa a sql de inserção do módulo
+	 *
+	 * @return 	void
+	 */
+	public function afterSave()
+	{
+		if (!empty($this->ultimoId))
+		{
+			$modulo = ucfirst(strtolower($this->data['0']['Modulo']['nome']));
+			$arq 	= APP.'Modules/'.$modulo.'/Model/Sql/'.$modulo.'.sql';
+			if (file_exists($arq))
+			{
+				$handle  = fopen($arq,"r");
+				$texto   = fread($handle, filesize($arq));
+				$sqls	 = explode(";",$texto);
+				fclose($handle);
+
+				// executando sql a sql
+				foreach($sqls as $_l => $sql)
+				{
+					if (trim($sql))
+					{
+
+						$this->query($sql);
+					}
+				}
+			}
+		}
+		parent::afterSave();
+	}
+
+	/**
+	 * Executa código depois do método delete
+	 *
+	 * @return 	void
+	 */
+	public function afterExclude()
+	{
+		$sql = 'DELETE FROM sis_cadastros WHERE modulo_id='.$this->data['0']['Modulo']['id'].';';
+		$sql .= 'DELETE FROM sis_permissoes WHERE modulo_id='.$this->data['0']['Modulo']['id'];
+		$this->query($sql);
+		parent::afterExclude();
+	}
 }

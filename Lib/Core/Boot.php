@@ -147,7 +147,17 @@ class Boot {
 			if (isset($_SESSION['Usuario']['perfil']))
 			{
 				$model = $this->$controller->modelClass;
-				
+
+				// recuperando os módulos ativos
+				$sql = 'SELECT m.id, m.nome FROM sis_modulos m WHERE m.ativo=1 ORDER BY m.nome';
+				$res = $this->$controller->$model->query($sql);
+				$modulos = array();
+				foreach($res as $_l => $_arrCmps)
+				{
+					$modulos[$_arrCmps['id']] = $_arrCmps['nome'];
+				}
+				$this->$controller->viewVars['modulos'] = $modulos;
+
 				// recuperando minhas permissoes, conforme meu perfil, módulo e controller corrente
 				$minhasPermissoes = array();
 				$sql = "SELECT p.id, p.modulo_id, p.cadastro_id, p.perfil_id, p.visualizar, 
@@ -245,17 +255,23 @@ class Boot {
 		{
 			$_SESSION['sistemaErro']['tip'] = 'Página';
 			$_SESSION['sistemaErro']['txt'] = 'Não foi possível localizar a Página <b>'.$action.'</b> do Cadastro <b>'.$controller.'</b> do módulo <b>'.$module.'</b>: <br />';
-			die('<script>document.location.href="'.$this->$controller->base.'sistema/usuarios/erros'.'"</script>');
+			//die('<script>document.location.href="'.$this->$controller->base.'sistema/usuarios/erros'.'"</script>');
 		}
 		$this->$controller->$action();
 
 		// identificando a posição
-		$this->$controller->viewVars['position'] = "<a href='".$this->$controller->viewVars['base'].strtolower($module).'/'.strtolower($controller)."/index'>".((!empty($this->$controller->viewVars['tituloModule'])) 		? $this->$controller->viewVars['tituloModule'] 		: $module)."</a>";
-		$this->$controller->viewVars['position'] .= " :: <a href='".$this->$controller->viewVars['base'].strtolower($module).'/'.strtolower($controller)."/index'>".((!empty($this->$controller->viewVars['tituloController'])) 	? $this->$controller->viewVars['tituloController'] 	: $controller)."</a>";
-		$a = isset($this->$controller->viewVars['tituloAction']) ? $this->$controller->viewVars['tituloAction'] : $action;
-		if (!empty($a)) $this->$controller->viewVars['position'] .= " :: <a href='".$this->$controller->viewVars['aqui']."'>$a</a>";
-		$this->$controller->viewVars['position'] = htmlentities($this->$controller->viewVars['position']);
-		unset($a);
+		$this->$controller->viewVars['tituloModule'] = isset( $this->$controller->viewVars['tituloModule'])
+		  ?  $this->$controller->viewVars['tituloModule']
+		  : $module;
+		$this->$controller->viewVars['tituloAction'] = isset( $this->$controller->viewVars['tituloAction'])
+		  ?  $this->$controller->viewVars['tituloAction']
+		  : $action;
+		$this->$controller->viewVars['tituloController'] = isset( $this->$controller->viewVars['tituloController'])
+		  ?  $this->$controller->viewVars['tituloController']
+		  : $controller;
+		$this->$controller->viewVars['tituloAction'] = isset( $this->$controller->viewVars['tituloAction'])
+		  ?  $this->$controller->viewVars['tituloAction']
+		  : $action;
 
 		// atualizando viewVars do controller com algumas informações do model
 		if (count($this->$controller->Model))

@@ -474,7 +474,6 @@ class Controller {
 			}
 			if (!empty($this->viewVars['urlRetorno']))
 			{
-				//debug($this->viewVars['urlRetorno']);
 				header('Location: '.$this->viewVars['urlRetorno']); die();
 			}
 		}

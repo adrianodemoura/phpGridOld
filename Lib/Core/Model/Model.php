@@ -361,6 +361,7 @@ class Model {
 				$ts  = round((microtime(true)-$ini),6);
 				array_push($this->sqls,array('sql'=>$_sql,'ts'=>$ts,'li'=>1));
 			}
+			if ($sqlTi=='INSERT') $this->ultimoId = $this->db->lastInsertId();
 			$this->db->commit();
 		} catch (Exception $e) 
 		{
@@ -368,9 +369,12 @@ class Model {
 			array_push($this->sqls,array('sql'=>'ROLLBACK;','ts'=>0.0001,'li'=>1));
 			$this->erros[$lE] = $e->getMessage();
 		}
+
+		// se não tem erros
 		if (empty($this->erros))
 		{
 			array_push($this->sqls,array('sql'=>'COMMIT;','ts'=>0.0001,'li'=>1));
+			$this->afterSave();
 			return true;
 		} else return false;
 	}
@@ -391,7 +395,13 @@ class Model {
 		$ini	= microtime(true);
 		if (empty($erro['2']))
 		{
-			$linhas = $_data->fetchAll(PDO::FETCH_NAMED);
+			try
+			{
+				$linhas = $_data->fetchAll(PDO::FETCH_NAMED);
+			} catch (Exception $e) 
+			{
+				$linhas = null;
+			}
 			if (is_array($linhas))
 			{
 				$l = 0;
@@ -479,6 +489,7 @@ class Model {
 			}
 			array_push($this->sqls,array('sql'=>'END;','ts'=>0.0001));
 			$this->db->commit();
+			$this->afterExclude();
 			return true;
 		} catch(PDOException $e)
 		{
@@ -1012,7 +1023,7 @@ class Model {
 	}
 
 	/**
-	 * Executa código depois do método save
+	 * Executa código depois do método find
 	 * 
 	 * @return	void
 	 */
@@ -1045,6 +1056,24 @@ class Model {
 			}
 		}
 		return $resultado;
+	}
+
+	/**
+	 * Executa código depois do método save
+	 *
+	 * @return 	void
+	 */
+	public function afterSave()
+	{
+	}
+
+	/**
+	 * Executa código depois do método delete
+	 *
+	 * @return 	void
+	 */
+	public function afterExclude()
+	{
 	}
 
 	/**

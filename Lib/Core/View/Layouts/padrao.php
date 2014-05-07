@@ -114,7 +114,22 @@
 	
 	<div id='cab2' class='container-fluid'>
 		<div style='float: left;'>
-			<?= html_entity_decode($position) ?>
+
+			<div style='float: left; color: #000;'>
+			<form name='formModulo' method='post' action='<?= getBase() ?>sistema/usuarios/set_modulo/'>
+			<select name='data[modulo]' id='TModulo' title='Clique aqui para trocar o módulo ...' 
+					onchange='this.form.submit()'>
+				<?php foreach($modulos as $_id => $_nome) : ?>
+				<option value='<?= strtolower($_nome) ?>' <?php if ($_nome==strtoupper($module)) echo ' selected="selected"'; ?> >
+					<?= $_nome ?>
+				</option>
+				<?php endforeach ?>
+			</select>
+			</form>
+			</div>
+
+			<div style='float: left;'>
+			</div>
 		</div>
 
 		<div style='font-size: 10px; float: right;'>

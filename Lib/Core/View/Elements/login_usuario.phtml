@@ -2,11 +2,13 @@
 	$ip = (strlen($_SERVER['SERVER_ADDR'])>4) ? $_SERVER['SERVER_ADDR'] : $_SERVER['REMOTE_ADDR'];
 	if ($ip=='::1') $ip = '127.0.0.1';
 	if (isset($_SESSION['Usuario'])) : ?>
-	<img src='<?= $base.'img/bt_usuario.png' ?>' border='0px' />&nbsp; 
-	<a href='<?= $base.strtolower($module) ?>/usuarios/info'  title='Clique para ver os seus detalhes'><?= $_SESSION['Usuario']['nome'] ?></a>
-	| <img src='<?= $base.'img/bt_ip.png' ?>' border='0px' />&nbsp; Seu IP: <?= $ip; ?>
-	| <img src='<?= $base.'img/bt_logout.png' ?>' border='0px' />&nbsp;
-	<a href='<?= $base.strtolower($module) ?>/usuarios/sair' title='Clique aqui para sair do sistema'>sair</a>
+	<img src='<?= $this->viewVars['base'].'img/bt_usuario.png' ?>' border='0px' />&nbsp; 
+	<a href='<?= $this->viewVars['base'].strtolower($module) ?>/usuarios/info' 
+		title='Clique para ver os seus detalhes'><?= $_SESSION['Usuario']['nome'] ?></a>
+	| <img src='<?= $this->viewVars['base'].'img/bt_ip.png' ?>' border='0px' />&nbsp; Seu IP: <?= $ip; ?>
+	| <img src='<?= $this->viewVars['base'].'img/bt_logout.png' ?>' border='0px' />&nbsp;
+	<a href='<?= $this->viewVars['base'] ?>sistema/usuarios/sair' 
+		title='Clique aqui para sair do sistema'>sair</a>
 <?php else : ?>
-	<a href='<?= $base.strtolower($module) ?>/usuarios/login' title='Clique aqui para entrar no sistema'>login</a>
+	<a href='<?= $this->viewVars['base'] ?>sistema/usuarios/login' title='Clique aqui para entrar no sistema'>login</a>
 <?php endif ?>

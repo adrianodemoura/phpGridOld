@@ -49,7 +49,7 @@ class Permissao extends SistemaApp {
 					'txtPesquisa' => 'Digite o nome do Módulo para pesquisar ...',
 				),
 			),
-		)
+		),
 		'cadastro_id'=> array
 		(
 			'tit'		=> 'Cadastro',
@@ -64,7 +64,7 @@ class Permissao extends SistemaApp {
 					'txtPesquisa' => 'Digite o nome do Cadastro para pesquisar ...',
 				),
 			),
-		)
+		),
 		'perfil_id'=> array
 		(
 			'tit'		=> 'Perfil',

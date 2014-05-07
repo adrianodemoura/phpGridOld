@@ -93,4 +93,31 @@ class Cadastro extends SistemaApp {
 			'tit'			=> 'Modificado',
 		)
 	);
+
+	/**
+	 * Executa código depois do método save
+	 *
+	 * - Para cada novo cadastro, uma nova permissão para o perfil GERENTE é incluída
+	 *
+	 * @return 	void
+	 */
+	public function afterSave()
+	{
+		if (!empty($this->ultimoId))
+		{
+			appUses('Model','Permissao');
+			$p = new Permissao();
+			$d = array();
+			$d['0']['Permissao']['modulo_id'] 	= $this->data['0']['Cadastro']['modulo_id'];
+			$d['0']['Permissao']['cadastro_id'] = $this->ultimoId;
+			$d['0']['Permissao']['perfil_id'] 	= 2;
+			$d['0']['Permissao']['visualizar'] 	= 1;
+			$r = $p->save($d);
+			if (!$r)
+			{
+				die('erro ao incluir novas permissões !!!');
+			}
+		}
+		parent::afterSave();
+	}
 }
