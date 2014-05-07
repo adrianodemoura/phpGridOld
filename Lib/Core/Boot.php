@@ -150,12 +150,12 @@ class Boot {
 				
 				// recuperando minhas permissoes, conforme meu perfil, módulo e controller corrente
 				$minhasPermissoes = array();
-				$idPerfil = 0;
-				foreach($_SESSION['Perfis'] as $_id => $_perfil) if ($_perfil==$_SESSION['Usuario']['perfil']) $idPerfil = $_id;
-				$sql = 'SELECT id, modulo, controller, perfil_id, visualizar, incluir, alterar, excluir, imprimir, pesquisar, exportar FROM sis_permissoes';
-				$sql .= ' WHERE perfil_id='.$idPerfil;
-				$sql .= ' AND modulo="'.strtoupper($module).'"';
-				$sql .= ' AND controller="'.strtoupper($controller).'"';
+				$sql = "SELECT p.id, p.modulo_id, p.cadastro_id, p.perfil_id, p.visualizar, 
+								p.incluir, p.alterar, p.excluir, p.imprimir, p.pesquisar, p.exportar 
+							FROM sis_permissoes p 
+							INNER JOIN sis_modulos m ON m.id = p.modulo_id AND m.nome='".strtoupper($module)."' 
+							INNER JOIN sis_cadastros c ON c.id = p.cadastro_id AND c.cadastro='".strtoupper($controller)."' 
+							WHERE p.perfil_id=".$_SESSION['Usuario']['perfil_id'];
 				$_minhasPermissoes = $this->$controller->$model->query($sql);
 				if (!empty($_minhasPermissoes))
 				{
@@ -167,8 +167,6 @@ class Boot {
 				{
 					// todas as permissões pro bonitão da bala chita
 					$minhasPermissoes['id'] 			= 1;
-					$minhasPermissoes['modulo'] 		= $module;
-					$minhasPermissoes['controller'] 	= $controller;
 					$minhasPermissoes['perfil_id'] 		= 1;
 					$minhasPermissoes['visualizar']		= 1;
 					$minhasPermissoes['incluir'] 		= 1;
@@ -178,7 +176,7 @@ class Boot {
 					$minhasPermissoes['pesquisar'] 		= 1;
 					$minhasPermissoes['exportar'] 		= 1;
 
-					// recuperando todos os perfis
+					// recuperando todos os perfis para tela de configuração das permissões
 					$_perfis = $this->$controller->$model->query('SELECT id, nome FROM '.$this->$controller->$model->prefixo.'perfis WHERE id>1 ORDER BY nome');
 					$perfis = array();
 					foreach($_perfis as $_l => $_arrCmps)
@@ -186,25 +184,27 @@ class Boot {
 						$perfis[$_arrCmps['id']] = $_arrCmps['nome'];
 					}
 					$this->$controller->viewVars['permissoes']['perfis'] = $perfis;
-					
-					// recuperando as permissões da página corrente
-					$_permissoes = $this->$controller->$model->query('SELECT 
-						visualizar, incluir, alterar, excluir, imprimir, pesquisar, exportar, perfil_id
-						FROM '.$this->$controller->$model->prefixo.'permissoes 
-						WHERE modulo="'.strtolower($module).'" 
-						AND controller="'.strtolower($controller).'" ORDER BY modulo, controller');
-					foreach($_permissoes as $_l => $_arrCmps)
-					{
-						$idPerfil = $_arrCmps['perfil_id'];
-						foreach($_arrCmps as $_cmp => $_vlr)
-						{
-							if ($_cmp!='perfil_id')
-								$this->$controller->viewVars['permissoes']['acao'][$idPerfil][$_cmp] = $_vlr;
-						}
-					}
 				}
 				$this->$controller->viewVars['minhasPermissoes'] = $minhasPermissoes;
-			}// else die('tchau');
+
+				// recuperando as permissões do cadastro corrente
+				$sql = "SELECT p.visualizar, p.incluir, p.alterar, p.excluir, 
+						p.imprimir, p.pesquisar, p.exportar, p.perfil_id
+						FROM sis_permissoes p
+						INNER JOIN sis_modulos 		m ON m.id = p.modulo_id
+						INNER JOIN sis_cadastros 	c ON c.id = p.cadastro_id
+						WHERE m.nome='".strtoupper($module)."' AND c.cadastro='".strtoupper($controller)."'";
+				$_permissoes = $this->$controller->$model->query($sql);
+				foreach($_permissoes as $_l => $_arrCmps)
+				{
+					$idPerfil = $_arrCmps['perfil_id'];
+					foreach($_arrCmps as $_cmp => $_vlr)
+					{
+						if ($_cmp!='perfil_id')
+							$this->$controller->viewVars['permissoes']['acao'][$idPerfil][$_cmp] = $_vlr;
+					}
+				}
+			}
 		}
 
 		// excluindo acessoNegado
@@ -229,7 +229,7 @@ class Boot {
 					$_SESSION['acessoNegado'] = strtolower($module.'/'.$controller.'/'.$action);
 					$_SESSION['sistemaErro']['tip'] = 'Acesso Negado';
 					$_SESSION['sistemaErro']['txt'] = 'Caro '.$_SESSION['Usuario']['nome'].', o seu perfil não possui privilégios suficientes para acessar a página '.strtolower($module.'/'.$controller.'/'.$action);
-					//header('Location: '.$this->$controller->base.'sistema/usuarios/acesso_negado');
+					header('Location: '.$this->$controller->base.'sistema/usuarios/acesso_negado');
 				}
 			}
 		}

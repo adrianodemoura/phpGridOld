@@ -3,12 +3,39 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
 -- -----------------------------------------------------
+-- Table `cadastros`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `sis_cadastros` ;
+CREATE  TABLE IF NOT EXISTS `sis_cadastros` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `cadastro` VARCHAR(45) NOT NULL ,
+  `titulo` VARCHAR(45) NOT NULL ,
+  `ativo` TINYINT(1) NOT NULL DEFAULT 1 ,
+  `modulo_id` INT NOT NULL ,
+  `criado` DATETIME NOT NULL ,
+  `modificado` DATETIME NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `i_cadastro` (`cadastro` ASC) ,
+  INDEX `i_ativo` (`ativo` ASC) ,
+  INDEX `i_modificado` (`modificado` ASC) ,
+  INDEX `i_criado` (`criado` ASC) ,
+  INDEX `fk_modulos` (`modulo_id` ASC) )
+ENGINE = MyISAM;
+INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (1,'BAIRROS','Bairros',1,1,sysdate(),sysdate());
+INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (2,'CADASTROS','Cadastros',1,1,sysdate(),sysdate());
+INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (3,'CIDADES','Cidades',1,1,sysdate(),sysdate());
+INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (4,'CONFIGURACOES','Configurações',1,1,sysdate(),sysdate());
+INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (5,'MODULOS','Módulos',1,1,sysdate(),sysdate());
+INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (6,'PERFIS','Perfis',1,1,sysdate(),sysdate());
+INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (7,'USUARIOS','Usuários',1,1,sysdate(),sysdate());
+
+-- -----------------------------------------------------
 -- Table `permissoes`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `sis_permissoes` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `modulo` VARCHAR(45) NOT NULL COMMENT 'nome do módulo' ,
-  `controller` VARCHAR(45) NOT NULL COMMENT 'nome do controller' ,
+  `modulo_id` INT NOT NULL DEFAULT 1 ,
+  `cadastro_id` INT NOT NULL DEFAULT 1 ,
   `visualizar` TINYINT(1) NOT NULL DEFAULT 0 ,
   `incluir` TINYINT(1) NOT NULL DEFAULT 0 ,
   `alterar` TINYINT(1) NOT NULL DEFAULT 0 ,
@@ -18,24 +45,24 @@ CREATE  TABLE IF NOT EXISTS `sis_permissoes` (
   `exportar` TINYINT(1) NOT NULL DEFAULT 0 ,
   `perfil_id` INT NOT NULL DEFAULT 1 ,
   PRIMARY KEY (`id`) ,
-  INDEX `i_modulo` (`modulo` ASC) ,
-  INDEX `i_controller` (`controller` ASC) ,
+  INDEX `fk_modulo` (`modulo_id` ASC) ,
+  INDEX `fk_cadastro` (`cadastro_id` ASC) ,
   INDEX `fk_perfil` (`perfil_id` ASC) )
 ENGINE = MyISAM
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
 COMMENT = 'Tabela que contém as permissões de cada perfil';
-INSERT INTO sis_permissoes (id,modulo,controller,visualizar,incluir,alterar,excluir,imprimir,pesquisar,exportar,perfil_id) VALUES (1,'SISTEMA','USUARIOS',1,0,1,0,1,1,1,2);
-INSERT INTO sis_permissoes (id,modulo,controller,visualizar,incluir,alterar,excluir,imprimir,pesquisar,exportar,perfil_id) VALUES (2,'SISTEMA','USUARIOS',1,0,1,0,1,1,1,3);
-INSERT INTO sis_permissoes (id,modulo,controller,visualizar,incluir,alterar,excluir,imprimir,pesquisar,exportar,perfil_id) VALUES (3,'SISTEMA','USUARIOS',1,0,1,0,1,1,0,4);
+INSERT INTO sis_permissoes (id,modulo_id,cadastro_id,visualizar,incluir,alterar,excluir,imprimir,pesquisar,exportar,perfil_id) VALUES (1,1,7,1,0,1,0,1,1,1,2);
+INSERT INTO sis_permissoes (id,modulo_id,cadastro_id,visualizar,incluir,alterar,excluir,imprimir,pesquisar,exportar,perfil_id) VALUES (2,1,7,1,0,1,0,1,1,1,3);
+INSERT INTO sis_permissoes (id,modulo_id,cadastro_id,visualizar,incluir,alterar,excluir,imprimir,pesquisar,exportar,perfil_id) VALUES (3,1,7,1,0,1,0,1,1,0,4);
 
-INSERT INTO sis_permissoes (id,modulo,controller,visualizar,incluir,alterar,excluir,imprimir,pesquisar,exportar,perfil_id) VALUES (4,'SISTEMA','CIDADES',1,0,0,0,1,1,1,2);
-INSERT INTO sis_permissoes (id,modulo,controller,visualizar,incluir,alterar,excluir,imprimir,pesquisar,exportar,perfil_id) VALUES (5,'SISTEMA','CIDADES',1,0,0,0,1,1,1,3);
-INSERT INTO sis_permissoes (id,modulo,controller,visualizar,incluir,alterar,excluir,imprimir,pesquisar,exportar,perfil_id) VALUES (6,'SISTEMA','CIDADES',1,0,0,0,1,1,0,4);
+INSERT INTO sis_permissoes (id,modulo_id,cadastro_id,visualizar,incluir,alterar,excluir,imprimir,pesquisar,exportar,perfil_id) VALUES (4,1,3,1,0,0,0,1,1,1,2);
+INSERT INTO sis_permissoes (id,modulo_id,cadastro_id,visualizar,incluir,alterar,excluir,imprimir,pesquisar,exportar,perfil_id) VALUES (5,1,3,1,0,0,0,1,1,1,3);
+INSERT INTO sis_permissoes (id,modulo_id,cadastro_id,visualizar,incluir,alterar,excluir,imprimir,pesquisar,exportar,perfil_id) VALUES (6,1,3,1,0,0,0,1,1,0,4);
 
-INSERT INTO sis_permissoes (id,modulo,controller,visualizar,incluir,alterar,excluir,imprimir,pesquisar,exportar,perfil_id) VALUES (7,'SISTEMA','BAIRROS',1,0,0,0,1,1,1,2);
-INSERT INTO sis_permissoes (id,modulo,controller,visualizar,incluir,alterar,excluir,imprimir,pesquisar,exportar,perfil_id) VALUES (8,'SISTEMA','BAIRROS',1,0,0,0,1,1,1,3);
-INSERT INTO sis_permissoes (id,modulo,controller,visualizar,incluir,alterar,excluir,imprimir,pesquisar,exportar,perfil_id) VALUES (9,'SISTEMA','BAIRROS',1,0,0,0,1,1,0,4);
+INSERT INTO sis_permissoes (id,modulo_id,cadastro_id,visualizar,incluir,alterar,excluir,imprimir,pesquisar,exportar,perfil_id) VALUES (7,1,1,1,0,0,0,1,1,1,2);
+INSERT INTO sis_permissoes (id,modulo_id,cadastro_id,visualizar,incluir,alterar,excluir,imprimir,pesquisar,exportar,perfil_id) VALUES (8,1,1,1,0,0,0,1,1,1,3);
+INSERT INTO sis_permissoes (id,modulo_id,cadastro_id,visualizar,incluir,alterar,excluir,imprimir,pesquisar,exportar,perfil_id) VALUES (9,1,1,1,0,0,0,1,1,0,4);
 
 -- -----------------------------------------------------
 -- Table `cidades`
@@ -200,33 +227,6 @@ CREATE  TABLE IF NOT EXISTS `sis_modulos` (
   INDEX `i_ativo` (`ativo` ASC) )
 ENGINE = MyISAM;
 INSERT INTO sis_modulos (id,nome,ativo) VALUES (1,'SISTEMA',1);
-
--- -----------------------------------------------------
--- Table `cadastros`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `sis_cadastros` ;
-CREATE  TABLE IF NOT EXISTS `sis_cadastros` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `cadastro` VARCHAR(45) NOT NULL ,
-  `titulo` VARCHAR(45) NOT NULL ,
-  `ativo` TINYINT(1) NOT NULL DEFAULT 1 ,
-  `modulo_id` INT NOT NULL ,
-  `criado` DATETIME NOT NULL ,
-  `modificado` DATETIME NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  INDEX `i_cadastro` (`cadastro` ASC) ,
-  INDEX `i_ativo` (`ativo` ASC) ,
-  INDEX `i_modificado` (`modificado` ASC) ,
-  INDEX `i_criado` (`criado` ASC) ,
-  INDEX `fk_modulos` (`modulo_id` ASC) )
-ENGINE = MyISAM;
-INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (1,'BAIRROS','Bairros',1,1,sysdate(),sysdate());
-INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (2,'CADASTROS','Cadastros',1,1,sysdate(),sysdate());
-INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (3,'CIDADES','Cidades',1,1,sysdate(),sysdate());
-INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (4,'CONFIGURACOES','Configurações',1,1,sysdate(),sysdate());
-INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (5,'MODULOS','Módulos',1,1,sysdate(),sysdate());
-INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (6,'PERFIS','Perfis',1,1,sysdate(),sysdate());
-INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (7,'USUARIOS','Usuários',1,1,sysdate(),sysdate());
 
 -- -----------------------------------------------------
 -- Table `configuracoes`

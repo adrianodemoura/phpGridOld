@@ -82,16 +82,17 @@ function router($rota='', $destino=array(), $params=array())
  */
 function appUses($tipo='',$class='')
 {
+	$class = ucfirst($class);
 	switch(strtolower($tipo))
 	{
 		case 'component':
-			require_once('Controller/Component/'.ucfirst($class).'Component.php');
+			require_once('Controller/Component/'.$class.'Component.php');
 			break;
 		case 'model':
-			require_once('Model/'.ucfirst($class).'.php');
+			require_once('Model/'.$class.'.php');
 			break;
 		case 'controller':
-			require_once('Controller/'.ucfirst($class).'Controller.php');
+			require_once('Controller/'.$class.'Controller.php');
 			break;
 	}
 }

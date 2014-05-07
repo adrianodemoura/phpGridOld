@@ -313,10 +313,14 @@ class UsuariosController extends SistemaAppController {
 		$perfilId				= $arrPermissao['1'];
 		$vlr					= ($this->params['tipo']=='ok') ? 0 : 1;
 		
-		$sql = 'SELECT id FROM sis_permissoes';
-		$sql .= ' WHERE modulo="'.$modulo.'"';
-		$sql .= ' AND controller="'.$controller.'"';
-		$sql .= ' AND perfil_id='.$perfilId;
+		$sql = "SELECT p.id FROM sis_permissoes p
+			INNER JOIN sis_modulos 		m ON m.id = p.modulo_id
+			INNER JOIN sis_cadastros 	c ON c.id = p.cadastro_id
+			WHERE 
+				m.nome='".$modulo."' 
+			AND c.cadastro='".$controller."'
+			AND perfil_id=".$perfilId;
+
 		$data = $this->Usuario->query($sql);
 		$id = isset($data['0']['id']) ? $data['0']['id'] : 0;
 		if ($id>0)
@@ -326,10 +330,17 @@ class UsuariosController extends SistemaAppController {
 			$sql .= ' WHERE id='.$id;
 		} else
 		{
+			$sql = "SELECT id FROM sis_modulos WHERE nome='".$modulo."'";
+			$res = $this->Usuario($sql);
+			$modulo_id = $res['0']['id'];
+			$sql = "SELECT id FROM sis_cadastros WHERE cadastro='".$controller."'";
+			$res = $this->Usuario($sql);
+			$cadastro_id = $res['0']['id'];
+
 			$sql = 'INSERT INTO sis_permissoes';
-			$sql .= ' (modulo,controller,'.$permissao.',perfil_id)';
+			$sql .= ' (modulo_id,cadastro_id,'.$permissao.',perfil_id)';
 			$sql .= ' VALUE';
-			$sql .= ' ("'.$modulo.'","'.$controller.'",'.$vlr.','.$perfilId.')';
+			$sql .= ' ("'.$modulo_id.'","'.$cadastro_id.'",'.$vlr.','.$perfilId.')';
 		}
 		$this->Usuario->query($sql);
 	}

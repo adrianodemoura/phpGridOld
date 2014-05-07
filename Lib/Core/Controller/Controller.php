@@ -404,10 +404,21 @@ class Controller {
 			array_push($this->viewVars['head'],$link);
 		}
 
+		// ferramentas para o layout
 		$this->viewVars['ferramentasLayout']['3']['permissao']	= 'exportar';
 		$this->viewVars['ferramentasLayout']['3']['title'] 		= 'Clique aqui para exportar todo o cadastro com filtros';
 		$this->viewVars['ferramentasLayout']['3']['icone'] 		= $this->viewVars['base'].'img/bt_exportar.png';
 		$this->viewVars['ferramentasLayout']['3']['onclick'] 	= 'document.location.href="'.$this->viewVars['base'].strtolower($this->module).'/'.strtolower($this->controller).'/exportar"';
+
+		// recuperando os menus da lista
+		$menu = array();
+		$data = $this->$modelClass->getMeusCadastros($_SESSION['Usuario']['perfil_id'],$this->module);
+		foreach($data as $_l => $_arrCmps)
+		{
+			$menu[$_arrCmps['cadastro']]['tit'] 		= $_arrCmps['titulo'];
+			$menu[$_arrCmps['cadastro']]['link'] 		= $this->base.strtolower($this->module).'/'.strtolower($_arrCmps['cadastro']).'/listar';
+		}
+		$this->viewVars['linksMenu'] 	= $menu;
 
 		// verifica erros da lista
 		if (isset($_SESSION['errosLista']))
@@ -628,13 +639,14 @@ class Controller {
 	public function exportar()
 	{
 		$modelClass		= $this->modelClass;
+		$alias 			= isset($this->modelClass) ? $this->modelClass : $modelClass;
 		$this->layout 	= 'csv';
 		$params			= array();
 
 		// configurando os parâmetros dos filtros na sessão
-		if (isset($_SESSION['Filtros'][$this->module][$this->controller]))
+		if (isset($_SESSION['Filtros'][$this->module][$this->controller][$alias]))
 		{
-			foreach($_SESSION['Filtros'][$this->module][$this->controller] as $_cmp => $_vlr)
+			foreach($_SESSION['Filtros'][$this->module][$this->controller][$alias] as $_cmp => $_vlr)
 			{
 				if (strlen($_vlr)>0) $params['where'][$_cmp] = $_vlr;
 			}

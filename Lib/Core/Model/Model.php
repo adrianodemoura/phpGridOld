@@ -1084,4 +1084,33 @@ class Model {
 		}*/
 		return $data;
 	}
+
+	/**
+	 * Retorna uma matriz com os cadastros do perfil
+	 *
+	 * @param 	integer 	$idPerfil 	Id do Perfil a pesquisar
+	 * @param 	string 		$modulo 	Nome do Módulo
+	 * @return 	array 		$cadastros array(n=>array(cadastro,titulo))
+	 */
+	public function getMeusCadastros($idPerfil=1, $modulo='')
+	{
+		if ($idPerfil>1)
+		{
+			$sql = "SELECT DISTINCT c.cadastro, c.titulo
+				FROM sis_permissoes p
+				INNER JOIN sis_cadastros c ON c.id = p.cadastro_id
+				INNER JOIN sis_modulos m ON m.id = c.modulo_id
+				WHERE p.perfil_id=".$_SESSION['Usuario']['perfil_id']." 
+				 AND m.nome='".strtoupper($modulo)."' AND p.visualizar=1
+				ORDER BY c.cadastro";
+		} else
+		{
+			$sql = "SELECT DISTINCT c.cadastro, c.titulo 
+					FROM sis_cadastros c
+					INNER JOIN sis_modulos m ON m.id = c.modulo_id
+					WHERE c.ativo=1 AND m.nome='".strtoupper($modulo)."'
+					ORDER BY c.cadastro";
+		}
+		return $this->query($sql);
+	}
 }

@@ -35,14 +35,36 @@ class Permissao extends SistemaApp {
 		(
 			'tit'	=> 'Id',
 		),
-		'modulo'		=> array
+		'modulo_id'=> array
 		(
-			'tit'	=> 'Módulo'
-		),
-		'controller'=> array
+			'tit'		=> 'Módulo',
+			'belongsTo' 	=> array
+			(
+				'Modulo'	=> array
+				(
+					'key'	=> 'id',
+					'fields'=> array('id','nome'),
+					'order'	=> array('nome'),
+					'ajax'	=> 'sistema/modulos/get_options/',
+					'txtPesquisa' => 'Digite o nome do Módulo para pesquisar ...',
+				),
+			),
+		)
+		'cadastro_id'=> array
 		(
-			'tit'	=> 'Cadastro'
-		),
+			'tit'		=> 'Cadastro',
+			'belongsTo' 	=> array
+			(
+				'Cadastro'	=> array
+				(
+					'key'	=> 'id',
+					'fields'=> array('id','nome'),
+					'order'	=> array('nome'),
+					'ajax'	=> 'sistema/cadastros/get_options/',
+					'txtPesquisa' => 'Digite o nome do Cadastro para pesquisar ...',
+				),
+			),
+		)
 		'perfil_id'=> array
 		(
 			'tit'		=> 'Perfil',

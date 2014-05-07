@@ -132,6 +132,9 @@
 	?>
 		<td align='center' id='td<?= $this->Html->domId(($_l+1).'.'.$a['1']) ?>' class="td<?= $this->Html->domId($a['1']) ?>">
 			<?php
+				$pode = $this->Html->pode('alterar',$this->viewVars['minhasPermissoes']);
+				if (!$pode)  $p['edicaoOff'] = true;
+
 				echo $this->Html->getInput($cmp,$p,$this->data[$_l]);
 				if (isset($p['mascara']))
 				{
