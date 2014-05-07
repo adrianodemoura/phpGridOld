@@ -143,5 +143,5 @@
 </div><!-- fim corpo -->
 <div id='tampaTudo'>tampaTudo</div>
 </body>
-</html><?php debug($this->data) ?>
+</html>
 <!-- tempo de execução <?= round((microtime(true)-INICIO),6) ?> segundos -->

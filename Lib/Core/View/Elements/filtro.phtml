@@ -1,17 +1,19 @@
 <div class='filtro'>
-<form name='formFiltro' id='formFiltro' method='post' action='<?= $base.strtolower($module).'/'.strtolower($controller).'/set_filtro' ?>' >
+<form name='formFiltro' id='formFiltro' method='post' 
+	action='<?= $base.strtolower($module).'/'.strtolower($controller).'/set_filtro' ?>' >
 <span style='float: left; margin: 0px 5px 0px 0px; font-weight: bold;'>Filtros: </span>
 <?php 
 	foreach($this->viewVars['filtros'] as $_cmp => $_arrProp) : 
+	$a = explode('.', $_cmp); 
 	array_push($this->viewVars['onRead'], 
-		'$("#Filtro'.ucfirst($_cmp).'").change(function() { this.form.submit(); })');
+		'$("#Filtro'.$a['0'].ucfirst($a['1']).'").change(function() { this.form.submit(); })');
 ?>
-	<select name='filtro[<?= $_cmp ?>]' id='Filtro<?= ucfirst($_cmp) ?>'>
+	<select name='filtro[<?= $a["0"] ?>][<?= $a["1"] ?>]' id='Filtro<?= $a["0"].ucfirst($a["1"]) ?>'>
 		<option value=''><?= $_arrProp['emptyFiltro'] ?></option>
 		<?php
 			foreach($_arrProp['options'] as $_vlr => $_show) : 
-			$s = isset($_SESSION['Filtros'][$module][$controller][$_cmp]) 
-				? $_SESSION['Filtros'][$module][$controller][$_cmp] 
+			$s = isset($_SESSION['Filtros'][$module][$controller][$a["0"]][$a["1"]]) 
+				? $_SESSION['Filtros'][$module][$controller][$a["0"]][$a["1"]] 
 				: '';
 			if ($_vlr==$s && strlen($s)>0) $s = 'selected="selected"';
 		?>

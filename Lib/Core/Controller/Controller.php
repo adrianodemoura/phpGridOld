@@ -256,9 +256,12 @@ class Controller {
 		// configurando os parâmetros dos filtros na sessão
 		if (isset($_SESSION['Filtros'][$this->module][$this->controller]))
 		{
-			foreach($_SESSION['Filtros'][$this->module][$this->controller] as $_cmp => $_vlr)
+			foreach($_SESSION['Filtros'][$this->module][$this->controller] as $_mod => $_arrCmps)
 			{
-				if (strlen($_vlr)>0) $params['where'][$_cmp] = $_vlr;
+				foreach($_arrCmps as $_cmp => $_vlr)
+				{
+					if (strlen($_vlr)>0) $params['where'][$_mod.'.'.$_cmp] = $_vlr;
+				}
 			}
 		}
 		// configurando o filtro pelos parâmetros de pesquisa
@@ -361,11 +364,12 @@ class Controller {
 		{
 			if (isset($_arrProp['filtro']) && $_arrProp['filtro']==true)
 			{
-				$filtros[$_cmp]['emptyFiltro'] 	= isset($_arrProp['emptyFiltro']) ? $_arrProp['emptyFiltro'] : '-- todos --';
-				$filtros[$_cmp]['options'] 		= isset($_arrProp['options']) ? $_arrProp['options'] : array();
-				if (empty($filtros[$_cmp]['options']))
+				$alias = !empty($this->$modelClass->alias) ? $this->$modelClass->alias : $modelClass ;
+				$filtros[$alias.'.'.$_cmp]['emptyFiltro'] 	= isset($_arrProp['emptyFiltro']) ? $_arrProp['emptyFiltro'] : '-- todos --';
+				$filtros[$alias.'.'.$_cmp]['options'] 		= isset($_arrProp['options']) ? $_arrProp['options'] : array();
+				if (empty($filtros[$alias.'.'.$_cmp]['options']))
 				{
-					$filtros[$_cmp]['options'] = $this->$modelClass->getOptions($_cmp);
+					$filtros[$alias.'.'.$_cmp]['options'] = $this->$modelClass->getOptions($_cmp);
 				}
 			}
 		}
@@ -523,24 +527,28 @@ class Controller {
 		{
 			unset($_SESSION['Pagi']);
 			$l = 0;
-			foreach($_POST['filtro'] as $_cmp => $_vlr)
+			foreach($_POST['filtro'] as $_mod => $_arrCmps)
 			{
-				if (strlen($_vlr)==0)
+				foreach($_arrCmps as $_cmp => $_vlr)
 				{
-					unset($_SESSION['Filtros'][$this->module][$this->controller][$_cmp]);
-				} else
-				{
-					$_SESSION['Filtros'][$this->module][$this->controller][$_cmp] = $_vlr;
+					if (strlen($_vlr)==0)
+					{
+						unset($_SESSION['Filtros'][$this->module][$this->controller][$_mod][$_cmp]);
+					} else
+					{
+						$_SESSION['Filtros'][$this->module][$this->controller][$_mod][$_cmp] = $_vlr;
+					}
+					$l++;
 				}
-				$l++;
 			}
-			if (!count($_SESSION['Filtros'][$this->module][$this->controller]))
+			if (!count($_SESSION['Filtros'][$this->module][$this->controller][$_mod]))
 			{
-				unset($_SESSION['Filtros'][$this->module][$this->controller]);
+				unset($_SESSION['Filtros'][$this->module][$this->controller][$_mod]);
 			}
 		}
 		$this->viewVars['urlRetorno'] = isset($_POST['urlRetorno']) ? $_POST['urlRetorno'] : $_SERVER['REQUEST_URI'];
 		$this->redirect(strtolower($this->module.'/'.$this->controller.'/listar'));
+		//debug($_POST['filtro']);
 	}
 
 	/**
