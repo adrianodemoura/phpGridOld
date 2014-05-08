@@ -20,4 +20,4 @@
 	require_once(CORE.'Config/bootstrap.php');
 
 	// definindo rota raiz 
-	router('/',array('sistema','usuarios','index'));
+	router('/',array('sistema','usuarios','listar'));

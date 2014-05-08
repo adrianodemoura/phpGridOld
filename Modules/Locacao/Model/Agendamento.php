@@ -41,6 +41,10 @@ class Agendamento extends LocacaoApp {
 			'notEmpty' 	=> true,
 			'pesquisar'	=> '&',
 		),
+		'data'			=> array
+		(
+			'tit'		=> 'Data',
+		),
 		'sala_id'			=> array
 		(
 			'tit'			=> 'Sala',

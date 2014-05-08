@@ -41,12 +41,24 @@ class Sala extends LocacaoApp {
 			'notEmpty' 	=> true,
 			'pesquisar'	=> '&',
 		),
+		'numero'		=> array
+		(
+			'tit'		=> 'Número',
+		),
 		'ativo'=> array
 		(
-			'tit'		=> 'Ativo',
+			'tit'		=> 'Ativa',
 			'filtro'	=> true,
 			'options'	=> array('1'=>'Sim','0'=>'Não'),
-			'emptyFiltro'	=> '-- Ativos --',
+			'emptyFiltro'	=> '-- Ativas --',
+		),
+		'criado'		=> array
+		(
+			'tit'		=> 'Criada',
+		),
+		'modificado'		=> array
+		(
+			'tit'		=> 'Modificada',
 		),
 	);
 

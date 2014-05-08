@@ -61,7 +61,8 @@ class Modulo extends SistemaApp {
 		'ativo'=> array
 		(
 			'tit'		=> 'Ativo',
-			'options'	=> array('1'=>'Sim','0'=>'Não')
+			'options'	=> array('1'=>'Sim','0'=>'Não'),
+			'default' 	=> 1
 		),
 	);
 
