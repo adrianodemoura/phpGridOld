@@ -149,12 +149,13 @@ class Boot {
 				$model = $this->$controller->modelClass;
 
 				// recuperando os módulos ativos
-				$sql = 'SELECT m.id, m.nome FROM sis_modulos m WHERE m.ativo=1 ORDER BY m.nome';
+				$sql = 'SELECT m.id, m.nome, m.titulo FROM sis_modulos m WHERE m.ativo=1 ORDER BY m.nome';
 				$res = $this->$controller->$model->query($sql);
 				$modulos = array();
 				foreach($res as $_l => $_arrCmps)
 				{
-					$modulos[$_arrCmps['id']] = $_arrCmps['nome'];
+					$modulos[$_arrCmps['id']]['nome'] 	= $_arrCmps['nome'];
+					$modulos[$_arrCmps['id']]['titulo'] = $_arrCmps['titulo'];
 				}
 				$this->$controller->viewVars['modulos'] = $modulos;
 

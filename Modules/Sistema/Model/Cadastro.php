@@ -73,8 +73,8 @@ class Cadastro extends SistemaApp {
 				'Modulo'			=> array
 				(
 					'key'			=> 'id',
-					'fields'		=> array('id','nome'),
-					'order'			=> array('nome')
+					'fields'		=> array('id','titulo'),
+					'order'			=> array('titulo')
 				),
 			)
 		),

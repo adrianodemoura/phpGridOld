@@ -52,6 +52,12 @@ class Modulo extends SistemaApp {
 			'notEmpty'	=> true,
 			'pesquisar'	=> '&',
 		),
+		'titulo'		=> array
+		(
+			'tit'		=> 'Título',
+			'notEmpty'	=> true,
+			'upperOff' 	=> true,
+		),
 		'ativo'=> array
 		(
 			'tit'		=> 'Ativo',

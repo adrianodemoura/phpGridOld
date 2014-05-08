@@ -119,9 +119,9 @@
 			<form name='formModulo' method='post' action='<?= getBase() ?>sistema/usuarios/set_modulo/'>
 			<select name='data[modulo]' id='TModulo' title='Clique aqui para trocar o módulo ...' 
 					onchange='this.form.submit()'>
-				<?php foreach($modulos as $_id => $_nome) : ?>
-				<option value='<?= strtolower($_nome) ?>' <?php if ($_nome==strtoupper($module)) echo ' selected="selected"'; ?> >
-					<?= $_nome ?>
+				<?php foreach($modulos as $_id => $_arrCmps) : ?>
+				<option value='<?= strtolower($_arrCmps['nome']) ?>' <?php if ($_arrCmps['nome']==strtoupper($module)) echo ' selected="selected"'; ?> >
+					<?= $_arrCmps['titulo'] ?>
 				</option>
 				<?php endforeach ?>
 			</select>

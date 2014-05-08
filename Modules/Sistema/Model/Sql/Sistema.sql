@@ -221,12 +221,14 @@ DROP TABLE IF EXISTS `sis_modulos` ;
 CREATE  TABLE IF NOT EXISTS `sis_modulos` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `nome` VARCHAR(45) NOT NULL ,
+  `titulo` VARCHAR(45) NOT NULL ,
   `ativo` TINYINT(1) NOT NULL DEFAULT 0 ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `i_nome` (`nome` ASC) ,
+  INDEX `i_titulo` (`titulo` ASC) ,
   INDEX `i_ativo` (`ativo` ASC) )
 ENGINE = MyISAM;
-INSERT INTO sis_modulos (id,nome,ativo) VALUES (1,'SISTEMA',1);
+INSERT INTO sis_modulos (id,nome,titulo,ativo) VALUES (1,'SISTEMA','Sistema',1);
 
 -- -----------------------------------------------------
 -- Table `configuracoes`
