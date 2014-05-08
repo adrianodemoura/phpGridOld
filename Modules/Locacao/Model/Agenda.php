@@ -6,14 +6,14 @@
  * @package		Locacao.Model
  */
 appUses('Model','LocacaoApp');
-class Agendamento extends LocacaoApp {
+class Agenda extends LocacaoApp {
 	/**
 	 * Nome da tabela de cidades
 	 * 
 	 * @var		string	
 	 * @access	public
 	 */
-	public $tabela		= 'agendamentos';
+	public $tabela		= 'agendas';
 
 	/**
 	 * Chave primária do model usuários
@@ -35,9 +35,9 @@ class Agendamento extends LocacaoApp {
 		(
 			'tit'		=> 'Id',
 		),
-		'obs'		=> array
+		'motivo'		=> array
 		(
-			'tit'		=> 'Obs',
+			'tit'		=> 'Motivo',
 			'notEmpty' 	=> true,
 			'pesquisar'	=> '&',
 		),

@@ -190,26 +190,26 @@ class Boot {
 					$minhasPermissoes['imprimir'] 		= 1;
 					$minhasPermissoes['pesquisar'] 		= 1;
 					$minhasPermissoes['exportar'] 		= 1;
-				}
-				$this->$controller->viewVars['minhasPermissoes'] = $minhasPermissoes;
 
-				// recuperando as permissões do cadastro corrente
-				$sql = "SELECT p.visualizar, p.incluir, p.alterar, p.excluir, 
-						p.imprimir, p.pesquisar, p.exportar, p.perfil_id
-						FROM sis_permissoes p
-						INNER JOIN sis_modulos 		m ON m.id = p.modulo_id
-						INNER JOIN sis_cadastros 	c ON c.id = p.cadastro_id
-						WHERE m.nome='".strtoupper($module)."' AND c.cadastro='".strtoupper($controller)."'";
-				$_permissoes = $this->$controller->$model->query($sql);
-				foreach($_permissoes as $_l => $_arrCmps)
-				{
-					$idPerfil = $_arrCmps['perfil_id'];
-					foreach($_arrCmps as $_cmp => $_vlr)
+					// recuperando as permissões do cadastro corrente
+					$sql = "SELECT p.visualizar, p.incluir, p.alterar, p.excluir, 
+							p.imprimir, p.pesquisar, p.exportar, p.perfil_id
+							FROM sis_permissoes p
+							INNER JOIN sis_modulos 		m ON m.id = p.modulo_id
+							INNER JOIN sis_cadastros 	c ON c.id = p.cadastro_id
+							WHERE m.nome='".strtoupper($module)."' AND c.cadastro='".strtoupper($controller)."'";
+					$_permissoes = $this->$controller->$model->query($sql);
+					foreach($_permissoes as $_l => $_arrCmps)
 					{
-						if ($_cmp!='perfil_id')
-							$this->$controller->viewVars['permissoes']['acao'][$idPerfil][$_cmp] = $_vlr;
+						$idPerfil = $_arrCmps['perfil_id'];
+						foreach($_arrCmps as $_cmp => $_vlr)
+						{
+							if ($_cmp!='perfil_id')
+								$this->$controller->viewVars['permissoes']['acao'][$idPerfil][$_cmp] = $_vlr;
+						}
 					}
 				}
+				$this->$controller->viewVars['minhasPermissoes'] = $minhasPermissoes;
 
 				// recuperando os cadastros 
 				$cadastros = array();

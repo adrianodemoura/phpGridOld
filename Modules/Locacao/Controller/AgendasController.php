@@ -6,11 +6,11 @@
  * @subpackage		Locacao.Controller
  */
 appUses('Controller','LocacaoApp');
-class AgendamentosController extends LocacaoAppController {
+class AgendasController extends LocacaoAppController {
 	/**
 	 * Model Usuário
 	 * 
 	 * @var		array
 	 */
-	public $Model = array('Agendamento');
+	public $Model = array('Agenda');
 }

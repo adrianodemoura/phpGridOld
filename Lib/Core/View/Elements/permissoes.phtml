@@ -36,7 +36,7 @@
 		</tr>
 		
 		<?php 
-			foreach($this->viewVars['permissoes']['perfis'] as $_id => $_perfil) : 
+			foreach($_SESSION['Perfis'] as $_id => $_perfil) : if ($_id>1) :
 		?>
 		<tr>
 			<td style='padding: 0px 0px 0px 5px;'><?= $_perfil ?></td>
@@ -53,7 +53,7 @@
 			<?php endforeach ?>
 			
 		</tr>
-		<?php endforeach ?>
+		<?php endif; endforeach ?>
 		</table>
 	</div>
 </div>
