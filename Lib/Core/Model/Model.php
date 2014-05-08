@@ -534,6 +534,14 @@ class Model {
 		$distinct = isset($params['distinct']) ? $params['distinct'] : null;
 		$ali1	= $this->name;
 
+		// verificando os campos do order
+		$a = explode('_', $order);
+		if (count($a)>2)
+		{
+			$order = ucfirst($a['1']).'_'.$a['2'];
+			unset($a);
+		}
+
 		// verifica o nome de cada campo
 		if (!empty($fields))
 		{
