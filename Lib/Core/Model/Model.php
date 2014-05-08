@@ -984,7 +984,20 @@ class Model {
 						// removendo a máscara
 						if (isset($p['mascara']))
 						{
-							$v = str_replace(array('-','_','(',')','/','\\','.'),'',$v);
+							$v = str_replace(array('-','_','(',')','\\','.'),'',$v);
+						}
+
+						// se é do tipo data
+						if (in_array($p['type'], array('datetime')))
+						{
+							if (!empty($v))
+							{
+								$n1	= explode('/', substr($v,0,10));
+								$n2 = substr($v,11,strlen($v));
+								if (empty($n2)) $n2 = date('H:i:s');
+								$v  = $n1['2'].'-'.$n1['1'].'-'.$n1['0'].' '.$n2;
+								$v 	= date($this->dateFormatBD, strtotime($v));
+							}
 						}
 
 						// testando a primaryKey

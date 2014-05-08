@@ -24,7 +24,7 @@ class Sala extends LocacaoApp {
 	public $primaryKey 	= array('id');
 
 	/**
-	 * Propriedade de cada campo da tabela usuários
+	 * Propriedade de cada campo da tabela salas
 	 * 
 	 * @var		array
 	 * @acess	public

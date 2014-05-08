@@ -44,6 +44,7 @@ class Agendamento extends LocacaoApp {
 		'data'			=> array
 		(
 			'tit'		=> 'Data',
+			'mascara'	=> '99/99/9999 99:99:99',
 		),
 		'sala_id'			=> array
 		(
