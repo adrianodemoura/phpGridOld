@@ -154,9 +154,7 @@ class Boot {
 				$model = $this->$controller->modelClass;
 
 				// recuperando os módulos ativos
-				$sql = 'SELECT m.id, m.nome, m.titulo FROM sis_modulos m WHERE m.ativo=1 ORDER BY m.nome';
-				//debug($sql);
-				$res = $this->$controller->$model->query($sql);
+				$res = $this->$controller->$model->getMeusModulos($_SESSION['Usuario']['perfil_id']);
 				$modulos = array();
 				foreach($res as $_l => $_arrCmps)
 				{
@@ -180,7 +178,7 @@ class Boot {
 				}
 
 				// recuperando os parâmetros para a tela de configuração de permissões de cada perfil
-				if ($_SESSION['Usuario']['perfil']=='ADMINISTRADOR')
+				if ($_SESSION['Usuario']['perfil_id']==1)
 				{
 					// todas as permissões pro bonitão da bala chita
 					$minhasPermissoes['id'] 			= 1;
@@ -257,7 +255,7 @@ class Boot {
 					$_SESSION['acessoNegado'] = strtolower($module.'/'.$controller.'/'.$action);
 					$_SESSION['sistemaErro']['tip'] = 'Acesso Negado';
 					$_SESSION['sistemaErro']['txt'] = 'Caro '.$_SESSION['Usuario']['nome'].', o seu perfil não possui privilégios suficientes para acessar a página '.strtolower($module.'/'.$controller.'/'.$action);
-					//header('Location: '.$this->$controller->base.'sistema/usuarios/acesso_negado');
+					header('Location: '.$this->$controller->base.'sistema/usuarios/acesso_negado');
 				}
 			}
 		}

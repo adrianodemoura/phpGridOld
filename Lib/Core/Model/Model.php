@@ -1124,6 +1124,29 @@ class Model {
 	}
 
 	/**
+	 * Retorna uma matriz com os módulos em que o perfil tem acesso
+	 *
+	 * @param 	integer 	$idPerfil 	Id do Perfil a pesquisar
+	 * @return 	array 		$modulos
+	 */
+	public function getMeusModulos($idPerfil=1)
+	{
+		if ($idPerfil>1)
+		{
+			$sql = "SELECT DISTINCT m.id, m.nome, m.titulo
+				FROM sis_modulos m
+				INNER JOIN sis_permissoes p 
+				ON  p.modulo_id = m.id 
+				AND p.perfil_id =".$idPerfil." ORDER BY m.nome";
+		} else
+		{
+			$sql = "SELECT DISTINCT m.id, m.nome, m.titulo
+				FROM sis_modulos m ORDER BY m.nome";
+		}
+		return $this->query($sql);
+	}
+
+	/**
 	 * Retorna uma matriz com os cadastros do perfil
 	 *
 	 * @param 	integer 	$idPerfil 	Id do Perfil a pesquisar
@@ -1138,7 +1161,7 @@ class Model {
 				FROM sis_permissoes p
 				INNER JOIN sis_cadastros c ON c.id = p.cadastro_id
 				INNER JOIN sis_modulos m ON m.id = c.modulo_id
-				WHERE p.perfil_id=".$_SESSION['Usuario']['perfil_id']." 
+				WHERE p.perfil_id=".$idPerfil." 
 				 AND m.nome='".strtoupper($modulo)."' AND p.visualizar=1
 				ORDER BY c.cadastro";
 		} else
