@@ -7,6 +7,14 @@
  */
 class Boot {
 	/**
+	 * Dados do formulário data
+	 * 
+	 * @var 	array
+	 * @access	public
+	 */
+	public $data 	= array();
+
+	/**
 	 * Variáveis da view
 	 * 
 	 * @var		array
@@ -117,9 +125,6 @@ class Boot {
 		$this->$controller->viewPath			= $controller;
 		$this->$controller->base				= $this->$controller->viewVars['base'];
 		$this->$controller->params				= $params;
-
-		// letra de separação
-		$this->$controller->viewVars['se'] = !empty($this->$controller->viewVars['se']) ? $this->$controller->viewVars['se'] : ':';
 
 		// recuperando o data
 		$this->$controller->data = isset($_POST['data']) ? $_POST['data'] : array();
@@ -261,9 +266,15 @@ class Boot {
 		$this->$controller->$action();
 
 		// identificando a posição
-		$this->$controller->viewVars['tituloModule'] = isset( $this->$controller->viewVars['tituloModule'])
+		$this->$controller->viewVars['tituloModule'] = isset($this->$controller->viewVars['tituloModule'])
 		  ?  $this->$controller->viewVars['tituloModule']
 		  : $module;
+		if (empty($this->$controller->viewVars['tituloModule']))
+		{
+			$this->$controller->viewVars['tituloModule'] = !empty($this->$controller->viewVars['tituloModule'])
+			? $this->$controller->viewVars['tituloModule']
+			:  $module;
+		}
 		$this->$controller->viewVars['tituloAction'] = isset( $this->$controller->viewVars['tituloAction'])
 		  ?  $this->$controller->viewVars['tituloAction']
 		  : $action;
@@ -273,6 +284,12 @@ class Boot {
 		$this->$controller->viewVars['tituloAction'] = isset( $this->$controller->viewVars['tituloAction'])
 		  ?  $this->$controller->viewVars['tituloAction']
 		  : $action;
+		if (empty($this->$controller->viewVars['tituloAction']))
+		{
+			$this->$controller->viewVars['tituloAction'] = !empty($this->$controller->viewVars['tituloAction'])
+			? $this->$controller->viewVars['tituloAction']
+			:  $action;
+		}
 
 		// atualizando viewVars do controller com algumas informações do model
 		if (count($this->$controller->Model))

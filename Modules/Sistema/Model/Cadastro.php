@@ -82,7 +82,8 @@ class Cadastro extends SistemaApp {
 		(
 			'tit'		=> 'Ativo',
 			'filtro'	=> true,
-			'options'	=> array('1'=>'Sim','0'=>'Não')
+			'options'	=> array('1'=>'Sim','0'=>'Não'),
+			'emptyFiltro'	=> '-- Ativos --',
 		),
 		'criado'			=> array
 		(

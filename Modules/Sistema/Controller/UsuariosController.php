@@ -5,10 +5,7 @@
  * @package			Sistema
  * @subpackage		Sistema.Controller
  */
-/**
- * Include files
- */
-include_once(APP.'Modules/Sistema/Controller/SistemaAppController.php');
+appUses('Controller','SistemaApp');
 class UsuariosController extends SistemaAppController {
 	/**
 	 * Model Usuário
@@ -24,16 +21,21 @@ class UsuariosController extends SistemaAppController {
 	 */
 	public function beforeIndex()
 	{
-		$this->viewVars['tituloPagina'] 	= 'Informações de Usuário';
+		$this->viewVars['tituloPagina'] 	= 'Cadastro de Usuários';
 		$this->viewVars['tituloController'] = 'Usuários';
 		parent::beforeIndex();
 	}
 
 	/**
-	 *
+	 * Exibe a página principal do sistema
+	 * - Aqui serão exibidos os módulos e seus cadastros
+	 * - Os Cadastros mais acessados pelo usuário, serão listado primeiro
+	 * 
+	 * @return	void
 	 */
 	public function index()
 	{
+		$this->viewVars['tituloPagina'] 	= 'Página Inicial';
 		parent::index();
 	}
 

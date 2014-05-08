@@ -53,6 +53,14 @@ class Controller {
 	public $Model		= array();
 
 	/**
+	 * Dados do formulário data
+	 * 
+	 * @var		array
+	 * @access	public
+	 */
+	public $data		= array();
+
+	/**
 	 * Variáveis da visão
 	 * 
 	 * @var		mixed
@@ -67,14 +75,6 @@ class Controller {
 	public $viewPath	= null;
 
 	/**
-	 * Dados do formulário data
-	 * 
-	 * @var		array
-	 * @access	public
-	 */
-	public $data		= array();
-
-	/**
 	 * Start do controller
 	 * 
 	 * @return	void
@@ -84,16 +84,16 @@ class Controller {
 		// variávies obrigatórias para a view
 		$this->viewVars['base'] 			= '';
 		$this->viewVars['aqui'] 			= '';
-		$this->viewVars['se'] 				= '';
+		$this->viewVars['module'] 			= '';
+		$this->viewVars['controller'] 		= '';
+		$this->viewVars['action'] 			= '';
 		$this->viewVars['tituloPagina'] 	= '';
 		$this->viewVars['tituloModule'] 	= '';
 		$this->viewVars['tituloController'] = '';
 		$this->viewVars['tituloAction'] 	= '';
-		$this->viewVars['position'] 		= '';
 		$this->viewVars['tempoOn'] 			= 20;
 		$this->viewVars['primaryKey'] 		= array();
 		$this->viewVars['permissoes'] 		= array();
-		$this->viewVars['paginacao'] 		= array();
 		$this->viewVars['params'] 			= array();
 		$this->viewVars['msgFlash'] 		= array();
 		$this->viewVars['head'] 			= array();
