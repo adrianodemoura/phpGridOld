@@ -260,7 +260,8 @@ class Boot {
 		}
 		$this->$controller->viewVars['tituloController'] = isset( $this->$controller->viewVars['tituloController'])
 		  ?  $this->$controller->viewVars['tituloController']
-		  : $controller;
+		  : $cadastros[strtoupper($controller)]['tit'];
+
 		$this->$controller->viewVars['tituloAction'] = isset( $this->$controller->viewVars['tituloAction'])
 		  ?  $this->$controller->viewVars['tituloAction']
 		  : ucfirst($action);

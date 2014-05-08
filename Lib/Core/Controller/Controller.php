@@ -227,7 +227,9 @@ class Controller {
 			$this->redirect(strtolower($this->module),'usuarios','erros');
 		}
 
-		$this->viewVars['tituloPagina'] = !empty($this->viewVars['tituloPagina']) ? $this->viewVars['tituloPagina'] : 'Lista de '.$this->controller;
+		$this->viewVars['tituloPagina'] = !empty($this->viewVars['tituloPagina']) 
+			? $this->viewVars['tituloPagina'] 
+			: 'Cadastro de '.$this->viewVars['cadastros'][strtoupper($this->controller)]['tit'];
 
 		// verificando a sessão de paginação, se for de outro módulo.controller, zera ela.
 		if (isset($_SESSION['Pagi']))
