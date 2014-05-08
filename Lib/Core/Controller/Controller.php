@@ -423,6 +423,27 @@ class Controller {
 		$this->viewVars['ferramentasLayout']['3']['icone'] 		= $this->viewVars['base'].'img/bt_exportar.png';
 		$this->viewVars['ferramentasLayout']['3']['onclick'] 	= 'document.location.href="'.$this->viewVars['base'].strtolower($this->module).'/'.strtolower($this->controller).'/exportar"';
 
+		// se é administrador, recupera as eprmissões do cadastro corrente
+		if ($_SESSION['Usuario']['perfil_id']==1)
+		{
+			$sql = "SELECT p.visualizar, p.incluir, p.alterar, p.excluir, 
+					p.imprimir, p.pesquisar, p.exportar, p.perfil_id
+					FROM sis_permissoes p
+					INNER JOIN sis_modulos 		m ON m.id = p.modulo_id
+					INNER JOIN sis_cadastros 	c ON c.id = p.cadastro_id
+					WHERE m.nome='".strtoupper($this->module)."' AND c.cadastro='".strtoupper($this->controller)."'";
+			$_permissoes = $this->$modelClass->query($sql);
+			foreach($_permissoes as $_l => $_arrCmps)
+			{
+				$idPerfil = $_arrCmps['perfil_id'];
+				foreach($_arrCmps as $_cmp => $_vlr)
+				{
+					if ($_cmp!='perfil_id')
+						$this->viewVars['permissoes']['acao'][$idPerfil][$_cmp] = $_vlr;
+				}
+			}
+		}
+
 		// verifica erros da lista
 		if (isset($_SESSION['errosLista']))
 		{

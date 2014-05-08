@@ -67,7 +67,7 @@ class Boot {
 		}
 		$url['0'] = isset($url['0']) ? ucfirst(strtolower($url['0'])) : 'Sistema';
 		$url['1'] = isset($url['1']) ? ucfirst(strtolower($url['1'])) : 'Usuarios';
-		$url['2'] = isset($url['2']) ? ucfirst(strtolower($url['2'])) : 'index';
+		$url['2'] = isset($url['2']) ? strtolower($url['2']) : 'index';
 		$module		= $url['0'];
 		$controller = $url['1'];
 		$action		= $url['2'];
@@ -190,24 +190,6 @@ class Boot {
 					$minhasPermissoes['imprimir'] 		= 1;
 					$minhasPermissoes['pesquisar'] 		= 1;
 					$minhasPermissoes['exportar'] 		= 1;
-
-					// recuperando as permissões do cadastro corrente
-					$sql = "SELECT p.visualizar, p.incluir, p.alterar, p.excluir, 
-							p.imprimir, p.pesquisar, p.exportar, p.perfil_id
-							FROM sis_permissoes p
-							INNER JOIN sis_modulos 		m ON m.id = p.modulo_id
-							INNER JOIN sis_cadastros 	c ON c.id = p.cadastro_id
-							WHERE m.nome='".strtoupper($module)."' AND c.cadastro='".strtoupper($controller)."'";
-					$_permissoes = $this->$controller->$model->query($sql);
-					foreach($_permissoes as $_l => $_arrCmps)
-					{
-						$idPerfil = $_arrCmps['perfil_id'];
-						foreach($_arrCmps as $_cmp => $_vlr)
-						{
-							if ($_cmp!='perfil_id')
-								$this->$controller->viewVars['permissoes']['acao'][$idPerfil][$_cmp] = $_vlr;
-						}
-					}
 				}
 				$this->$controller->viewVars['minhasPermissoes'] = $minhasPermissoes;
 
@@ -266,7 +248,7 @@ class Boot {
 		}
 		$this->$controller->$action();
 
-		// identificando a posição
+		// identificando o título do MVC
 		$this->$controller->viewVars['tituloModule'] = isset($this->$controller->viewVars['tituloModule'])
 		  ?  $this->$controller->viewVars['tituloModule']
 		  : $module;
@@ -276,20 +258,17 @@ class Boot {
 			? $this->$controller->viewVars['tituloModule']
 			:  $module;
 		}
-		$this->$controller->viewVars['tituloAction'] = isset( $this->$controller->viewVars['tituloAction'])
-		  ?  $this->$controller->viewVars['tituloAction']
-		  : $action;
 		$this->$controller->viewVars['tituloController'] = isset( $this->$controller->viewVars['tituloController'])
 		  ?  $this->$controller->viewVars['tituloController']
 		  : $controller;
 		$this->$controller->viewVars['tituloAction'] = isset( $this->$controller->viewVars['tituloAction'])
 		  ?  $this->$controller->viewVars['tituloAction']
-		  : $action;
+		  : ucfirst($action);
 		if (empty($this->$controller->viewVars['tituloAction']))
 		{
 			$this->$controller->viewVars['tituloAction'] = !empty($this->$controller->viewVars['tituloAction'])
 			? $this->$controller->viewVars['tituloAction']
-			:  $action;
+			:  ucfirst($action);
 		}
 
 		// atualizando viewVars do controller com algumas informações do model

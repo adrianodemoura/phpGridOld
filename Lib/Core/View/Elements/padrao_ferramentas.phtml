@@ -5,7 +5,7 @@
 		src='<?= $this->viewVars['base'] ?>img/bt_home.png'
 		onclick='document.location.href="<?= $this->viewVars['base'].'sistema/usuarios/index' ?>"' />
 
-	<?php if ($_SESSION['Usuario']['perfil_id']==1) : ?>
+	<?php if ($_SESSION['Usuario']['perfil_id']==1 && $this->viewVars['action']=='listar') : ?>
 		<img title='Clique aqui para configurar as permissões do cadastro' 
 			src='<?= $this->viewVars['base'] ?>img/bt_permissoes.png'
 			onclick='showModal("permissoes")' />
