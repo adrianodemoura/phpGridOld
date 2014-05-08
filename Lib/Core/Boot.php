@@ -155,12 +155,13 @@ class Boot {
 
 				// recuperando os módulos ativos
 				$sql = 'SELECT m.id, m.nome, m.titulo FROM sis_modulos m WHERE m.ativo=1 ORDER BY m.nome';
+				//debug($sql);
 				$res = $this->$controller->$model->query($sql);
 				$modulos = array();
 				foreach($res as $_l => $_arrCmps)
 				{
-					$modulos[$_arrCmps['id']]['nome'] 	= $_arrCmps['nome'];
-					$modulos[$_arrCmps['id']]['titulo'] = $_arrCmps['titulo'];
+					$modulos[$_arrCmps['nome']]['id'] = $_arrCmps['id'];
+					$modulos[$_arrCmps['nome']]['titulo'] = $_arrCmps['titulo'];
 				}
 				$this->$controller->viewVars['modulos'] = $modulos;
 
@@ -220,6 +221,17 @@ class Boot {
 							$this->$controller->viewVars['permissoes']['acao'][$idPerfil][$_cmp] = $_vlr;
 					}
 				}
+
+				// recuperando os cadastros 
+				$cadastros = array();
+				$_cad = $this->$controller->$model->getMeusCadastros($_SESSION['Usuario']['perfil_id'],$module);
+				foreach($_cad as $_l => $_arrCmps)
+				{
+					$cadastros[$_arrCmps['cadastro']]['tit'] = $_arrCmps['titulo'];
+					$cadastros[$_arrCmps['cadastro']]['link']= $this->$controller->base.strtolower($module).'/'.strtolower($_arrCmps['cadastro']).'/listar';
+				}
+				unset($_cad);
+				$this->$controller->viewVars['cadastros'] 	= $cadastros;
 			}
 		}
 
@@ -245,7 +257,7 @@ class Boot {
 					$_SESSION['acessoNegado'] = strtolower($module.'/'.$controller.'/'.$action);
 					$_SESSION['sistemaErro']['tip'] = 'Acesso Negado';
 					$_SESSION['sistemaErro']['txt'] = 'Caro '.$_SESSION['Usuario']['nome'].', o seu perfil não possui privilégios suficientes para acessar a página '.strtolower($module.'/'.$controller.'/'.$action);
-					header('Location: '.$this->$controller->base.'sistema/usuarios/acesso_negado');
+					//header('Location: '.$this->$controller->base.'sistema/usuarios/acesso_negado');
 				}
 			}
 		}

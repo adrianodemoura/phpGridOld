@@ -93,8 +93,11 @@ class Controller {
 		$this->viewVars['tituloAction'] 	= '';
 		$this->viewVars['tempoOn'] 			= 20;
 		$this->viewVars['primaryKey'] 		= array();
+		$this->viewVars['modulos'] 			= array();
+		$this->viewVars['cadastros'] 		= array();
 		$this->viewVars['permissoes'] 		= array();
 		$this->viewVars['params'] 			= array();
+		$this->viewVars['paginacao'] 		= array();
 		$this->viewVars['msgFlash'] 		= array();
 		$this->viewVars['head'] 			= array();
 		$this->viewVars['onRead'] 			= array();
@@ -419,16 +422,6 @@ class Controller {
 		$this->viewVars['ferramentasLayout']['3']['title'] 		= 'Clique aqui para exportar todo o cadastro com filtros';
 		$this->viewVars['ferramentasLayout']['3']['icone'] 		= $this->viewVars['base'].'img/bt_exportar.png';
 		$this->viewVars['ferramentasLayout']['3']['onclick'] 	= 'document.location.href="'.$this->viewVars['base'].strtolower($this->module).'/'.strtolower($this->controller).'/exportar"';
-
-		// recuperando os menus da lista
-		$menu = array();
-		$data = $this->$modelClass->getMeusCadastros($_SESSION['Usuario']['perfil_id'],$this->module);
-		foreach($data as $_l => $_arrCmps)
-		{
-			$menu[$_arrCmps['cadastro']]['tit'] 		= $_arrCmps['titulo'];
-			$menu[$_arrCmps['cadastro']]['link'] 		= $this->base.strtolower($this->module).'/'.strtolower($_arrCmps['cadastro']).'/listar';
-		}
-		$this->viewVars['linksMenu'] 	= $menu;
 
 		// verifica erros da lista
 		if (isset($_SESSION['errosLista']))

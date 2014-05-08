@@ -119,8 +119,8 @@
 			<form name='formModulo' method='post' action='<?= getBase() ?>sistema/usuarios/set_modulo/'>
 			<select name='data[modulo]' id='TModulo' title='Clique aqui para trocar o módulo ...' 
 					onchange='this.form.submit()' style='width: 180px; border: 0px; background-color: #fff; padding: 1px 3px 2px 3px; font-size: 15px; letter-spacing: 2px;'>
-				<?php foreach($modulos as $_id => $_arrCmps) : ?>
-				<option value='<?= strtolower($_arrCmps['nome']) ?>' <?php if ($_arrCmps['nome']==strtoupper($module)) echo ' selected="selected"'; ?> >
+				<?php foreach($modulos as $_modulo => $_arrCmps) : ?>
+				<option value='<?= strtolower($_modulo) ?>' <?php if ($_modulo==strtoupper($module)) echo ' selected="selected"'; ?> >
 					<?= $_arrCmps['titulo'] ?>
 				</option>
 				<?php endforeach ?>
@@ -159,4 +159,5 @@
 <div id='tampaTudo'>tampaTudo</div>
 </body>
 </html>
+<?php //debug($this->viewVars); ?>
 <!-- tempo de execução <?= round((microtime(true)-INICIO),6) ?> segundos -->

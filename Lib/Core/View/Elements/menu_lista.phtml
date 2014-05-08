@@ -1,6 +1,6 @@
-<?php $linksMenu = isset($this->viewVars['linksMenu']) ? $this->viewVars['linksMenu'] : null; ?>
+<?php $cadastros = isset($this->viewVars['cadastros']) ? $this->viewVars['cadastros'] : null; ?>
 
-<?php if (isset($linksMenu)) : foreach($linksMenu as $_con => $_arrOpcs) : ?>
+<?php if (isset($cadastros)) : foreach($cadastros as $_con => $_arrOpcs) : ?>
 
 	<a href='<?= $_arrOpcs['link'] ?>' class='list-group-item<?php if ($_con==strtoupper($controller)) echo ' active'; ?>'>
 	<?= $_arrOpcs['tit'] ?>
