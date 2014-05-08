@@ -189,12 +189,13 @@ function setAjaxTab()
 		{
 			$("#ajaxTo").html("");
 			$("#ajaxResp").html("");
+			//console.log(resposta);
 			var jArrResposta 	= resposta.split('*');
 			var table			= '<table border="1px" id="ajaxTab">'+"\n";
 			$.each(jArrResposta, function(i, linha)
 			{
 				var jArrLinha = linha.split(';');
-				if (jArrLinha[0].length>1)
+				if (jArrLinha[0].length>0)
 				{
 					table += "<tr class='ajaxTr' id='"+i+"ajaxTr'>\n";
 					var tds = [];
