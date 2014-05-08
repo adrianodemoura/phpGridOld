@@ -38,6 +38,7 @@ class Sala extends LocacaoApp {
 		'titulo'		=> array
 		(
 			'tit'		=> 'Nome',
+			'notEmpty' 	=> true,
 			'pesquisar'	=> '&',
 		),
 		'ativo'=> array
@@ -48,4 +49,26 @@ class Sala extends LocacaoApp {
 			'emptyFiltro'	=> '-- Ativos --',
 		),
 	);
+
+	/**
+	 * Executa código antes de salvar uma nova sala
+	 *
+	 * @return void
+	 */
+	public function beforeSave()
+	{
+		foreach($this->data as $_l => $_arrMods)
+		{
+			if (isset($_arrMods['Sala']['numero']))
+			{
+				if (empty($_arrMods['Sala']['numero']))
+				{
+					$this->data[$_l]['Sala']['numero'] = '0';
+				}
+			}
+		}
+		return parent::beforeSave();
+	}
+
+
 }

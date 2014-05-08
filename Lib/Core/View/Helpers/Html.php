@@ -87,6 +87,11 @@ class Html {
 		{
 			foreach($e['belongsTo'] as $_mod => $_arrProp)
 			{
+				if (strpos($_mod,'.'))
+				{
+					$a 		= explode('.',$_mod);
+					$_mod	= $a['1'];
+				}
 				if (isset($_arrProp['ajax']))
 				{
 					$fields = array();
@@ -171,7 +176,7 @@ class Html {
 			case 'ajax':
 				$input = "<input ";
 				$opcs['type'] = 'hidden';
-				foreach($opcs as $_tag => $_vlr) $input .= " $_tag='$_vlr'";
+				foreach($opcs as $_tag => $_vlr) if (!is_array($_vlr)) $input .= " $_tag='$_vlr'";
 				$input .= " />";
 				$vlr = '';
 

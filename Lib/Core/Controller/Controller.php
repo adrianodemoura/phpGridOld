@@ -323,6 +323,16 @@ class Controller {
 				}
 				break;
 			}
+			if (empty($fields))
+			{
+				foreach($this->$modelClass->esquema as $_cmp => $_arrProp)
+				{
+					if (!in_array($_cmp,$this->$modelClass->primaryKey))
+					{
+						array_push($fields, $modelClass.'.'.$_cmp);
+					}
+				}
+			}
 			$this->viewVars['fields'] = $fields;
 		}
 

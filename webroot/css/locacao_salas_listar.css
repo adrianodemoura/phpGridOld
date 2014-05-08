@@ -1,4 +1,10 @@
-.in_titulo
+.tabLista .in_titulo
 {
 	width: 300px;
+}
+
+.tabLista .in_numero,
+.tabLista .in_ativo
+{
+	text-align: center;
 }

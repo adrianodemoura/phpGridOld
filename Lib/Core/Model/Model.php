@@ -629,6 +629,12 @@ class Model {
 				{
 					foreach($this->esquema[$c]['belongsTo'] as $_model => $_arrProp)
 					{
+						if (strpos($_model,'.'))
+						{
+							$a 		= explode('.',$_model);
+							$_model = $a['1'];
+							set_include_path(get_include_path() . PATH_SEPARATOR . APP.'Modules/'.$a['0'].'/');
+						}
 						require_once('Model/'.$_model.'.php');
 						$belo 	= new $_model();
 						if (isset($belo->esquema)) $this->outrosEsquemas[$_model] = $belo->esquema;
@@ -837,6 +843,12 @@ class Model {
 			case 'belongsTo':
 				foreach($this->esquema[$cmp]['belongsTo'] as $_mod => $_arrProp)
 				{
+					if (strpos($_mod,'.'))
+					{
+						$a 		= explode('.',$_mod);
+						$_mod	= $a['1'];
+						set_include_path(get_include_path() . PATH_SEPARATOR . APP.'Modules/'.$a['0'].'/');
+					}
 					$alias 	= $_mod;
 					$cmps 	= $_arrProp['fields'];
 					$ordem 	= $_arrProp['order'];
@@ -965,7 +977,6 @@ class Model {
 		$_data 	= array();
 		$c		= isset($this->esquema['criado']) ? true : false;
 		$m		= isset($this->esquema['modificado']) ? true : false;
-		$u		= isset($this->esquema['usuario_id']) ? true : false;
 		$id 	= false;
 		foreach($this->data as $_l => $_arrMods)
 		{
@@ -1003,8 +1014,6 @@ class Model {
 			}
 			// campo modificado
 			if ($m) $_data[$_l][$_mod]['modificado'] = date($this->dateFormatBD);
-			// campo modificado
-			if ($u) $_data[$_l][$_mod]['usuario_id'] = $_SESSION['Usuario']['id'];
 		}
 		$this->data = $_data;
 		return true;

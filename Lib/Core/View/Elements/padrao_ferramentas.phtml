@@ -3,7 +3,7 @@
 	<div style='float: left;'>
 	<img title='Clique aqui para ir até a página inicial' 
 		src='<?= $this->viewVars['base'] ?>img/bt_home.png'
-		onclick='document.location.href="<?= $this->viewVars['base'] ?>"' />
+		onclick='document.location.href="<?= $this->viewVars['base'].'sistema/usuarios/index' ?>"' />
 
 	<?php if ($_SESSION['Usuario']['perfil_id']==1) : ?>
 		<img title='Clique aqui para configurar as permissões do cadastro' 
