@@ -56,12 +56,14 @@ class Cadastro extends SistemaApp {
 		(
 			'tit'		=> 'Cadastro',
 			'notEmpty'	=> true,
+			'pesquisar'	=> '&'
 		),
 		'titulo'	=> array
 		(
 			'tit'		=> 'Título',
 			'notEmpty'	=> true,
 			'upperOff'	=> true,
+			'pesquisar'	=> '&',
 		),
 		'modulo_id'		=> array
 		(

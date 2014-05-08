@@ -16,6 +16,7 @@ CREATE  TABLE IF NOT EXISTS `sis_cadastros` (
   `modificado` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `i_cadastro` (`cadastro` ASC) ,
+  INDEX `i_titulo` (`titulo` ASC) ,
   INDEX `i_ativo` (`ativo` ASC) ,
   INDEX `i_modificado` (`modificado` ASC) ,
   INDEX `i_criado` (`criado` ASC) ,

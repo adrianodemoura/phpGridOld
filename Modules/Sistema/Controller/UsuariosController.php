@@ -117,6 +117,10 @@ class UsuariosController extends SistemaAppController {
 			{
 				$msg = 'Usuário inválido !!!';
 				$this->setMsgFlash('Usuário inválido','msgFlashErro');
+				if (!empty($this->Usuario->erros))
+				{
+					$this->viewVars['erroBanco'] = $this->Usuario->erros['0'];
+				}
 			}
 		}
 	}
@@ -147,14 +151,28 @@ class UsuariosController extends SistemaAppController {
 	}
 
 	/**
+	 * Exibe a tela de instalação do banco de dados
+	 *
+	 * @return void
+	 */
+	public function instala_bd()
+	{
+		$this->layout 	= 'publico';
+		$modelClass 	= $this->modelClass;
+		include_once(APP.'Config/database.php');
+		$dbConfig = new Database_Config($this->$modelClass->database);
+		$this->viewVars['banco'] = $dbConfig->default;
+	}
+
+	/**
 	 * Exibe a tela de instalação do módulo sistema
 	 * 
 	 * @return	void
 	 */
-	public function instalacao()
+	public function instala_tb()
 	{
 		error_reporting(E_WARNING);
-		ini_set('display_errors', 0);
+		ini_set('display_errors', 1);
 
 		$this->layout = 'publico';
 		$sql = 'SELECT id from sis_usuarios where id=1';

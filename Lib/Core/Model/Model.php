@@ -220,21 +220,8 @@ class Model {
 				{
 					case '1049':
 					case '1045':
-						$msg = '<br /><br /><br /><br />
-						<center>
-						Erro: <b style="color: red;">' . $e->getMessage() . '</b>
-						
-							<p>N&atilde;o foi poss&iacute;vel conectar no banco de dados: </p>
-							</center>
-							<pre>
-							Pe&ccedil;a ao administrador do banco de dados para executar:
-							
-							create database '.$banco['database'].' character set '.$banco['encoding'].';
-							grant all privileges on '.$banco['database'].'.* to '.$banco['user'].'@'.$banco['host'].' identified by "'.$banco['password'].'" with grant option;
-							flush privileges;
-							</pre>
-							<p><center>Clique <a href="./instalacao">aqui</a> para tentar novamente.</center></p>';
-						echo $msg;
+						header('Location: '.getBase().'sistema/usuarios/instala_bd');
+						die();
 						break;
 				}
 				die("<center>!!</center>");
@@ -423,6 +410,9 @@ class Model {
 					$l++;
 				}
 			}
+		} else
+		{
+			array_push($this->erros, $erro['2']);
 		}
 
 		$ts = microtime(true);

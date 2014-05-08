@@ -35,6 +35,17 @@
 <br />
 <div class="container">
 
+<?php if (isset($erroBanco)) : ?>
+<div style='margin: 0px auto; width: 600px; padding: 3px; line-height: 30px; text-align: center; color: red;'>
+<?= $erroBanco ?>
+</div>
+<center>
+	Clique <a href='<?= getBase() ?>sistema/usuarios/instala_tb'>aqui</a> para continuar a instalação.
+</center>
+<br /><br />
+<?php endif ?>
+
+
 <center>
 	<a href='<?= $base ?>'>Volta para a página inicial</a>
 </center>

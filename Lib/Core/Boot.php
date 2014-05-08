@@ -190,15 +190,6 @@ class Boot {
 					$minhasPermissoes['imprimir'] 		= 1;
 					$minhasPermissoes['pesquisar'] 		= 1;
 					$minhasPermissoes['exportar'] 		= 1;
-
-					// recuperando todos os perfis para tela de configuração das permissões
-					$_perfis = $this->$controller->$model->query('SELECT id, nome FROM '.$this->$controller->$model->prefixo.'perfis WHERE id>1 ORDER BY nome');
-					$perfis = array();
-					foreach($_perfis as $_l => $_arrCmps)
-					{
-						$perfis[$_arrCmps['id']] = $_arrCmps['nome'];
-					}
-					$this->$controller->viewVars['permissoes']['perfis'] = $perfis;
 				}
 				$this->$controller->viewVars['minhasPermissoes'] = $minhasPermissoes;
 
