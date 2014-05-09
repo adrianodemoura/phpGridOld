@@ -19,6 +19,7 @@
 </script>
 
 <script type="text/javascript" src="<?= $base ?>js/jquery.min.js"></script>
+<script type="text/javascript" src="<?= $base ?>js/bootstrap.min.js"></script>
 <script type="text/javascript" src="<?= $base ?>js/padrao.js"></script>
 <?php if (isset($tempoOn)) : ?>
 <script src="<?= $base ?>js/jquery.chrony.min.js"></script>
