@@ -351,10 +351,10 @@ class UsuariosController extends SistemaAppController {
 		} else
 		{
 			$sql = "SELECT id FROM sis_modulos WHERE nome='".$modulo."'";
-			$res = $this->Usuario($sql);
+			$res = $this->Usuario->query($sql);
 			$modulo_id = $res['0']['id'];
 			$sql = "SELECT id FROM sis_cadastros WHERE cadastro='".$controller."'";
-			$res = $this->Usuario($sql);
+			$res = $this->Usuario->query($sql);
 			$cadastro_id = $res['0']['id'];
 
 			$sql = 'INSERT INTO sis_permissoes';
