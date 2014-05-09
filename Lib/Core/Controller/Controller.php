@@ -291,7 +291,7 @@ class Controller {
 		// recuperando os parâmetros da GET
 		$params['pag'] 		= isset($this->params['pag']) ? $this->params['pag'] : 1;
 		$params['pag']		= empty($params['pag']) ? 1 : $params['pag'];
-		$params['order'] 	= isset($this->params['ord']) ? $this->params['ord'] : array();
+		$params['order'] 	= isset($this->params['ord']) ? array($this->params['ord']) : array();
 		$params['direc'] 	= isset($this->params['dir']) ? $this->params['dir'] : 'ASC';
 
 		// recuperando o data
@@ -500,7 +500,7 @@ class Controller {
 			}
 			if (!empty($this->viewVars['urlRetorno']))
 			{
-				header('Location: '.$this->viewVars['urlRetorno']); die();
+				//header('Location: '.$this->viewVars['urlRetorno']); die();
 			}
 		}
 	}

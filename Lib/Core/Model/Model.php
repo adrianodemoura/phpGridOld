@@ -353,6 +353,10 @@ class Model {
 		} catch (Exception $e) 
 		{
 			$this->db->rollBack();
+			foreach($sqls as $_l => $_sql)
+			{
+				array_push($this->sqls,array('sql'=>$_sql,'ts'=>0,'li'=>1));
+			}
 			array_push($this->sqls,array('sql'=>'ROLLBACK;','ts'=>0.0001,'li'=>1));
 			$this->erros[$lE] = $e->getMessage();
 		}
@@ -533,14 +537,6 @@ class Model {
 		$pagT	= isset($params['pagT']) 	? $params['pagT'] 	: 20;
 		$distinct = isset($params['distinct']) ? $params['distinct'] : null;
 		$ali1	= $this->name;
-
-		// verificando os campos do order
-		$a = explode('_', $order);
-		if (count($a)>2)
-		{
-			$order = ucfirst($a['1']).'_'.$a['2'];
-			unset($a);
-		}
 
 		// verifica o nome de cada campo
 		if (!empty($fields))
@@ -729,6 +725,12 @@ class Model {
 				foreach($order as $_cmp)
 				{
 					if ($l) $sql .= ' AND ';
+					$a = explode('_', $_cmp);
+					if (count($a)>2)
+					{
+						$_cmp = ucfirst($a['1']).'_'.$a['2'];
+						unset($a);
+					}
 					$sql .= $_cmp;
 					$l++;
 				}
