@@ -36,6 +36,30 @@ class UsuariosController extends SistemaAppController {
 	public function index()
 	{
 		$this->viewVars['tituloPagina'] 	= 'Página Inicial';
+		$sql = "SELECT DISTINCT m.id, 
+			m.nome as modulo, m.titulo as titModulo, 
+			c.cadastro as cadastro, c.titulo as cadTitulo
+			FROM sis_modulos m
+			LEFT JOIN sis_cadastros c ON c.modulo_id = m.id";
+
+		if ($_SESSION['Usuario']['perfil_id']>1) // usuário administrador pega tudo
+		{
+			$sql .= " INNER JOIN sis_permissoes p 
+					ON p.modulo_id = m.id 
+					AND p.cadastro_id = c.id
+					AND p.visualizar = 1
+					AND p.perfil_id =".$_SESSION['Usuario']['perfil_id'];
+		}
+
+		$sql .= " WHERE m.ativo=1 AND c.ativo=1 ORDER BY m.titulo, c.cadastro";
+		$_data = $this->Usuario->query($sql);
+		$data = array();
+		foreach($_data as $_l => $_arrModus)
+		{
+			$data[$_arrModus['modulo']]['tit'] = $_arrModus['titModulo'];
+			$data[$_arrModus['modulo']]['cad'][$_arrModus['cadastro']] = $_arrModus['cadTitulo'];
+		}
+		$this->data = $data;
 		parent::index();
 	}
 

@@ -1150,6 +1150,7 @@ class Model {
 				FROM sis_modulos m
 				INNER JOIN sis_permissoes p 
 				ON  p.modulo_id = m.id 
+				AND p.visualizar = 1
 				AND p.perfil_id =".$idPerfil." ORDER BY m.nome";
 		} else
 		{
@@ -1175,7 +1176,7 @@ class Model {
 				INNER JOIN sis_cadastros c ON c.id = p.cadastro_id
 				INNER JOIN sis_modulos m ON m.id = c.modulo_id
 				WHERE p.perfil_id=".$idPerfil." 
-				 AND m.nome='".strtoupper($modulo)."' AND p.visualizar=1
+				 AND m.nome='".strtoupper($modulo)."' AND p.visualizar=1 AND c.ativo=1
 				ORDER BY c.cadastro";
 		} else
 		{

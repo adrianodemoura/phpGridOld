@@ -1,7 +1,30 @@
 <br />
 <br />
 <br />
-<div class='container'>
-<?php //debug($this); ?>
+<div id='painelCads' class='container'>
+
+<ul>
+<?php foreach($this->data as $_modu => $_arrModus) : ?>
+	<li>
+		<b><?= $_arrModus['tit'] ?></b>
+	</li>
+	<li>
+		<ul>
+			<?php foreach($_arrModus['cad'] as $_cad => $_tit) : 
+				$img = 'cadastro';
+				if (file_exists('./cads/'.strtolower($_cad).'.png')) $img = strtolower($_cad);
+			?>
+			<li>
+				<a href='<?= $this->viewVars['base'].strtolower($_modu.'/'.$_cad.'/listar') ?>'>
+				<img src='<?= $this->viewVars['base'] ?>cads/<?= $img ?>.png' /><br />
+				<?= $_tit ?>
+				</a>
+			</li>	
+			<?php endforeach ?>
+		</ul>
+	</li>
+
+<?php endforeach ?>
+</ul>
 </div>
 
