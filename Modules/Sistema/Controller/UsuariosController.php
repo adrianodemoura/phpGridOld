@@ -136,7 +136,7 @@ class UsuariosController extends SistemaAppController {
 				}
 
 				$this->setMsgFlash('Usuário autenticado com sucesso !!!','msgFlashOk');
-				$this->redirect('sistema','usuarios','info');
+				$this->redirect('sistema','usuarios','index');
 			} else
 			{
 				$msg = 'Usuário inválido !!!';
