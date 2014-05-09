@@ -1,7 +1,7 @@
 phpGrid
 ==========
 
-Php com OO, MVC, Auxiliares, jQuery, Bootstrap e tabelas.
+Php com OO, MVC, Auxiliares, PDO, jQuery, Bootstrap e tabelas.
 
 <b>1 - Requerimentos:</b><br />
 Servidor Web Apache versão 2 ou superior, com módulo rewrite habilitado.<br />
