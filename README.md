@@ -33,4 +33,8 @@ APP/webroot/css/module_controller_action.css
 dentro da view execute:
 <?php $this->head('css','action'); ?>
 
+<b>4 - Demonstrativo:</b><br />
+O demonstrativo pode ser acessado em http://www.deskfacil.com/phpgrid
+
+
 Se encontrar alguma dificuldade LEIA O CÓDIGO, se ainda assim continuar com dificuldades, DESISTA você é burro, brincadeirinha pode me contactar pelo e-mail adrianodemoura@gmail.com
