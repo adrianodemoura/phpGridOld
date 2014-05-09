@@ -1,13 +1,22 @@
+#painelCads
+{
+	background-color: #fff;
+	border: 5px solid #ccc;
+	-moz-border-radius: 9px;
+	-webkit-border-radius: 9px;
+	border-radius: 9px;
+}
 #painelCads ul
 {
 	list-style: none;
-	background-color: #fff;
 	padding: 10px 0px 10px 10px;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 6px;
-	border-radius: 6px;
 }
 
+#painelCads ul li ul
+{
+	/*background-color: #fff;
+	margin-bottom: 5px;*/
+}
 
 #painelCads ul li ul li
 {
