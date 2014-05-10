@@ -34,32 +34,29 @@
 	<!-- propriedades dos campos -->
 <?php
 	$c = '';
-	foreach($esquema as $_mod => $_arrCmps) 
+	foreach($esquema[$modelClass] as $_cmp => $_arrProp)
 	{
-		foreach($_arrCmps as $_cmp => $_arrProp)
+		$t = isset($_arrProp['tit']) ? $_arrProp['tit'] : $_cmp;
+		$p = array();
+
+		if (isset($_arrProp['key']) && $_arrProp['key']=='PRI') array_push($p, array('primary'=>1));
+		if (isset($_arrProp['notEmpty'])) array_push($p,array('obrigatorio'=>1));
+
+		if (!empty($p) && empty($c)) $c .= "{ $_mod : { ";
+
+		if (!empty($p))
 		{
-			$t = isset($_arrProp['tit']) ? $_arrProp['tit'] : $_cmp;
-			$p = array();
-
-			if (isset($_arrProp['key']) && $_arrProp['key']=='PRI') array_push($p, array('primary'=>1));
-			if (isset($_arrProp['notEmpty'])) array_push($p,array('obrigatorio'=>1));
-
-			if (!empty($p) && empty($c)) $c .= "{ $_mod : { ";
-
-			if (!empty($p))
+			$c .= " $_cmp : { ";
+			foreach($p as $_l => $_arrProp)
 			{
-				$c .= " $_cmp : { ";
-				foreach($p as $_l => $_arrProp)
+				foreach($_arrProp as $_cmp => $_vlr)
 				{
-					foreach($_arrProp as $_cmp => $_vlr)
-					{
-						if ($_l) $c .= ', ';
-						$c .= "$_cmp : $_vlr";
-					}
+					if ($_l) $c .= ', ';
+					$c .= "$_cmp : $_vlr";
 				}
-				$c .= '},'."\n";
 			}
-		} 
+			$c .= '},'."\n";
+		}
 	}
 	if (!empty($c)) echo "\tvar campos = ".trim($c,',').'}};'."\n\n";
 ?>
@@ -161,5 +158,5 @@
 <div id='tampaTudo'>tampaTudo</div>
 </body>
 </html>
-<?php //debug($this->viewVars); ?>
+<?php debug($fields); ?>
 <!-- tempo de execução <?= round((microtime(true)-INICIO),6) ?> segundos -->

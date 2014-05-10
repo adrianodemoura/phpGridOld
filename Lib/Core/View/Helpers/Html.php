@@ -44,7 +44,8 @@ class Html {
 		foreach($a as $_l => $_n)
 		{
 			$na	.= "[$_n]";
-			$id .= str_replace('_id','Id',ucfirst("$_n"));
+			//$id .= str_replace('_id','Id',ucfirst("$_n"));
+			$id .= ucfirst("$_n");
 		}
 		if ($tipo=='id') return $id; else return $na;
 	}
@@ -69,6 +70,7 @@ class Html {
 		$opcs['value']	= isset($opcs['value']) ? $opcs['value'] : '';
 		$opcs['value']	= isset($e['value']) ? $e['value'] : $opcs['value'];
 		$a = explode('.',$cmp);
+
 		$a['2'] = isset($a['2']) ? $a['2'] : $cmp;
 
 		if (isset($e['edicaoOff']) && $e['edicaoOff']==true) $opcs['disabled'] = 'disabled';
@@ -89,8 +91,8 @@ class Html {
 			{
 				if (strpos($_mod,'.'))
 				{
-					$a 		= explode('.',$_mod);
-					$_mod	= $a['1'];
+					$aa 	= explode('.',$_mod);
+					$_mod	= $aa['1'];
 				}
 				if (isset($_arrProp['ajax']))
 				{
@@ -271,9 +273,12 @@ class Html {
 				$opcs['type'] = 'hidden';
 				foreach($opcs as $_tag => $_vlr) if (!is_array($_vlr)) $input .= " $_tag='$_vlr'";
 				$input .= " />";
-				$vlr = '';
+				if (!empty($opcs['value']) && isset($opcs['options']))
+				{
+					$ajax['value'] = $opcs['options'][$opcs['value']];
+				}
 
-				$input .= "<div id='".$ajax['cmp']."' class='div_ajax'>".$ajax['value']."</div>";
+				$input .= "<div id='".$ajax['cmp']."' class='ajaxDiv".$this->domId($a['2'])." div_ajax'>".$ajax['value']."</div>";
 				$input .= "<img style='float: right; margin: 0px 5px 0px 0px;' src='".$this->base."img/bt_ajax.png' class='bt_lista_ajax'
 							onclick='
 								$(\"#ajaxTit\").html(\"".$ajax['titPesq']."\");
