@@ -61,6 +61,13 @@ class UsuariosController extends SistemaAppController {
 			$data[$_arrModus['modulo']]['cad'][$_arrModus['cadastro']] = $_arrModus['cadTitulo'];
 		}
 		$this->data = $data;
+		
+		// excluindo acessoNegado
+		if (isset($_SESSION['negadoAcesso']))
+		{
+			$this->viewVars['negadoAcesso'] = $_SESSION['negadoAcesso'];
+			unset($_SESSION['negadoAcesso']);
+		}
 		parent::index();
 	}
 
@@ -291,17 +298,6 @@ class UsuariosController extends SistemaAppController {
 		$this->viewVars['txt'] = isset($_SESSION['sistemaErro']['txt']) ? $_SESSION['sistemaErro']['txt'] : '';
 		$this->viewVars['tip'] = isset($_SESSION['sistemaErro']['tip']) ? $_SESSION['sistemaErro']['tip'] : '';
 		unset($_SESSION['sistemaErro']);
-	}
-
-	/**
-	 * Exibe a tela de Acesso Negado
-	 * 
-	 * @param	chaveMCA negada (ModuloControllerAction)
-	 * @return	void
-	 */
-	public function acesso_negado()
-	{
-		$this->viewVars['mvcRetorno'] = isset($_SESSION['acessoNegado']) ? $_SESSION['acessoNegado'] : null;
 	}
 
 	/**

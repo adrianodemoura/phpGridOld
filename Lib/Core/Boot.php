@@ -206,16 +206,6 @@ class Boot {
 			}
 		}
 
-		// excluindo acessoNegado
-		if (isset($_SESSION['acessoNegado']))
-		{
-			$chaveMCA = strtolower($module.'/'.$controller.'/'.$action);
-			if ($chaveMCA!='sistema/usuarios/acesso_negado')
-			{
-				unset($_SESSION['acessoNegado']);
-			}
-		}
-
 		// validando a permissão
 		if (isset($_SESSION['Usuario']) && $_SESSION['Usuario']['perfil'] != 'ADMINISTRADOR')
 		{
@@ -225,10 +215,10 @@ class Boot {
 				$pode = isset($minhasPermissoes['visualizar']) ? $minhasPermissoes['visualizar'] : 0;
 				if (!$pode)
 				{
-					$_SESSION['acessoNegado'] = strtolower($module.'/'.$controller.'/'.$action);
-					$_SESSION['sistemaErro']['tip'] = 'Acesso Negado';
-					$_SESSION['sistemaErro']['txt'] = 'Caro '.$_SESSION['Usuario']['nome'].', o seu perfil não possui privilégios suficientes para acessar a página '.strtolower($module.'/'.$controller.'/'.$action);
-					header('Location: '.$this->$controller->base.'sistema/usuarios/acesso_negado');
+					$_SESSION['negadoAcesso']['txt'] = 'Caro '.$_SESSION['Usuario']['nome'].', 
+						o seu perfil '.$_SESSION['Usuario']['perfil'].' não possui privilégios suficientes para acessar a página '.
+						strtolower($module.'/'.$controller.'/'.$action);
+					header('Location: '.$this->$controller->base.'sistema/usuarios/index');
 				}
 			}
 		}

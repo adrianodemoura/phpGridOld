@@ -45,6 +45,8 @@ class Agenda extends LocacaoApp {
 		(
 			'tit'		=> 'Data',
 			'mascara'	=> '99/99/9999 99:99:99',
+			'mascEdit'	=> array('d','m','y','h','i'),
+			'multMinu'	=> 5,
 		),
 		'sala_id'			=> array
 		(

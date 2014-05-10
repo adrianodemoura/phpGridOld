@@ -1,5 +1,8 @@
 <br />
 <div id='painelCads' class='container'>
+	<?php if (isset($_SESSION['negadoAcesso'])) : ?>
+	<?= $_SESSION['negadoAcesso']['txt'] ?>
+	<?php endif ?>
 
 <ul>
 <?php foreach($this->data as $_modu => $_arrModus) : ?>

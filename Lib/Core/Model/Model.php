@@ -108,7 +108,9 @@ class Model {
 	 * - unique			Não aceita valores duplicados para o campo
 	 * - filtro			Se o campo faz parte do filtro do cadastro
 	 * - emptyFiltro	Mensagem para o comboBox do filtro do campo
-	 * - type			Tipo do campo, pode ser numeric, float, varchar, text
+	 * - type			Tipo do campo, pode ser numeric, float, varchar, text, date, datetime
+	 * - mascEdit		Tipo de máscara usado para edição, exemplo: d/m/Y i:m:s
+	 * - multMinu		Múltiplo dos minutos, os minutos podem ser editados a cada 5 minutos, 10 minutos
 	 * - edicaoOff		Se verdadeiro o campo não será editável nos formulários de manutenção
 	 * - mascara		Máscara do campo
 	 * - upperOff		Por padrão, todos os campos são salvos em maiúsculo, mas com este parâmetro não.
@@ -998,7 +1000,7 @@ class Model {
 						}
 
 						// se é do tipo data
-						if (in_array($p['type'], array('datetime')))
+						if (in_array($p['type'], array('date','datetime')))
 						{
 							if (!empty($v))
 							{
@@ -1014,6 +1016,29 @@ class Model {
 						if (in_array($_cmp, $this->primaryKey))
 						{
 							$id = true;
+						}
+					} else
+					{
+						// se é do tipo data
+						if (in_array($p['type'], array('date','datetime')))
+						{
+							if (!empty($v))
+							{
+								$_v = $v['dia'].'/'.$v['mes'].'/'.$v['ano'];
+								if ($p['type']=='datetime')
+								{
+									$v['hor'] = isset($v['hor']) ? $v['hor'] : date('H');
+									$v['min'] = isset($v['min']) ? $v['min'] : date('m');
+									$v['seg'] = isset($v['seg']) ? $v['seg'] : date('s');
+									$_v .= ' '.$v['hor'].':'.$v['min'].':'.$v['seg'];
+								}
+								$v = $_v;
+								$n1	= explode('/', substr($v,0,10));
+								$n2 = substr($v,11,strlen($v));
+								if (empty($n2)) $n2 = date('H:i:s');
+								$v  = $n1['2'].'-'.$n1['1'].'-'.$n1['0'].' '.$n2;
+								$v 	= date($this->dateFormatBD, strtotime($v));
+							}
 						}
 					}
 					$_data[$_l][$_mod][$_cmp] = $v;

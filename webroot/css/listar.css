@@ -70,7 +70,7 @@
 }
 .tabLista .lista_input
 {
-	width: 120px;
+	min-width: 	20px;
 }
 .tabLista .inAlerta
 {
