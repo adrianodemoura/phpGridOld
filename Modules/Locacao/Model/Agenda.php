@@ -82,5 +82,13 @@ class Agenda extends LocacaoApp {
 				),
 			),
 		),
+		'criado'		=> array
+		(
+			'tit'		=> 'Criada',
+		),
+		'modificado'		=> array
+		(
+			'tit'		=> 'Modificada',
+		),
 	);
 }
