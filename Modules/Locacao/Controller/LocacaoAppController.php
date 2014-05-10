@@ -9,4 +9,12 @@
  */
 appUses('Controller','');
 class LocacaoAppController extends Controller {
+	/**
+	 * 
+	 */
+	public function beforeRender()
+	{
+		$this->viewVars['tituloModule'] = 'Locação';
+		parent::beforeRender();
+	}
 }

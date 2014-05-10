@@ -258,19 +258,19 @@ class Boot {
 			? $this->$controller->viewVars['tituloModule']
 			:  $module;
 		}
-		$this->$controller->viewVars['tituloController'] = isset( $this->$controller->viewVars['tituloController'])
+		$this->$controller->viewVars['tituloController'] = isset($this->$controller->viewVars['tituloController'])
 		  ?  $this->$controller->viewVars['tituloController']
 		  : $cadastros[strtoupper($controller)]['tit'];
+		$this->$controller->viewVars['tituloController'] = !empty($this->$controller->viewVars['tituloController'])
+		  ?  $this->$controller->viewVars['tituloController']
+		  : $controller;
 
-		$this->$controller->viewVars['tituloAction'] = isset( $this->$controller->viewVars['tituloAction'])
+		$this->$controller->viewVars['tituloAction'] = isset($this->$controller->viewVars['tituloAction'])
 		  ?  $this->$controller->viewVars['tituloAction']
 		  : ucfirst($action);
-		if (empty($this->$controller->viewVars['tituloAction']))
-		{
-			$this->$controller->viewVars['tituloAction'] = !empty($this->$controller->viewVars['tituloAction'])
-			? $this->$controller->viewVars['tituloAction']
-			:  ucfirst($action);
-		}
+		$this->$controller->viewVars['tituloAction'] = !empty($this->$controller->viewVars['tituloAction'])
+		  ?  $this->$controller->viewVars['tituloAction']
+		  : ucfirst($action);
 
 		// atualizando viewVars do controller com algumas informações do model
 		if (count($this->$controller->Model))

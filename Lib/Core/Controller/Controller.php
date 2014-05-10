@@ -711,6 +711,7 @@ class Controller {
 	 */
 	public function relatorios()
 	{
+		$this->viewVars['tituloAction'] = !empty($this->viewVars['tituloAction']) ? $this->viewVars['tituloAction'] : 'Relatórios';
 		$relatorios = isset($this->viewVars['relatorios']) ? $this->viewVars['relatorios'] : array();
 		$this->viewVars['relatorios'] = $relatorios;
 	}

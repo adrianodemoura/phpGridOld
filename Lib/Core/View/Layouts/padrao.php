@@ -130,6 +130,7 @@
 			</div>
 
 			<div style='float: left;'>
+				<?= $tituloController.' :: '.$tituloAction ?>
 			</div>
 		</div>
 

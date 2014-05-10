@@ -36,6 +36,7 @@ class UsuariosController extends SistemaAppController {
 	public function index()
 	{
 		$this->viewVars['tituloPagina'] 	= 'Página Inicial';
+		$this->viewVars['tituloAction'] 	= 'Painel';
 		$sql = "SELECT DISTINCT m.id, 
 			m.nome as modulo, m.titulo as titModulo, 
 			c.cadastro as cadastro, c.titulo as cadTitulo
