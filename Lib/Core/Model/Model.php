@@ -104,6 +104,7 @@ class Model {
 	 * Matriz com as propriedades de cada campo do model corrente
 	 * As propriedades do esquema podem ser:
 	 * - tit			Título do campo
+	 * - default		Determina o valor padrão do campo
 	 * - notempty		Não valores em branco para o campo
 	 * - unique			Não aceita valores duplicados para o campo
 	 * - filtro			Se o campo faz parte do filtro do cadastro

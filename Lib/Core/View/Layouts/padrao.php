@@ -158,5 +158,5 @@
 <div id='tampaTudo'>tampaTudo</div>
 </body>
 </html>
-<?php debug($fields); ?>
+<?php //debug($fields); ?>
 <!-- tempo de execução <?= round((microtime(true)-INICIO),6) ?> segundos -->
