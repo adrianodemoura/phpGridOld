@@ -50,6 +50,8 @@ class Agenda extends LocacaoApp {
 		(
 			'tit'			=> 'Sala',
 			'notEmpty'		=> true,
+			'filtro'		=> true,
+			'emptyFiltro'	=> '-- Salas --',
 			'belongsTo' 	=> array
 			(
 				'Sala'	=> array
@@ -64,8 +66,10 @@ class Agenda extends LocacaoApp {
 		),
 		'usuario_id'		=> array
 		(
-			'tit'			=> 'Usuário',
+			'tit'			=> 'Solicitante',
 			'notEmpty'		=> true,
+			'filtro'		=> true,
+			'emptyFiltro'	=> '-- Solicitantes --',
 			'belongsTo' 	=> array
 			(
 				'Sistema.Usuario'	=> array
