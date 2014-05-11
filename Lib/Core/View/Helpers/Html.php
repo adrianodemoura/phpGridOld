@@ -278,7 +278,7 @@ class Html {
 				if (in_array('h',$mas)) // hora
 				{
 					$input .= '<select name="'.$opcs['name'].'[hor]" id="'.$opcs['id'].'hor" class="'.$opcs['class'].'">'."\n";
-					for($i=0; $i<60; $i++)
+					for($i=0; $i<24; $i++)
 					{
 						$i = substr('00'.$i,strlen('00'.$i)-2,2);
 						$input .= '<option ';

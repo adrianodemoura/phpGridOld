@@ -244,19 +244,33 @@ class Model {
 	 */
 	public function validate()
 	{
+		$ids = array();
 		foreach($this->data as $_l	=> $_arrMods)
 		{
 			foreach($_arrMods[$this->name] as $_cmp => $_vlr)
 			{
-				$tit	= isset($this->esquema[$_cmp]['tit']) 	? $this->esquema[$_cmp]['tit'] : $_cmp;
+				$tit	= isset($this->esquema[$_cmp]['tit']) 		? $this->esquema[$_cmp]['tit'] 		: $_cmp;
 				$empty 	= isset($this->esquema[$_cmp]['notEmpty']) 	? $this->esquema[$_cmp]['notEmpty'] : null;
+				$unique	= isset($this->esquema[$_cmp]['unique']) 	? $this->esquema[$_cmp]['unique'] 	: null;
 				if (!empty($empty) && empty($_vlr))
 				{
 					$this->erros[$_l] = 'O Campo '.$tit.' é de preenchimento obrigatório';
 				}
+				if ($unique)
+				{
+					$idCor = isset($_arrMods[$this->name]['id']) ? $_arrMods[$this->name]['id'] : null;
+					$params['where'][$this->name.'.'.$_cmp] = $_vlr;
+					if ($idCor) $params['where'][$this->name.'.id <>'] = $idCor;
+					$_repete = $this->find('list',$params);
+					$repete = isset($_repete['0'][$this->name]) ? $_repete['0'][$this->name] : array();
+					if (!empty($repete))
+					{
+						$this->erros[$_l] = 'Duplicidade não aceita no campo '.$tit;
+					}
+				}
 			}
 		}
-		
+		if (!empty($this->erros)) return false;
 		return true;
 	}
 
@@ -684,6 +698,10 @@ class Model {
 				$b['1'] = isset($b['1']) ? $b['1'] : null;
 				switch(strtoupper($b['1']))
 				{
+					case '<>':
+						$_cmp = trim(str_replace('<>','',$_cmp));
+						$sql .= $_cmp." <> ".$_vlr;
+						break;
 					case 'IN':
 						$_cmp = trim(str_replace('IN','',$_cmp));
 						$sql .= $_cmp." IN ('".implode("','",$_vlr)."') ";
@@ -1066,7 +1084,6 @@ class Model {
 	 */
 	public function beforeFind($params=array())
 	{
-		
 		return $params;
 	}
 
