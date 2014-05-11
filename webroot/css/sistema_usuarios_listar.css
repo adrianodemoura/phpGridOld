@@ -6,6 +6,7 @@
 .in_celular
 {
 	text-align: center;
+	width: 110px;
 }
 .in_email
 {
@@ -18,6 +19,11 @@
 .in_senha
 {
 	width: 100px;
+}
+.in_ultimo_ip
+{
+	width: 100px;
+	text-align: center;
 }
 .thCidade_id
 {
