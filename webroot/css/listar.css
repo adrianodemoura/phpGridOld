@@ -103,7 +103,8 @@
 }
 .tabLista tr td img
 {
-	float: right;
+	float: left;
+	margin: 2px 5px 0px 0px;
 }
 .tabLista input,
 .tabLista select
