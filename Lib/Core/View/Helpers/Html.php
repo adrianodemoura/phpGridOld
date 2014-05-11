@@ -319,18 +319,16 @@ class Html {
 				$opcs['type'] = 'hidden';
 				foreach($opcs as $_tag => $_vlr) if (!is_array($_vlr)) $input .= " $_tag='$_vlr'";
 				$input .= " />";
-				if (!empty($opcs['value']) && isset($opcs['options']))
-				{
-					$ajax['value'] = $opcs['options'][$opcs['value']];
-				}
-
-				$input .= "<div id='".$ajax['cmp']."' class='ajaxDiv".$this->domId($a['2'])." div_ajax'>".$ajax['value']."</div>";
-				$input .= "<img style='float: right; margin: 0px 5px 0px 0px;' src='".$this->base."img/bt_ajax.png' class='bt_lista_ajax'
+				if (!empty($opcs['value']) && isset($opcs['options'])) $ajax['value'] = $opcs['options'][$opcs['value']];
+				$input .= "<div id='".$ajax['cmp']."' class='ajaxDiv".$this->domId($a['2'])." div_ajax'>".$ajax['value']."&nbsp;&nbsp;&nbsp;";
+				$input .= "<img src='".$this->base."img/bt_ajax.png' class='bt_lista_ajax'
 							onclick='
 								$(\"#ajaxTit\").html(\"".$ajax['titPesq']."\");
 								$(\"#ajaxCmp\").val(\"".$opcs['id']."\"); 
 								$(\"#ajaxDest\").val(\"".$ajax['url']."\"); 
 								showAjaxForm();' />";
+				
+				$input .= "</div>";
 				break;
 			default:
 				$input = "<input ";

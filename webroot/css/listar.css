@@ -99,6 +99,11 @@
 {
 	border-bottom: 1px solid #ccc;
 	border-right: 1px solid #ccc;
+	white-space: nowrap;
+}
+.tabLista tr td img
+{
+	float: right;
 }
 .tabLista input,
 .tabLista select
