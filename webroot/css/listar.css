@@ -13,7 +13,6 @@
 	margin: 0px 10px 0px 0px;
 }
 
-
 /**********************************************/
 .paginacao
 {
@@ -59,8 +58,6 @@
 /**********************************************/
 .tabela
 {
-	/*background-color: #fff;
-	padding: 4px;*/
 	clear: both;
 	display: table;
 }
@@ -165,16 +162,3 @@
 {
 	cursor: pointer;
 }
-/*
-.tabLista .cmpPesquisa
-{
-	position: absolute;
-}
-.tabLista .cmpPesquisaRes
-{
-	position: absolute;
-	background-color: #fff;
-	padding: 5px;
-	display: none;
-	border: 1px solid #ddd;
-}*/
