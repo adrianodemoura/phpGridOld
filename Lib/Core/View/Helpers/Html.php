@@ -176,7 +176,51 @@ class Html {
 				$input .= '</select>';
 				break;
 			case 'date':
+				$mas = isset($e['mascEdit']) ? $e['mascEdit'] : array('d','m','y');
+				$_vd = explode('/',$opcs['value']);
+				$dia = 1;
+				$mes = 1;
+				$ano = date('Y');
+				$dia = !empty($_vd['0']) ? $_vd['0'] : $dia;
+				$mes = !empty($_vd['1']) ? $_vd['1'] : $mes;
+				$ano = !empty($_vd['2']) ? $_vd['2'] : $ano;
 				$input = '';
+				
+				if (in_array('d',$mas)) // dia
+				{
+					$input .= '<select name="'.$opcs['name'].'[dia]" id="'.$opcs['id'].'dia" class="'.$opcs['class'].'">'."\n";
+					for($i=1; $i<32; $i++)
+					{
+						$i = substr('00'.$i,strlen('00'.$i)-2,2);
+						$input .= '<option ';
+						if ($i==$dia) $input .= ' selected="selected" ';
+						$input .= 'value="'.$i.'">'.$i.'</option>';
+					}
+					$input .= '</select>'."\n";
+				}
+				if (in_array('m',$mas)) // mes
+				{
+					$input .= '<select name="'.$opcs['name'].'[mes]" id="'.$opcs['id'].'mes" class="'.$opcs['class'].'">'."\n";
+					for($i=1; $i<13; $i++)
+					{
+						$i = substr('00'.$i,strlen('00'.$i)-2,2);
+						$input .= '<option ';
+						if ($i==$mes) $input .= ' selected="selected" ';
+						$input .= 'value="'.$i.'">'.$i.'</option>';
+					}
+					$input .= '</select>'."\n";
+				}
+				if (in_array('y',$mas)) // ano
+				{
+					$input .= '<select name="'.$opcs['name'].'[ano]" id="'.$opcs['id'].'ano" class="'.$opcs['class'].'">'."\n";
+					for($i=date('Y')+1; $i>date('Y')-100; $i--)
+					{
+						$input .= '<option ';
+						if ($i==$ano) $input .= ' selected="selected" ';
+						$input .= 'value="'.$i.'">'.$i.'</option>';
+					}
+					$input .= '</select>'."\n";
+				}
 				break;
 			case 'datetime':
 				$mas = isset($e['mascEdit']) ? $e['mascEdit'] : array('d','m','y','h','i','s');
@@ -252,6 +296,7 @@ class Html {
 						$input .= '<option ';
 						if ($i==$min) $input .= ' selected="selected" ';
 						$input .= 'value="'.$i.'">'.$i.'</option>';
+						if (isset($e['multMinu'])) for($o=0; $o<($e['multMinu']-1); $o++) $i++;
 					}
 					$input .= '</select>'."\n";
 				}
@@ -264,6 +309,7 @@ class Html {
 						$input .= '<option ';
 						if ($i==$seg) $input .= ' selected="selected" ';
 						$input .= 'value="'.$i.'">'.$i.'</option>';
+						if (isset($e['multSeg'])) for($o=0; $o<($e['multSeg']-1); $o++) $i++;
 					}
 					$input .= '</select>'."\n";
 				}
