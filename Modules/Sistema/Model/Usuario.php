@@ -88,7 +88,8 @@ class Usuario extends SistemaApp {
 		(
 			'tit'		=> 'e-mail',
 			'upperOff'	=> true,
-			'pesquisar'	=> '&'
+			'pesquisar'	=> '&',
+			'unique'	=> true,
 		),
 		'celular'		=> array
 		(
@@ -98,7 +99,9 @@ class Usuario extends SistemaApp {
 		'trocar_senha'	=> array
 		(
 			'tit'		=> 'Trocar Senha',
-			'options'	=> array('1'=>'Sim','0'=>'Não')
+			'filtro'	=> true,
+			'options'	=> array('1'=>'Sim','0'=>'Não'),
+			'emptyFiltro'	=> '-- Trocar Senha --',
 		),
 		'cidade_id'		=> array
 		(

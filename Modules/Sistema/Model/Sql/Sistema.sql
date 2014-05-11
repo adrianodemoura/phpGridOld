@@ -186,6 +186,7 @@ CREATE  TABLE IF NOT EXISTS `sis_usuarios` (
   INDEX `i_nome` (`nome` ASC) ,
   INDEX `i_email` (`email` ASC) ,
   INDEX `i_acessos` (`acessos` ASC) ,
+  INDEX `i_trocarsenha` (`trocar_senha` ASC) ,
   INDEX `i_modificado` (`modificado` ASC) ,
   INDEX `i_criado` (`criado` ASC) ,
   INDEX `fk_usuarios_cidades` (`cidade_id` ASC) )

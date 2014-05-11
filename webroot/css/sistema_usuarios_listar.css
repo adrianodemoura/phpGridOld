@@ -11,10 +11,13 @@
 {
 	width: 200px;
 }
-
 .in_nome
 {
 	width: 310px;
+}
+.in_senha
+{
+	width: 100px;
 }
 .thCidade_id
 {

@@ -235,6 +235,16 @@ class Model {
 	}
 
 	/**
+	 * Executa código antes do método validade
+	 * 
+	 * @return	boolean		Verdadeiro de deve continuar, Falso se não.
+	 */
+	public function beforeValidate()
+	{
+		return true;
+	}
+
+	/**
 	 * Executa a validação de cada campo do model
 	 * As validações podem ser: 
 	 * - notnull, não aceita valores nulos
@@ -244,6 +254,8 @@ class Model {
 	 */
 	public function validate()
 	{
+		if (!$this->beforeValidate()) return false;
+
 		$ids = array();
 		foreach($this->data as $_l	=> $_arrMods)
 		{
@@ -271,7 +283,17 @@ class Model {
 			}
 		}
 		if (!empty($this->erros)) return false;
+		$this->afterValidate();
 		return true;
+	}
+
+	/**
+	 * Executa código depois do método validade
+	 *
+	 * @return void
+	 */
+	public function afterValidate()
+	{
 	}
 
 	/**
