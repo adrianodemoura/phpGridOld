@@ -39,7 +39,6 @@ class Agenda extends LocacaoApp {
 		(
 			'tit'		=> 'Motivo',
 			'notEmpty' 	=> true,
-			'unique'	=> true,
 			'pesquisar'	=> '&',
 		),
 		'data'			=> array
