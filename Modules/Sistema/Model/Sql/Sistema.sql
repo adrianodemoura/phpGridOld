@@ -158,7 +158,7 @@ CREATE  TABLE IF NOT EXISTS `sis_bairros` (
   INDEX `fk_territorio` (`territorio_id` ASC) ,
   INDEX `fk_regional` (`regional_id` ASC) ,
   INDEX `fk_cidades` (`cidade_id` ASC) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
 COMMENT = 'bairros bh';
