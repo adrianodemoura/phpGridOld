@@ -66,7 +66,7 @@
 	{
 
 	<?php
-	if (!empty($msgFlash)) 	echo '$("#msgFlash").fadeOut(4000);'."\n";
+	if (!empty($msgFlash)) 	echo '$("#msgFlash").fadeOut(10000);'."\n";
 	if (!empty($this->viewVars['onRead'])) 	foreach($this->viewVars['onRead'] as $_l => $_line) echo $_line.";\n";
 	?>
 
