@@ -70,10 +70,10 @@
 </tr>
 <?php endif ?>
 
-<?php if (isset($this->viewVars['erros'][$_l])) : ?>
+<?php if (isset($this->viewVars['erros'][($_l+1)])) : ?>
 <tr>
 	<td colspan='100' class='td_lista_erro'>
-		<?= $this->viewVars['erros'][$_l] ?>
+		<?= $this->viewVars['erros'][($_l+1)] ?>
 	</td>
 </tr>
 <?php endif ?>

@@ -60,6 +60,15 @@ class Model {
 	public $primaryKey	= array();
 
 	/**
+	 * chave que NÃO pode repetir
+	 * - Esta chave será será testada no método validade
+	 *
+	 * @var 	array
+	 * @access  public
+	 */
+	public $uniqueKey	= array();
+
+	/**
 	 * Historic of the sqls
 	 * 
 	 * @var		array
@@ -245,168 +254,12 @@ class Model {
 	}
 
 	/**
-	 * Executa a validação de cada campo do model
-	 * As validações podem ser: 
-	 * - notnull, não aceita valores nulos
-	 * - unique, não aceita duplicidades
-	 * 
-	 * @return	boolean
-	 */
-	public function validate()
-	{
-		if (!$this->beforeValidate()) return false;
-
-		$ids = array();
-		foreach($this->data as $_l	=> $_arrMods)
-		{
-			foreach($_arrMods[$this->name] as $_cmp => $_vlr)
-			{
-				$tit	= isset($this->esquema[$_cmp]['tit']) 		? $this->esquema[$_cmp]['tit'] 		: $_cmp;
-				$empty 	= isset($this->esquema[$_cmp]['notEmpty']) 	? $this->esquema[$_cmp]['notEmpty'] : null;
-				$unique	= isset($this->esquema[$_cmp]['unique']) 	? $this->esquema[$_cmp]['unique'] 	: null;
-				if (!empty($empty) && empty($_vlr))
-				{
-					$this->erros[$_l] = 'O Campo '.$tit.' é de preenchimento obrigatório';
-				}
-				if ($unique)
-				{
-					$idCor = isset($_arrMods[$this->name]['id']) ? $_arrMods[$this->name]['id'] : null;
-					$params['where'][$this->name.'.'.$_cmp] = $_vlr;
-					if ($idCor) $params['where'][$this->name.'.id <>'] = $idCor;
-					$_repete = $this->find('list',$params);
-					$repete = isset($_repete['0'][$this->name]) ? $_repete['0'][$this->name] : array();
-					if (!empty($repete))
-					{
-						$this->erros[$_l] = 'Duplicidade não aceita no campo '.$tit;
-					}
-				}
-			}
-		}
-		if (!empty($this->erros)) return false;
-		$this->afterValidate();
-		return true;
-	}
-
-	/**
 	 * Executa código depois do método validade
 	 *
 	 * @return void
 	 */
 	public function afterValidate()
 	{
-	}
-
-	/**
-	 * Salva um registro ou conjunto de registros no banco de dados.
-	 * As querys serão executadas dentro de uma transação, certifique-se de que o banco de dados possui o devido suporte.
-	 * 
-	 * @param	array	$data	Matriz com os dados a serem salvos
-	 * @return	boolean	Retorna verdadeiro em caso de sucesso
-	 */
-	public function save($data=array())
-	{
-		$this->open();
-		$sqls	= array();
-		$sqlTi 	= 'INSERT';
-		$sqlUp 	= '';
-		$sqlIn 	= '';
-		$where 	= '';
-		$lCm	= 0;
-		$lPk	= 0;
-		$this->data = $this->getData($data);
-
-		if (!$this->validate()) return false;
-
-		if (!$this->beforeSave()) return false;
-
-		// dando um loop na data pra criar cada sql
-		foreach($this->data as $_l => $_arrMods)
-		{
-			foreach($_arrMods as $_l2 => $_arrCmps)
-			{
-				$sqlInC= array();
-				$sqlInV= array();
-				$sqlUp = '';
-				$where = '';
-				foreach($_arrCmps as $_cmp => $_vlr)
-				{
-					$tipo = (isset($this->esquema[$_cmp]['type'])) ? $this->esquema[$_cmp]['type'] : 'text';
-					if ($lCm>0 && !empty($sqlUp)) $sqlUp .= ", ";
-					if (!empty($_vlr)) $sqlTi = (in_array($_cmp,$this->primaryKey)) ? 'UPDATE' : $sqlTi;
-
-					switch($tipo)
-					{
-						case 'numero':
-						case 'numeric':
-						case 'float':
-						case 'integer':
-						case 'int':
-							$_sqlUp = "$_cmp=$_vlr";
-							array_push($sqlInC,$_cmp);
-							array_push($sqlInV,$_vlr);
-							break;
-						default:
-							$_sqlUp = "$_cmp='$_vlr'";
-							array_push($sqlInC,$_cmp);
-							array_push($sqlInV,"'$_vlr'");
-					}
-					$lCm++;
-					if (in_array($_cmp,$this->primaryKey))
-					{
-						if (!empty($where)) $where .= ' AND ';
-						$where .= $_sqlUp;
-					} else
-					{
-						$sqlUp .= $_sqlUp;
-					}
-				}
-			}
-			switch($sqlTi)
-			{
-				case 'UPDATE':
-					$sqls[$_l] = 'UPDATE '.$this->prefixo.$this->tabela.' SET '.$sqlUp.' WHERE '.$where.';';
-					break;
-				case 'INSERT':
-					$sqls[$_l] = 'INSERT INTO '.$this->prefixo.$this->tabela.' ('.implode(',',$sqlInC).') VALUES ('.implode(',',$sqlInV).');';
-					break;
-			}
-		}
-
-		// iniciando a transação
-		array_push($this->sqls,array('sql'=>'BEGIN;','ts'=>0.0001,'li'=>1));
-		$lE = 0; // linha erro
-		try
-		{
-			$this->db->beginTransaction();
-			$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			foreach($sqls as $_l => $_sql)
-			{
-				$lE = $_l;
-				$ini = microtime(true);
-				$this->db->exec($_sql);
-				$ts  = round((microtime(true)-$ini),6);
-				array_push($this->sqls,array('sql'=>$_sql,'ts'=>$ts,'li'=>1));
-			}
-			if ($sqlTi=='INSERT') $this->ultimoId = $this->db->lastInsertId();
-			$this->db->commit();
-		} catch (Exception $e) 
-		{
-			$this->db->rollBack();
-			foreach($sqls as $_l => $_sql)
-			{
-				array_push($this->sqls,array('sql'=>$_sql,'ts'=>0,'li'=>1));
-			}
-			array_push($this->sqls,array('sql'=>'ROLLBACK;','ts'=>0.0001,'li'=>1));
-			$this->erros[$lE] = $e->getMessage();
-		}
-
-		// se não tem erros
-		if (empty($this->erros))
-		{
-			array_push($this->sqls,array('sql'=>'COMMIT;','ts'=>0.0001,'li'=>1));
-			$this->afterSave();
-			return true;
-		} else return false;
 	}
 
 	/**
@@ -484,7 +337,7 @@ class Model {
 	 */
 	public function exclude($data=array())
 	{
-		$this->data = $this->getData($data);
+		$this->data = $data;
 
 		if (!$this->beforeExclude()) return false;
 
@@ -1040,7 +893,7 @@ class Model {
 							$v = str_replace(array('-','_','(',')','\\','.'),'',$v);
 						}
 
-						// se é do tipo data
+						// se é do tipo data no formato string
 						if (in_array($p['type'], array('date','datetime')))
 						{
 							if (!empty($v))
@@ -1060,25 +913,12 @@ class Model {
 						}
 					} else
 					{
-						// se é do tipo data
+						// se é do tipo data no formato array
 						if (in_array($p['type'], array('date','datetime')))
 						{
 							if (!empty($v))
 							{
-								$_v = $v['dia'].'/'.$v['mes'].'/'.$v['ano'];
-								if ($p['type']=='datetime')
-								{
-									$v['hor'] = isset($v['hor']) ? $v['hor'] : date('H');
-									$v['min'] = isset($v['min']) ? $v['min'] : date('m');
-									$v['seg'] = isset($v['seg']) ? $v['seg'] : date('s');
-									$_v .= ' '.$v['hor'].':'.$v['min'].':'.$v['seg'];
-								}
-								$v = $_v;
-								$n1	= explode('/', substr($v,0,10));
-								$n2 = substr($v,11,strlen($v));
-								if (empty($n2)) $n2 = date('H:i:s');
-								$v  = $n1['2'].'-'.$n1['1'].'-'.$n1['0'].' '.$n2;
-								$v 	= date($this->dateFormatBD, strtotime($v));
+								$v 	= $this->getData($v,$_cmp);
 							}
 						}
 					}
@@ -1164,44 +1004,6 @@ class Model {
 	}
 
 	/**
-	 * Retorna o valor data substituindo o título pelo o nome do campo
-	 * - Esta funcionalidade foi apalicada por questões de segurança, não se pode 
-	 *   jogar o nome do campo na view, então jogas-se o nome do campo criptografado
-	 *   e depois substitui a cripotografia pelo nome ral do campo.
-	 *
-	 * @param 	array 	Matriz com o data oriundo do controller
-	 * @return 	array 	Matriz data remasterizada.
-	 */
-	public function getData($data=array())
-	{
-		/*$_data = array();
-		foreach($data as $_l => $_arrMods)
-		{
-			foreach($_arrMods as $_mod => $_arrCmps)
-			{
-				foreach($_arrCmps as $_tit => $_vlr)
-				{
-					foreach($this->esquema as $_cmp => $_arrProp)
-					{
-						$cmp = null;
-						if ($_arrProp['tit']==$_tit)
-						{
-							$cmp = $_cmp;
-							break;
-						}
-					}
-					if (empty($cmp))
-					{
-						die('Erro ao localizar nome do campo !!! não se esqueça de utilizar o título do campo e não o seu nome nos formulários e/ou controller.');
-					}
-					$_data[$_l][$_mod][$cmp] = $_vlr;
-				}
-			}
-		}*/
-		return $data;
-	}
-
-	/**
 	 * Retorna uma matriz com os módulos em que o perfil tem acesso
 	 *
 	 * @param 	integer 	$idPerfil 	Id do Perfil a pesquisar
@@ -1252,5 +1054,268 @@ class Model {
 					ORDER BY c.cadastro";
 		}
 		return $this->query($sql);
+	}
+
+	/**
+	 * Retorna a data do formato array para o formato string
+	 *
+	 * @param 	$v 		data no formato array
+	 * @param 	$cmp 	nome do campo
+	 * @return 	$v 		data no formato string
+	 */
+	public function getData($v=array(), $cmp='')
+	{
+		$_v = $v['dia'].'/'.$v['mes'].'/'.$v['ano'];
+		$p 	= $this->esquema[$cmp];
+		if ($p['type']=='datetime')
+		{
+			$v['hor'] = isset($v['hor']) ? $v['hor'] : 0;
+			$v['min'] = isset($v['min']) ? $v['min'] : 0;
+			$v['seg'] = isset($v['seg']) ? $v['seg'] : 0;
+			$_v .= ' '.$v['hor'].':'.$v['min'].':'.$v['seg'];
+		}
+		$v = $_v;
+		$n1	= explode('/', substr($v,0,10));
+		$n2 = substr($v,11,strlen($v));
+		if (empty($n2)) $n2 = date('H:i:s');
+		$v  = $n1['2'].'-'.$n1['1'].'-'.$n1['0'].' '.$n2;
+		$v 	= date($this->dateFormatBD, strtotime($v));
+		return $v;
+	}
+
+	/**
+	 * Salva um registro ou conjunto de registros no banco de dados.
+	 * As querys serão executadas dentro de uma transação, certifique-se de que o banco de dados possui o devido suporte.
+	 * 
+	 * @param	array	$data	Matriz com os dados a serem salvos
+	 * @return	boolean	Retorna verdadeiro em caso de sucesso
+	 */
+	public function save($data=array())
+	{
+		$this->open();
+		$sqls	= array();
+		$sqlTi 	= 'INSERT';
+		$sqlUp 	= '';
+		$sqlIn 	= '';
+		$where 	= '';
+		$lCm	= 0;
+		$lPk	= 0;
+		$this->data = $data;
+
+		// identificando os valores dos campos ids
+		foreach($this->data as $_l => $_arrMods)
+		{
+			foreach($this->primaryKey as $_l2 => $_cmp)
+			{
+				if (isset($_arrMods[$this->name][$_cmp]))
+				{
+					$this->ids[$_l][$_cmp] = $_arrMods[$this->name][$_cmp];
+				}
+			}
+		}
+
+		if (!$this->validate()) return false;
+
+		if (!$this->beforeSave()) return false;
+
+		// dando um loop na data pra criar cada sql
+		foreach($this->data as $_l => $_arrMods)
+		{
+			foreach($_arrMods as $_l2 => $_arrCmps)
+			{
+				$sqlInC= array();
+				$sqlInV= array();
+				$sqlUp = '';
+				$where = '';
+				foreach($_arrCmps as $_cmp => $_vlr)
+				{
+					$tipo = (isset($this->esquema[$_cmp]['type'])) ? $this->esquema[$_cmp]['type'] : 'text';
+					if ($lCm>0 && !empty($sqlUp)) $sqlUp .= ", ";
+					if (!empty($_vlr)) $sqlTi = (in_array($_cmp,$this->primaryKey)) ? 'UPDATE' : $sqlTi;
+
+					switch($tipo)
+					{
+						case 'numero':
+						case 'numeric':
+						case 'float':
+						case 'integer':
+						case 'int':
+							$_sqlUp = "$_cmp=$_vlr";
+							array_push($sqlInC,$_cmp);
+							array_push($sqlInV,$_vlr);
+							break;
+						default:
+							$_sqlUp = "$_cmp='$_vlr'";
+							array_push($sqlInC,$_cmp);
+							array_push($sqlInV,"'$_vlr'");
+					}
+					$lCm++;
+					if (in_array($_cmp,$this->primaryKey))
+					{
+						if (!empty($where)) $where .= ' AND ';
+						$where .= $_sqlUp;
+					} else
+					{
+						$sqlUp .= $_sqlUp;
+					}
+				}
+			}
+			switch($sqlTi)
+			{
+				case 'UPDATE':
+					$sqls[$_l] = 'UPDATE '.$this->prefixo.$this->tabela.' SET '.$sqlUp.' WHERE '.$where.';';
+					break;
+				case 'INSERT':
+					$sqls[$_l] = 'INSERT INTO '.$this->prefixo.$this->tabela.' ('.implode(',',$sqlInC).') VALUES ('.implode(',',$sqlInV).');';
+					break;
+			}
+		}
+
+		// iniciando a transação
+		array_push($this->sqls,array('sql'=>'BEGIN;','ts'=>0.0001,'li'=>1));
+		$lE = 0; // linha erro
+		try
+		{
+			$this->db->beginTransaction();
+			$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			foreach($sqls as $_l => $_sql)
+			{
+				$lE = $_l;
+				$ini = microtime(true);
+				$this->db->exec($_sql);
+				$ts  = round((microtime(true)-$ini),6);
+				array_push($this->sqls,array('sql'=>$_sql,'ts'=>$ts,'li'=>1));
+			}
+			if ($sqlTi=='INSERT') $this->ultimoId = $this->db->lastInsertId();
+			$this->db->commit();
+		} catch (Exception $e) 
+		{
+			$this->db->rollBack();
+			foreach($sqls as $_l => $_sql)
+			{
+				array_push($this->sqls,array('sql'=>$_sql,'ts'=>0,'li'=>1));
+			}
+			array_push($this->sqls,array('sql'=>'ROLLBACK;','ts'=>0.0001,'li'=>1));
+			$this->erros[$lE] = $e->getMessage();
+		}
+
+		// se não tem erros
+		if (empty($this->erros))
+		{
+			array_push($this->sqls,array('sql'=>'COMMIT;','ts'=>0.0001,'li'=>1));
+			$this->afterSave();
+			return true;
+		} else return false;
+	}
+
+	/**
+	*/
+	public function getMsgModel($msg='',$data=array())
+	{
+		$_msg = $msg;
+		foreach($data as $_l => $_arrMods)
+		{
+			foreach($_arrMods as $_mod => $_arrCmps)
+			{
+				foreach($_arrCmps as $_cmp => $_vlr)
+				{
+					$_msg = str_replace('{'.$_mod.'.'.$_cmp.'}', $_vlr, $_msg);
+				}
+			}
+		}
+		return $_msg;
+	}
+
+	/**
+	 * Executa a validação de cada campo do model
+	 * As validações podem ser: 
+	 * - notnull, não aceita valores nulos
+	 * - unique, não aceita duplicidades
+	 * - uniqueKey, testa a duplicidade de chaves montadas por mais de um campo
+	 * 
+	 * @return	boolean
+	 */
+	public function validate()
+	{
+		if (!$this->beforeValidate()) return false;
+
+		$duplaChaves 	= array();
+		$ids 			= array();
+
+		$ids = array();
+		foreach($this->data as $_l	=> $_arrMods)
+		{
+			foreach($_arrMods[$this->name] as $_cmp => $_vlr)
+			{
+				$tit	= isset($this->esquema[$_cmp]['tit']) 		? $this->esquema[$_cmp]['tit'] 		: $_cmp;
+				$empty 	= isset($this->esquema[$_cmp]['notEmpty']) 	? $this->esquema[$_cmp]['notEmpty'] : null;
+				$unique	= isset($this->esquema[$_cmp]['unique']) 	? $this->esquema[$_cmp]['unique'] 	: null;
+				if (!empty($empty) && empty($_vlr))
+				{
+					$this->erros[$_l] = 'O Campo '.$tit.' é de preenchimento obrigatório';
+				}
+				if ($unique)
+				{
+					$idCor = isset($_arrMods[$this->name]['id']) ? $_arrMods[$this->name]['id'] : null;
+					$params['where'][$this->name.'.'.$_cmp] = $_vlr;
+					if ($idCor) $params['where'][$this->name.'.id <>'] = $idCor;
+					$_repete = $this->find('list',$params);
+					$repete = isset($_repete['0'][$this->name]) ? $_repete['0'][$this->name] : array();
+					if (!empty($repete))
+					{
+						$this->erros[$_l] = 'Duplicidade não aceita no campo '.$tit;
+					}
+				}
+			}
+
+			// incrementando os campos uniquekey
+			if (!empty($this->uniqueKey))
+			{
+				foreach($this->uniqueKey as $_l2 => $_arrProp)
+				{
+					$duplaChaves[$_l]['msg'] = $_arrProp['msg'];
+					foreach($_arrProp['fields'] as $_cmp)
+					{
+						$duplaChaves[$_l][$_cmp] = $_arrMods[$this->name][$_cmp];
+					}
+				}
+			}
+		}
+
+		// validando as chaves duplas
+		if (count($duplaChaves))
+		{
+			foreach($duplaChaves as $_l => $_arrCmps)
+			{
+				$params = array();
+				if (isset($this->ids[$_l]))
+				{
+					foreach($this->ids[$_l] as $_cmp2 => $_vlr2)
+					{
+						$params['where'][$this->name.'.'.$_cmp2.' <>'] = $_vlr2;
+					}
+				}
+				foreach($_arrCmps as $_cmp => $_vlr)
+				{
+					if ($_cmp!='msg')
+					{
+						$p = $this->esquema[$_cmp];
+						if (in_array($p['type'], array('date','datetime'))) $_vlr = $this->getData($_vlr,$_cmp);
+						$params['where'][$this->name.'.'.$_cmp] = $_vlr;
+					}
+				}
+				$res = $this->find('all',$params);
+				//debug($res);
+				if (count($res))
+				{
+					$this->erros[$_l] = $this->getMsgModel($_arrCmps['msg'],$res);
+				}
+			}
+		}
+
+		// se ocorreu algum erro
+		if (!empty($this->erros)) return false;
+		$this->afterValidate();
+		return true;
 	}
 }

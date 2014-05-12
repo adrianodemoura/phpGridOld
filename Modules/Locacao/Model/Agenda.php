@@ -24,6 +24,22 @@ class Agenda extends LocacaoApp {
 	public $primaryKey 	= array('id');
 
 	/**
+	 * chave que NÃO pode repetir
+	 * - Esta chave será será testada no método validade
+	 *
+	 * @var 	array
+	 * @access  public
+	 */
+	public $uniqueKey	= array
+	(
+		'0' => array
+		(
+			'msg' 		=> 'A sala {Sala.titulo} já foi agendada por {Usuario.nome} nesta dia e horário !!!',
+			'fields' 	=> array('data','sala_id'),
+		),
+	);
+
+	/**
 	 * Propriedade de cada campo da tabela usuários
 	 * 
 	 * @var		array
@@ -46,7 +62,7 @@ class Agenda extends LocacaoApp {
 			'tit'		=> 'Data',
 			'mascara'	=> '99/99/9999 99:99:99',
 			'mascEdit'	=> array('d','m','y','h','i'),
-			'multMinu'	=> 5,
+			'multMinu'	=> 30,
 		),
 		'sala_id'			=> array
 		(
