@@ -11,7 +11,7 @@ CREATE  TABLE IF NOT EXISTS `loc_salas` (
   INDEX `i_ativo` (`ativo` ASC) ,
   INDEX `i_modificado` (`modificado` ASC) ,
   INDEX `i_criado` (`criado` ASC) )
-ENGINE = MyISAM;
+ENGINE = InnoDB;
 
 DROP TABLE IF EXISTS `loc_agendas` ;
 CREATE  TABLE IF NOT EXISTS `loc_agendas` (
@@ -29,4 +29,4 @@ CREATE  TABLE IF NOT EXISTS `loc_agendas` (
   INDEX `i_modificado` (`modificado` ASC) ,
   INDEX `i_criado` (`criado` ASC) ,
   INDEX `i_usuario_id` (`usuario_id` ASC) )
-ENGINE = MyISAM;
+ENGINE = InnoDB;

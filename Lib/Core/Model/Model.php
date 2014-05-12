@@ -250,6 +250,9 @@ class Model {
 	 */
 	public function beforeValidate()
 	{
+		$this->db->beginTransaction();
+		$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		array_push($this->sqls,array('sql'=>'BEGIN;','ts'=>0.0001,'li'=>1));
 		return true;
 	}
 
@@ -1086,6 +1089,12 @@ class Model {
 	/**
 	 * Salva um registro ou conjunto de registros no banco de dados.
 	 * As querys serão executadas dentro de uma transação, certifique-se de que o banco de dados possui o devido suporte.
+	 * Outros métodos serão executados dentro deste método, conforme sequência abaixo:
+	 *  - validate
+	 * 	- - beforeValidate
+	 * 	- - afterValidate
+	 * 	- beforeSave
+	 * 	- afterSave
 	 * 
 	 * @param	array	$data	Matriz com os dados a serem salvos
 	 * @return	boolean	Retorna verdadeiro em caso de sucesso
@@ -1172,44 +1181,44 @@ class Model {
 		}
 
 		// iniciando a transação
-		array_push($this->sqls,array('sql'=>'BEGIN;','ts'=>0.0001,'li'=>1));
 		$lE = 0; // linha erro
-		try
+		foreach($sqls as $_l => $_sql)
 		{
-			$this->db->beginTransaction();
-			$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			foreach($sqls as $_l => $_sql)
+			$lE = $_l;
+			$ini = microtime(true);
+			try
 			{
-				$lE = $_l;
-				$ini = microtime(true);
-				$this->db->exec($_sql);
-				$ts  = round((microtime(true)-$ini),6);
-				array_push($this->sqls,array('sql'=>$_sql,'ts'=>$ts,'li'=>1));
-			}
-			if ($sqlTi=='INSERT') $this->ultimoId = $this->db->lastInsertId();
-			$this->db->commit();
-		} catch (Exception $e) 
-		{
-			$this->db->rollBack();
-			foreach($sqls as $_l => $_sql)
+				$d = $this->query($_sql);
+			} catch (PDOException $e)
 			{
-				array_push($this->sqls,array('sql'=>$_sql,'ts'=>0,'li'=>1));
+				$this->erros[$lE] = $e->getMessage();
 			}
-			array_push($this->sqls,array('sql'=>'ROLLBACK;','ts'=>0.0001,'li'=>1));
-			$this->erros[$lE] = $e->getMessage();
 		}
+		if ($sqlTi=='INSERT') $this->ultimoId = $this->db->lastInsertId();
 
-		// se não tem erros
+		// depois de salvar
+		$this->afterSave();
+
 		if (empty($this->erros))
 		{
+			$this->db->commit();
 			array_push($this->sqls,array('sql'=>'COMMIT;','ts'=>0.0001,'li'=>1));
-			$this->afterSave();
 			return true;
-		} else return false;
+		} else
+		{
+			$this->db->rollBack();
+			array_push($this->sqls,array('sql'=>'ROLLBACK;','ts'=>0.0001,'li'=>1));
+			return false;
+		}
 	}
 
 	/**
-	*/
+	 * Retorna a mensagem, renderizada com o conteúdo do data
+	 *
+	 * @param 	string 	$msg 	Mensagem a ser renderizada
+	 * @param 	array 	$data 	Dados do model
+	 @ @param 	string 	$_msg 	$mensagem renderizada
+	 */
 	public function getMsgModel($msg='',$data=array())
 	{
 		$_msg = $msg;
