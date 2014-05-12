@@ -34,7 +34,7 @@ class Agenda extends LocacaoApp {
 	(
 		'0' => array
 		(
-			'msg' 		=> 'A sala {Sala.titulo} já foi agendada por {Usuario.nome} nesta dia e horário !!!',
+			'msg' 		=> 'A sala {Sala.titulo} já foi agendada por {Usuario.nome} nesta mesmo dia e horário !!!',
 			'fields' 	=> array('data','sala_id'),
 		),
 	);
