@@ -22,7 +22,7 @@ class Database_Config {
 		'user' 		=> 'phpg_us',
 		'password' 	=> 'phpg_67',
 		'database' 	=> 'phpg_bd',
-		'encoding' 	=> 'utf8'
+		'charset' 	=> 'utf8'
 	);
 
 	/**
@@ -39,7 +39,7 @@ class Database_Config {
 		'user' 		=> 'phpg_test_us',
 		'password' 	=> 'phpg_test_67',
 		'database' 	=> 'phpg_test_bd',
-		'encoding' 	=> 'utf8'
+		'charset' 	=> 'utf8'
 	);
 
 	/**
@@ -56,7 +56,7 @@ class Database_Config {
 		'user' 		=> 'phpg_prod_us',
 		'password' 	=> 'phpg_prod_67',
 		'database' 	=> 'phpg_prod_bd',
-		'encoding' 	=> 'utf8'
+		'charset' 	=> 'utf8'
 	);
 
 	/**
