@@ -83,6 +83,7 @@ class UsuariosController extends SistemaAppController {
 		,'Usuario.senha'
 		,'Usuario.trocar_senha'
 		,'Usuario.ultimo_ip'
+		,'Usuario.Perfil'
 		,'Usuario.cidade_id');
 		if (!in_array($_SESSION['Usuario']['perfil'],array('ADMINISTRADOR','GERENTE')))
 		{

@@ -134,6 +134,7 @@ class Usuario extends SistemaApp {
 		),
 		'Perfil'	=> array
 		(
+			'tit'		=> 'Perfis',
 			'type' 		=> 'habtm',
 			'table'		=> 'sis_usuarios_perfis',
 			'key'		=> array('usuario_id'),
