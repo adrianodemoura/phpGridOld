@@ -211,6 +211,7 @@ class Model {
 			$banco				= $dbConfig->default;
 			$driver 			= $banco['driver'];
 			$driver				= ucfirst(strtolower($driver));
+			$charset 			= isset($banco['charset']) ? $banco['charset'] : 'utf8';
 			$this->driver 		= $driver;
 			$this->dateFormatBD = isset($banco['dateFormatBD']) ? $banco['dateFormatBD'] : $this->dateFormatBD;
 			$this->dateFormat 	= isset($banco['dateFormat'])   ? $banco['dateFormat']   : $this->dateFormat;
@@ -219,7 +220,7 @@ class Model {
 			{
 				case 'Mysql':
 				case 'MariaDB':
-					$dsn = "mysql:host=".$banco['host'].";dbname=".$banco['database'];
+					$dsn = "mysql:host=".$banco['host'].";dbname=".$banco['database'].";charset=".$charset;
 					if ($banco['persistent']==true) $params['PDO::ATTR_PERSISTENT'] = true;
 					break;
 			}

@@ -1,6 +1,5 @@
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
 -- -----------------------------------------------------
 -- Table `cadastros`
@@ -21,7 +20,7 @@ CREATE  TABLE IF NOT EXISTS `sis_cadastros` (
   INDEX `i_modificado` (`modificado` ASC) ,
   INDEX `i_criado` (`criado` ASC) ,
   INDEX `fk_modulos` (`modulo_id` ASC) )
-ENGINE = MyISAM;
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (1,'BAIRROS','Bairros',1,1,sysdate(),sysdate());
 INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (2,'CADASTROS','Cadastros',1,1,sysdate(),sysdate());
 INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (3,'CIDADES','Cidades',1,1,sysdate(),sysdate());
@@ -49,10 +48,7 @@ CREATE  TABLE IF NOT EXISTS `sis_permissoes` (
   INDEX `fk_modulo` (`modulo_id` ASC) ,
   INDEX `fk_cadastro` (`cadastro_id` ASC) ,
   INDEX `fk_perfil` (`perfil_id` ASC) )
-ENGINE = MyISAM
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci
-COMMENT = 'Tabela que contém as permissões de cada perfil';
+ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = 'Tabela que contém as permissões de cada perfil';
 INSERT INTO sis_permissoes (id,modulo_id,cadastro_id,visualizar,incluir,alterar,excluir,imprimir,pesquisar,exportar,perfil_id) VALUES (1,1,7,1,0,1,0,1,1,1,2);
 INSERT INTO sis_permissoes (id,modulo_id,cadastro_id,visualizar,incluir,alterar,excluir,imprimir,pesquisar,exportar,perfil_id) VALUES (2,1,7,1,0,1,0,1,1,1,3);
 INSERT INTO sis_permissoes (id,modulo_id,cadastro_id,visualizar,incluir,alterar,excluir,imprimir,pesquisar,exportar,perfil_id) VALUES (3,1,7,1,0,1,0,1,1,0,4);
@@ -77,10 +73,7 @@ CREATE  TABLE IF NOT EXISTS `sis_cidades` (
   PRIMARY KEY (`id`) ,
   INDEX `i_nome` (`nome` ASC) ,
   INDEX `i_uf` (`uf` ASC) )
-ENGINE = MyISAM
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci
-COMMENT = 'Tabela que contém todas as cidades do brasil';
+ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = 'Tabela que contém todas as cidades do brasil';
 
 
 -- -----------------------------------------------------
@@ -94,10 +87,7 @@ CREATE  TABLE IF NOT EXISTS `sis_perfis` (
   `modificado` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `i_nome` (`nome` ASC) )
-ENGINE = MyISAM
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci
-COMMENT = 'perfis de usuários';
+ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = 'perfis de usuários';
 INSERT INTO sis_perfis (id,nome,criado,modificado) VALUES (1,'ADMINISTRADOR',sysdate(),sysdate());
 INSERT INTO sis_perfis (id,nome,criado,modificado) VALUES (2,'GERENTE',sysdate(),sysdate());
 INSERT INTO sis_perfis (id,nome,criado,modificado) VALUES (3,'USUARIO',sysdate(),sysdate());
@@ -112,10 +102,7 @@ CREATE  TABLE IF NOT EXISTS `sis_regionais` (
   `nome` VARCHAR(45) NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `i_nome` (`nome` ASC) )
-ENGINE = MyISAM
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci
-COMMENT = 'regionais bh';
+ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = 'regionais bh';
 INSERT INTO sis_regionais (id,nome) VALUES (1,'BARREIRO');
 INSERT INTO sis_regionais (id,nome) VALUES (2,'CENTRO-SUL');
 INSERT INTO sis_regionais (id,nome) VALUES (3,'LESTE');
@@ -135,10 +122,7 @@ CREATE  TABLE IF NOT EXISTS `sis_territorios` (
   `nome` VARCHAR(4) NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `i_nome` (`nome` ASC) )
-ENGINE = MyISAM
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci
-COMMENT = 'territórios de bh';
+ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = 'territórios de bh';
 
 -- -----------------------------------------------------
 -- Table `bairros`
@@ -158,10 +142,7 @@ CREATE  TABLE IF NOT EXISTS `sis_bairros` (
   INDEX `fk_territorio` (`territorio_id` ASC) ,
   INDEX `fk_regional` (`regional_id` ASC) ,
   INDEX `fk_cidades` (`cidade_id` ASC) )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci
-COMMENT = 'bairros bh';
+ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = 'bairros bh';
 
 -- -----------------------------------------------------
 -- Table `usuarios`
@@ -190,7 +171,7 @@ CREATE  TABLE IF NOT EXISTS `sis_usuarios` (
   INDEX `i_modificado` (`modificado` ASC) ,
   INDEX `i_criado` (`criado` ASC) ,
   INDEX `fk_usuarios_cidades` (`cidade_id` ASC) )
-ENGINE = InnoDB;
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `sis_usuarios` (`id`, `senha`, `ativo`, `nome`, `email`, `cidade_id`, `celular`, `ultimo_ip`,`ultimo_acesso`,`criado`,`modificado`) VALUES ('1', 'e527fc321d4e4166deee7c8a318a586b', 1,'ADMINISTRADOR PHPGRID', 'admin@phpgrid.com', '2302','3112345678','127.0.0.1',sysdate(),sysdate(),sysdate());
 INSERT INTO `sis_usuarios` (`id`, `senha`, `ativo`, `nome`, `email`, `cidade_id`, `celular`, `ultimo_ip`,`ultimo_acesso`,`criado`,`modificado`) VALUES ('2', 'e527fc321d4e4166deee7c8a318a586b', 1,'GERENTE PHPGRID', 'gerente@phpgrid.com', '2301','31323245467','127.0.0.1',sysdate(),sysdate(),sysdate());
 INSERT INTO `sis_usuarios` (`id`, `senha`, `ativo`, `nome`, `email`, `cidade_id`, `celular`, `ultimo_ip`,`ultimo_acesso`,`criado`,`modificado`) VALUES ('3', 'e527fc321d4e4166deee7c8a318a586b', 1,'USUÁRIO PHPGRID', 'usuario@phpgrid.com', '2303','31111122222','127.0.0.1',sysdate(),sysdate(),sysdate());
@@ -206,7 +187,7 @@ CREATE  TABLE IF NOT EXISTS `sis_usuarios_perfis` (
   PRIMARY KEY (`usuario_id`, `perfil_id`) ,
   INDEX `i_usuarios_perfis_perfil` (`perfil_id` ASC) ,
   INDEX `i_usuarios_perfis_usuario` (`usuario_id` ASC) )
-ENGINE = MyISAM;
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO sis_usuarios_perfis (usuario_id,perfil_id) VALUES (1,1);
 INSERT INTO sis_usuarios_perfis (usuario_id,perfil_id) VALUES (1,2);
 INSERT INTO sis_usuarios_perfis (usuario_id,perfil_id) VALUES (1,3);
@@ -229,7 +210,7 @@ CREATE  TABLE IF NOT EXISTS `sis_modulos` (
   UNIQUE INDEX `i_nome` (`nome` ASC) ,
   INDEX `i_titulo` (`titulo` ASC) ,
   INDEX `i_ativo` (`ativo` ASC) )
-ENGINE = MyISAM;
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO sis_modulos (id,nome,titulo,ativo) VALUES (1,'SISTEMA','Sistema',1);
 
 -- -----------------------------------------------------
@@ -249,10 +230,5 @@ CREATE  TABLE IF NOT EXISTS `sis_configuracoes` (
   `celular` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`id`) ,
   INDEX `fk_cidades` (`cidade_id` ASC) )
-ENGINE = MyISAM;
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO sis_configuracoes (id,empresa,email,cep,tel1,tel2,celular,cidade_id) VALUES (1,'MOURA INFORMÁTICA','moura@mourainfo.com.br','30575000','3112345678','3187654321','3388345687',2302);
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-

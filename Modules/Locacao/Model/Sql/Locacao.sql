@@ -1,3 +1,6 @@
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
 DROP TABLE IF EXISTS `loc_salas` ;
 CREATE  TABLE IF NOT EXISTS `loc_salas` (
   `id` INT NOT NULL AUTO_INCREMENT ,
@@ -11,7 +14,7 @@ CREATE  TABLE IF NOT EXISTS `loc_salas` (
   INDEX `i_ativo` (`ativo` ASC) ,
   INDEX `i_modificado` (`modificado` ASC) ,
   INDEX `i_criado` (`criado` ASC) )
-ENGINE = InnoDB;
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `loc_agendas` ;
 CREATE  TABLE IF NOT EXISTS `loc_agendas` (
@@ -29,4 +32,4 @@ CREATE  TABLE IF NOT EXISTS `loc_agendas` (
   INDEX `i_modificado` (`modificado` ASC) ,
   INDEX `i_criado` (`criado` ASC) ,
   INDEX `i_usuario_id` (`usuario_id` ASC) )
-ENGINE = InnoDB;
+ENGINE=InnoDB DEFAULT CHARSET=utf8;

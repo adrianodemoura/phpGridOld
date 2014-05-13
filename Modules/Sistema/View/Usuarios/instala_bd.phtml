@@ -6,7 +6,7 @@
 <pre style="width: 900px; margin: 0px auto; background-color: #fff;">
 Pe&ccedil;a ao administrador do banco de dados para executar:
 
-create database <?= $banco['database'] ?> character set <?= $banco['encoding'] ?>;
+create database <?= $banco['database'] ?> character set <?= $banco['charset'] ?>;
 grant all privileges on <?= $banco['database'] ?>.* to <?= $banco['user'] ?>@<?= $banco['host'] ?> identified by "<?= $banco['password'] ?>" with grant option;
 flush privileges;
 </pre>
