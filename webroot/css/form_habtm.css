@@ -3,9 +3,9 @@
 	position: absolute;
 	left: 50%;
 	top: 50%;
-	min-width: 500px;
+	min-width: 400px;
 	height: auto;
-	margin-top: -350px;
+	margin-top: -250px;
 	margin-left: -220px;
 	display: none;
 	z-index: 9999;
@@ -34,7 +34,7 @@
 	float: left;
 	display: block;
 	min-width: 190px;
-	min-height: 300px;
+	min-height: 200px;
 	margin-bottom: 10px;
 }
 
