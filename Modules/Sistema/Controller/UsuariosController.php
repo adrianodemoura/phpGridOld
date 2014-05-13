@@ -78,12 +78,14 @@ class UsuariosController extends SistemaAppController {
 	 */
 	public function listar()
 	{
-		$this->viewVars['fields'] = array('Usuario.ativo','Usuario.nome','Usuario.email','Usuario.celular'
+		$this->viewVars['fields'] = array('Usuario.ativo'
+		,'Usuario.nome'
+		,'Usuario.Perfil'
+		,'Usuario.email','Usuario.celular'
 		,'Usuario.acessos'
 		,'Usuario.senha'
 		,'Usuario.trocar_senha'
 		,'Usuario.ultimo_ip'
-		,'Usuario.Perfil'
 		,'Usuario.cidade_id');
 		if (!in_array($_SESSION['Usuario']['perfil'],array('ADMINISTRADOR','GERENTE')))
 		{

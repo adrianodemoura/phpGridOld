@@ -1,0 +1,59 @@
+#formHabtm
+{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	min-width: 500px;
+	height: auto;
+	margin-top: -350px;
+	margin-left: -220px;
+	display: none;
+	z-index: 9999;
+	padding: 20px;
+	background-color: #fff;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	display: none;
+}
+
+#formHabtm .barraHabtm
+{
+	clear: both;
+	min-height: 40px;
+	/*background-color: #ddd;*/
+}
+#formHabtm .barraHabtm .btHabtmSalvar,
+#formHabtm .barraHabtm .btHabtmFechar
+{
+	float: right;
+	margin: 0px 5px 0px 0px;
+}
+#formHabtm .meioHabtm div
+{
+	float: left;
+	display: block;
+	min-width: 190px;
+	min-height: 300px;
+	margin-bottom: 10px;
+}
+
+#formHabtm .meioHabtm .dataEsq
+{
+	margin-right: 5px;
+	border: 1px solid #ccc;
+}
+
+#formHabtm .meioHabtm .dataDir
+{
+	border: 1px solid #ccc;
+}
+
+#formHabtm #cmpPesqHabtm
+{
+	width: 300px;
+}
+#formHabtm .divPesqHabtm
+{
+	margin: 10px 0px 10px 0px;
+}

@@ -387,6 +387,11 @@ class Controller {
 					$filtros[$alias.'.'.$_cmp]['options'] = $this->$modelClass->getOptions($_cmp);
 				}
 			}
+			// testando habtm
+			if ($_arrProp['type']=='habtm')
+			{
+				$this->viewVars['temHabtm'] = true;
+			}
 		}
 		$this->viewVars['filtros'] 	= $filtros;
 
@@ -500,7 +505,7 @@ class Controller {
 			}
 			if (!empty($this->viewVars['urlRetorno']))
 			{
-				//header('Location: '.$this->viewVars['urlRetorno']); die();
+				header('Location: '.$this->viewVars['urlRetorno']); die();
 			}
 		}
 	}

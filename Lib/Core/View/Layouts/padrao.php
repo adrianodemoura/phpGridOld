@@ -25,8 +25,15 @@
 <script src="<?= $base ?>js/jquery.chrony.min.js"></script>
 <?php endif ?>
 
+<?php if (isset($temHabtm)) : ?>
+<script src="<?= $base ?>js/form_habtm.js"></script>
+<?php endif ?>
+
 <link rel="stylesheet" type="text/css" href="<?= $base ?>css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="<?= $base ?>css/padrao.css" />
+<?php if (isset($temHabtm)) : ?>
+<link rel="stylesheet" type="text/css" href="<?= $base ?>css/form_habtm.css" />
+<?php endif ?>
 
 <?php foreach($head as $_l => $_t) echo html_entity_decode($_t)."\n"; ?>
 
@@ -157,5 +164,5 @@
 </div><!-- fim corpo -->
 <div id='tampaTudo'>tampaTudo</div>
 </body>
-</html><?= debug($this->data); ?>
+</html>
 <!-- tempo de execução <?= round((microtime(true)-INICIO),6) ?> segundos -->

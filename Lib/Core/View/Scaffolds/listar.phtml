@@ -2,9 +2,13 @@
 	$this->Html->setHead('css','listar');
 	$this->Html->setHead('js','listar');
 	$this->Html->setHead('js','jquery.maskedinput.min');
-?>
 
-<?php $this->element('ajax_form'); ?>
+	$this->element('ajax_form');
+
+	if (isset($this->viewVars['temHabtm'])) : 
+		$this->element('form_habtm');
+	endif 
+?>
 
 <div id='lista'>
 

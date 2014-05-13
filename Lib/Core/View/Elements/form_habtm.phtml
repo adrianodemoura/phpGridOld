@@ -1,0 +1,42 @@
+<div id="formHabtm">
+	<div class="barraHabtm">
+
+		<div id='ajaxPagi'>
+			<div id='xHP1' class='ajaxPi' title='primeira página'>&laquo;</div>  
+			<div id='xHPA' class='ajaxPi' title='pagina anterior'>&lsaquo;</div> 
+			<div id='xHPC' class='ajaxPi' title='pagina corrente'>1</div> 
+			<div id='xHPP' class='ajaxPi' title='próxima página'>&rsaquo;</div> 
+			<div id='xHPU' class='ajaxPi' title='próxima página'>&raquo;</div> 
+		</div>
+
+	</div>
+
+	<div class="divPesqHabtm">
+		<input type='text' name='data[Habtm][pesq]' id='cmpPesqHabtm' value='' />
+	</div>
+
+	<div class="meioHabtm">
+		<div class="dataEsq">
+			<div id='listaHabtm'>
+			</div>
+		</div>
+		<div class="dataDir">
+			<div id='dataHabtm'>
+			</div>
+		</div>
+	</div>
+
+	<div class="barraHabtm">
+
+		<input type='button' name='btHabtmFechar' value='Fechar' 
+			class='btn btn-close btHabtmFechar' 
+			onclick='hideHabtmForm()' />
+
+		<input type='button' name='btHabtmSalvar' value='Salvar' 
+			class='btn btn-success btHabtmSalvar' 
+			onclick='setHabtm();' />
+
+	</div>
+
+	<input type='text' name='cmpHabtmCor' id='cmpHabtmCor' value='' />
+</div>

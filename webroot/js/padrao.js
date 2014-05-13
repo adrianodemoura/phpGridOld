@@ -9,7 +9,7 @@ function showModal(janela)
 	var maskWidth 	= $(window).width();
 	$('#tampaTudo').css({'width':maskWidth,'height':maskHeight});
 	$('#tampaTudo').fadeTo("slow",0.8);	
-	$("#"+janela).fadeIn(2000); 
+	$("#"+janela).fadeIn(1000); 
 }
 
 function setPermissao(id)

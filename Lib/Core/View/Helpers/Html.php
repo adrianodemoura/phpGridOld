@@ -330,17 +330,21 @@ class Html {
 				$input .= "</div>";
 				break;
 			case 'habtm':
-				$input = "<div id='habtm".$opcs['id']."' class='divHabtm'>";
+				$input = "<img src='".$this->base."img/bt_ajax.png' class='bt_lista_ajax'";
+				$input .= " onclick='showHabtmForm(\"habtm".$opcs['id']."\");' />";
+				$input .= "<div id='habtm".$opcs['id']."' class='divHabtm'>";
 				if (!empty($opcs['value']))
 				{
+					$t = 0;
 					foreach($opcs['value'] as $_l => $_arrCmps)
 					{
 						$id 	= $_arrCmps['id'];
 						$key 	= $_arrCmps[$e['key']['0']];
 						$keyFK	= $_arrCmps[$e['keyFk']['0']];
+						$t++;
 
 						if ($_l) $input .= ', ';
-						$input .= '<input type="hidden" style="width: 20px; font-size: 8px;"';
+						$input .= '<input type="hidden"';
 						$input .= ' name="'.$opcs['name'].'['.$_l.']"';
 						$input .= ' id="'.$opcs['id'].$_l.'"';
 						$input .= ' class="'.$opcs['class'].'"';
@@ -352,13 +356,14 @@ class Html {
 						{
 							if (!in_array($_cmp, array('id')))
 							{
-								$input .= $_vlr;
+								$input .= "<span>$_vlr</span>";
 								$l++;
 								if ($l>0) break;
 							}
 						}
 					}
 				}
+				//for($i=0; $i<$t; $i++) $input .= '&nbsp;';	$input .= "&nbsp;&nbsp;";
 				$input .= "</div>";
 				break;
 			default:
