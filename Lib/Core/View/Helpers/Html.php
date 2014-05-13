@@ -329,6 +329,38 @@ class Html {
 				$input .= "<div id='".$ajax['cmp']."' class='ajaxDiv".$this->domId($a['2'])." div_ajax'>".$ajax['value']."&nbsp;&nbsp;&nbsp;";
 				$input .= "</div>";
 				break;
+			case 'habtm':
+				$input = "<div id='habtm".$opcs['id']."' class='divHabtm'>";
+				if (!empty($opcs['value']))
+				{
+					foreach($opcs['value'] as $_l => $_arrCmps)
+					{
+						$id 	= $_arrCmps['id'];
+						$key 	= $_arrCmps[$e['key']['0']];
+						$keyFK	= $_arrCmps[$e['keyFk']['0']];
+
+						if ($_l) $input .= ', ';
+						$input .= '<input type="hidden" style="width: 20px; font-size: 8px;"';
+						$input .= ' name="'.$opcs['name'].'['.$_l.']"';
+						$input .= ' id="'.$opcs['id'].$_l.'"';
+						$input .= ' class="'.$opcs['class'].'"';
+						$input .= ' value="'.$key.'.'.$keyFK.'"';
+						$input .= " />";
+
+						$l = 0;
+						foreach($_arrCmps as $_cmp => $_vlr)
+						{
+							if (!in_array($_cmp, array('id')))
+							{
+								$input .= $_vlr;
+								$l++;
+								if ($l>0) break;
+							}
+						}
+					}
+				}
+				$input .= "</div>";
+				break;
 			default:
 				$input = "<input ";
 				$tam = isset($e['length']) 	? $e['length'] : 0;

@@ -129,8 +129,12 @@
 			$p = $this->viewVars['esquema'][$a['0']][$a['1']];
 			$cmp = ($_l+1).'.'.$a['0'].'.'.$a['1'];
 			$p['value'] = isset($_arrMods[$a['0']][$a['1']]) ? $_arrMods[$a['0']][$a['1']] : null;
+			if ($p['type']=='habtm' && isset($_arrMods[$a['1']]))
+			{
+				$p['value'] = $_arrMods[$a['1']];
+			}
 	?>
-		<td align='center' id='td<?= $this->Html->domId(($_l+1).'.'.$a['1']) ?>' class="td<?= $this->Html->domId($a['1']) ?>">
+		<td id='td<?= $this->Html->domId(($_l+1).'.'.$a['1']) ?>' class="td<?= $this->Html->domId($a['1']) ?>">
 			<?php
 				$pode = $this->Html->pode('alterar',$this->viewVars['minhasPermissoes']);
 				if (!$pode)  $p['edicaoOff'] = true;
