@@ -42,7 +42,7 @@ class Usuario extends SistemaApp {
 	 * @var		array
 	 * @access	public
 	 */
-	public $habtm	= array
+	/*public $habtm	= array
 	(
 		'Perfil'	=> array
 		(
@@ -51,7 +51,7 @@ class Usuario extends SistemaApp {
 			'tableFk'=> 'sis_perfis',
 			'keyFk'	=> array('perfil_id'),
 		)
-	);
+	);*/
 
 	/**
 	 * Propriedade de cada campo da tabela usuários
@@ -131,6 +131,14 @@ class Usuario extends SistemaApp {
 		'ultimo_acesso'	=> array
 		(
 			'tit'		=> 'Último Acesso',
+		),
+		'Perfil'	=> array
+		(
+			'type' 		=> 'habtm',
+			'table'		=> 'sis_usuarios_perfis',
+			'key'		=> array('usuario_id'),
+			'tableFk'	=> 'sis_perfis',
+			'keyFk'		=> array('perfil_id'),
 		),
 	);
 

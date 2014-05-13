@@ -455,7 +455,10 @@ class Model {
 				{
 					foreach($this->esquema as $_cmp => $_arrProp)
 					{
-						array_push($fields,$this->name.'.'.$_cmp);
+						if (!in_array($_arrProp['type'], array('habtm','virtual')))
+						{
+							array_push($fields,$this->name.'.'.$_cmp);
+						}
 					}
 				}
 				break;
@@ -465,8 +468,11 @@ class Model {
 					$l = 0;
 					foreach($this->esquema as $_cmp => $_arrProp)
 					{
-						array_push($fields,$this->name.'.'.$_cmp);
-						$l++;
+						if (!in_array($_arrProp['type'], array('habtm','virtual')))
+						{
+							array_push($fields,$this->name.'.'.$_cmp);
+							$l++;
+						}
 					}
 				}
 				break;
@@ -483,8 +489,11 @@ class Model {
 						if ($l>0) break;
 						if (!in_array($_cmp,$this->primaryKey))
 						{
-							array_push($fields,$this->name.'.'.$_cmp);
-							$l++;
+							if (!in_array($_arrProp['type'], array('habtm','virtual')))
+							{
+								array_push($fields,$this->name.'.'.$_cmp);
+								$l++;
+							}
 						}
 					}
 				}
