@@ -1,12 +1,10 @@
 body
 {
-	/*background-image: url("../img/bg.png");*/
 	background-color: #fff;
 }
 #cabecalho
 {
-	/*background-image: url("../img/bg3.png");*/
-	background-color: #ddd;
+	background-image: url("../img/bg.png");
 	line-height: 30px;
 	border-bottom: 2px solid #bbb;
 }

@@ -111,9 +111,11 @@ class UsuariosController extends SistemaAppController {
 				$_SESSION['Usuario']['email'] 			= $data['0']['Usuario']['email'];
 				$_SESSION['Usuario']['nome'] 			= $data['0']['Usuario']['nome'];
 				$_SESSION['Usuario']['ultimo_ip'] 		= $data['0']['Usuario']['ultimo_ip'];
+				$_SESSION['Usuario']['ultimo_acesso'] 	= $data['0']['Usuario']['ultimo_acesso'];
 				$_SESSION['Usuario']['perfil'] 			= $data['0']['Perfil']['0']['nome'];
 				$_SESSION['Usuario']['perfil_id'] 		= $data['0']['Perfil']['0']['id'];
 				$novaData['0']['Usuario']['id'] 		= $data['0']['Usuario']['id'];
+				$novaData['0']['Usuario']['ultimo_acesso'] 	= date('d/m/Y H:i:s');
 				$novaData['0']['Usuario']['acessos'] 	= ($data['0']['Usuario']['acessos']+1);
 				$novaData['0']['Usuario']['ultimo_ip'] 	= (strlen($_SERVER['SERVER_ADDR'])>4) ? $_SERVER['SERVER_ADDR'] : $_SERVER['REMOTE_ADDR'];
 				if ($novaData['0']['Usuario']['ultimo_ip']=='::1') $novaData['0']['Usuario']['ultimo_ip'] = '127.0.0.1';
@@ -134,13 +136,10 @@ class UsuariosController extends SistemaAppController {
 					die('Erro ao atualizar Usuários');
 				} else
 				{	// recuperando as configuraçõe de sessão
-					require_once('Model/Configuracao.php');
+					/*require_once('Model/Configuracao.php');
 					$Conf = new Configuracao();
 					$data = $Conf->find('all');
-					if (isset($data['0']['Configuracao']['sql_dump']))
-					{
-						$_SESSION['sql_dump'] = $data['0']['Configuracao']['sql_dump'];
-					}
+					*/
 				}
 
 				$this->setMsgFlash('Usuário autenticado com sucesso !!!','msgFlashOk');
@@ -171,6 +170,7 @@ class UsuariosController extends SistemaAppController {
 		unset($this->data['0']['Usuario']['senha']);
 		$this->Usuario->outrosEsquemas['Cidade']['nome']['tit'] = 'Cidade';
 		$this->data['0']['Usuario']['ultimo_ip'] = $_SESSION['Usuario']['ultimo_ip'];
+		$this->data['0']['Usuario']['ultimo_acesso'] = $_SESSION['Usuario']['ultimo_acesso'];
 		$perfis = $this->data['0']['Perfil'];
 		unset($this->data['0']['Perfil']);
 		$meusPerfis = '';

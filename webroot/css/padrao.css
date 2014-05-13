@@ -41,7 +41,7 @@ body
 	font-weight: bold;
 	position: fixed;
 	width: 100%;
-	line-height: 40px;
+	line-height: 38px;
 	z-index: 1001;
 }
 .msgFlashOk
@@ -52,7 +52,7 @@ body
 	font-weight: bold;
 	position: fixed;
 	width: 100%;
-	line-height: 40px;
+	line-height: 38px;
 	z-index: 1001;
 }
 

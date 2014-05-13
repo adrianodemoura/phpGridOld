@@ -1,15 +1,16 @@
 <div id="padrao_ferramentas">
 
 	<div style='float: left;'>
-	<img title='Página inicial' 
-		src='<?= $this->viewVars['base'] ?>img/bt_home.png'
-		onclick='document.location.href="<?= $this->viewVars['base'].'sistema/usuarios/index' ?>"' />
 
 	<?php if ($_SESSION['Usuario']['perfil_id']==1 && $this->viewVars['action']=='listar') : ?>
 		<img title='Clique aqui para configurar as permissões do cadastro' 
 			src='<?= $this->viewVars['base'] ?>img/bt_permissoes.png'
 			onclick='showModal("permissoes")' />
 	<?php endif ?>
+
+	<img title='Página inicial' 
+		src='<?= $this->viewVars['base'] ?>img/bt_home.png'
+		onclick='document.location.href="<?= $this->viewVars['base'].'sistema/usuarios/index' ?>"' />
 
 	<?php if ($_SESSION['Usuario']['perfil_id']<4) : ?>
 		<img title='Clique aqui para habilitar o Sql Dump' 
