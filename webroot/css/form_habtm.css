@@ -33,13 +33,15 @@
 {
 	float: left;
 	display: block;
-	min-width: 190px;
-	min-height: 200px;
+	min-width: auto;
+	min-height: auto;
 	margin-bottom: 10px;
 }
 
 #formHabtm .meioHabtm .dataEsq
 {
+	min-width: 300px;
+	min-height: 200px;
 	margin-right: 5px;
 	border: 1px solid #ccc;
 }
@@ -47,6 +49,7 @@
 #formHabtm .meioHabtm .dataDir
 {
 	border: 1px solid #ccc;
+	min-width: 200px;
 }
 
 #formHabtm #cmpPesqHabtm
@@ -64,4 +67,18 @@
 #formHabtm #cmpHabtmCor
 {
 	display: none;
+}
+#formHabtm .delLinhaFormHabtm
+{
+	color: red;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+#formHabtm .linhaFormHabtm
+{
+	height: 26px;
+	line-height: 26px;
+	width: auto;
+	float: left;
 }

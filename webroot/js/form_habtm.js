@@ -56,8 +56,8 @@ function getElemsDiv(id,tags,order)
 }
 
 /**
- * Atualiza o o formulário habtm (dataHabtm do elemento form_habtm) com os valores do campo habtm da lista
- *
+ * Atualiza a div dataHabtm do formulário habtm_form, com os campos HABTM do formulário da lista
+ * será criado uma linha para cada campo, que conterá o valor ID e o nome do relacionamento
  */
 function setDataHabtm()
 {
@@ -72,13 +72,14 @@ function setDataHabtm()
 	{
 		var inName 	= objId[0]+'['+objId[1]+']'+objId[2]+'['+objId[3]+']'+'['+i+']';
 		var inId	= objId[0]+objId[1]+objId[2]+objId[3]+i;
-		htmlData += '<span>'+arr[i].span+'</span>';
-		htmlData += '<input type="hidden" name="'+inName+'" id="'+inId+'" value="'+arr[i].input+'" />';
-		htmlData += "\n<br />";
+		htmlData += '<div id="divLinhaFormHabtm'+i+'" class="linhaFormHabtm">';
+		htmlData += '<span id="sp'+inId+'">'+arr[i].span+'</span> ';
+		htmlData += '<span class="delLinhaFormHabtm" onclick="(\'#divLinhaFormHabtm'+i+'\').remove();">(x)</span>';
+		htmlData += '<input type="hidden" name="'+inName+'" id="in'+inId+'" value="'+arr[i].input+'" />';
+		htmlData += "</div><br />\n";
 	}
 
 	$("#dataHabtm").html(htmlData);
-
 }
 
 /**
