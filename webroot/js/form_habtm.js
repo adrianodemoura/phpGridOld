@@ -27,17 +27,29 @@ function setDataHabtm()
 {
 	var id 		= $("#cmpHabtmCor").val();
 	var data 	= $("#"+id).html();
-	var inputs 	= $('#'+id+' input');
+	var objInputs= [];
+	var l 		= 0;
 	$('#'+id+' input').each(function()
 	{
-		console.log($(this).val());
+		if (objInputs[l]==undefined) objInputs[l] = {};
+		if (objInputs[l]['ids']==undefined) objInputs[l]['ids'] = {};
+		objInputs[l]['ids'] = $(this).val();
+		l++;
 	});
+	l = 0;
 	$('#'+id+' span').each(function()
 	{
-		console.log($(this).text());
+		if (objInputs[l]['span']==undefined) objInputs[l]['span'] = {};
+		objInputs[l]['span'] = $(this).text();
+		l++;
 	});
-	//console.log(inputs);
+
+	for(i=0; i<objInputs.length;i++)
+	{
+		console.log(objInputs[i]);
+	}
 }
+
 /**
  * Atuza o campo Habtm na lista, e fecha a janela Habtm
  *
