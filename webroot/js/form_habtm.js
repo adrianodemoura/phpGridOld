@@ -28,7 +28,11 @@ function setDataHabtm()
 	var id 		= $("#cmpHabtmCor").val();
 	var data 	= $("#"+id).html();
 	var inputs 	= $('#'+id+' input');
-	console.log(inputs);
+	$('#'+id+' input').each(function()
+	{
+		console.log($(this).val());
+	});
+	//console.log(inputs);
 }
 /**
  * Atuza o campo Habtm na lista, e fecha a janela Habtm

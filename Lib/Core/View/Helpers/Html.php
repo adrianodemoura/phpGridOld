@@ -331,8 +331,8 @@ class Html {
 				break;
 			case 'habtm':
 				$input = "<img src='".$this->base."img/bt_ajax.png' class='bt_lista_ajax'";
-				$input .= " onclick='showHabtmForm(\"habtm".$opcs['id']."\");' />";
-				$input .= "<div id='habtm".$opcs['id']."' class='divHabtm'>";
+				$input .= " onclick='showHabtmForm(\"habtm_".str_replace('.','_',$cmp)."\");' />";
+				$input .= "<div id='habtm_".str_replace('.','_',$cmp)."' class='divHabtm'>";
 				if (!empty($opcs['value']))
 				{
 					$t = 0;
