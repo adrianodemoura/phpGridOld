@@ -57,3 +57,11 @@
 {
 	margin: 10px 0px 10px 0px;
 }
+#formHabtm #dataHabtm
+{
+	padding: 5px;
+}
+#formHabtm #cmpHabtmCor
+{
+	display: none;
+}
