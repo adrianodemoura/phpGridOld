@@ -25,11 +25,12 @@ function hideHabtmForm()
 
 /**
  * Retorna os elementos, conforme as tags, de uma div
+ * e ainda ordena por umda das tags definida em order
  */
-function getObjDiv(id,tags,order)
+function getElemsDiv(id,tags,order)
 {
-	var objInputs 	= [];
-	var ordem 		= tags[order];
+	var arr   	= [];
+	var ordem	= tags[order];
 
 	for(i=0; i<tags.length;i++)
 	{
@@ -37,21 +38,21 @@ function getObjDiv(id,tags,order)
 		var l 	= 0;
 		$('#'+id+' '+tag).each(function()
 		{
-			if (objInputs[l]==undefined) objInputs[l] = {};
-			if (objInputs[l][tag]==undefined) objInputs[l][tag] = {};
+			if (arr[l]==undefined) arr[l] = {};
+			if (arr[l][tag]==undefined) arr[l][tag] = {};
 			vlr = ($(this).val()=='') ? $(this).text() : $(this).val();
-			objInputs[l][tag] = vlr;
+			arr[l][tag] = vlr;
 			l++;
 		});
 	};
 
 	// ordenando o objeto
-	objInputs.sort(function(a,b)
+	arr.sort(function(a,b)
 	{
 		return a[ordem].localeCompare(b[ordem]);
 	});
 
-	return objInputs;
+	return arr;
 }
 
 /**
@@ -62,18 +63,17 @@ function setDataHabtm()
 {
 	var id 		= $("#cmpHabtmCor").val();
 	var objId	= id.split('_');
-	var data 	= $("#"+id).html();
 	var tags	= ['input','span'];
-	var objInputs= getObjDiv(id,tags,1);
+	var arr 	= getElemsDiv(id,tags,1);
 	var htmlData= '';
 
 	// montando o html do dataHabtm //habtm_3_Usuario_Perfil
-	for(i=0; i<objInputs.length;i++)
+	for(i=0; i<arr.length;i++)
 	{
 		var inName 	= objId[0]+'['+objId[1]+']'+objId[2]+'['+objId[3]+']'+'['+i+']';
 		var inId	= objId[0]+objId[1]+objId[2]+objId[3]+i;
-		htmlData += '<span>'+objInputs[i].span+'</span>';
-		htmlData += '<input type="hidden" name="'+inName+'" id="'+inId+'" value="'+objInputs[i].input+'" />';
+		htmlData += '<span>'+arr[i].span+'</span>';
+		htmlData += '<input type="hidden" name="'+inName+'" id="'+inId+'" value="'+arr[i].input+'" />';
 		htmlData += "\n<br />";
 	}
 

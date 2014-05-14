@@ -713,9 +713,7 @@ class Model {
 						$sql .= ' WHERE t1.'.$_cmp.'='.$vlrCmpEsquerda;
 						$l++;
 					}
-					$sql .= ' ORDER BY Perfil.nome DESC';
 					$dataHbtm = $this->query($sql);
-					//debug($sql);
 					foreach($dataHbtm as $_lHa => $_arrCmHa)
 					{
 						$data[$_l][$_mod][$_lHa] = $_arrCmHa;
