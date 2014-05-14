@@ -32,6 +32,10 @@ function setDataHabtm()
 	{
 		console.log($(this).val());
 	});
+	$('#'+id+' span').each(function()
+	{
+		console.log($(this).text());
+	});
 	//console.log(inputs);
 }
 /**
