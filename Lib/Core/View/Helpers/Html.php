@@ -331,7 +331,8 @@ class Html {
 				break;
 			case 'habtm':
 				$input = "<img src='".$this->base."img/bt_ajax.png' class='bt_lista_ajax'";
-				$input .= " onclick='showHabtmForm(\"habtm_".str_replace('.','_',$cmp)."\");' />";
+				$input .= " onclick='showHabtmForm(\"habtm_".str_replace('.','_',$cmp)."\");' ";
+				$input .= " title='clique aqui para editar os ".$e['tit']."' />";
 				$input .= "<div id='habtm_".str_replace('.','_',$cmp)."' class='divHabtm'>";
 				if (!empty($opcs['value']))
 				{
@@ -363,7 +364,7 @@ class Html {
 						}
 					}
 				}
-				for($i=0; $i<$t; $i++) $input .= '&nbsp;'; $input .= "&nbsp;&nbsp;&nbsp;&nbsp;";
+				for($i=0; $i<$t; $i++) $input .= '&nbsp;'; $input .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 				$input .= "</div>";
 				break;
 			default:

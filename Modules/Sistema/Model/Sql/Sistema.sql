@@ -73,7 +73,7 @@ CREATE  TABLE IF NOT EXISTS `sis_cidades` (
   PRIMARY KEY (`id`) ,
   INDEX `i_nome` (`nome` ASC) ,
   INDEX `i_uf` (`uf` ASC) )
-ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = 'Tabela que contém todas as cidades do brasil';
+ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT = 'Tabela que contém todas as cidades do brasil';
 
 
 -- -----------------------------------------------------

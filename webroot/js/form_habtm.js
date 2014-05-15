@@ -118,7 +118,7 @@ function setHabtmLista()
 	{
 		//for($i=0; $i<$t; $i++) $input .= '&nbsp;'; $input .= "&nbsp;&nbsp;&nbsp;&nbsp;";
 		for(i=0; i<data.length; i++) html += '&nbsp;';
-		html += '&nbsp;&nbsp;&nbsp;&nbsp;';
+		html += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 	}
 
 	$("#btSalvarT").addClass('btAlerta');
