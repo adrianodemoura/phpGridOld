@@ -1,18 +1,20 @@
 <div id="formHabtm">
 	<div class="barraHabtm">
 
-		<div id='ajaxPagi'>
-			<div id='xHP1' class='ajaxPi' title='primeira página'>&laquo;</div>  
-			<div id='xHPA' class='ajaxPi' title='pagina anterior'>&lsaquo;</div> 
-			<div id='xHPC' class='ajaxPi' title='pagina corrente'>1</div> 
-			<div id='xHPP' class='ajaxPi' title='próxima página'>&rsaquo;</div> 
-			<div id='xHPU' class='ajaxPi' title='próxima página'>&raquo;</div> 
+		<div class="divPesqHabtm">
+			<input type='text' name='data[Habtm][pesq]' id='cmpPesqHabtm' value='' />
 		</div>
 
-	</div>
+		<div>
+		<ul class="pagination" style="margin: 0px 0px 0px 6px; cursor: pointer;">
+			<li><a id='xHP1' title='primeira página' onclick="return setDataHabtm('1');"><<</a></li>
+			<li><a id='xHPA' title='página anterior' onclick="return setDataHabtm('A');"> < </a></li>
+			<li><a id='xHPC' title='página corrente' onclick="return setDataHabtm('C');">1</a></li>
+			<li><a id='xHPP' title='próxima página'  onclick="return setDataHabtm('P');"> > </a></li>
+			<li><a id='xHPU' title='última página' 	 onclick="return setDataHabtm('U');">>></a></li>
+		</ul>
+		</div>
 
-	<div class="divPesqHabtm">
-		<input type='text' name='data[Habtm][pesq]' id='cmpPesqHabtm' value='' />
 	</div>
 
 	<div class="meioHabtm">
@@ -26,15 +28,15 @@
 		</div>
 	</div>
 
-	<div class="barraHabtm">
-
-		<input type='button' name='btHabtmFechar' value='Fechar' 
-			class='btn btn-close btHabtmFechar' 
-			onclick='hideHabtmForm()' />
+	<div class="barraHabtm" style="padding: 10px 0px 0px 0px;">
 
 		<input type='button' name='btHabtmSalvar' value='Salvar' 
 			class='btn btn-success btHabtmSalvar' 
-			onclick='setHabtm();' />
+			onclick='setHabtmLista();' />
+
+		<input type='button' name='btHabtmFechar' value='Cancelar' 
+			class='btn btn-warning btHabtmFechar' 
+			onclick='hideHabtmForm()' />
 
 	</div>
 

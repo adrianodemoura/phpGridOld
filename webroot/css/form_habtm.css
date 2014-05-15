@@ -16,17 +16,20 @@
 	border-radius: 6px;
 	display: none;
 }
+#formHabtm .divPesqHabtm
+{
+	float: left;
+}
 
 #formHabtm .barraHabtm
 {
 	clear: both;
-	min-height: 40px;
-	/*background-color: #ddd;*/
+	line-height: 28px;
 }
 #formHabtm .barraHabtm .btHabtmSalvar,
 #formHabtm .barraHabtm .btHabtmFechar
 {
-	float: right;
+	float: left;
 	margin: 0px 5px 0px 0px;
 }
 #formHabtm .meioHabtm div
@@ -35,9 +38,11 @@
 	display: block;
 	min-width: auto;
 	min-height: auto;
-	margin-bottom: 10px;
 }
-
+#formHabtm .meioHabtm
+{
+	margin-bottom: 5px;
+}
 #formHabtm .meioHabtm .dataEsq
 {
 	min-width: 300px;
@@ -54,11 +59,8 @@
 
 #formHabtm #cmpPesqHabtm
 {
-	width: 300px;
-}
-#formHabtm .divPesqHabtm
-{
-	margin: 10px 0px 10px 0px;
+	min-width: 100px;
+	width: 298px;
 }
 #formHabtm #dataHabtm
 {
@@ -77,8 +79,5 @@
 
 #formHabtm .linhaFormHabtm
 {
-	height: 26px;
-	line-height: 26px;
-	width: auto;
-	float: left;
+	clear: both;
 }

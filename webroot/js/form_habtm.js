@@ -59,7 +59,7 @@ function getElemsDiv(id,tags,order)
  * Atualiza a div dataHabtm do formulário habtm_form, com os campos HABTM do formulário da lista
  * será criado uma linha para cada campo, que conterá o valor ID e o nome do relacionamento
  */
-function setDataHabtm()
+function setDataHabtm(pag)
 {
 	var id 		= $("#cmpHabtmCor").val();
 	var objId	= id.split('_');
@@ -67,27 +67,48 @@ function setDataHabtm()
 	var arr 	= getElemsDiv(id,tags,1);
 	var htmlData= '';
 
+	$("#cmpPesqHabtm").focus();
+
 	// montando o html do dataHabtm //habtm_3_Usuario_Perfil
 	for(i=0; i<arr.length;i++)
 	{
 		var inName 	= objId[0]+'['+objId[1]+']'+objId[2]+'['+objId[3]+']'+'['+i+']';
 		var inId	= objId[0]+objId[1]+objId[2]+objId[3]+i;
 		htmlData += '<div id="divLinhaFormHabtm'+i+'" class="linhaFormHabtm">';
+		htmlData += '<div class="delLinhaFormHabtm" onclick="$(\'#divLinhaFormHabtm'+i+'\').remove();">(x)</div>&nbsp;';
 		htmlData += '<span id="sp'+inId+'">'+arr[i].span+'</span> ';
-		htmlData += '<span class="delLinhaFormHabtm" onclick="(\'#divLinhaFormHabtm'+i+'\').remove();">(x)</span>';
 		htmlData += '<input type="hidden" name="'+inName+'" id="in'+inId+'" value="'+arr[i].input+'" />';
-		htmlData += "</div><br />\n";
+		htmlData += "</div>";
 	}
 
 	$("#dataHabtm").html(htmlData);
+	return false;
 }
 
 /**
  * Atualiza os campos Habtm na lista, e fecha a janela Habtm
  *
+ 	<input type="hidden" name="data[1][Usuario][Perfil][0]" id="1UsuarioPerfil0" class="in_perfil lista_input" 
+ 		value="1.1" />
+	<span>ADMINISTRADOR</span>
  */
-function setHabtm()
+function setHabtmLista()
 {
+	var id 		= $("#cmpHabtmCor").val();
+	var objId	= id.split('_');
+	var data 	= getElemsDiv('dataHabtm',['span','input'],0);
+	var html 	= '';
 
+	for(i=0; i<data.length; i++)
+	{
+		var inName 	= 'data['+objId[1]+']['+objId[2]+']['+objId[3]+']'+'['+i+']';
+		var inId	= objId[1]+objId[2]+objId[3]+i;
+		if (i>0) html += ', ';
+		html += '<input type="hidden" name="'+inName+'" id="'+inId+'" value="'+data[i].input+'" />';
+		html += '<span>'+data[i].span+'</span>';
+	}
+	html += '      ';
+	//console.log(html);
+	$("#"+id).html(html);
 	hideHabtmForm();
 }
