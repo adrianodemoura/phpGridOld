@@ -5,10 +5,7 @@
  * @package			Sistema
  * @subpackage		Sistema.Controller
  */
-/**
- * Include files
- */
-include_once(APP.'Modules/Sistema/Controller/SistemaAppController.php');
+appUses('controller','SistemaApp');
 class PerfisController extends SistemaAppController {
 	/**
 	 * Model Perfil
