@@ -1185,7 +1185,11 @@ class Model {
 							foreach($_vlr as $_l3 => $_vlr3)
 							{
 								$v = explode('.', $_vlr3);
-								array_push($sHabtm, 'INSERT INTO '.$tabHabtm.'('.$cmpKey.','.$cmpKeyFk.') values ('.$v['0'].','.$v['1'].');');
+								if (!empty($v['0']) && !empty($v['1']))
+								{
+									array_push($sHabtm, 'INSERT INTO '.
+										$tabHabtm.'('.$cmpKey.','.$cmpKeyFk.') values ('.$v['0'].','.$v['1'].');');
+								}
 							}
 							break;
 						default:

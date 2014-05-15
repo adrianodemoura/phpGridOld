@@ -106,9 +106,17 @@ function setHabtmLista()
 		if (i>0) html += ', ';
 		html += '<input type="hidden" name="'+inName+'" id="'+inId+'" value="'+data[i].input+'" />';
 		html += '<span>'+data[i].span+'</span>';
+	} 
+
+	if (!data.length)
+	{
+		var inName 	= 'data['+objId[1]+']['+objId[2]+']['+objId[3]+']'+'[0]';
+		var inId	= objId[1]+objId[2]+objId[3]+'0';
+		if (i>0) html += ', ';
+		html += '<input type="hidden" name="'+inName+'" id="'+inId+'" value="0.0" />';
 	}
-	html += '      ';
-	//console.log(html);
+
+	$("#btSalvarT").addClass('btAlerta');
 	$("#"+id).html(html);
 	hideHabtmForm();
 }
