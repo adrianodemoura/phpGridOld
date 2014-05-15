@@ -315,8 +315,7 @@ class Model {
 			array_push($this->erros, $erro['2']);
 		}
 
-		$ts = microtime(true);
-		$ts = round(($ts-$ini)*360,4);
+		$ts = round(microtime(true)-$_SERVER['REQUEST_TIME'],4);
 		array_push($this->sqls,array('sql'=>$sql,'ts'=>$ts,'li'=>$l));
 		return $data;
 	}

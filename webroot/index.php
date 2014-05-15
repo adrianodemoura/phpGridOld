@@ -3,9 +3,6 @@
  * Arquivo index do sistema
  * 
  */
-	// iniciando o cronômetro
-	define('INICIO',microtime(true));
-
 	// constantes locais
 	define('APP','../');
 	define('CORE','../Lib/Core/');

@@ -165,4 +165,4 @@
 <div id='tampaTudo'>tampaTudo</div>
 </body>
 </html>
-<!-- tempo de execução <?= round((microtime(true)-INICIO),6) ?> segundos -->
+<!-- tempo de execução <?= round(microtime(true)-$_SERVER['REQUEST_TIME'],4) ?> segundos -->
