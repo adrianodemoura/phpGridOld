@@ -1,5 +1,5 @@
-<table class='tabLista'><!-- linhas -->
 <form name='formLista' id='formLista' method='post' action='<?= $base.strtolower($module).'/'.strtolower($controller).'/salvar' ?>' >
+<table class='tabLista'><!-- linhas -->
 <input type='hidden' name='urlRetorno' value='<?= $this->viewVars['urlRetorno'] ?>' style='width: 300px;' />
 <input type='hidden' name='marcador' value='' id='marcador' style='width: 300px;' />
 <?php foreach($this->data as $_l => $_arrMods) : ?>
@@ -157,7 +157,8 @@
 	<td colspan='100' style='padding-left: 5px; background-color: transparent; border: none;'>
 	Total de registros: <?= number_format($this->viewVars['paginacao']['tot'],0,',','.'); ?>
 </td></tr>
+</table><!-- fim linhas -->
 <?php endif ?>
 
-</table><!-- fim linhas -->
+
 
