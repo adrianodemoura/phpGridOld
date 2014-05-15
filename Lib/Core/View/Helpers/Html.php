@@ -363,7 +363,7 @@ class Html {
 						}
 					}
 				}
-				//for($i=0; $i<$t; $i++) $input .= '&nbsp;';	$input .= "&nbsp;&nbsp;";
+				for($i=0; $i<$t; $i++) $input .= '&nbsp;'; $input .= "&nbsp;&nbsp;&nbsp;&nbsp;";
 				$input .= "</div>";
 				break;
 			default:

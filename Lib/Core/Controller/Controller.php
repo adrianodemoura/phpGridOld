@@ -499,13 +499,13 @@ class Controller {
 				$msg = 'O Registro foi salvo com sucesso ...';
 				if (isset($this->data['1'])) $msg = 'Os Registros foram salvos com sucesso ...';
 				$this->setMsgFlash($msg,'msgFlashOk');
-
+				$this->data = $this->$modelClass->data;
 				$this->viewVars['msgOk'] = $msg;
 				$this->viewVars['dados'] = $this->data;
 			}
 			if (!empty($this->viewVars['urlRetorno']))
 			{
-				header('Location: '.$this->viewVars['urlRetorno']); die();
+				//header('Location: '.$this->viewVars['urlRetorno']); die();
 			}
 		}
 	}

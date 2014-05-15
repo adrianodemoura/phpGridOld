@@ -114,6 +114,11 @@ function setHabtmLista()
 		var inId	= objId[1]+objId[2]+objId[3]+'0';
 		if (i>0) html += ', ';
 		html += '<input type="hidden" name="'+inName+'" id="'+inId+'" value="0.0" />';
+	} else 
+	{
+		//for($i=0; $i<$t; $i++) $input .= '&nbsp;'; $input .= "&nbsp;&nbsp;&nbsp;&nbsp;";
+		for(i=0; i<data.length; i++) html += '&nbsp;';
+		html += '&nbsp;&nbsp;&nbsp;&nbsp;';
 	}
 
 	$("#btSalvarT").addClass('btAlerta');

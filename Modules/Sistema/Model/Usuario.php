@@ -35,25 +35,6 @@ class Usuario extends SistemaApp {
 	public $alias		= 'Usuario';
 
 	/**
-	 * Relacionamento Habtm
-	 * 
-	 * - O nome da tabela de ligação já deve levar o prefixo caso possua, a regra foi definida assim para que haja ligação entre os módulos
-	 * 
-	 * @var		array
-	 * @access	public
-	 */
-	/*public $habtm	= array
-	(
-		'Perfil'	=> array
-		(
-			'table'	=> 'sis_usuarios_perfis',
-			'key'	=> array('usuario_id'),
-			'tableFk'=> 'sis_perfis',
-			'keyFk'	=> array('perfil_id'),
-		)
-	);*/
-
-	/**
 	 * Propriedade de cada campo da tabela usuários
 	 * 
 	 * @var		array
@@ -185,6 +166,7 @@ class Usuario extends SistemaApp {
 	 */
 	public function beforeSave()
 	{
+		$temAdmin = 0;
 		foreach($this->data as $_l => $_arrMods)
 		{
 			// criptografando a senha
@@ -201,7 +183,12 @@ class Usuario extends SistemaApp {
 			// admin sempre ativo
 			if (isset($_arrMods['Usuario']['ativo']) && isset($_arrMods['Usuario']['id']))
 			{
-				if ($_arrMods['Usuario']['id']=='1') $this->data[$_l]['Usuario']['ativo'] = 1;
+
+				if ($_arrMods['Usuario']['id']=='1')
+				{
+					$this->data[$_l]['Usuario']['ativo'] = 1;
+					$temAdmin = $_l;
+				}
 			}
 			// removendo acessos
 			if (isset($_arrMods['Usuario']['Acessos']))
@@ -209,6 +196,14 @@ class Usuario extends SistemaApp {
 				//unset($this->data[$_l]['Usuario']['Acessos']);
 			}
 		}
+
+		// se é o administrador, ele sempre estára no grup administrador
+		if ($temAdmin)
+		{
+			// admin sempre administrador
+			$this->data[$temAdmin]['Usuario']['Perfil']['0'] = '1.1';
+		}
+
 		return parent::beforeSave();
 	}
 }
