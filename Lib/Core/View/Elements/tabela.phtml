@@ -35,6 +35,8 @@
 	$p = $this->viewVars['esquema'][$a['0']][$a['1']];
 	$i = isset($this->viewVars['esquema'][$a['0']][$a['1']]['key']) ? true : false; // é indice
 	$t = isset($p['tit']) ? $p['tit'] : $a['1'];
+	$ty= isset($p['type']) ? $p['type'] : null;
+	$i = ($ty=='habtm') ? false : $i;
 	if (isset($p['belongsTo']))
 	{
 		$c = $this->Html->getFieldRel($p['belongsTo']);
