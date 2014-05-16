@@ -34,7 +34,9 @@
 	$d = ($this->viewVars['params']['dir']=='asc') ? 'desc' : 'asc';
 	$p = $this->viewVars['esquema'][$a['0']][$a['1']];
 	$i = isset($this->viewVars['esquema'][$a['0']][$a['1']]['key']) ? true : false; // é indice
-	$t = $p['tit'];
+	$t = isset($p['tit']) ? $p['tit'] : $a['1'];
+	$ty= isset($p['type']) ? $p['type'] : null;
+	$i = ($ty=='habtm') ? false : $i;
 	if (isset($p['belongsTo']))
 	{
 		$c = $this->Html->getFieldRel($p['belongsTo']);
@@ -128,9 +130,13 @@
 			$a = explode('.',$_cmp);
 			$p = $this->viewVars['esquema'][$a['0']][$a['1']];
 			$cmp = ($_l+1).'.'.$a['0'].'.'.$a['1'];
-			$p['value'] = $_arrMods[$a['0']][$a['1']];
+			$p['value'] = isset($_arrMods[$a['0']][$a['1']]) ? $_arrMods[$a['0']][$a['1']] : null;
+			if ($p['type']=='habtm' && isset($_arrMods[$a['1']]))
+			{
+				$p['value'] = $_arrMods[$a['1']];
+			}
 	?>
-		<td align='center' id='td<?= $this->Html->domId(($_l+1).'.'.$a['1']) ?>' class="td<?= $this->Html->domId($a['1']) ?>">
+		<td id='td<?= $this->Html->domId(($_l+1).'.'.$a['1']) ?>' class="td<?= $this->Html->domId($a['1']) ?>">
 			<?php
 				$pode = $this->Html->pode('alterar',$this->viewVars['minhasPermissoes']);
 				if (!$pode)  $p['edicaoOff'] = true;
@@ -146,11 +152,15 @@
 </tr>
 
 <?php endforeach ?>
+</form>
+
 <?php if (isset($this->viewVars['paginacao']['tot'])) : ?>
 <tr style='background-color: transparent; border: none;'>
 	<td colspan='100' style='padding-left: 5px; background-color: transparent; border: none;'>
 	Total de registros: <?= number_format($this->viewVars['paginacao']['tot'],0,',','.'); ?>
 </td></tr>
-<?php endif ?>
 </table><!-- fim linhas -->
-</form>
+<?php endif ?>
+
+
+
