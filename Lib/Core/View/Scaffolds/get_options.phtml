@@ -1,1 +1,20 @@
-<?php debug($this->viewVars['params']); ?>
+<?php
+	if (isset($data))
+	{
+		 foreach($data as $_l => $_arrMods)
+		{
+			foreach($_arrMods as $_mod => $_arrCmps)
+			{
+				$l = 0;
+				foreach($_arrCmps as $_cmp => $_vlr)
+				{
+					if ($l) echo ';';
+					if (!empty($_vlr)) echo $_vlr;
+					$l++;
+				}
+			}
+			//if ($debug) echo "<br />";
+			echo "*\n";
+		}
+	}
+?>

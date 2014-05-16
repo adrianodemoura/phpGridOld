@@ -1,0 +1,48 @@
+<div id="formHabtm">
+	<div class="barraHabtm">
+
+		<div class="divPesqHabtm">
+			<input type='text' name='data[Habtm][pesq]' id='cmpPesqHabtm' value='' />
+		</div>
+
+		<div>
+		<ul class="pagination" style="margin: 0px 0px 0px 6px; cursor: pointer;">
+			<li><a id='xHP1' title='primeira página' onclick="return setListaHabtm('1');"><<</a></li>
+			<li><a id='xHPA' title='página anterior' onclick="return setListaHabtm('A');"> < </a></li>
+			<li><a id='xHPC' title='página corrente' onclick="return setListaHabtm('C');">1</a></li>
+			<li><a id='xHPP' title='próxima página'  onclick="return setListaHabtm('P');"> > </a></li>
+			<li><a id='xHPU' title='última página' 	 onclick="return setListaHabtm('U');">>></a></li>
+		</ul>
+		</div>
+
+	</div>
+
+	<div class="meioHabtm">
+		<div class="dataEsq">
+			<div id='listaHabtm'>
+			</div>
+		</div>
+		<div class="dataDir">
+			<div id='dataHabtm'>
+			</div>
+		</div>
+	</div>
+
+	<div class="barraHabtm" style="padding: 10px 0px 0px 0px;">
+
+		<input type='button' name='btHabtmSalvar' value='Salvar' 
+			class='btn btn-success btHabtmSalvar' 
+			onclick='setHabtmLista();' />
+
+		<input type='button' name='btHabtmFechar' value='Cancelar' 
+			class='btn btn-warning btHabtmFechar' 
+			onclick='hideHabtmForm()' />
+
+	</div>
+
+	<input type='text' name='cmpHabtmCor' id='cmpHabtmCor' value='' />
+
+	<div class="barraHabtm" style='color: red;'>
+	* Esta operação só será concluída após o click no botão "Salvar Todos".
+	</div>
+</div>

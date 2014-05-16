@@ -98,7 +98,7 @@ class Model {
 	 * @var		array
 	 * @access	public
 	 */
-	public $habtm		= array();
+	//public $habtm		= array();
 
 	/**
 	 * Não retornar habtm HasAndBelongsToMany, relacionamento n para n
@@ -107,7 +107,7 @@ class Model {
 	 * @var		boolean
 	 * @access	public
 	 */
-	public $habtmOff 	= false;
+	//public $habtmOff 	= false;
 
 	/**
 	 * Matriz com as propriedades de cada campo do model corrente
@@ -315,8 +315,7 @@ class Model {
 			array_push($this->erros, $erro['2']);
 		}
 
-		$ts = microtime(true);
-		$ts = round(($ts-$ini)*360,4);
+		$ts = round(microtime(true)-$_SERVER['REQUEST_TIME'],4);
 		array_push($this->sqls,array('sql'=>$sql,'ts'=>$ts,'li'=>$l));
 		return $data;
 	}
@@ -402,7 +401,8 @@ class Model {
 		{
 			if ($l)
 			{
-				$field = strtolower($this->name.'_'.$_cmp);
+				//$field = strtolower($this->name.'_'.$_cmp);
+				$field = $this->name.'.'.$_cmp;
 				break;
 			}
 			$l++;
@@ -433,6 +433,7 @@ class Model {
 		$pagT	= isset($params['pagT']) 	? $params['pagT'] 	: 20;
 		$distinct = isset($params['distinct']) ? $params['distinct'] : null;
 		$ali1	= $this->name;
+		$cHabtm = array();
 
 		// verifica o nome de cada campo
 		if (!empty($fields))
@@ -442,7 +443,11 @@ class Model {
 				if (!strpos($_cmp,'.'))
 				{
 					unset($fields[$_l]);
-					array_unshift($fields,$this->name.'.'.$_cmp);
+					$tipo = $this->esquema[$this->name][$_cmp]['type'];
+					if (!in_array($tipo, array('habtm','virtual')))
+					{
+						array_unshift($fields,$this->name.'.'.$_cmp);
+					}
 				}
 			}
 		}
@@ -455,7 +460,11 @@ class Model {
 				{
 					foreach($this->esquema as $_cmp => $_arrProp)
 					{
-						array_push($fields,$this->name.'.'.$_cmp);
+						if (!in_array($_arrProp['type'], array('habtm','virtual')))
+						{
+							array_push($fields,$this->name.'.'.$_cmp);
+						}
+						if ($_arrProp['type']=='habtm') array_push($cHabtm, $_cmp);
 					}
 				}
 				break;
@@ -465,8 +474,12 @@ class Model {
 					$l = 0;
 					foreach($this->esquema as $_cmp => $_arrProp)
 					{
-						array_push($fields,$this->name.'.'.$_cmp);
-						$l++;
+						if (!in_array($_arrProp['type'], array('habtm','virtual')))
+						{
+							array_push($fields,$this->name.'.'.$_cmp);
+							$l++;
+						}
+						if ($_arrProp['type']=='habtm') array_push($cHabtm, $_cmp);
 					}
 				}
 				break;
@@ -483,8 +496,11 @@ class Model {
 						if ($l>0) break;
 						if (!in_array($_cmp,$this->primaryKey))
 						{
-							array_push($fields,$this->name.'.'.$_cmp);
-							$l++;
+							if (!in_array($_arrProp['type'], array('habtm','virtual')))
+							{
+								array_push($fields,$this->name.'.'.$_cmp);
+								$l++;
+							}
 						}
 					}
 				}
@@ -666,17 +682,19 @@ class Model {
 			}
 			
 			// incrementando habtm, caso poussua
-			if ($tipo=='all' AND isset($this->habtm) && !empty($this->habtm))
+			if ($tipo=='all' && !empty($cHabtm))
 			{
-				foreach($this->habtm as $_mod => $_arrProp)
+				foreach($cHabtm as $_Habtm)
 				{
-					$tabEsquerda= $_arrProp['tableFk'];
-					$tabLiga	= $_arrProp['table'];
+					$p 			= $this->esquema[$_Habtm];
+					$_mod 		= isset($p['modFk']) ? $this->getModel($p['modFk']) : $_Habtm;
+					$tabEsquerda= $p['tableFk'];
+					$tabLiga	= $p['table'];
 					$arrTab		= explode('_',$tabLiga);
-					$cmpEsquerda= $_arrProp['key'];
+					$cmpEsquerda= $p['key'];
 					
 					$tabDireita = $arrTab['2'];
-					$cmpDireita = $_arrProp['keyFk'];
+					$cmpDireita = $p['keyFk'];
 					$sql = ' SELECT * FROM '.$tabEsquerda.' '.$_mod;
 					$sql .= ' INNER JOIN '.$tabLiga.' t1 ON ';
 					$l = 0;
@@ -1110,6 +1128,7 @@ class Model {
 		$where 	= '';
 		$lCm	= 0;
 		$lPk	= 0;
+		$sHabtm = array(); // sqls habtm
 		$this->data = $data;
 
 		// identificando os valores dos campos ids
@@ -1133,15 +1152,17 @@ class Model {
 		{
 			foreach($_arrMods as $_l2 => $_arrCmps)
 			{
-				$sqlInC= array();
-				$sqlInV= array();
-				$sqlUp = '';
-				$where = '';
+				$sqlInC	= array();
+				$sqlInV	= array();
+				$sqlUp 	= '';
+				$where 	= '';
+				$id 	= null;
 				foreach($_arrCmps as $_cmp => $_vlr)
 				{
 					$tipo = (isset($this->esquema[$_cmp]['type'])) ? $this->esquema[$_cmp]['type'] : 'text';
 					if ($lCm>0 && !empty($sqlUp)) $sqlUp .= ", ";
 					if (!empty($_vlr)) $sqlTi = (in_array($_cmp,$this->primaryKey)) ? 'UPDATE' : $sqlTi;
+					if ((in_array($_cmp,$this->primaryKey))) $id = $_vlr;
 
 					switch($tipo)
 					{
@@ -1153,6 +1174,23 @@ class Model {
 							$_sqlUp = "$_cmp=$_vlr";
 							array_push($sqlInC,$_cmp);
 							array_push($sqlInV,$_vlr);
+							break;
+						case 'virtual':
+							break;
+						case 'habtm':
+							$tabHabtm 	= $this->esquema[$_cmp]['table'];
+							$cmpKey 	= $this->esquema[$_cmp]['key']['0'];
+							$cmpKeyFk	= $this->esquema[$_cmp]['keyFk']['0'];
+							array_push($sHabtm,'DELETE FROM '.$tabHabtm.' WHERE '.$cmpKey.'='.$id);
+							foreach($_vlr as $_l3 => $_vlr3)
+							{
+								$v = explode('.', $_vlr3);
+								if (!empty($v['0']) && !empty($v['1']))
+								{
+									array_push($sHabtm, 'INSERT INTO '.
+										$tabHabtm.'('.$cmpKey.','.$cmpKeyFk.') values ('.$v['0'].','.$v['1'].');');
+								}
+							}
 							break;
 						default:
 							$_sqlUp = "$_cmp='$_vlr'";
@@ -1196,6 +1234,15 @@ class Model {
 			}
 		}
 		if ($sqlTi=='INSERT') $this->ultimoId = $this->db->lastInsertId();
+
+		// salvando habtm
+		if (!empty($sHabtm))
+		{
+			foreach($sHabtm as $_l => $_sql)
+			{
+				$res = $this->query($_sql);
+			}
+		}
 
 		// depois de salvar
 		$this->afterSave();
@@ -1327,5 +1374,16 @@ class Model {
 		if (!empty($this->erros)) return false;
 		$this->afterValidate();
 		return true;
+	}
+
+	/**
+	 * Retorna o nome do model, caso seja de outro módulo inclui no path o caminho do módulo
+	 *
+	 * @param 	string 	$model 	Nome do model, pode ser no formato Modulo.Model, ou simples Model
+	 * @return 	string 	$model 	Nome do model
+	 */
+	public function getModel($model='')
+	{
+		return $model;
 	}
 }

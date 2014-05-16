@@ -24,7 +24,7 @@ class Usuario extends SistemaApp {
 	 * @var		array
 	 * @access	public
 	 */
-	public $primaryKey = array('id');
+	public $primaryKey 	= array('id');
 
 	/**
 	 * Nickname para a tabela usuarios
@@ -35,77 +35,58 @@ class Usuario extends SistemaApp {
 	public $alias		= 'Usuario';
 
 	/**
-	 * Relacionamento Habtm
-	 * 
-	 * - O nome da tabela de ligação já deve levar o prefixo caso possua, a regra foi definida assim para que haja ligação entre os módulos
-	 * 
-	 * @var		array
-	 * @access	public
-	 */
-	public $habtm	= array
-	(
-		'Perfil'	=> array
-		(
-			'table'	=> 'sis_usuarios_perfis',
-			'key'	=> array('usuario_id'),
-			'tableFk'=> 'sis_perfis',
-			'keyFk'	=> array('perfil_id'),
-		)
-	);
-
-	/**
 	 * Propriedade de cada campo da tabela usuários
 	 * 
 	 * @var		array
 	 * @acess	public
 	 */
-	public $esquema 	= array
+	public $esquema 		= array
 	(
-		'id'			=> array
+		'id'				=> array
 		(
-			'tit'		=> 'Id'
+			'tit'			=> 'Id'
 		),
-		'nome'			=> array
+		'nome'				=> array
 		(
-			'tit'		=> 'Nome',
-			'notEmpty'	=> true,
-			'pesquisar'	=> '&'
+			'tit'			=> 'Nome',
+			'notEmpty'		=> true,
+			'pesquisar'		=> '&'
 		),
 		'ativo'=> array
 		(
-			'tit'		=> 'Ativo',
-			'filtro'	=> true,
-			'options'	=> array('1'=>'Sim','0'=>'Não'),
+			'tit'			=> 'Ativo',
+			'filtro'		=> true,
+			'options'		=> array('1'=>'Sim','0'=>'Não'),
 			'emptyFiltro'	=> '-- Ativos --',
 		),
-		'acessos'		=> array
+		'acessos'			=> array
 		(
-			'tit'		=> 'Acessos',
-			'type'		=> 'numeric',
-			'edicaoOff'	=> true
+			'tit'			=> 'Acessos',
+			'type'			=> 'numeric',
+			'edicaoOff'		=> true
 		),
 		'email'	=> array
 		(
-			'tit'		=> 'e-mail',
-			'upperOff'	=> true,
-			'pesquisar'	=> '&',
-			'unique'	=> true,
+			'tit'			=> 'e-mail',
+			'upperOff'		=> true,
+			'pesquisar'		=> '&',
+			'unique'		=> true,
 		),
-		'celular'		=> array
+		'celular'			=> array
 		(
-			'tit'		=> 'Celular',
-			'mascara'	=> '(##)####-####',
+			'tit'			=> 'Celular',
+			'mascara'		=> '(##)####-####',
 		),
-		'trocar_senha'	=> array
+		'trocar_senha'		=> array
 		(
-			'tit'		=> 'Trocar Senha',
-			'filtro'	=> true,
-			'options'	=> array('1'=>'Sim','0'=>'Não'),
+			'tit'			=> 'Trocar Senha',
+			'filtro'		=> true,
+			'options'		=> array('1'=>'Sim','0'=>'Não'),
 			'emptyFiltro'	=> '-- Trocar Senha --',
 		),
-		'cidade_id'		=> array
+		'cidade_id'			=> array
 		(
-			'tit'		=> 'Cidade',
+			'tit'			=> 'Cidade',
 			'belongsTo' 	=> array
 			(
 				'Cidade'	=> array
@@ -118,19 +99,36 @@ class Usuario extends SistemaApp {
 				),
 			),
 		),
-		'ultimo_ip'	=> array
+		'ultimo_ip'			=> array
 		(
-			'tit'		=> 'Último IP',
-			'edicaoOff'	=>true
+			'tit'			=> 'Último IP',
+			'edicaoOff'		=>true
 		),
-		'senha'			=> array
+		'senha'				=> array
 		(
-			'tit'		=> 'Senha',
-			'type'		=> 'password',
+			'tit'			=> 'Senha',
+			'type'			=> 'password',
 		),
-		'ultimo_acesso'	=> array
+		'ultimo_acesso'		=> array
 		(
-			'tit'		=> 'Último Acesso',
+			'tit'			=> 'Último Acesso',
+		),
+		'Perfil'			=> array
+		(
+			'tit'			=> 'Perfis',
+			'type' 			=> 'habtm',
+			'table'			=> 'sis_usuarios_perfis',
+			'key'			=> array('usuario_id'),
+			'tableFk'		=> 'sis_perfis',
+			'keyFk'			=> array('perfil_id'),
+			'modFk'			=> 'Perfil',
+			'optionsFk'		=> array
+			(
+				'cadastro'	=> 'sistema/perfis',
+				'key'		=> 'Perfil.nome',
+				'fields'	=> 'Perfil.id,Perfil.nome',
+				'ord'		=> 'Perfil.nome',
+			),
 		),
 	);
 
@@ -175,6 +173,7 @@ class Usuario extends SistemaApp {
 	 */
 	public function beforeSave()
 	{
+		$temAdmin = 0;
 		foreach($this->data as $_l => $_arrMods)
 		{
 			// criptografando a senha
@@ -191,7 +190,12 @@ class Usuario extends SistemaApp {
 			// admin sempre ativo
 			if (isset($_arrMods['Usuario']['ativo']) && isset($_arrMods['Usuario']['id']))
 			{
-				if ($_arrMods['Usuario']['id']=='1') $this->data[$_l]['Usuario']['ativo'] = 1;
+
+				if ($_arrMods['Usuario']['id']=='1')
+				{
+					$this->data[$_l]['Usuario']['ativo'] = 1;
+					$temAdmin = $_l;
+				}
 			}
 			// removendo acessos
 			if (isset($_arrMods['Usuario']['Acessos']))
@@ -199,6 +203,14 @@ class Usuario extends SistemaApp {
 				//unset($this->data[$_l]['Usuario']['Acessos']);
 			}
 		}
+
+		// se é o administrador, ele sempre estára no grup administrador
+		if ($temAdmin)
+		{
+			// admin sempre administrador
+			$this->data[$temAdmin]['Usuario']['Perfil']['0'] = '1.1';
+		}
+
 		return parent::beforeSave();
 	}
 }

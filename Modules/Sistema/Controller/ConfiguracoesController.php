@@ -7,10 +7,7 @@
  * @package			Sistema
  * @subpackage		Sistema.Controller
  */
-/**
- * Include files
- */
-include_once(APP.'Modules/Sistema/Controller/SistemaAppController.php');
+appUses('controller','SistemaApp');
 class ConfiguracoesController extends SistemaAppController {
 	/**
 	 * Model Usuário
@@ -41,7 +38,7 @@ class ConfiguracoesController extends SistemaAppController {
 		parent::listar();
 		$this->viewVars['botoesLista']['0'] = array();
 		$this->viewVars['marcadores'] 		= null;
-		unset($this->viewVars['paginacao']);
+		//unset($this->viewVars['paginacao']);
 		unset($this->viewVars['filtros']);
 		unset($this->viewVars['ferramentas']);
 	}

@@ -329,6 +329,45 @@ class Html {
 				$input .= "<div id='".$ajax['cmp']."' class='ajaxDiv".$this->domId($a['2'])." div_ajax'>".$ajax['value']."&nbsp;&nbsp;&nbsp;";
 				$input .= "</div>";
 				break;
+			case 'habtm':
+				$input = "<img src='".$this->base."img/bt_ajax.png' class='bt_lista_ajax'";
+				$input .= " onclick='showHabtmForm(\"habtm_".str_replace('.','_',$cmp)."\");' ";
+				$input .= " title='clique aqui para editar os ".$e['tit']."' />";
+				$input .= "<div id='habtm_".str_replace('.','_',$cmp)."' class='divHabtm'>";
+				if (!empty($opcs['value']))
+				{
+					$t = 0;
+					foreach($opcs['value'] as $_l => $_arrCmps)
+					{
+						$id 	= $_arrCmps['id'];
+						$key 	= $_arrCmps[$e['key']['0']];
+						$keyFK	= $_arrCmps[$e['keyFk']['0']];
+						$t++;
+
+						if ($_l) $input .= ', ';
+						$input .= '<input type="hidden"';
+						$input .= ' name="'.$opcs['name'].'['.$_l.']"';
+						$input .= ' id="'.$opcs['id'].$_l.'"';
+						$input .= ' class="'.$opcs['class'].'"';
+						$input .= ' value="'.$key.'.'.$keyFK.'"';
+						$input .= " />";
+
+						$l = 0;
+						foreach($_arrCmps as $_cmp => $_vlr)
+						{
+							if (!in_array($_cmp, array('id')))
+							{
+								$input .= "<span>$_vlr</span>";
+								$l++;
+								if ($l>0) break;
+							}
+						}
+					}
+				}
+				if (isset($t)) for($i=0; $i<$t; $i++) $input .= '&nbsp;'; $input .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+				$input .= "</div>";
+				//debug($e);
+				break;
 			default:
 				$input = "<input ";
 				$tam = isset($e['length']) 	? $e['length'] : 0;

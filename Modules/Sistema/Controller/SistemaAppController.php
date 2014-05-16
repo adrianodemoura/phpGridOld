@@ -7,10 +7,6 @@
  * @package		Sistema
  * @package		Sistema.Controller
  */
-/**
- * Include files
- */
-//include_once(CORE.'Controller/Controller.php');
 appUses('Controller','');
 class SistemaAppController extends Controller {
 }

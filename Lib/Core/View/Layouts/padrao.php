@@ -25,8 +25,15 @@
 <script src="<?= $base ?>js/jquery.chrony.min.js"></script>
 <?php endif ?>
 
+<?php if (isset($temHabtm)) : ?>
+<script src="<?= $base ?>js/form_habtm.js"></script>
+<?php endif ?>
+
 <link rel="stylesheet" type="text/css" href="<?= $base ?>css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="<?= $base ?>css/padrao.css" />
+<?php if (isset($temHabtm)) : ?>
+<link rel="stylesheet" type="text/css" href="<?= $base ?>css/form_habtm.css" />
+<?php endif ?>
 
 <?php foreach($head as $_l => $_t) echo html_entity_decode($_t)."\n"; ?>
 
@@ -41,8 +48,19 @@
 
 		if (isset($_arrProp['key']) && $_arrProp['key']=='PRI') array_push($p, array('primary'=>1));
 		if (isset($_arrProp['notEmpty'])) array_push($p,array('obrigatorio'=>1));
+		if (isset($_arrProp['optionsFk']))
+		{
+			$optionsFk = '{';
+			foreach($_arrProp['optionsFk'] as $_cmpFk => $_vlrFk)
+			{
+				if (strlen($optionsFk)>1) $optionsFk .= ', ';
+				$optionsFk .= "$_cmpFk: '$_vlrFk' ";
+			}
+			$optionsFk .= '}';
+			array_push($p,array('optionsFk'=>$optionsFk));
+		}
 
-		if (!empty($p) && empty($c)) $c .= "{ $_mod : { ";
+		if (!empty($p) && empty($c)) $c .= " { $_mod : { \n";
 
 		if (!empty($p))
 		{
@@ -52,7 +70,7 @@
 				foreach($_arrProp as $_cmp => $_vlr)
 				{
 					if ($_l) $c .= ', ';
-					$c .= "$_cmp : $_vlr";
+					$c .= "$_cmp  : $_vlr";
 				}
 			}
 			$c .= '},'."\n";
@@ -158,4 +176,4 @@
 <div id='tampaTudo'>tampaTudo</div>
 </body>
 </html>
-<!-- tempo de execução <?= round((microtime(true)-INICIO),6) ?> segundos -->
+<!-- tempo de execução <?= round(microtime(true)-$_SERVER['REQUEST_TIME'],4) ?> segundos -->

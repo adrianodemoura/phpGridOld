@@ -1,0 +1,96 @@
+#formHabtm
+{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	min-width: 400px;
+	height: auto;
+	margin-top: -250px;
+	margin-left: -220px;
+	display: none;
+	z-index: 9999;
+	padding: 20px;
+	background-color: #fff;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	display: none;
+}
+#formHabtm .divPesqHabtm
+{
+	float: left;
+}
+
+#formHabtm .barraHabtm
+{
+	clear: both;
+	line-height: 28px;
+}
+#formHabtm .barraHabtm .btHabtmSalvar,
+#formHabtm .barraHabtm .btHabtmFechar
+{
+	float: left;
+	margin: 0px 5px 0px 0px;
+}
+#formHabtm .meioHabtm div
+{
+	float: left;
+	display: block;
+	min-width: auto;
+	min-height: auto;
+}
+#formHabtm .meioHabtm
+{
+	margin-bottom: 5px;
+}
+#formHabtm .meioHabtm .dataEsq
+{
+	min-width: 300px;
+	min-height: 200px;
+	margin-right: 5px;
+	border: 1px solid #ccc;
+}
+
+#formHabtm .meioHabtm .dataDir
+{
+	border: 1px solid #ccc;
+	min-width: 200px;
+}
+
+#formHabtm #cmpPesqHabtm
+{
+	min-width: 100px;
+	width: 298px;
+}
+#formHabtm #dataHabtm
+{
+	padding: 5px;
+}
+#formHabtm #cmpHabtmCor
+{
+	/*display: none;*/
+}
+#formHabtm .delLinhaFormHabtm
+{
+	color: red;
+	font-weight: bold;
+	cursor: pointer;
+	margin-right: 5px;
+}
+
+#formHabtm .linhaFormHabtm
+{
+	clear: both;
+}
+
+#formHabtm .linhaListaHabtm
+{
+	clear: both;
+	/*background-color: #ddd;*/
+}
+
+#formHabtm .linhaListaCol1
+{
+	cursor: pointer;
+	display: block;
+}
