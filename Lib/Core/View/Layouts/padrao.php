@@ -48,8 +48,19 @@
 
 		if (isset($_arrProp['key']) && $_arrProp['key']=='PRI') array_push($p, array('primary'=>1));
 		if (isset($_arrProp['notEmpty'])) array_push($p,array('obrigatorio'=>1));
+		if (isset($_arrProp['optionsFk']))
+		{
+			$optionsFk = '{';
+			foreach($_arrProp['optionsFk'] as $_cmpFk => $_vlrFk)
+			{
+				if (strlen($optionsFk)>1) $optionsFk .= ', ';
+				$optionsFk .= "$_cmpFk: '$_vlrFk' ";
+			}
+			$optionsFk .= '}';
+			array_push($p,array('optionsFk'=>$optionsFk));
+		}
 
-		if (!empty($p) && empty($c)) $c .= "{ $_mod : { ";
+		if (!empty($p) && empty($c)) $c .= " { $_mod : { \n";
 
 		if (!empty($p))
 		{
@@ -59,7 +70,7 @@
 				foreach($_arrProp as $_cmp => $_vlr)
 				{
 					if ($_l) $c .= ', ';
-					$c .= "$_cmp : $_vlr";
+					$c .= "$_cmp  : $_vlr";
 				}
 			}
 			$c .= '},'."\n";

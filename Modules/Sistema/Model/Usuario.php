@@ -24,7 +24,7 @@ class Usuario extends SistemaApp {
 	 * @var		array
 	 * @access	public
 	 */
-	public $primaryKey = array('id');
+	public $primaryKey 	= array('id');
 
 	/**
 	 * Nickname para a tabela usuarios
@@ -122,6 +122,13 @@ class Usuario extends SistemaApp {
 			'tableFk'		=> 'sis_perfis',
 			'keyFk'			=> array('perfil_id'),
 			'modFk'			=> 'Perfil',
+			'optionsFk'		=> array
+			(
+				'cadastro'	=> 'sistema/perfis',
+				'key'		=> 'Perfil.nome',
+				'fields'	=> 'Perfil.id,Perfil.nome',
+				'ord'		=> 'Perfil.nome',
+			),
 		),
 	);
 

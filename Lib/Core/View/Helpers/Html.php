@@ -364,8 +364,9 @@ class Html {
 						}
 					}
 				}
-				for($i=0; $i<$t; $i++) $input .= '&nbsp;'; $input .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+				if (isset($t)) for($i=0; $i<$t; $i++) $input .= '&nbsp;'; $input .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 				$input .= "</div>";
+				//debug($e);
 				break;
 			default:
 				$input = "<input ";

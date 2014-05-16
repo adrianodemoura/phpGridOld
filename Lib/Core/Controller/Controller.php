@@ -615,17 +615,45 @@ class Controller {
 	{
 		$this->layout		= 'ajax';
 		$modelClass 		= $this->modelClass;
+		$fields				= isset($this->viewVars['params']['cmps']) 		
+								? $this->viewVars['params']['cmps'] : null;
+		$fields				= isset($this->viewVars['params']['fields']) 	
+								? $this->viewVars['params']['fields'] : $fields;
+		$ordem				= isset($this->viewVars['params']['ord']) 	
+								? $this->viewVars['params']['ord'] : null;
+
+		// se fields está vaziio, pega o id e o displayField
+		if (empty($fields))
+		{
+			foreach ($this->$modelClass->primaryKey as $_l => $_cmp) 
+			{
+				if (!empty($fields)) $fields .= ', ';
+				$fields .= $modelClass.'.'.$_cmp;
+			}
+			$fields .= ', '.$this->$modelClass->getDisplayField();
+		}
+
+		// se não tem ordem, pega o display field
+		if (empty($ordem))
+		{
+			$this->viewVars['params']['ord'] = $this->$modelClass->getDisplayField();
+		}
+
+		// parametros
 		$params				= array();
-		$params['fields']	= explode(',',$this->viewVars['params']['cmps']);
+		$params['fields']	= explode(',',$fields);
 		$params['where']	= array();
 		$params['pag']		= isset($this->viewVars['params']['pag']) ? $this->viewVars['params']['pag'] : 1;
 		$params['order']	= isset($this->viewVars['params']['ord']) ? explode(',',$this->viewVars['params']['ord']) : null;
+		$params['direc']	= isset($this->viewVars['params']['dir']) ? explode(',',$this->viewVars['params']['dir']) : 'asc';
 		$params['pag']		= isset($this->viewVars['params']['pag']) ? $this->viewVars['params']['pag'] : 1;
-		
+
 		// pegando a última página
 		if ($params['pag']=='*')
 		{
-			$params['pag']=1;
+			$params['pag'] 		= 1;
+			array_unshift($params['order'],$this->$modelClass->name.'.id');
+			$params['direc'] 	= 'DESC';
 		}
 
 		// dando um loope nos parâmetros
@@ -633,7 +661,7 @@ class Controller {
 		{
 			if ($_cmp!='cmps')
 			{
-				if (!in_array($_cmp,array('cmps','pag','ord','dir')))
+				if (!in_array($_cmp,array('cmps','fields','pag','ord','dir')))
 				{
 					$params['where'][$_cmp.' LIKE'] = rawurldecode($_vlr);
 				}

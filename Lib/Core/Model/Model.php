@@ -401,7 +401,8 @@ class Model {
 		{
 			if ($l)
 			{
-				$field = strtolower($this->name.'_'.$_cmp);
+				//$field = strtolower($this->name.'_'.$_cmp);
+				$field = $this->name.'.'.$_cmp;
 				break;
 			}
 			$l++;

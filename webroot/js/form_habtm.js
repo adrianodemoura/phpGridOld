@@ -12,6 +12,7 @@ function showHabtmForm(id)
 	setDataHabtm();
 	showModal("formHabtm");
 	$("#cmpPesqHabtm").focus();
+	setListaHabtm();
 }
 
 /**
@@ -20,46 +21,18 @@ function showHabtmForm(id)
  */
 function hideHabtmForm()
 {
-	$("#formHabtm").fadeOut(0, function() { $("#tampaTudo").fadeOut(); }); 
-}
-
-/**
- * Retorna os elementos, conforme as tags, de uma div
- * e ainda ordena por umda das tags definida em order
- */
-function getElemsDiv(id,tags,order)
-{
-	var arr   	= [];
-	var ordem	= tags[order];
-
-	for(i=0; i<tags.length;i++)
+	$("#formHabtm").fadeOut(0, function()
 	{
-		var tag = tags[i];
-		var l 	= 0;
-		$('#'+id+' '+tag).each(function()
-		{
-			if (arr[l]==undefined) arr[l] = {};
-			if (arr[l][tag]==undefined) arr[l][tag] = {};
-			vlr = ($(this).val()=='') ? $(this).text() : $(this).val();
-			arr[l][tag] = vlr;
-			l++;
-		});
-	};
-
-	// ordenando o objeto
-	arr.sort(function(a,b)
-	{
-		return a[ordem].localeCompare(b[ordem]);
-	});
-
-	return arr;
+		$("#listaHabtm").empty();
+		$("#tampaTudo").fadeOut();
+	}); 
 }
 
 /**
  * Atualiza a div dataHabtm do formulário habtm_form, com os campos HABTM do formulário da lista
  * será criado uma linha para cada campo, que conterá o valor ID e o nome do relacionamento
  */
-function setDataHabtm(pag)
+function setDataHabtm()
 {
 	var id 		= $("#cmpHabtmCor").val();
 	var objId	= id.split('_');
@@ -121,7 +94,108 @@ function setHabtmLista()
 		html += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 	}
 
+	$("#"+id).addClass('inAlerta');
 	$("#btSalvarT").addClass('btAlerta');
 	$("#"+id).html(html);
 	hideHabtmForm();
+}
+
+/**
+ * Atualiza a div listaHabtm com a paginação dos campos de relacionamento
+ *
+ */
+function setListaHabtm(pag)
+{
+	var id 		= $("#cmpHabtmCor").val();
+	var objId	= id.split('_');
+	var model	= objId[2];
+	var cmp 	= objId[3];
+	var url 	= base;
+	var html 	= '';
+	var c 		= $("#xHPC").text();
+
+	switch(pag)
+	{
+		case '1':
+			c = 1;
+			break;
+		case 'A':
+			c = parseInt(c)-1;
+			if (!c) c = 1;
+			break;
+		case 'P':
+			c = parseInt(c)+1;
+			break;
+		case 'U':
+			c = '*';
+	}
+
+	// montando a url de destino
+	if (campos[model][cmp]['optionsFk']['cadastro'] != undefined)
+	{
+		url += campos[model][cmp]['optionsFk']['cadastro'];
+		url += '/get_options/pag:'+c;
+		if (campos[model][cmp]['optionsFk']['key']!=undefined)
+		{
+			url += '/'+campos[model][cmp]['optionsFk']['key']+':'+$("#cmpPesqHabtm").val();
+		}
+		if (campos[model][cmp]['optionsFk']['fields']!=undefined)
+		{
+			url += '/fields:'+campos[model][cmp]['optionsFk']['fields'];
+		}
+		if (campos[model][cmp]['optionsFk']['ord']!=undefined)
+		{
+			url += '/ord:'+campos[model][cmp]['optionsFk']['ord'];
+		}
+
+		// recuperando a lista
+		$('#ajaxDest').load(url, function(resposta, status, xhr)
+		{
+			if (status=='success')
+			{
+				$("#listaHabtm").html(" ... aguarde ...");
+				var tam = parseInt(resposta.length);
+				if (c=='*') c = 1;
+				if (tam<5)
+				{
+					c = parseInt(c)-1;
+				} else
+				{
+					/*console.log(url);
+					console.log(tam);
+					console.log(resposta);*/
+				}
+				$("#xHPC").text(c);
+
+				var jArrResposta = resposta.split('*');
+				$.each(jArrResposta, function(i, linha)
+				{
+					var jArrLinha = linha.split(';');
+					html += '<div class="linhaListaHabtm">';
+					$.each(jArrLinha, function(o, vlr)
+					{
+						if (vlr.length>1)
+						{
+							html += '<span>'+vlr+'</span>';
+						}
+					});
+					html += '</div>';
+				});
+
+				if(html.length<40) html = 'a pesquisa retornou vazio ...'
+
+				// atualizando a listaHabtm
+				$("#listaHabtm").html(html);
+			}
+		});
+	} else
+	{
+		html = 'Este campo não possui configuração optionsFK ...';
+	}
+
+	// atualizando a página
+	$("#xHPC").text(c);
+
+	// atualizando a listaHabtm
+	$("#listaHabtm").html(html);
 }
