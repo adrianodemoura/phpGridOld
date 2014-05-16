@@ -505,7 +505,7 @@ class Controller {
 			}
 			if (!empty($this->viewVars['urlRetorno']))
 			{
-				//header('Location: '.$this->viewVars['urlRetorno']); die();
+				header('Location: '.$this->viewVars['urlRetorno']); die();
 			}
 		}
 	}

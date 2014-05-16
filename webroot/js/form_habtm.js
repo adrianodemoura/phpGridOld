@@ -42,20 +42,61 @@ function setDataHabtm()
 
 	$("#cmpPesqHabtm").focus();
 
-	// montando o html do dataHabtm //habtm_3_Usuario_Perfil
+	// montando o html do dataHabtm 
 	for(i=0; i<arr.length;i++)
 	{
+		var idHabtm	= arr[i].input.split('.');
 		var inName 	= objId[0]+'['+objId[1]+']'+objId[2]+'['+objId[3]+']'+'['+i+']';
 		var inId	= objId[0]+objId[1]+objId[2]+objId[3]+i;
-		htmlData += '<div id="divLinhaFormHabtm'+i+'" class="linhaFormHabtm">';
-		htmlData += '<div class="delLinhaFormHabtm" onclick="$(\'#divLinhaFormHabtm'+i+'\').remove();">(x)</div>&nbsp;';
-		htmlData += '<span id="sp'+inId+'">'+arr[i].span+'</span> ';
+
+		htmlData += '<div id="divLinhaFormHabtm'+idHabtm['1']+'" class="linhaFormHabtm">';
 		htmlData += '<input type="hidden" name="'+inName+'" id="in'+inId+'" value="'+arr[i].input+'" />';
+		htmlData += '<div class="delLinhaFormHabtm" onclick="$(\'#divLinhaFormHabtm'+idHabtm['1']+'\').remove();">(x)</div>';
+		htmlData += '<span id="sp'+inId+'">'+arr[i].span+'</span> ';
 		htmlData += "</div>";
 	}
 
 	$("#dataHabtm").html(htmlData);
 	return false;
+}
+
+
+/**
+ * Atualiza a linha no data habtm
+ *
+ */
+function setLinhaDataHabtm(idHabtm,txtHabtm)
+{
+	var id 		= $("#cmpHabtmCor").val();
+	var objId	= id.split('_');
+	var tags	= ['input','span'];
+	var vlrIdHabtm = idHabtm;
+	var idHabtm = idHabtm.split('.');
+	var inName 	= objId[0]+'['+objId[1]+']'+objId[2]+'['+objId[3]+']'+'['+idHabtm['0']+']';
+	var inId	= objId[0]+objId[1]+objId[2]+objId[3]+idHabtm['1'];
+	var linha 	= '';
+	var html 	= '';
+
+	linha += '<div id="divLinhaFormHabtm'+idHabtm['1']+'" class="linhaFormHabtm">';
+	linha += '<input type="hidden" name="'+inName+'" id="in'+inId+'" value="'+vlrIdHabtm+'" />';
+	linha += '<div class="delLinhaFormHabtm" onclick="$(\'#divLinhaFormHabtm'+idHabtm['1']+'\').remove();">(x)</div>';
+	linha += '<span id="sp'+inId+'">'+txtHabtm+'</span> ';
+	linha += "</div>";
+
+	// removendo, caso já exista
+	$("#divLinhaFormHabtm"+idHabtm['1']).remove();
+	// incluindo nova linha no data habtm
+	$("#dataHabtm").append(linha);
+
+	arr = $("#dataHabtm");
+
+	// ordenando o objeto
+	arr.sort(function(a,b)
+	{
+		html = a['span'].localeCompare(b['span']);
+	});
+	console.log(html);
+	//$("#dataHabtm").html(html);
 }
 
 /**
@@ -79,7 +120,7 @@ function setHabtmLista()
 		if (i>0) html += ', ';
 		html += '<input type="hidden" name="'+inName+'" id="'+inId+'" value="'+data[i].input+'" />';
 		html += '<span>'+data[i].span+'</span>';
-	} 
+	}
 
 	if (!data.length)
 	{
@@ -149,10 +190,12 @@ function setListaHabtm(pag)
 		}
 
 		// recuperando a lista
+		//console.log(url);
 		$('#ajaxDest').load(url, function(resposta, status, xhr)
 		{
 			if (status=='success')
 			{
+
 				$("#listaHabtm").html(" ... aguarde ...");
 				var tam = parseInt(resposta.length);
 				if (c=='*') c = 1;
@@ -162,23 +205,33 @@ function setListaHabtm(pag)
 				} else
 				{
 					/*console.log(url);
-					console.log(tam);
-					console.log(resposta);*/
+					console.log(tam);*/
+					//console.log(resposta);
 				}
 				$("#xHPC").text(c);
 
+				//console.log(resposta);
 				var jArrResposta = resposta.split('*');
 				$.each(jArrResposta, function(i, linha)
 				{
 					var jArrLinha = linha.split(';');
+					//console.log(jArrLinha);
 					html += '<div class="linhaListaHabtm">';
-					$.each(jArrLinha, function(o, vlr)
+					var idHabtmR = 0;
+					$.each(jArrLinha, function(e, coluna)
 					{
-						if (vlr.length>1)
+						if (e==0)
 						{
-							html += '<span>'+vlr+'</span>';
+							idHabtmR = coluna;
+						} else if(e==1) 
+						{
+							idHabtm = objId['1']+'.'+parseInt(idHabtmR);
+							html += '<span class="linhaListaCol1"';
+							html += ' onclick="setLinhaDataHabtm(\''+idHabtm+'\',\''+coluna+'\');"';
+							html += '>'+coluna+'</span>';
 						}
 					});
+					
 					html += '</div>';
 				});
 

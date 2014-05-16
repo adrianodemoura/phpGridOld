@@ -68,13 +68,14 @@
 }
 #formHabtm #cmpHabtmCor
 {
-	display: none;
+	/*display: none;*/
 }
 #formHabtm .delLinhaFormHabtm
 {
 	color: red;
 	font-weight: bold;
 	cursor: pointer;
+	margin-right: 5px;
 }
 
 #formHabtm .linhaFormHabtm
@@ -85,5 +86,11 @@
 #formHabtm .linhaListaHabtm
 {
 	clear: both;
-	background-color: #ddd;
+	/*background-color: #ddd;*/
+}
+
+#formHabtm .linhaListaCol1
+{
+	cursor: pointer;
+	display: block;
 }
