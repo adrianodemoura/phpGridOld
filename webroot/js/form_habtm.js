@@ -85,18 +85,9 @@ function setLinhaDataHabtm(idHabtm,txtHabtm)
 
 	// removendo, caso já exista
 	$("#divLinhaFormHabtm"+idHabtm['1']).remove();
+
 	// incluindo nova linha no data habtm
 	$("#dataHabtm").append(linha);
-
-	arr = $("#dataHabtm");
-
-	// ordenando o objeto
-	arr.sort(function(a,b)
-	{
-		html = a['span'].localeCompare(b['span']);
-	});
-	console.log(html);
-	//$("#dataHabtm").html(html);
 }
 
 /**
