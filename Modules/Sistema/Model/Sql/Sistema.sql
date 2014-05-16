@@ -195,7 +195,11 @@ INSERT INTO sis_usuarios_perfis (usuario_id,perfil_id) VALUES (1,4);
 
 INSERT INTO sis_usuarios_perfis (usuario_id,perfil_id) VALUES (2,2);
 INSERT INTO sis_usuarios_perfis (usuario_id,perfil_id) VALUES (2,3);
+INSERT INTO sis_usuarios_perfis (usuario_id,perfil_id) VALUES (2,4);
+
 INSERT INTO sis_usuarios_perfis (usuario_id,perfil_id) VALUES (3,3);
+INSERT INTO sis_usuarios_perfis (usuario_id,perfil_id) VALUES (3,4);
+
 INSERT INTO sis_usuarios_perfis (usuario_id,perfil_id) VALUES (4,4);
 
 -- -----------------------------------------------------
