@@ -68,7 +68,7 @@
 }
 #formHabtm #cmpHabtmCor
 {
-	/*display: none;*/
+	display: none;
 }
 #formHabtm .delLinhaFormHabtm
 {
@@ -86,7 +86,6 @@
 #formHabtm .linhaListaHabtm
 {
 	clear: both;
-	/*background-color: #ddd;*/
 }
 
 #formHabtm .linhaListaCol1
