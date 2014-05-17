@@ -169,7 +169,7 @@ class Boot {
 								p.incluir, p.alterar, p.excluir, p.imprimir, p.pesquisar, p.exportar 
 							FROM sis_permissoes p 
 							INNER JOIN sis_modulos m ON m.id = p.modulo_id AND m.nome='".strtoupper($module)."' 
-							INNER JOIN sis_cadastros c ON c.id = p.cadastro_id AND c.cadastro='".strtoupper($controller)."' 
+							INNER JOIN sis_cadastros c ON c.id = p.cadastro_id AND c.nome='".strtoupper($controller)."' 
 							WHERE p.perfil_id=".$_SESSION['Usuario']['perfil_id'];
 				$_minhasPermissoes = $this->$controller->$model->query($sql);
 				if (!empty($_minhasPermissoes))
@@ -198,8 +198,8 @@ class Boot {
 				$_cad = $this->$controller->$model->getMeusCadastros($_SESSION['Usuario']['perfil_id'],$module);
 				foreach($_cad as $_l => $_arrCmps)
 				{
-					$cadastros[$_arrCmps['cadastro']]['tit'] = $_arrCmps['titulo'];
-					$cadastros[$_arrCmps['cadastro']]['link']= $this->$controller->base.strtolower($module).'/'.strtolower($_arrCmps['cadastro']).'/listar';
+					$cadastros[$_arrCmps['nome']]['tit'] = $_arrCmps['titulo'];
+					$cadastros[$_arrCmps['nome']]['link']= $this->$controller->base.strtolower($module).'/'.strtolower($_arrCmps['nome']).'/listar';
 				}
 				unset($_cad);
 				$this->$controller->viewVars['cadastros'] 	= $cadastros;

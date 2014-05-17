@@ -39,7 +39,7 @@ class UsuariosController extends SistemaAppController {
 		$this->viewVars['tituloAction'] 	= 'Painel';
 		$sql = "SELECT DISTINCT m.id, 
 			m.nome as modulo, m.titulo as titModulo, 
-			c.cadastro as cadastro, c.titulo as cadTitulo
+			c.nome as cadastro, c.titulo as cadTitulo
 			FROM sis_modulos m
 			LEFT JOIN sis_cadastros c ON c.modulo_id = m.id";
 
@@ -52,7 +52,7 @@ class UsuariosController extends SistemaAppController {
 					AND p.perfil_id =".$_SESSION['Usuario']['perfil_id'];
 		}
 
-		$sql .= " WHERE m.ativo=1 AND c.ativo=1 ORDER BY m.titulo, c.cadastro";
+		$sql .= " WHERE m.ativo=1 AND c.ativo=1 ORDER BY m.titulo, c.nome";
 		$_data = $this->Usuario->query($sql);
 		$data = array();
 		foreach($_data as $_l => $_arrModus)
@@ -363,7 +363,7 @@ class UsuariosController extends SistemaAppController {
 			INNER JOIN sis_cadastros 	c ON c.id = p.cadastro_id
 			WHERE 
 				m.nome='".$modulo."' 
-			AND c.cadastro='".$controller."'
+			AND c.nome='".$controller."'
 			AND perfil_id=".$perfilId;
 
 		$data = $this->Usuario->query($sql);

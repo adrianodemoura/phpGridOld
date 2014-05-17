@@ -1065,20 +1065,20 @@ class Model {
 	{
 		if ($idPerfil>1)
 		{
-			$sql = "SELECT DISTINCT c.cadastro, c.titulo
+			$sql = "SELECT DISTINCT c.nome, c.titulo
 				FROM sis_permissoes p
 				INNER JOIN sis_cadastros c ON c.id = p.cadastro_id
 				INNER JOIN sis_modulos m ON m.id = c.modulo_id
 				WHERE p.perfil_id=".$idPerfil." 
 				 AND m.nome='".strtoupper($modulo)."' AND p.visualizar=1 AND c.ativo=1
-				ORDER BY c.cadastro";
+				ORDER BY c.nome";
 		} else
 		{
-			$sql = "SELECT DISTINCT c.cadastro, c.titulo 
+			$sql = "SELECT DISTINCT c.nome, c.titulo 
 					FROM sis_cadastros c
 					INNER JOIN sis_modulos m ON m.id = c.modulo_id
 					WHERE c.ativo=1 AND m.nome='".strtoupper($modulo)."'
-					ORDER BY c.cadastro";
+					ORDER BY c.nome";
 		}
 		return $this->query($sql);
 	}

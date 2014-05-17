@@ -435,7 +435,7 @@ class Controller {
 					FROM sis_permissoes p
 					INNER JOIN sis_modulos 		m ON m.id = p.modulo_id
 					INNER JOIN sis_cadastros 	c ON c.id = p.cadastro_id
-					WHERE m.nome='".strtoupper($this->module)."' AND c.cadastro='".strtoupper($this->controller)."'";
+					WHERE m.nome='".strtoupper($this->module)."' AND c.nome='".strtoupper($this->controller)."'";
 			$_permissoes = $this->$modelClass->query($sql);
 			foreach($_permissoes as $_l => $_arrCmps)
 			{
