@@ -151,13 +151,6 @@ class Controller {
 	 */
 	public function beforeRender()
 	{
-		if ($this->layout=='padrao')
-		{
-			$this->viewVars['ferramentasLayout']['2']['permissao']	= 'imprimir';
-			$this->viewVars['ferramentasLayout']['2']['title'] 		= 'Relatórios';
-			$this->viewVars['ferramentasLayout']['2']['icone'] 		= $this->viewVars['base'].'img/bt_relatorios.png';
-			$this->viewVars['ferramentasLayout']['2']['onclick'] 	= 'document.location.href="'.$this->viewVars['base'].strtolower($this->module).'/'.strtolower($this->controller).'/relatorios"';
-		}
 	}
 
 	/**
@@ -167,7 +160,7 @@ class Controller {
 	 * @param	string	$class	Classe que vai ser usada na div msg_flash
 	 * @return	void
 	 */
-	public function setMsgFlash($texto='', $class='')
+	public static function setMsgFlash($texto='', $class='')
 	{
 		$_SESSION['msgFlash']['txt']	= $texto;
 		$_SESSION['msgFlash']['class'] 	= $class;
@@ -179,7 +172,6 @@ class Controller {
 	 * @param 	string 	$mod 	Módulo
 	 * @param	string	$con	Controller
 	 * @param	string	$act	Action
-	 * @param	string	$plug	Plugin
 	 * @param	string	$par	Parâmetros
 	 * @return	void
 	 */
@@ -425,13 +417,18 @@ class Controller {
 		}
 
 		// ferramentas para o layout
+		$this->viewVars['ferramentasLayout']['2']['permissao']	= 'imprimir';
+		$this->viewVars['ferramentasLayout']['2']['title'] 		= 'Relatórios';
+		$this->viewVars['ferramentasLayout']['2']['icone'] 		= $this->viewVars['base'].'img/bt_relatorios.png';
+		$this->viewVars['ferramentasLayout']['2']['onclick'] 	= 'document.location.href="'.$this->viewVars['base'].strtolower($this->module).'/'.strtolower($this->controller).'/relatorios"';
+
 		$this->viewVars['ferramentasLayout']['3']['permissao']	= 'exportar';
 		$this->viewVars['ferramentasLayout']['3']['title'] 		= 'Clique aqui para exportar todo o cadastro com filtros';
 		$this->viewVars['ferramentasLayout']['3']['icone'] 		= $this->viewVars['base'].'img/bt_exportar.png';
 		$this->viewVars['ferramentasLayout']['3']['onclick'] 	= 'document.location.href="'.$this->viewVars['base'].strtolower($this->module).'/'.strtolower($this->controller).'/exportar"';
 
-		// se é administrador, recupera as eprmissões do cadastro corrente
-		if ($_SESSION['Usuario']['perfil_id']==1)
+		// se é administrador, recupera as permissões do cadastro corrente
+		/*if ($_SESSION['Usuario']['perfil_id']==1)
 		{
 			$sql = "SELECT p.visualizar, p.incluir, p.alterar, p.excluir, 
 					p.imprimir, p.pesquisar, p.exportar, p.perfil_id
@@ -449,7 +446,7 @@ class Controller {
 						$this->viewVars['permissoes']['acao'][$idPerfil][$_cmp] = $_vlr;
 				}
 			}
-		}
+		}*/
 
 		// verifica erros da lista
 		if (isset($_SESSION['errosLista']))
@@ -558,7 +555,7 @@ class Controller {
 	}
 
 	/**
-	 * Exibe a tela de exclusão de um registro
+	 * Configura o filtro para a lista
 	 *
 	 * @return void
 	 */
@@ -613,14 +610,14 @@ class Controller {
 	 */
 	public function get_options()
 	{
-		$this->layout		= 'ajax';
-		$modelClass 		= $this->modelClass;
-		$fields				= isset($this->viewVars['params']['cmps']) 		
-								? $this->viewVars['params']['cmps'] : null;
-		$fields				= isset($this->viewVars['params']['fields']) 	
-								? $this->viewVars['params']['fields'] : $fields;
-		$ordem				= isset($this->viewVars['params']['ord']) 	
-								? $this->viewVars['params']['ord'] : null;
+		$this->layout	= 'ajax';
+		$modelClass 	= $this->modelClass;
+		$fields			= isset($this->viewVars['params']['cmps']) 		
+							? $this->viewVars['params']['cmps'] : null;
+		$fields			= isset($this->viewVars['params']['fields']) 	
+							? $this->viewVars['params']['fields'] : $fields;
+		$ordem			= isset($this->viewVars['params']['ord']) 	
+							? $this->viewVars['params']['ord'] : null;
 
 		// se fields está vaziio, pega o id e o displayField
 		if (empty($fields))

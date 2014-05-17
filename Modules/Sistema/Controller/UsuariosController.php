@@ -78,6 +78,7 @@ class UsuariosController extends SistemaAppController {
 	 */
 	public function listar()
 	{
+		if (!isset($_SESSION['Usuario'])) $this->redirect('sistema','usuarios','login');
 		$this->viewVars['fields'] = array('Usuario.ativo'
 		,'Usuario.nome'
 		,'Usuario.Perfil'
