@@ -7,7 +7,7 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `sis_cadastros` ;
 CREATE  TABLE IF NOT EXISTS `sis_cadastros` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `cadastro` VARCHAR(45) NOT NULL ,
+  `nome` VARCHAR(45) NOT NULL ,
   `titulo` VARCHAR(45) NOT NULL ,
   `ativo` TINYINT(1) NOT NULL DEFAULT 1 ,
   `modulo_id` INT NOT NULL ,
@@ -21,13 +21,13 @@ CREATE  TABLE IF NOT EXISTS `sis_cadastros` (
   INDEX `i_criado` (`criado` ASC) ,
   INDEX `fk_modulos` (`modulo_id` ASC) )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (1,'BAIRROS','Bairros',1,1,sysdate(),sysdate());
-INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (2,'CADASTROS','Cadastros',1,1,sysdate(),sysdate());
-INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (3,'CIDADES','Cidades',1,1,sysdate(),sysdate());
-INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (4,'CONFIGURACOES','Configurações',1,1,sysdate(),sysdate());
-INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (5,'MODULOS','Módulos',1,1,sysdate(),sysdate());
-INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (6,'PERFIS','Perfis',1,1,sysdate(),sysdate());
-INSERT INTO sis_cadastros (id,cadastro,titulo,ativo,modulo_id,criado,modificado) VALUES (7,'USUARIOS','Usuários',1,1,sysdate(),sysdate());
+INSERT INTO sis_cadastros (id,nome,titulo,ativo,modulo_id,criado,modificado) VALUES (1,'BAIRROS','Bairros',1,1,sysdate(),sysdate());
+INSERT INTO sis_cadastros (id,nome,titulo,ativo,modulo_id,criado,modificado) VALUES (2,'CADASTROS','Cadastros',1,1,sysdate(),sysdate());
+INSERT INTO sis_cadastros (id,nome,titulo,ativo,modulo_id,criado,modificado) VALUES (3,'CIDADES','Cidades',1,1,sysdate(),sysdate());
+INSERT INTO sis_cadastros (id,nome,titulo,ativo,modulo_id,criado,modificado) VALUES (4,'CONFIGURACOES','Configurações',1,1,sysdate(),sysdate());
+INSERT INTO sis_cadastros (id,nome,titulo,ativo,modulo_id,criado,modificado) VALUES (5,'MODULOS','Módulos',1,1,sysdate(),sysdate());
+INSERT INTO sis_cadastros (id,nome,titulo,ativo,modulo_id,criado,modificado) VALUES (6,'PERFIS','Perfis',1,1,sysdate(),sysdate());
+INSERT INTO sis_cadastros (id,nome,titulo,ativo,modulo_id,criado,modificado) VALUES (7,'USUARIOS','Usuários',1,1,sysdate(),sysdate());
 
 -- -----------------------------------------------------
 -- Table `permissoes`

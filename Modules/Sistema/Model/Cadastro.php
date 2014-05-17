@@ -29,16 +29,7 @@ class Cadastro extends SistemaApp {
 	 * @var		array
 	 * @access	public
 	 */
-	public $displayField 	= 'cadastro';
-
-	/**
-	 * Nickname para a tabela usuarios
-	 * 
-	 * @var		string
-	 * @access	public
-	 */
-	public $alias		= 'Cadastro';
-
+	public $displayField 	= 'nome';
 
 	/**
 	 * Propriedade de cada campo da tabela usuários
@@ -52,7 +43,7 @@ class Cadastro extends SistemaApp {
 		(
 			'tit'	=> 'Id',
 		),
-		'cadastro'	=> array
+		'nome'		=> array
 		(
 			'tit'		=> 'Cadastro',
 			'notEmpty'	=> true,

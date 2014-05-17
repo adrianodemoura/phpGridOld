@@ -28,14 +28,14 @@ foreach($this->data as $_l => $_arrMods)
 			{
 				$prop = isset($esquema[$_mod][$_cmp]) ? $esquema[$_mod][$_cmp] : array();
 				echo $this->Html->getMascara($_vlr,$prop).";";
-			}/* else
+			} else
 			{
-				foreach($_vlr as $_cmp => $_vlr2)
+				foreach($_vlr as $_cmp2 => $_vlr2)
 				{
 					echo $_vlr2.";";
 				}
 				echo "\n";
-			}*/
+			}
 		}
 	}
 	echo "\n";

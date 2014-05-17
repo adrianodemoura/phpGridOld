@@ -561,6 +561,9 @@ class Model {
 						}
 					}
 				}
+
+				// habtm
+
 			}
 		}
 
@@ -630,7 +633,7 @@ class Model {
 			}
 		}
 
-		//
+		// configurando o order by
 		if (count($order))
 		{
 			$l 		= 0;
@@ -646,6 +649,9 @@ class Model {
 					{
 						$_cmp = ucfirst($a['1']).'_'.$a['2'];
 						unset($a);
+					} else 
+					{
+						$_cmp = ucfirst($_cmp);
 					}
 					$sql .= $_cmp;
 					$l++;
@@ -730,7 +736,6 @@ class Model {
 				$this->esquema[$_cmp]['options'] = $this->getOptions($_cmp);
 			}
 		}
-
 		// recuperando options para belongsToFunc
 		if (!empty($cmpsBelongsFunc))
 		{
