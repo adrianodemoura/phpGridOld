@@ -3,6 +3,19 @@
  */
 
 /**
+ * Executa código após o carregamento da página
+ * 
+ */
+$(document).ready(function()
+{
+	$('#cmpPesqHabtm').keypress(function()
+	{
+		var pag = $("#xHPC").text();
+		setListaHabtm(pag);
+	});
+});
+
+/**
  * Exibe o formulário habtm
  *
  */
