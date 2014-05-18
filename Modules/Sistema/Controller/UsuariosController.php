@@ -388,6 +388,7 @@ class UsuariosController extends SistemaAppController {
 			$sql .= ' VALUE';
 			$sql .= ' ("'.$modulo_id.'","'.$cadastro_id.'",'.$vlr.','.$perfilId.')';
 		}
+		//debug($sql);
 		$this->Usuario->query($sql);
 	}
 

@@ -387,18 +387,38 @@ class Controller {
 		}
 		$this->viewVars['filtros'] 	= $filtros;
 
+		// se é administrador, recupera as eprmissões do cadastro corrente
+		if ($_SESSION['Usuario']['perfil_id']==1)
+		{
+			$sql = "SELECT p.visualizar, p.incluir, p.alterar, p.excluir, 
+					p.imprimir, p.pesquisar, p.exportar, p.perfil_id
+					FROM sis_permissoes p
+					INNER JOIN sis_modulos 		m ON m.id = p.modulo_id
+					INNER JOIN sis_cadastros 	c ON c.id = p.cadastro_id
+					WHERE m.nome='".strtoupper($this->module)."' 
+					AND c.nome='".strtoupper($this->controller)."'";
+			$_permissoes = $this->$modelClass->query($sql);
+			foreach($_permissoes as $_l => $_arrCmps)
+			{
+				$idPerfil = $_arrCmps['perfil_id'];
+				foreach($_arrCmps as $_cmp => $_vlr)
+				{
+					if ($_cmp!='perfil_id')
+						$this->viewVars['permissoes']['acao'][$idPerfil][$_cmp] = $_vlr;
+				}
+			}
+		}
+
 		// ferramentas da lista
-		// botão excluir registro
 		$f = isset($this->viewVars['ferramentas']) ? $this->viewVars['ferramentas'] : array();
-		// botão editar registro
-		if (!isset($f['editar']) && $this->pode('editar'))
+		if (!isset($f['editar']) && $this->pode('alterar')) // botão editar registro
 		{
 			$link = $this->viewVars['base'].strtolower($this->module).'/'.strtolower($this->controller).'/editar/id:*id*';
 			$f['editar']['tit'] 	= 'Editar';
 			$f['editar']['link'] 	= $link;
 			$f['editar']['title'] 	= 'Clique aqui para editar este registro';
 		}
-		if (!isset($f['excluir']) && $this->pode('excluir'))
+		if (!isset($f['excluir']) && $this->pode('excluir')) // botão excluir
 		{
 			$link = $this->viewVars['base'].strtolower($this->module).'/'.strtolower($this->controller).'/excluir/id:*id*';
 			$f['excluir']['tit'] 	= 'Excluir';
