@@ -379,7 +379,7 @@ class UsuariosController extends SistemaAppController {
 			$sql = "SELECT id FROM sis_modulos WHERE nome='".$modulo."'";
 			$res = $this->Usuario->query($sql);
 			$modulo_id = $res['0']['id'];
-			$sql = "SELECT id FROM sis_cadastros WHERE cadastro='".$controller."'";
+			$sql = "SELECT id FROM sis_cadastros WHERE nome='".$controller."'";
 			$res = $this->Usuario->query($sql);
 			$cadastro_id = $res['0']['id'];
 
