@@ -52,7 +52,7 @@ class Boot {
 		session_save_path(sys_get_temp_dir());
 
 		// sessão
-		session_name(SESSAO); 
+		session_name(md5('seg'.$_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT'])); 
 		session_start();
 
 		if (array_key_exists('HTTP_USER_AGENT', $_SESSION))

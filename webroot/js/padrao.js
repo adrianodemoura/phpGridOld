@@ -89,3 +89,111 @@ function getElemsDiv(id,tags,order)
 
 	return arr;
 }
+
+/**
+ * Exibe o formulário ajax
+ *
+ */
+function showAjaxForm()
+{
+	$('#ajaxPC').html(1);
+	$('#ajaxPesq').val('');
+	setAjaxTab();
+	$("#ajaxForm").fadeIn();
+	showModal("ajaxForm");
+	$("#ajaxPesq").focus();
+}
+
+function setAjaxTab()
+{
+	var txt	= encodeURIComponent($("#ajaxPesq").val());
+	var url	= $('#ajaxDest').val();
+	var pag = $('#ajaxPC').html();
+	var tem = 0; // tem valor
+	url += txt+'/pag:'+pag
+
+	$('#ajaxDest').load(url, function(resposta, status, xhr)
+	{
+		if (status=='success')
+		{
+			$("#ajaxTo").html("");
+			$("#ajaxResp").html("");
+			//console.log(resposta);
+			var jArrResposta 	= resposta.split('*');
+			var table			= '<table border="1px" id="ajaxTab">'+"\n";
+			$.each(jArrResposta, function(i, linha)
+			{
+				var jArrLinha = linha.split(';');
+				if (jArrLinha[0].length>0)
+				{
+					table += "<tr class='ajaxTr' id='"+i+"ajaxTr'>\n";
+					var tds = [];
+					$.each(jArrLinha, function(o, vlr)
+					{
+						if (vlr)
+						{
+							table += "\t<td class='ajaxTd' ";
+							if (o==0) table += "style='display: none;' ";
+							table += "onclick='setItemAjax("+i+"); showLista();'>"+vlr+"</td>\n";
+							tem = 1;
+						}
+					});
+					table += "</tr>\n";
+				}
+			});
+			table += "</table>\n";
+			
+			if (tem==0) $('#ajaxPC').html(parseInt(pag));
+			$("#ajaxResp").html(table);
+		}
+	});
+	return false;
+}
+
+/**
+ * Configura o item de campo belongsTo, que encontra na lista, com a escolha do ajaxForm
+ */
+function setItemAjax(tr)
+{
+	$("#ajaxPesq").val('');
+	var ajaxIdDest 	= $("#ajaxCmp").val();
+	var ajaxSpDest 	= "ajax"+ajaxIdDest;
+	var v = '';
+	var l = 0;
+	$("#"+tr+"ajaxTr").children('td').each(function()
+	{
+		if (l==0) $("#"+ajaxIdDest).val($(this).html()); // atualiza o input hidden com o valor do id do campo
+		else
+		{
+			if (v) v += '/';
+			v += $(this).html();
+		}
+		l++;
+	});
+
+	try
+	{
+		$("#"+ajaxSpDest).html(v);
+		$("#"+ajaxSpDest).addClass('inAlerta');
+		$("#btSalvarT").addClass('btAlerta');
+	} catch(err)
+	{
+		alert('ocorreu algum erro ao tentar configurar o item !!!');
+	}
+
+	$("#btSalvarT").addClass("btAlerta");
+}
+
+/**
+ * Fecha o formulário ajax, e volta pra página anterior
+ *
+ */
+function showLista()
+{
+	var pagAnt = $("pagAnter").text();
+	if (pagAnt==undefined) pagAnt = 'lista';
+	$("#ajaxResp").html("");
+	$("#tampaTudo").fadeOut();
+	$("#ajaxForm").fadeOut(); 
+	$("."+pagAnt).fadeIn(); 
+}

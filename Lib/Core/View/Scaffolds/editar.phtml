@@ -1,1 +1,69 @@
-estou no editar do scaffolds
+<?php
+	$this->Html->setHead('css','editar');
+	$this->Html->setHead('js','editar');
+	$this->Html->setHead('js','jquery.maskedinput.min');
+
+	$this->element('ajax_form');
+?>
+<div class='editar'>
+	<form 	name='formEditar' method='post' 
+		action="<?= $urlAction ?>"
+	>
+	<input type='hidden' 	name='pagAnt' 	  id='pagAnt' 	value='editar' />
+	<input type='hidden' 	name='urlRetorno' id='urlRetorno' value='<?= $aqui ?>' />
+
+	<div class='container editarBarra'>
+		<input type='submit' name='btSalvar' value='Salvar' class='btn btn-success' />
+		<input type='button' name='btFechar' value='Fechar' class='btn btn-warning' 
+			onclick='document.location.href="<?= $urlFechar ?>"' />
+	</div>
+
+	<div class='container'>
+
+	<?php foreach($fields as $_l => $_cmp) : 
+		if (!in_array($_cmp, array('#',"-","!")))
+		{
+			$cmp 	= '0.'.$modelClass.'.'.$_cmp;
+			$p 		= $this->viewVars['esquema'][$modelClass][$_cmp];
+			$tit	= isset($p['tit']) 	? $p['tit'] 	: $_cmp;
+			$tipo 	= isset($p['type']) ? $p['type'] 	: 'text';
+			$p['value'] = isset($this->data['0'][$modelClass][$_cmp]) 
+				? $this->data['0'][$modelClass][$_cmp]
+				: null;
+
+			// se possui máscara
+			if (isset($p['mascara']))
+			{
+				array_push($this->viewVars['onRead'],
+							'$("#'.$this->Html->domId($cmp).'").
+							mask("'.str_replace('#','9',$p['mascara']).'")');
+			}
+
+			// se é id
+			if (in_array($_cmp, $this->viewVars['primaryKey']))
+			{
+				$p['input']['div']['style'] = 'display: none';
+			} else
+			{
+				// escrevendo o input
+				echo '<label class="lbEditar">'.$tit.'</label>';
+			}
+			echo $this->Html->getInput($cmp,$p,$this->data['0']);
+		} else
+		{
+			switch ($_cmp)
+			{
+				case '#':
+					echo "<span class='spBr' />";
+					break;
+				case '-':
+					echo "<span class='hrBr' />";
+					break;
+			}
+		}
+
+		endforeach ;
+	?>
+	</div>
+	</form>
+</div>

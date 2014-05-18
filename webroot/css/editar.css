@@ -1,0 +1,49 @@
+.editar
+{
+	background-color: #fff;
+	padding: 5px;
+}
+
+.editar .inDiv
+{
+	float: left;
+	line-height: 20px;
+	margin: 0px 0px 3px 0px;
+	white-space: nowrap;
+}
+.editar .inDiv .bt_lista_ajax
+{
+	margin: 3px 4px 0px 0px;
+}
+
+.editar label
+{
+	line-height: 26px;
+	float: left;
+	display: block;
+	min-width: 150px;
+	text-align: right;
+	margin: 0px 5px 0px 0px;
+}
+
+.editar .spBr
+{
+	line-height: 20px;
+	margin: 0px 0px 5px 0px;
+	clear: both;
+	display: block;
+}
+.editar .bt_lista_ajax
+{
+	float: left;
+}
+
+.editar .editarBarra
+{
+	background-color: #ccc;
+	padding: 5px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	margin: 0px 0px 9px 0px;
+}

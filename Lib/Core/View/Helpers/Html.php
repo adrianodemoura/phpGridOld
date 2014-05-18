@@ -382,7 +382,7 @@ class Html {
 				}
 				$input .= " />";
 		}
-		$div = "<div";
+		$div = "<div class='inDiv'";
 		if (!empty($propDiv))
 		{
 			foreach($propDiv as $_tag => $_vlr)
@@ -390,10 +390,10 @@ class Html {
 				$div .= " $_tag='$_vlr'";
 			}
 		}
-		/*$div .= ">";
+		$div .= ">";
 		$div .= $input;
-		$div .= "</div>\n";*/
-		$div = $input;
+		$div .= "</div>\n";
+		//$div = $input;
 		return $div;
 	}
 
