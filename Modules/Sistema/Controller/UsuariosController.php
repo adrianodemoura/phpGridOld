@@ -110,6 +110,7 @@ class UsuariosController extends SistemaAppController {
 			$data = $this->Usuario->autentica($this->data['Usuario']['email'],$this->data['Usuario']['senha']);
 			if (count($data))
 			{
+				session_regenerate_id(); // genando novamente o id da sessão, segurança contra Session Fixation
 				$msg = 'Usuário autenticado com sucesso !!!';
 				$_SESSION['Usuario']['id'] 				= $data['0']['Usuario']['id'];
 				$_SESSION['Usuario']['email'] 			= $data['0']['Usuario']['email'];

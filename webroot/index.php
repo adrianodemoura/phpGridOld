@@ -6,6 +6,7 @@
 	// constantes locais
 	define('APP','../');
 	define('CORE','../Lib/Core/');
+	define('VENDOR','../Vendor/');
 
 	// incluindo a view de saída
 	require_once(CORE.'Boot.php');

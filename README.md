@@ -5,7 +5,7 @@ Php com OO, MVC, Auxiliares, PDO, MariaDB, jQuery, Bootstrap e tabelas.
 
 
 <b>1 - Requerimentos:</b><br />
-Servidor Web Apache versão 2 ou superior, com módulo rewrite habilitado.<br />
+Servidor Web Apache versão 2 ou superior, com módulo rewrite e mcrypt habilitados.<br />
 Php versão 5 ou superior, mysql ou mariadb com versão 5 ou superior e ainda Bootstrap e jQjuery já inclusos no CORE.
 
 <b>2 - Instalação:</b><br />
