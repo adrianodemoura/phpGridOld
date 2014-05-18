@@ -81,7 +81,9 @@
 <?php endif ?>
 
 <tr><!-- linha a linha -->
-	<?php if ($this->Html->pode('alterar',$this->viewVars['minhasPermissoes']) && isset($this->viewVars['marcadores'])) : ?>
+	<?php if ($this->Html->pode('alterar',$this->viewVars['minhasPermissoes']) 
+		&& isset($this->viewVars['marcadores'])) : 
+	?>
 	<td>
 		<?php
 			$ids = '';

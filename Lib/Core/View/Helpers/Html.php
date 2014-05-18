@@ -77,10 +77,12 @@ class Html {
 		if (isset($e['options'])) $opcs['options'] = $e['options'];
 		if ($e['type']=='password') $opcs['value'] = '';
 
-		$opcs['type'] 	= (isset($opcs['type']))  	? $opcs['type'] 	: 'text';
-		$opcs['class'] 	= (isset($opcs['class'])) 	? $opcs['class'] 	: 'in_'.strtolower($a['2']). ' lista_input';
-		//$idDiv			= (isset($opcs['idDiv'])) 	? $opcs['idDiv'] 	: null;
-		//if (!empty($idDiv)) unset($opcs['idDiv']);
+		$opcs['type'] 	= (isset($opcs['type']))  	
+			? $opcs['type'] 	
+			: 'text';
+		$opcs['class'] 	= (isset($opcs['class'])) 	
+			? $opcs['class'] 	
+			: 'in_'.strtolower($a['2']). ' lista_input';
 
 		if (isset($opcs['options'])) $opcs['type'] = 'select';
 
@@ -143,23 +145,47 @@ class Html {
 			{
 				$opcs['value'] = $opcs['options'][$opcs['value']];
 				unset($opcs['options']);
-			} else
+			}
+			if (isset($e['belongsTo']))
 			{
-				if (isset($a['2']))
+				$tmpVlr = '';
+				$l 		= 0;
+				foreach($e['belongsTo'] as $_mod => $_arrProp)
 				{
-					$b = explode('_',$a['2']);
-					$b['0'] = ucfirst($b['0']);
-					if (isset($linha[$b['0']]))
+					if (isset($linha[$_mod]))
+					{
+						$lC = 0;
+						foreach($linha[$_mod] as $_cmp => $_vlr)
+						{
+							if ($lC>0)
+							{
+								if ($l>0) $tmpVlr .= '/';
+								$tmpVlr .= $_vlr;
+								$l++;
+							}
+							$lC++;
+						}
+					}
+				}
+				$opcs['value'] = $tmpVlr;
+			}
+
+			if ($e['type']=='habtm')
+			{
+				$tmpVlr = '';
+				if (isset($e['value']) && !empty($e['value']))
+				{
+					foreach($e['value'] as $_l => $_arrCmps)
 					{
 						$l = 0;
-						foreach($linha[$b['0']] as $_cmp => $_vlr)
+						foreach($_arrCmps as $_cmp => $_vlr)
 						{
-							if ($l>1) $opcs['value'] .= '/'.$_vlr;
-							if ($l==1) $opcs['value'] = $_vlr;
+							if ($l==1) $tmpVlr .= $_vlr.', ';
 							$l++;
 						}
 					}
 				}
+				$opcs['value'] = $tmpVlr;
 			}
 		}
 
@@ -330,9 +356,13 @@ class Html {
 				$input .= "</div>";
 				break;
 			case 'habtm':
-				$input = "<img src='".$this->base."img/bt_ajax.png' class='bt_lista_ajax'";
-				$input .= " onclick='showHabtmForm(\"habtm_".str_replace('.','_',$cmp)."\");' ";
-				$input .= " title='clique aqui para editar os ".$e['tit']."' />";
+				$input = '';
+				if (isset($this->minhasPermissoes['alterar']) && $this->minhasPermissoes['alterar']==1)
+				{
+					$input .= "<img src='".$this->base."img/bt_ajax.png' class='bt_lista_ajax'";
+					$input .= " onclick='showHabtmForm(\"habtm_".str_replace('.','_',$cmp)."\");' ";
+					$input .= " title='clique aqui para editar os ".$e['tit']."' />";
+				}
 				$input .= "<div id='habtm_".str_replace('.','_',$cmp)."' class='divHabtm'>";
 				if (!empty($opcs['value']))
 				{
@@ -378,7 +408,7 @@ class Html {
 				}
 				foreach($opcs as $_tag => $_vlr)
 				{
-					$input .= " $_tag='$_vlr'";
+					if (!is_array($_vlr)) $input .= " $_tag='$_vlr'";
 				}
 				$input .= " />";
 		}
@@ -485,7 +515,7 @@ class Html {
 	 */
 	public function pode($acao='', $minhasPermissoes=array())
 	{
-		if ($_SESSION['Usuario']['perfil']=='ADMINISTRADOR') return true;
+		if ($_SESSION['Usuario']['perfil_id']==1) return true;
 		if (isset($minhasPermissoes[$acao]))
 		{
 			if ($minhasPermissoes[$acao]==1) return true;

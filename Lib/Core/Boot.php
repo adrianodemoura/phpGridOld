@@ -213,6 +213,7 @@ class Boot {
 					$minhasPermissoes['exportar'] 		= 1;
 				}
 				$this->$controller->viewVars['minhasPermissoes'] = $minhasPermissoes;
+				$this->Html->minhasPermissoes = $minhasPermissoes;
 
 				// recuperando os cadastros 
 				$cadastros = array();
