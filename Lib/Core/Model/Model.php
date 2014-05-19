@@ -415,9 +415,10 @@ class Model {
 	 * 
 	 * @param	string	$tipo	Tipos list|all|neighbors
 	 * @param	mixed	$params	Opções para a busca, tabela, fields, where, order, inner, página, total de registro por página.
+	 * @param 	array 	$cache 	Opções para cachear o resultado, deve conter o nome da chave e seu tempo de duração.
 	 * @return	mixed	$data	Results
 	 */
-	public function find($tipo='all',$params=array())
+	public function find($tipo='all',$params=array(), $cache=array())
 	{
 		$params = $this->beforeFind($params);
 
@@ -675,7 +676,22 @@ class Model {
 			$this->pag['pagU'] 	= round($data['0']['tot']/$pagT)+1;
 		}
 
-		$_data 	= $this->query($sql);
+		// se é pra bucar no cache
+		if (empty($where) && isset($cache['chave']))
+		{
+			appUses('cache','Memcache');
+			$cache = new Memcache();
+			$_data = $cache->read($cache['chave']);
+			if (!$_data)
+			{
+				$_data 	= $this->query($sql);
+				$cache->write($cache['chave'],$cache['duracao']);
+			}
+		} else
+		{
+			$_data = $this->query($sql);
+		}
+
 		$data	= array();
 		foreach($_data as $_l => $_arrCmps)
 		{
@@ -1051,7 +1067,8 @@ class Model {
 			$sql = "SELECT DISTINCT m.id, m.nome, m.titulo
 				FROM sis_modulos m ORDER BY m.nome";
 		}
-		return $this->query($sql);
+		$_data = $this->query($sql);
+		return $_data;
 	}
 
 	/**

@@ -94,5 +94,8 @@ function appUses($tipo='',$class='')
 		case 'controller':
 			require_once('Controller/'.$class.'Controller.php');
 			break;
+		case 'cache':
+			require_once(CORE.'Cache/'.$class.'.php');
+			break;
 	}
 }
