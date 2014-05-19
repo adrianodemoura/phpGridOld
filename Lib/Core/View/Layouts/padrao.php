@@ -175,5 +175,5 @@
 </div><!-- fim corpo -->
 <div id='tampaTudo'>tampaTudo</div>
 </body>
-</html><?= debug($this->data['0']); ?>
+</html>
 <!-- tempo de execução <?= round(microtime(true)-$_SERVER['REQUEST_TIME'],4) ?> segundos -->
