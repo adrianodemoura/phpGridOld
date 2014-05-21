@@ -168,23 +168,32 @@ class UsuariosController extends SistemaAppController {
 	 */
 	public function info()
 	{
-		$this->viewVars['tituloAction'] = 'Informações do Usuário';
-		$opcs = array();
-		$opcs['where']['Usuario.id'] = $_SESSION['Usuario']['id'];
-		$this->data = $this->Usuario->find('all',$opcs);
-		unset($this->data['0']['Usuario']['senha']);
-		$this->Usuario->outrosEsquemas['Cidade']['nome']['tit'] = 'Cidade';
-		$this->data['0']['Usuario']['ultimo_ip'] = $_SESSION['Usuario']['ultimo_ip'];
-		$this->data['0']['Usuario']['ultimo_acesso'] = $_SESSION['Usuario']['ultimo_acesso'];
-		$perfis = $this->data['0']['Perfil'];
-		unset($this->data['0']['Perfil']);
-		$meusPerfis = '';
-		foreach($perfis as $_l => $_arrCmps)
+		appUses('cache','Memcache');
+		$Cache 	= new Memcache();
+		$chave 	= 'infoUsuario'.$_SESSION['Usuario']['id'];
+		$data 	= $Cache->read($chave);
+		if (!$data)
 		{
-			if ($_l) $meusPerfis .= ', ';
-			$meusPerfis .= $_arrCmps['nome'];
+			$opcs = array();
+			$opcs['where']['Usuario.id'] = $_SESSION['Usuario']['id'];
+			$data = $this->Usuario->find('all',$opcs);
+			unset($data['0']['Usuario']['senha']);
+			$Usuario->outrosEsquemas['Cidade']['nome']['tit'] = 'Cidade';
+			$data['0']['Usuario']['ultimo_ip'] 		= $_SESSION['Usuario']['ultimo_ip'];
+			$data['0']['Usuario']['ultimo_acesso'] 	= $_SESSION['Usuario']['ultimo_acesso'];
+			$perfis = $data['0']['Perfil'];
+			unset($data['0']['Perfil']);
+			$meusPerfis = '';
+			foreach($perfis as $_l => $_arrCmps)
+			{
+				if ($_l) $meusPerfis .= ', ';
+				$meusPerfis .= $_arrCmps['nome'];
+			}
+			$data['0']['Usuario']['Perfis'] = $meusPerfis;
+			$Cache->write($chave,$data);
 		}
-		$this->data['0']['Usuario']['Perfis'] = $meusPerfis;
+		$this->viewVars['tituloAction'] = 'Informações do Usuário';
+		$this->data = $data;
 	}
 
 	/**

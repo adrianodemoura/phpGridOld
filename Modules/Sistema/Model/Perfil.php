@@ -78,4 +78,28 @@ class Perfil extends SistemaApp {
 		}
 		return true;
 	}
+
+	/**
+	 * Executa código depois do método save do cadastro de usuários
+	 *
+	 * - Limpa o cacheInfo de cada usuário
+	 *
+	 * @return 	void
+	 */
+	public function afterSave()
+	{
+		foreach($this->data as $_l => $_arrMods)
+		{
+			$id = isset($_arrMods['Perfil']['id'])
+				? $_arrMods['Perfil']['id']
+				: 0;
+			if ($id>0)
+			{
+				appUses('cache','Memcache');
+				$Cache 	= new Memcache();
+				$chave 	= 'modulos'.$id;
+				$res 	= $Cache->delete($chave);
+			}
+		}
+	}
 }

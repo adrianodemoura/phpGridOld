@@ -832,7 +832,15 @@ class Model {
 		{
 			case 'Mysql':
 			case 'MariaDB':
-				$_data = $this->query('DESCRIBE '.$tabela);
+				appUses('cache','Memcache');
+				$Cache = new Memcache();
+				$chave = 'describe'.$tabela;
+				$_data = $Cache->read($chave);
+				if (!$_data)
+				{
+					$_data = $this->query('DESCRIBE '.$tabela);
+					$Cache->write($chave,$_data);
+				}
 				foreach($_data as $_l => $_arrProp)
 				{
 					$field 	= $_arrProp['Field'];
@@ -1038,21 +1046,30 @@ class Model {
 	 */
 	public function getMeusModulos($idPerfil=1)
 	{
-		if ($idPerfil>1)
+		appUses('cache','Memcache');
+		$Cache 	= new Memcache();
+		$chave 	= 'modulos'.$idPerfil;
+		$data 	= $Cache->read($chave);
+		if (!$data)
 		{
-			$sql = "SELECT DISTINCT m.id, m.nome, m.titulo
-				FROM sis_modulos m
-				INNER JOIN sis_permissoes p 
-				ON  p.modulo_id = m.id 
-				AND p.visualizar = 1
-				AND p.perfil_id =".$idPerfil." ORDER BY m.nome";
-		} else
-		{
-			$sql = "SELECT DISTINCT m.id, m.nome, m.titulo
-				FROM sis_modulos m ORDER BY m.nome";
+			if ($idPerfil>1)
+			{
+				$sql = "SELECT DISTINCT m.id, m.nome, m.titulo
+					FROM sis_modulos m
+					INNER JOIN sis_permissoes p 
+					ON  p.modulo_id = m.id 
+					AND p.visualizar = 1
+					AND p.perfil_id =".$idPerfil." ORDER BY m.nome";
+			} else
+			{
+				$sql = "SELECT DISTINCT m.id, m.nome, m.titulo
+					FROM sis_modulos m ORDER BY m.nome";
+			}
+			$data = $this->query($sql);
+			$Cache->write($chave,$data);
 		}
-		$_data = $this->query($sql);
-		return $_data;
+
+		return $data;
 	}
 
 	/**
@@ -1064,24 +1081,33 @@ class Model {
 	 */
 	public function getMeusCadastros($idPerfil=1, $modulo='')
 	{
-		if ($idPerfil>1)
+		/*appUses('cache','Memcache');
+		$Cache 	= new Memcache();
+		$chave 	= 'cadastros'.$idPerfil.$modulo;
+		$data 	= $Cache->read($chave);
+		if (!$data)*/
 		{
-			$sql = "SELECT DISTINCT c.nome, c.titulo
-				FROM sis_permissoes p
-				INNER JOIN sis_cadastros c ON c.id = p.cadastro_id
-				INNER JOIN sis_modulos m ON m.id = c.modulo_id
-				WHERE p.perfil_id=".$idPerfil." 
-				 AND m.nome='".strtoupper($modulo)."' AND p.visualizar=1 AND c.ativo=1
-				ORDER BY c.nome";
-		} else
-		{
-			$sql = "SELECT DISTINCT c.nome, c.titulo 
-					FROM sis_cadastros c
+			if ($idPerfil>1)
+			{
+				$sql = "SELECT DISTINCT c.nome, c.titulo
+					FROM sis_permissoes p
+					INNER JOIN sis_cadastros c ON c.id = p.cadastro_id
 					INNER JOIN sis_modulos m ON m.id = c.modulo_id
-					WHERE c.ativo=1 AND m.nome='".strtoupper($modulo)."'
+					WHERE p.perfil_id=".$idPerfil." 
+					AND m.nome='".strtoupper($modulo)."' AND p.visualizar=1 AND c.ativo=1
 					ORDER BY c.nome";
+			} else
+			{
+				$sql = "SELECT DISTINCT c.nome, c.titulo 
+						FROM sis_cadastros c
+						INNER JOIN sis_modulos m ON m.id = c.modulo_id
+						WHERE c.ativo=1 AND m.nome='".strtoupper($modulo)."'
+						ORDER BY c.nome";
+			}
+			$data = $this->query($sql);
+			//$Cache->write($chave,$data);
 		}
-		return $this->query($sql);
+		return $data;
 	}
 
 	/**
