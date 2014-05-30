@@ -934,9 +934,13 @@ class Model {
 							if (!empty($v))
 							{
 								$n1	= explode('/', substr($v,0,10));
-								$n2 = substr($v,11,strlen($v));
+								$n2 = trim(substr($v,11,strlen($v)));
 								if (empty($n2)) $n2 = date('H:i:s');
-								$v  = $n1['2'].'-'.$n1['1'].'-'.$n1['0'].' '.$n2;
+								$v  = $n1['2'].'-'.$n1['1'].'-'.$n1['0'];
+								if ($p['type']=='datetime')
+								{
+									$v .= ' '.$n2;
+								}
 								$v 	= date($this->dateFormatBD, strtotime($v));
 							}
 						}
@@ -1008,8 +1012,16 @@ class Model {
 							case 'datetime':
 								if ($v=='0000-00-00 00:00:00')
 									$v = '';
-								else
+								else 
 									$v = date($this->dateFormat,strtotime($v));
+								break;
+							case 'date':
+								if ($v=='0000-00-00')
+									$v = '';
+								else {
+									$this->dateFormat = substr($this->dateFormat, 0, 5);
+									$v = date($this->dateFormat,strtotime($v));
+								}
 								break;
 						}
 					}
@@ -1132,7 +1144,8 @@ class Model {
 		$n1	= explode('/', substr($v,0,10));
 		$n2 = substr($v,11,strlen($v));
 		if (empty($n2)) $n2 = date('H:i:s');
-		$v  = $n1['2'].'-'.$n1['1'].'-'.$n1['0'].' '.$n2;
+		$v  = $n1['2'].'-'.$n1['1'].'-'.$n1['0'];
+		if ($p['type']=='datetime') $v .= ' '.$n2; else $this->dateFormatBD = substr($this->dateFormatBD,0,5);
 		$v 	= date($this->dateFormatBD, strtotime($v));
 		return $v;
 	}

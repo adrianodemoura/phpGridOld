@@ -36,9 +36,11 @@ class Memcache {
 			{
 				$this->cache->addServer($_prop['host'], $_prop['port'], $this->config['persistent']);
 			}
+			$this->on = true;
 		} else
 		{
 			$this->cache = null;
+			$this->on = false;
 		}
 	}
 
@@ -52,7 +54,8 @@ class Memcache {
 	 */
 	public function write($chave, $valor, $duracao=3600)
 	{
-		return $this->cache->set($chave, $valor, $duracao);
+		$data = ($this->on) ? $this->cache->set($chave, $valor, $duracao) : null;
+		return $data;
 	}
 
 	/**
@@ -63,7 +66,8 @@ class Memcache {
 	 */
 	public function read($chave)
 	{
-		return $this->cache->get($chave);
+		$data = ($this->on) ? $this->cache->get($chave) : null;
+		return $data;
 	}
 
 	/**
@@ -74,7 +78,8 @@ class Memcache {
 	 */
 	public function delete($chave)
 	{
-		return $this->cache->delete($chave);
+		$data = ($this->on) ? $this->cache->delete($chave) : null;
+		return $data;
 	}
 
 	/**
@@ -84,7 +89,8 @@ class Memcache {
 	 */
 	public function clear() 
 	{
-		return $this->cache->flush();
+		$data = ($this->on) ? $this->cache->flush() : null;
+		return $data;
 	}
 
 	/**
@@ -94,7 +100,8 @@ class Memcache {
 	 */
 	public function info()
 	{
-		return $this->cache->getstats();
+		$data = ($this->on) ? $this->cache->getstats() : null;
+		return $data;
 	}
 
 }
