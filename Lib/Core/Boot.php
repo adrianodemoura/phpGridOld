@@ -240,7 +240,10 @@ class Boot {
 					$_SESSION['negadoAcesso']['txt'] = 'Caro '.$_SESSION['Usuario']['nome'].', 
 						o seu perfil '.$_SESSION['Usuario']['perfil'].' não possui privilégios suficientes para acessar a página '.
 						strtolower($module.'/'.$controller.'/'.$action);
-					header('Location: '.$this->$controller->base.'sistema/usuarios/index');
+					if (!in_array($action, array('get_options')))
+					{
+						header('Location: '.$this->$controller->base.'sistema/usuarios/index');
+					}
 				}
 			}
 		}
