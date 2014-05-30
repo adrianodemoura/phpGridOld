@@ -8,7 +8,7 @@
 <tr><!-- cabeçalho das linhas -->
 	<?php if ($this->Html->pode('alterar',$this->viewVars['minhasPermissoes']) 
 			&& isset($this->viewVars['marcadores'])) : ?>
-		<th>
+		<th width="20">
 		<input type='checkbox' name='cxAll' id='cxAll' title='clique aqui para selecionar todos'
 		<?php
 		array_push($this->viewVars['onRead'], '$("#cxAll").click(function(event) 
@@ -84,7 +84,7 @@
 	<?php if ($this->Html->pode('alterar',$this->viewVars['minhasPermissoes']) 
 		&& isset($this->viewVars['marcadores'])) : 
 	?>
-	<td>
+	<td align="center">
 		<?php
 			$ids = '';
 			foreach($this->viewVars['primaryKey'] as $_l3 => $_cmp3) 
@@ -105,19 +105,17 @@
 		if (strpos($_prop['link'], '*')) // substituindo o campo pelo valor do campo
 		{
 			foreach($this->viewVars['primaryKey'] as $_l2 => $_cmp)
-			{ 
+			{
 				$v = $_arrMods[$this->viewVars['modelClass']][$_cmp];
 				$_prop['link'] = str_replace('*'.$_cmp.'*', $v, $_prop['link']);
 			}
 		}
 		?>
-		<td align='center'>
-			<a href='<?= $_prop['link'] ?>' 
+		<td align='center' width=30><a href='<?= $_prop['link'] ?>' 
 			<?php if (isset($_prop['onclick'])) : ?>
 				onclick="<?= $_prop['onclick'] ?>"
 			<?php endif; ?>
-			>
-				<img src='<?= $base ?>img/<?= $arqBt ?>' title='<?= $_prop['title'] ?>' /> 
+			><center><img src='<?= $base ?>img/<?= $arqBt ?>' title='<?= $_prop["title"] ?>' /></center>
 			</a>
 		</td>
 	<?php endforeach; endif ?>

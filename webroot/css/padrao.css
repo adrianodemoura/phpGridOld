@@ -1,7 +1,8 @@
+@import url(http://fonts.googleapis.com/css?family=Ubuntu:300,400);
 body
 {
 	 background-image: url("../img/bg.png");
-	 font-family: ubuntu, arial, times;
+	 font-family: "Ubuntu", arial, times;
 }
 
 #cabecalho

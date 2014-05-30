@@ -12,13 +12,13 @@
 	<input type='hidden' 	name='pagAnt' 	  id='pagAnt' 	value='editar' />
 	<input type='hidden' 	name='urlRetorno' id='urlRetorno' value='<?= $aqui ?>' />
 
-	<div class='container editarBarra'>
+	<div class='container-fluid editarBarra'>
 		<input type='submit' name='btSalvar' value='Salvar' class='btn btn-success' />
-		<input type='button' name='btFechar' value='Fechar' class='btn btn-warning' 
+		<input type='button' name='btFechar' value='Fechar' class='btn btn-danger' 
 			onclick='document.location.href="<?= $urlFechar ?>"' />
 	</div>
 
-	<div class='container'>
+	<div class='container-fluid campos'>
 
 	<?php foreach($fields as $_l => $_cmp) : 
 		if (!in_array($_cmp, array('#',"-","!")))

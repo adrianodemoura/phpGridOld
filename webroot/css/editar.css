@@ -1,7 +1,8 @@
 .editar
 {
-	background-color: #fff;
 	padding: 5px;
+	width: 80%;
+	margin: 0px auto;
 }
 
 .editar .inDiv
@@ -25,7 +26,11 @@
 	text-align: right;
 	margin: 0px 5px 0px 0px;
 }
-
+.editar .campos
+{
+	background-color: #fff;
+	padding: 10px 0px 0px 0px;
+}
 .editar .spBr
 {
 	line-height: 20px;
@@ -44,5 +49,13 @@
 	-moz-border-radius: 6px;
 	-webkit-border-radius: 6px;
 	border-radius: 6px;
-	margin: 0px 0px 9px 0px;
+	margin: 0px 0px 10px 0px;
+	background-color: #eee	;
+	border: 1px solid #ccc;
+}
+
+.editar .in_modificado,
+.editar .in_criado
+{
+	text-align: center;
 }
