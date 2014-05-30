@@ -39,6 +39,8 @@ class Controle extends ControlesaApp {
 		(
 			'tit'			=> 'dtAplicação',
 			'notEmpty'		=> true,
+			'mascEdit'		=> array('d','m','y','h','i'),
+			'multMinu'		=> 5,
 		),
 		'qt_retirada'		=> array
 		(
