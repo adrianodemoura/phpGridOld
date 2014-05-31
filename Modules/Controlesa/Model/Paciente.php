@@ -56,7 +56,7 @@ class Paciente extends ControlesaApp {
 				'Sistema.Cidade'	=> array
 				(
 					'key'	=> 'id',
-					'fields'=> array('id','nome'),
+					'fields'=> array('id','nome','uf'),
 					'order'	=> array('nome','uf'),
 					'ajax'	=> 'sistema/cidades/get_options/',
 					'txtPesquisa' => 'Digite o nome da cidade para pesquisar ...',

@@ -345,7 +345,7 @@ class Html {
 				$opcs['type'] = 'hidden';
 				foreach($opcs as $_tag => $_vlr) if (!is_array($_vlr)) $input .= " $_tag='$_vlr'";
 				$input .= " />";
-				if (!empty($opcs['value']) && isset($opcs['options'])) $ajax['value'] = $opcs['options'][$opcs['value']];
+				//if (!empty($opcs['value']) && isset($opcs['options'])) $ajax['value'] = $opcs['options'][$opcs['value']];
 				$input .= "<img src='".$this->base."img/bt_ajax.png' class='bt_lista_ajax'
 							onclick='
 								$(\"#ajaxTit\").html(\"".$ajax['titPesq']."\");
