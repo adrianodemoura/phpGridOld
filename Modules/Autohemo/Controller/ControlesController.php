@@ -3,10 +3,10 @@
  * Class Controles
  * 
  * @package			Controles
- * @subpackage		Controles.Controller
+ * @subpackage		Autohemoterapia.Controller
  */
-appUses('Controller','ControlesaApp');
-class ControlesController extends ControlesaAppController {
+appUses('Controller','AutohemoApp');
+class ControlesController extends AutohemoAppController {
 	/**
 	 * Model Controle
 	 * 

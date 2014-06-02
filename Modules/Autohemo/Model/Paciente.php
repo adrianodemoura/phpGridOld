@@ -1,19 +1,19 @@
 <?php
 /**
- * Class Aplicador
+ * Class Paciente
  * 
- * @package		Aplicador
- * @package		Aplicador.Model
+ * @package		Paciente
+ * @package		Controlesa.Model
  */
-appUses('Model','ControlesaApp');
-class Aplicador extends ControlesaApp {
+appUses('Model','AutohemoApp');
+class Paciente extends AutohemoApp {
 	/**
 	 * Nome da tabela de cidades
 	 * 
 	 * @var		string	
 	 * @access	public
 	 */
-	public $tabela		= 'aplicadores';
+	public $tabela		= 'pacientes';
 
 	/**
 	 * Chave primária do model usuários
@@ -47,11 +47,6 @@ class Aplicador extends ControlesaApp {
 			'upperOff'		=> true,
 			'pesquisar'		=> '&',
 			'unique'		=> true,
-		),
-		'telefone'			=> array
-		(
-			'tit'			=> 'Telefone',
-			'mascara'		=> '(99)9999-9999'
 		),
 		'cidade_id'			=> array
 		(

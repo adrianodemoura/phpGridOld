@@ -1,0 +1,16 @@
+.thRetirada_qtd,
+.thLocal_qtd
+{
+	width: 100px;
+}
+.tdRetirada_qtd,
+.tdLocal_qtd
+{
+	text-align: center;
+}
+
+.thRetirada_loc,
+.thLocal_apl
+{
+	width: 150px;
+}

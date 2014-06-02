@@ -4,4 +4,4 @@
  */
 
 	// definindo rota raiz do módulo locação
-	router('/controlesa',array('controlesa','controle','listar'));
+	router('/autohemo',array('autohemo','controle','listar'));
