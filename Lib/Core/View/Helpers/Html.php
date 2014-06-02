@@ -146,7 +146,7 @@ class Html {
 				$opcs['value'] = $opcs['options'][$opcs['value']];
 				unset($opcs['options']);
 			}
-			if (isset($e['belongsTo']))
+			/*if (isset($e['belongsTo']))
 			{
 				$tmpVlr = '';
 				$l 		= 0;
@@ -168,7 +168,7 @@ class Html {
 					}
 				}
 				$opcs['value'] = $tmpVlr;
-			}
+			}*/
 
 			if ($e['type']=='habtm')
 			{

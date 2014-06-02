@@ -28,14 +28,10 @@ CREATE TABLE IF NOT EXISTS `hem_controles` (
   `local_qtd` INT(11) NOT NULL,
   `local_apl` VARCHAR(50) NOT NULL,
 
-  `paciente_id` INT NOT NULL,
+  `usuario_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `fk_controle_paciente` FOREIGN KEY (`paciente_id`) REFERENCES `hem_pacientes` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  INDEX `i_usuario` (`usuario_id` ASC) )
 ENGINE = InnoDB;
-CREATE INDEX `fk_controle_paciente_idx` ON `hem_controles` (`paciente_id` ASC);
-
 
 -- -----------------------------------------------------
 -- Table `hem_aplicadores`

@@ -42,19 +42,19 @@ class Controle extends AutohemoApp {
 			'mascEdit'		=> array('d','m','y','h','i'),
 			'multMinu'		=> 5,
 		),
-		'paciente_id'		=> array
+		'usuario_id'		=> array
 		(
 			'tit'			=> 'Paciente',
 			'filtro'		=> true,
 			'emptyFiltro'	=> '-- Todos os Pacientes --',
 			'belongsTo' 	=> array
 			(
-				'Paciente'	=> array
+				'Sistema.Usuario'	=> array
 				(
 					'key'	=> 'id',
 					'fields'=> array('id','nome'),
 					'order'	=> array('nome'),
-					'ajax'	=> 'autohemo/pacientes/get_options/',
+					'ajax'	=> 'sistema/usuarios/get_options/',
 					'txtPesquisa' => 'Digite o nome do paciente para pesquisar ...',
 				),
 			),
@@ -63,11 +63,12 @@ class Controle extends AutohemoApp {
 		'retirada_qtd'		=> array
 		(
 			'tit'			=> 'qtd. Retirada',
-			'options'		=> array('5'=>'5ml', '10'=>'10ml', '15'=>'15ml', '20'=>'20ml')
+			'options'		=> array('2.5'=>'2,5ml', '5'=>'5ml', '10'=>'10ml', '15'=>'15ml', '20'=>'20ml')
 		),
 		'retirada_loc'		=> array
 		(
 			'tit'			=> 'Local da Retirada',
+			'upperOff'		=> true,
 			'options'		=> array
 			(
 				'braço direito'		=> 'Braço Direito', 
@@ -78,7 +79,7 @@ class Controle extends AutohemoApp {
 		'local_qtd'		=> array
 		(
 			'tit'			=> 'qtd. Aplicada',
-			'options'		=> array('5'=>'5ml', '10'=>'10ml', '15'=>'15ml', '20'=>'20ml')
+			'options'		=> array('2.5'=>'2,5ml', '5'=>'5ml', '10'=>'10ml', '15'=>'15ml', '20'=>'20ml')
 		),
 		'local_apl'	=> array
 		(
