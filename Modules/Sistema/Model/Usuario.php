@@ -112,6 +112,7 @@ class Usuario extends SistemaApp {
 		'ultimo_acesso'		=> array
 		(
 			'tit'			=> 'Último Acesso',
+			'edicaoOff'		=> true,
 		),
 		'Perfil'			=> array
 		(

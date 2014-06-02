@@ -5,6 +5,11 @@
 	padding: 0px 2px 0px 3px;
 	float: left;
 }
+.bt_lista_ajax
+{
+	float: left;
+	margin: 3px 0px 0px 3px;
+}
 
 /**********************************************/
 .filtro
