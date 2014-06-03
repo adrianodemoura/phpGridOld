@@ -18,7 +18,7 @@
 		$a = explode('.',$_cmp);
 		$p = $this->viewVars['esquema'][$a['0']][$a['1']];
 		$t = $this->viewVars['esquema'][$a['0']][$a['1']]['tit'];
-		if (!isset($p['edicaoOff'])) :
+		if (!isset($p['edicaoOff']) && !in_array($p['type'],array('habtm'))) :
 	?>
 	<th class="th<?= $this->Html->domId($a['1']) ?>">
 		<?= $t ?>
@@ -38,12 +38,14 @@
 
 		$p['value'] = isset($p['default']) ? $p['default'] : null;
 
-		echo $this->Html->getInput($cmp,$p);
-
-		if (isset($p['mascara']))
+		if (!in_array($p['type'],array('habtm')))
 		{
-			array_push($this->viewVars['onRead'],'$("#'.$this->Html->domId($cmp).'")
-					.mask("'.str_replace('#','9',$p['mascara']).'")');
+			echo $this->Html->getInput($cmp,$p);
+			if (isset($p['mascara']))
+			{
+				array_push($this->viewVars['onRead'],'$("#'.$this->Html->domId($cmp).'")
+						.mask("'.str_replace('#','9',$p['mascara']).'")');
+			}
 		}
 	?>
 	</td>
