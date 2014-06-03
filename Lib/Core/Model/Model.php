@@ -460,11 +460,12 @@ class Model {
 				{
 					foreach($this->esquema as $_cmp => $_arrProp)
 					{
-						if (isset($_arrProp['type']) && !in_array($_arrProp['type'], array('habtm','virtual')))
+						$_arrProp['type'] = isset($_arrProp['type']) ? $_arrProp['type'] : 'text';
+						if (!in_array($_arrProp['type'], array('habtm','virtual')))
 						{
 							array_push($fields,$this->name.'.'.$_cmp);
 						}
-						if (isset($_arrProp['type']) && $_arrProp['type']=='habtm') array_push($cHabtm, $_cmp);
+						if ($_arrProp['type']=='habtm') array_push($cHabtm, $_cmp);
 					}
 				}
 				break;
@@ -474,6 +475,7 @@ class Model {
 					$l = 0;
 					foreach($this->esquema as $_cmp => $_arrProp)
 					{
+						$_arrProp['type'] = isset($_arrProp['type']) ? $_arrProp['type'] : 'text';
 						if (!in_array($_arrProp['type'], array('habtm','virtual')))
 						{
 							array_push($fields,$this->name.'.'.$_cmp);
@@ -496,6 +498,7 @@ class Model {
 						if ($l>0) break;
 						if (!in_array($_cmp,$this->primaryKey))
 						{
+							$_arrProp['type'] = isset($_arrProp['type']) ? $_arrProp['type'] : 'text';
 							if (!in_array($_arrProp['type'], array('habtm','virtual')))
 							{
 								array_push($fields,$this->name.'.'.$_cmp);
