@@ -367,18 +367,18 @@ class Model {
 		{
 			$this->open();
 			$this->db->beginTransaction();
-			array_push($this->sqls,array('sql'=>'BEGIN;','ts'=>0.0001));
+			array_push($this->sqls,array('sql'=>'BEGIN;','ts'=>0.0001,'li'=>1));
 			foreach($sqls as $_l => $_sql)
 			{
 				$ini = microtime(true);
 				$this->db->exec($_sql);
 				$ts = microtime(true);
 				$ts = round(($ts-$ini),6);
-				array_push($this->sqls,array('sql'=>$_sql,'ts'=>$ts));
+				array_push($this->sqls,array('sql'=>$_sql,'ts'=>$ts,'li'=>1));
 			}
-			array_push($this->sqls,array('sql'=>'END;','ts'=>0.0001));
-			$this->db->commit();
 			$this->afterExclude();
+			array_push($this->sqls,array('sql'=>'COMMIT;','ts'=>0.0001,'li'=>1));
+			$this->db->commit();
 			return true;
 		} catch(PDOException $e)
 		{
@@ -701,10 +701,13 @@ class Model {
 					$tabLiga	= $p['table'];
 					$arrTab		= explode('_',$tabLiga);
 					$cmpEsquerda= $p['key'];
-					
+					$fieldsHabtm= isset($p['optionsFk']['fields']) 
+						? $p['optionsFk']['fields'].', '.$p['key']['0'].', '.$p['keyFk']['0']
+						: '*';
+
 					$tabDireita = $arrTab['2'];
 					$cmpDireita = $p['keyFk'];
-					$sql = ' SELECT * FROM '.$tabEsquerda.' '.$_mod;
+					$sql = ' SELECT '.$fieldsHabtm.' FROM '.$tabEsquerda.' '.$_mod;
 					$sql .= ' INNER JOIN '.$tabLiga.' t1 ON ';
 					$l = 0;
 					foreach($cmpDireita as $_cmp)
@@ -1266,7 +1269,7 @@ class Model {
 					break;
 			}
 		}
-
+		//debug($this->data);
 		// iniciando a transação
 		$lE = 0; // linha erro
 		foreach($sqls as $_l => $_sql)

@@ -138,6 +138,7 @@ class UsuariosController extends SistemaAppController {
 				if (!$this->Usuario->save($novaData))
 				{
 					session_destroy();
+					debug($data);
 					debug($novaData);
 					die('Erro ao atualizar Usuários');
 				} else

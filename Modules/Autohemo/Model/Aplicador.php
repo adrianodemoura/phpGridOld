@@ -3,7 +3,7 @@
  * Class Aplicador
  * 
  * @package		Aplicador
- * @package		Autohemoterapia.Model
+ * @package		Autohemo.Model
  */
 appUses('Model','AutohemoApp');
 class Aplicador extends AutohemoApp {
@@ -48,10 +48,20 @@ class Aplicador extends AutohemoApp {
 			'pesquisar'		=> '&',
 			'unique'		=> true,
 		),
-		'telefone'			=> array
+		'tele_resi'			=> array
 		(
 			'tit'			=> 'Telefone',
 			'mascara'		=> '(99)9999-9999'
+		),
+		'celular'			=> array
+		(
+			'tit'			=> 'Celular',
+			'mascara'		=> '(99)9999-9999'
+		),
+		'aniversario'			=> array
+		(
+			'tit'			=> 'Aniversário',
+			'mascara'		=> '99/99'
 		),
 		'cidade_id'			=> array
 		(

@@ -14,3 +14,21 @@
 {
 	width: 150px;
 }
+.thLocal_id,
+.thUsuario_id
+{
+	width: 300px;
+}
+
+.thReti_qtd
+{
+	width: 100px;
+}
+.tdReti_qtd
+{
+	text-align: center;
+}
+.in_reti_qtd
+{
+	text-align: center;
+}

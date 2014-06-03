@@ -600,8 +600,8 @@ class Controller {
 			{
 				$msg = 'O Registro foi excluído com sucesso ...';
 				if (isset($_POST['cx'])) $msg = 'Os registros foram excluídos com sucesso';
-				$this->setMsgFlash($msg,'msgFlashErro');
-				if (!isset($this->redirectOff)) $this->redirect(strtolower($this->module),strtolower($this->controller),'listar');
+				//$this->setMsgFlash($msg,'msgFlashErro');
+				//if (!isset($this->redirectOff)) $this->redirect(strtolower($this->module),strtolower($this->controller),'listar');
 			} else
 			{
 				$msg = !empty($this->$modelClass->erro) ? $this->$modelClass->erro : 'Erro ao tentar excluir registro !!!';

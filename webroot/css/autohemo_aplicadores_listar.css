@@ -1,5 +1,19 @@
-.in_telefone
+.thTele_resi
+{
+	width: 100px;
+}
+.in_tele_resi,
+.in_celular
 {
 	width: 120px;
+	text-align: center;
+}
+.in_aniversario
+{
+	width: 50px;
+	text-align: center;
+}
+.tdAniversario
+{
 	text-align: center;
 }

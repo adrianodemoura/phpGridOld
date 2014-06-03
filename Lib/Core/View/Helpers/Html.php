@@ -67,10 +67,11 @@ class Html {
 		$opcs['name']  	= $this->domId($cmp,'name');
 		$opcs['id']  	= $this->domId($cmp,'id');
 		$opcs['type']	= isset($opcs['type'])  ? $opcs['type']  : $e['type'];
+
 		$opcs['value']	= isset($opcs['value']) ? $opcs['value'] : '';
 		$opcs['value']	= isset($e['value']) ? $e['value'] : $opcs['value'];
-		$a = explode('.',$cmp);
 
+		$a = explode('.',$cmp);
 		$a['2'] = isset($a['2']) ? $a['2'] : $cmp;
 
 		if (isset($e['edicaoOff']) && $e['edicaoOff']==true) $opcs['disabled'] = 'disabled';
@@ -361,7 +362,7 @@ class Html {
 				{
 					$input .= "<img src='".$this->base."img/bt_ajax.png' class='bt_lista_ajax'";
 					$input .= " onclick='showHabtmForm(\"habtm_".str_replace('.','_',$cmp)."\");' ";
-					$input .= " title='clique aqui para editar os ".$e['tit']."' />";
+					$input .= " title='clique aqui para editar ".$e['tit']."' />";
 				}
 				$input .= "<div id='habtm_".str_replace('.','_',$cmp)."' class='divHabtm'>";
 				if (!empty($opcs['value']))
