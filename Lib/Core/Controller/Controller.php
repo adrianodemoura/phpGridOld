@@ -380,7 +380,7 @@ class Controller {
 				}
 			}
 			// testando habtm
-			if ($_arrProp['type']=='habtm')
+			if (isset($_arrProp['type']) && $_arrProp['type']=='habtm')
 			{
 				$this->viewVars['temHabtm'] = true;
 			}
