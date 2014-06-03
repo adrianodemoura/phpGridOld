@@ -690,7 +690,7 @@ class Model {
 				$data[$_l][$c['0']][$c['1']] = $_vlr;
 			}
 			
-			// incrementando habtm, caso poussua
+			// incrementando habtm, caso possua
 			if ($tipo=='all' && !empty($cHabtm))
 			{
 				foreach($cHabtm as $_Habtm)
