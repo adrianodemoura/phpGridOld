@@ -404,7 +404,7 @@ class Html {
 				$tam = isset($e['mascara']) ? strlen($e['mascara']) : $tam;
 				if ($tam>0)
 				{
-					$opcs['maxlength'] = $tam;
+					$opcs['maxlength'] = rount($tam);
 				}
 				foreach($opcs as $_tag => $_vlr)
 				{
