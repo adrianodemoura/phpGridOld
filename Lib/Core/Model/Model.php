@@ -460,11 +460,11 @@ class Model {
 				{
 					foreach($this->esquema as $_cmp => $_arrProp)
 					{
-						if (!in_array($_arrProp['type'], array('habtm','virtual')))
+						if (isset($_arrProp['type']) && !in_array($_arrProp['type'], array('habtm','virtual')))
 						{
 							array_push($fields,$this->name.'.'.$_cmp);
 						}
-						if ($_arrProp['type']=='habtm') array_push($cHabtm, $_cmp);
+						if (isset($_arrProp['type']) && $_arrProp['type']=='habtm') array_push($cHabtm, $_cmp);
 					}
 				}
 				break;
@@ -925,7 +925,7 @@ class Model {
 						// removendo a máscara
 						if (isset($p['mascara']))
 						{
-							$v = str_replace(array('-','_','(',')','\\','.'),'',$v);
+							$v = str_replace(array('/','-','_','(',')','\\','.'),'',$v);
 						}
 
 						// se é do tipo data no formato string
