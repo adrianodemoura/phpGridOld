@@ -871,7 +871,10 @@ class Model {
 					$this->esquema[$field]['length']= !isset($this->esquema[$field]['length']) ? $length : $this->esquema[$field]['length'];
 					$this->esquema[$field]['null']	= !isset($this->esquema[$field]['null']) ? $null : $this->esquema[$field]['null'];
 					if (!empty($default))
+					{
 						$this->esquema[$field]['default']= !isset($this->esquema[$field]['default']) ? $default : $this->esquema[$field]['default'];
+					}
+					if (isset($this->esquema[$field]['default']) && $this->esquema[$field]['default']=='agora') $this->esquema[$field]['default'] = date('d/m/Y H:i:s');
 					if (!empty($key))
 					{
 						$this->esquema[$field]['key']= !isset($this->esquema[$field]['key']) ? $key : $this->esquema[$field]['key'];

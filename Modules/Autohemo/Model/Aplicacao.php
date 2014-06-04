@@ -46,6 +46,7 @@ class Aplicacao extends AutohemoApp {
 			'notEmpty'		=> true,
 			'mascEdit'		=> array('d','m','y','h','i'),
 			'multMinu'		=> 5,
+			'default' 		=> 'agora',
 		),
 		'local_id'			=> array
 		(

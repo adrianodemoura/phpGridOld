@@ -41,6 +41,7 @@ class Retirada extends AutohemoApp {
 			'notEmpty'		=> true,
 			'mascEdit'		=> array('d','m','y','h','i'),
 			'multMinu'		=> 5,
+			'default' 		=> 'agora',
 		),
 		'reti_qtd'			=> array
 		(
