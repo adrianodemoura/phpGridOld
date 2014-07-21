@@ -7,3 +7,6 @@ webroot/uploads/*
 # ignorar configurações do banco
 Config/database.php
 
+# ignorar log do apache
+error.log
+access.log
